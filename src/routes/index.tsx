@@ -4,8 +4,8 @@ import { PageShell } from "@/components/PageShell";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TAIPOQ — Smart English & Hindi Typing Tutor" },
-      { name: "description", content: "Master precision and speed. The smart English & Hindi typing tutor for high-performance typists." },
+      { title: "TAIPOQ — English & Hindi Typing for Job Aspirants" },
+      { name: "description", content: "Smart English and Hindi typing practice for students and job aspirants. Created by Manas Dixit." },
     ],
   }),
   component: Home,
@@ -29,8 +29,7 @@ function Home() {
                 TAIPOQ
               </h1>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Master precision and speed. The smart English & Hindi typing tutor
-                designed for students, clerks, advocates, and high-performance typists.
+                Smart English and Hindi typing practice for students and job aspirants.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -165,6 +164,14 @@ function Home() {
           ))}
         </div>
       </div>
+
+      <section className="bento-tile mt-6 p-8">
+        <h2 className="font-display text-2xl font-bold tracking-tight">Built for Job Aspirants</h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">
+          TAIPOQ is created by Manas Dixit to help students and job aspirants practice English and Hindi typing anytime, anywhere. It is designed for candidates preparing for typing-based job requirements, helping them improve speed, accuracy, confidence, and regular practice discipline.
+        </p>
+        <p className="mt-4 text-sm text-muted-foreground">Created by Manas Dixit for job aspirants.</p>
+      </section>
 
       {/* Secondary nav strip */}
       <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-5">

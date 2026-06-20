@@ -58,10 +58,10 @@ export function Footer() {
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-8 text-sm">
         <div>
           <div className="font-display font-bold">TAIPOQ</div>
-          <div className="text-muted-foreground">Smart English & Hindi Typing Tutor</div>
+          <div className="text-muted-foreground">Smart English and Hindi typing practice for students and job aspirants.</div>
         </div>
         <div className="font-mono text-xs text-muted-foreground">
-          © {new Date().getFullYear()} · BUILT FOR TYPISTS
+          © 2026 TAIPOQ. Created by Manas Dixit for job aspirants.
         </div>
       </div>
     </footer>
