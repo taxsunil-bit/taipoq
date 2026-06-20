@@ -168,9 +168,8 @@ function Home() {
       <section className="bento-tile mt-6 p-8">
         <h2 className="font-display text-2xl font-bold tracking-tight">Built for Job Aspirants</h2>
         <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">
-          TAIPOQ is created by Manas Dixit to help students and job aspirants practice English and Hindi typing anytime, anywhere. It is designed for candidates preparing for typing-based job requirements, helping them improve speed, accuracy, confidence, and regular practice discipline.
+          TAIPOQ helps students and job aspirants practice English and Hindi typing anytime, anywhere. It is designed for candidates preparing for typing-based job requirements, helping them improve speed, accuracy, confidence, and regular practice discipline.
         </p>
-        <p className="mt-4 text-sm text-muted-foreground">Created by Manas Dixit for job aspirants.</p>
       </section>
 
       {/* Secondary nav strip */}
