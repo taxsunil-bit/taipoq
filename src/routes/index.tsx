@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
-import { INFO_LINKS } from "@/components/NavBar";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -177,19 +176,6 @@ function Home() {
       {/* Secondary nav strip */}
       <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
         {SECONDARY.map((s) => (
-          <Link
-            key={s.to}
-            to={s.to}
-            className="bento-tile bento-tile-hover flex items-center justify-between px-5 py-4 text-sm"
-          >
-            <span className="font-medium">{s.label}</span>
-            <span className="font-mono text-xs text-muted-foreground">→</span>
-          </Link>
-        ))}
-      </div>
-
-      <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-        {INFO_LINKS.map((s) => (
           <Link
             key={s.to}
             to={s.to}
