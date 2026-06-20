@@ -9,6 +9,15 @@ const links = [
   { to: "/login", label: "Login" },
 ] as const;
 
+export const INFO_LINKS = [
+  { to: "/about" as const, label: "About" },
+  { to: "/contact" as const, label: "Contact" },
+  { to: "/privacy-policy" as const, label: "Privacy Policy" },
+  { to: "/terms" as const, label: "Terms" },
+  { to: "/disclaimer" as const, label: "Disclaimer" },
+  { to: "/typing-tips" as const, label: "Typing Tips" },
+] as const;
+
 export function NavBar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
@@ -55,10 +64,23 @@ export function NavBar() {
 export function Footer() {
   return (
     <footer className="mt-20 border-t border-border/60">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-8 text-sm">
-        <div>
-          <div className="font-display font-bold">TAIPOQ</div>
-          <div className="text-muted-foreground">Smart English and Hindi typing practice for students and job aspirants.</div>
+      <div className="mx-auto max-w-7xl space-y-6 px-6 py-8 text-sm">
+        <div className="flex flex-wrap items-start justify-between gap-6">
+          <div>
+            <div className="font-display font-bold">TAIPOQ</div>
+            <div className="text-muted-foreground">Smart English and Hindi typing practice for students and job aspirants.</div>
+          </div>
+          <nav className="flex flex-wrap gap-x-5 gap-y-2">
+            {INFO_LINKS.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
         </div>
         <div className="font-mono text-xs text-muted-foreground">
           © 2026 TAIPOQ. Created by Manas Dixit for job aspirants.

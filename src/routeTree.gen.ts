@@ -9,14 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TypingTipsRouteImport } from './routes/typing-tips'
 import { Route as TestRouteImport } from './routes/test'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ResultRouteImport } from './routes/result'
 import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HindiRouteImport } from './routes/hindi'
 import { Route as EnglishRouteImport } from './routes/english'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HindiIndexRouteImport } from './routes/hindi.index'
 import { Route as EnglishIndexRouteImport } from './routes/english.index'
@@ -28,9 +34,19 @@ import { Route as EnglishLessonsRouteImport } from './routes/english.lessons'
 import { Route as AdminAddParagraphRouteImport } from './routes/admin.add-paragraph'
 import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-paragraph.$id'
 
+const TypingTipsRoute = TypingTipsRouteImport.update({
+  id: '/typing-tips',
+  path: '/typing-tips',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResultRoute = ResultRouteImport.update({
@@ -41,6 +57,11 @@ const ResultRoute = ResultRouteImport.update({
 const ProgressRoute = ProgressRouteImport.update({
   id: '/progress',
   path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -58,6 +79,16 @@ const EnglishRoute = EnglishRouteImport.update({
   path: '/english',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CertificateRoute = CertificateRouteImport.update({
   id: '/certificate',
   path: '/certificate',
@@ -66,6 +97,11 @@ const CertificateRoute = CertificateRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -121,14 +157,20 @@ const AdminEditParagraphIdRoute = AdminEditParagraphIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/certificate': typeof CertificateRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
+  '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/typing-tips': typeof TypingTipsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -141,11 +183,17 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/certificate': typeof CertificateRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/login': typeof LoginRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
+  '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/typing-tips': typeof TypingTipsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -159,14 +207,20 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/certificate': typeof CertificateRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
+  '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/typing-tips': typeof TypingTipsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -181,14 +235,20 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/admin'
     | '/certificate'
+    | '/contact'
+    | '/disclaimer'
     | '/english'
     | '/hindi'
     | '/login'
+    | '/privacy-policy'
     | '/progress'
     | '/result'
+    | '/terms'
     | '/test'
+    | '/typing-tips'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -201,11 +261,17 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/certificate'
+    | '/contact'
+    | '/disclaimer'
     | '/login'
+    | '/privacy-policy'
     | '/progress'
     | '/result'
+    | '/terms'
     | '/test'
+    | '/typing-tips'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -218,14 +284,20 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/admin'
     | '/certificate'
+    | '/contact'
+    | '/disclaimer'
     | '/english'
     | '/hindi'
     | '/login'
+    | '/privacy-policy'
     | '/progress'
     | '/result'
+    | '/terms'
     | '/test'
+    | '/typing-tips'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -239,23 +311,43 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   CertificateRoute: typeof CertificateRoute
+  ContactRoute: typeof ContactRoute
+  DisclaimerRoute: typeof DisclaimerRoute
   EnglishRoute: typeof EnglishRouteWithChildren
   HindiRoute: typeof HindiRouteWithChildren
   LoginRoute: typeof LoginRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProgressRoute: typeof ProgressRoute
   ResultRoute: typeof ResultRoute
+  TermsRoute: typeof TermsRoute
   TestRoute: typeof TestRoute
+  TypingTipsRoute: typeof TypingTipsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/typing-tips': {
+      id: '/typing-tips'
+      path: '/typing-tips'
+      fullPath: '/typing-tips'
+      preLoaderRoute: typeof TypingTipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/test': {
       id: '/test'
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/result': {
@@ -270,6 +362,13 @@ declare module '@tanstack/react-router' {
       path: '/progress'
       fullPath: '/progress'
       preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -293,6 +392,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnglishRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/certificate': {
       id: '/certificate'
       path: '/certificate'
@@ -305,6 +418,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -425,14 +545,20 @@ const HindiRouteWithChildren = HindiRoute._addFileChildren(HindiRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   CertificateRoute: CertificateRoute,
+  ContactRoute: ContactRoute,
+  DisclaimerRoute: DisclaimerRoute,
   EnglishRoute: EnglishRouteWithChildren,
   HindiRoute: HindiRouteWithChildren,
   LoginRoute: LoginRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProgressRoute: ProgressRoute,
   ResultRoute: ResultRoute,
+  TermsRoute: TermsRoute,
   TestRoute: TestRoute,
+  TypingTipsRoute: TypingTipsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
