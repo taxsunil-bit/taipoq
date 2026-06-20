@@ -203,5 +203,4 @@ const SECONDARY = [
   { to: "/hindi/lessons" as const, label: "Hindi Lessons" },
   { to: "/progress" as const, label: "My Progress" },
   { to: "/certificate" as const, label: "Certificate" },
-  { to: "/admin" as const, label: "Admin Panel" },
 ];

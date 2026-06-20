@@ -7,7 +7,6 @@ const links = [
   { to: "/test", label: "Test" },
   { to: "/progress", label: "Progress" },
   { to: "/login", label: "Login" },
-  { to: "/admin", label: "Admin" },
 ] as const;
 
 export function NavBar() {
