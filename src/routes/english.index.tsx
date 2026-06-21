@@ -19,6 +19,14 @@ function EnglishHub() {
   return (
     <PageShell>
       <PageHeader title="English Typing" subtitle="Build typing speed with lessons, practice, and tests." accent="english" />
+      <div className="mb-4 rounded-md border border-primary/40 bg-primary/5 p-4">
+        <p className="text-sm">
+          <b>First time?</b> Typing start karne se pahle finger position dekhein.{" "}
+          <Link to="/typing-start-guide" className="font-semibold text-primary underline underline-offset-2">
+            Learn finger placement →
+          </Link>
+        </p>
+      </div>
       <div className="grid gap-4 md:grid-cols-2">
         {cards.map((c) => (
           <Card key={c.title}>

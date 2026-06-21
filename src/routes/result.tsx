@@ -51,6 +51,40 @@ function ResultPage() {
         } />
       </div>
 
+      {typeof result.targetWpm === "number" && (() => {
+        const targetPassed = result.netWpm >= result.targetWpm && result.accuracy >= 90;
+        return (
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Target Result — {result.targetLabel ?? "Custom"}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-3 sm:grid-cols-4">
+                <Stat label="Target WPM" value={result.targetWpm} />
+                <Stat label="Your Net WPM" value={result.netWpm} />
+                <Stat label="Accuracy" value={`${result.accuracy}%`} />
+                <Stat
+                  label="vs Target"
+                  value={
+                    <Badge className={targetPassed ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground"}>
+                      {targetPassed ? "Pass" : "Fail"}
+                    </Badge>
+                  }
+                />
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Pass criteria: Net WPM ≥ {result.targetWpm} and Accuracy ≥ 90%.
+              </p>
+              {!targetPassed && (
+                <p className="mt-3 rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm text-amber-100">
+                  Practice accuracy first, then increase speed. Slow down a little and aim for 95%+ accuracy — speed will follow.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        );
+      })()}
+
       <Card className="mt-6">
         <CardHeader><CardTitle>Mistake Details ({result.mistakeList.length})</CardTitle></CardHeader>
         <CardContent>

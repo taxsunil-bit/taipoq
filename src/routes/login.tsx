@@ -34,6 +34,9 @@ function Login() {
       <PageHeader title={mode === "login" ? "Login" : "Register"} subtitle="Prototype only — name is stored locally." />
       <Card className="mx-auto max-w-md">
         <CardContent className="p-6">
+          <div role="note" className="mb-4 rounded-md border border-amber-500/60 bg-amber-500/15 p-3 text-xs font-medium text-amber-100 dark:text-amber-100">
+            This is a <b>local demo login</b>. Your name is saved only in this browser. Password login is not active yet.
+          </div>
           <div className="mb-4 flex rounded-md border p-1 text-sm">
             <button type="button" onClick={() => setMode("login")} className={`flex-1 rounded px-3 py-1.5 ${mode === "login" ? "bg-primary text-primary-foreground" : ""}`}>Login</button>
             <button type="button" onClick={() => setMode("register")} className={`flex-1 rounded px-3 py-1.5 ${mode === "register" ? "bg-primary text-primary-foreground" : ""}`}>Register</button>

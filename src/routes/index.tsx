@@ -4,8 +4,8 @@ import { PageShell } from "@/components/PageShell";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TAIPOQ — English & Hindi Typing for Job Aspirants" },
-      { name: "description", content: "Smart English and Hindi typing practice for students and job aspirants. Created by Manas Dixit." },
+      { title: "TAIPOQ — English & Hindi Typing Practice for Job Preparation" },
+      { name: "description", content: "Practice daily. Track your progress. Build job-ready English and Hindi typing speed and accuracy." },
     ],
   }),
   component: Home,
@@ -29,7 +29,8 @@ function Home() {
                 TAIPOQ
               </h1>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Smart English and Hindi typing practice for students and job aspirants.
+                Master precision and speed. The smart English & Hindi typing tutor
+                designed for students, clerks, advocates, and high-performance typists.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -40,7 +41,13 @@ function Home() {
                 to="/progress"
                 className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
               >
-                Documentation
+                View Progress
+              </Link>
+              <Link
+                to="/typing-start-guide"
+                className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-primary underline-offset-2 hover:underline"
+              >
+                First time? Learn finger placement
               </Link>
             </div>
           </div>
@@ -116,43 +123,33 @@ function Home() {
           <p className="mt-1 text-sm text-muted-foreground">Get certified in 5 min</p>
         </Link>
 
-        {/* Accuracy stat */}
+        {/* Honest value prop — single tile */}
         <div className="bento-tile flex flex-col justify-between p-6 md:col-span-1">
-          <div className="flex items-center justify-between opacity-70">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest">Accuracy</span>
-            <span className="h-2 w-2 rounded-full bg-success" />
-          </div>
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Daily Practice</span>
           <div className="mt-4">
-            <div className="font-mono text-4xl font-bold tracking-tight">
-              98.4<span className="text-xl opacity-50">%</span>
-            </div>
-            <p className="mt-1 text-xs text-muted-foreground">Average tracking precision</p>
+            <div className="font-display text-2xl font-bold leading-tight">Practice daily.</div>
+            <p className="mt-2 text-xs text-muted-foreground">Improve speed and accuracy over time.</p>
           </div>
         </div>
 
-        {/* Live typing preview — 2 wide */}
+        {/* Honest message block — replaces fake live preview */}
         <div className="bento-tile p-6 md:col-span-2">
           <div className="mb-3 flex items-center justify-between">
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              Live Preview · EN
+              What TAIPOQ helps you do
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground">
-              WPM <span className="text-foreground">62</span> · ACC <span className="text-foreground">96%</span>
-            </span>
+            <Link to="/typing-start-guide" className="font-mono text-[10px] uppercase tracking-widest text-primary hover:underline">
+              Start Guide →
+            </Link>
           </div>
-          <p className="font-mono text-xl leading-relaxed md:text-2xl">
-            <span className="text-success">the quick brown </span>
-            <span className="bg-destructive/20 text-destructive">fox</span>
-            <span className="text-success"> jumps</span>
-            <span className="caret-blink text-primary">|</span>
-            <span className="text-muted-foreground"> over the lazy dog</span>
-          </p>
-          <p className="mt-3 font-hindi text-lg text-muted-foreground">
-            <span className="text-success">यह एक हिंदी </span>
-            <span className="caret-blink text-primary">|</span>
-            <span> टाइपिंग अभ्यास है।</span>
-          </p>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            <li className="rounded-md border bg-card/40 p-3 text-sm"><b>Track your progress</b> — every test is saved locally.</li>
+            <li className="rounded-md border bg-card/40 p-3 text-sm"><b>Improve speed and accuracy</b> with timed practice.</li>
+            <li className="rounded-md border bg-card/40 p-3 text-sm"><b>Build job-ready typing skill</b> for RRB, SSC, DSSSB.</li>
+            <li className="rounded-md border bg-card/40 p-3 text-sm"><b>Learn finger placement</b> before you race the clock.</li>
+          </ul>
         </div>
+
 
         {/* Feature micro-tiles 2x2 */}
         <div className="grid grid-cols-2 gap-4 md:col-span-2">
@@ -164,13 +161,6 @@ function Home() {
           ))}
         </div>
       </div>
-
-      <section className="bento-tile mt-6 p-8">
-        <h2 className="font-display text-2xl font-bold tracking-tight">Built for Job Aspirants</h2>
-        <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">
-          TAIPOQ helps students and job aspirants practice English and Hindi typing anytime, anywhere. It is designed for candidates preparing for typing-based job requirements, helping them improve speed, accuracy, confidence, and regular practice discipline.
-        </p>
-      </section>
 
       {/* Secondary nav strip */}
       <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">

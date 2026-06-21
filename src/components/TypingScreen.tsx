@@ -205,19 +205,49 @@ export function TypingScreen({
 
       <div className="space-y-4">
         <Card>
-          <CardHeader><CardTitle className="text-sm">Keyboard / Guide</CardTitle></CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-10 gap-1 text-center text-xs">
-              {(isKruti
-                ? "qwertyuiopasdfghjklzxcvbnm".split("")
-                : language === "hi"
-                ? ["क","ख","ग","घ","च","छ","ज","झ","ट","ठ","त","थ","द","ध","न","प","फ","ब","भ","म"]
-                : "qwertyuiopasdfghjklzxcvbnm".split("")
-              ).map((k) => (
-                <div key={k} className={`rounded border bg-card px-1 py-2 ${!isKruti && language === "hi" ? "font-hindi" : ""}`}>{k}</div>
-              ))}
+          <CardHeader><CardTitle className="text-sm">Home Row · Finger Map</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded-md border border-primary/40 bg-primary/10 p-2">
+                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-primary">Left Hand</div>
+                <div className="grid grid-cols-4 gap-1 text-center font-mono text-sm font-bold">
+                  {[
+                    { k: "A", finger: "Little" },
+                    { k: "S", finger: "Ring" },
+                    { k: "D", finger: "Middle" },
+                    { k: "F", finger: "Index", bump: true },
+                  ].map((key) => (
+                    <div key={key.k} title={`Left ${key.finger}`} className="relative rounded border border-primary/30 bg-background/60 px-1 py-1.5">
+                      {key.k}
+                      {key.bump && <span className="absolute bottom-0.5 left-1/2 h-1 w-2 -translate-x-1/2 rounded-full bg-destructive" />}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-md border border-amber-500/40 bg-amber-500/10 p-2">
+                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-amber-300">Right Hand</div>
+                <div className="grid grid-cols-4 gap-1 text-center font-mono text-sm font-bold">
+                  {[
+                    { k: "J", finger: "Index", bump: true },
+                    { k: "K", finger: "Middle" },
+                    { k: "L", finger: "Ring" },
+                    { k: ";", finger: "Little" },
+                  ].map((key) => (
+                    <div key={key.k} title={`Right ${key.finger}`} className="relative rounded border border-amber-500/30 bg-background/60 px-1 py-1.5">
+                      {key.k}
+                      {key.bump && <span className="absolute bottom-0.5 left-1/2 h-1 w-2 -translate-x-1/2 rounded-full bg-destructive" />}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="mt-3 text-xs text-muted-foreground">
+            <div className="rounded-md border border-success/40 bg-success/10 px-2 py-1.5 text-center font-mono text-[11px] font-semibold tracking-widest">
+              SPACEBAR — Both Thumbs
+            </div>
+            <p className="text-[11px] leading-relaxed text-muted-foreground">
+              <b className="text-foreground">F</b> &amp; <b className="text-foreground">J</b> have small bumps (red dot) — keep both index fingers there.
+            </p>
+            <div className="border-t pt-2 text-xs text-muted-foreground">
               Current character:{" "}
               <span className={`ml-1 inline-block rounded bg-primary/20 px-2 py-0.5 font-semibold text-foreground ${isKruti ? "font-kruti" : language === "hi" ? "font-hindi" : ""}`}>
                 {compare[typed.length]?.expected ?? "—"}
