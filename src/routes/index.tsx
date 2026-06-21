@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/")({
@@ -161,6 +162,8 @@ function Home() {
           ))}
         </div>
       </div>
+
+      <JobTypingSpeedGuide variant="compact" />
 
       {/* Secondary nav strip */}
       <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
