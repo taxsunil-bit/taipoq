@@ -26,6 +26,9 @@ export type SavedResult = {
   mistakeHighlight: boolean;
   passed: boolean;
   mistakeList: MistakeRow[];
+  // Optional — Phase 1 job-target feature. Older results have this undefined.
+  targetWpm?: number;
+  targetLabel?: string;
 };
 
 export type SavedParagraph = {

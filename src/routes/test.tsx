@@ -16,6 +16,13 @@ export const Route = createFileRoute("/test")({
 type Lang = "English" | "Hindi";
 type HindiMode = "Unicode" | "Remington" | "Phonetic";
 
+const TARGETS = [
+  { label: "Practice", wpm: 25, hint: "Warm-up speed" },
+  { label: "RRB English", wpm: 30, hint: "Railway exam target" },
+  { label: "SSC/DSSSB English", wpm: 35, hint: "SSC/DSSSB target" },
+  { label: "Office / Data Entry", wpm: 40, hint: "Job-ready speed" },
+] as const;
+
 function TestPage() {
   const navigate = useNavigate();
   const [started, setStarted] = useState(false);
@@ -25,6 +32,9 @@ function TestPage() {
   const [difficulty, setDifficulty] = useState<"Beginner" | "Intermediate" | "Advanced" | "Legal Practice">("Intermediate");
   const [backspace, setBackspace] = useState<"Allowed" | "Not Allowed">("Allowed");
   const [highlight, setHighlight] = useState<"On" | "Off">("On");
+  const [targetLabel, setTargetLabel] = useState<string>("Practice");
+  const target_ = TARGETS.find((t) => t.label === targetLabel) ?? TARGETS[0];
+  const targetWpm = target_.wpm;
 
   const inactive = lang === "Hindi" && hindiMode !== "Remington";
 
@@ -46,7 +56,7 @@ function TestPage() {
   const mode = lang === "English" ? "QWERTY" : hindiMode;
 
   function handleSubmit(r: FinalResult) {
-    const passed = r.netWpm >= 25 && r.accuracy >= 90;
+    const passed = r.netWpm >= targetWpm && r.accuracy >= 90;
     saveResult({
       language: lang,
       mode,
@@ -65,6 +75,8 @@ function TestPage() {
       mistakeHighlight: highlight === "On",
       passed,
       mistakeList: r.mistakeList,
+      targetWpm,
+      targetLabel,
     });
     navigate({ to: "/result" });
   }
@@ -116,6 +128,37 @@ function TestPage() {
               )}
             </Field>
           )}
+          <Field label="Target (Net WPM)">
+            <div className="grid gap-2 sm:grid-cols-2">
+              {TARGETS.map((t) => {
+                const active = targetLabel === t.label;
+                return (
+                  <button
+                    key={t.label}
+                    type="button"
+                    onClick={() => setTargetLabel(t.label)}
+                    aria-pressed={active}
+                    className={`rounded-md border px-3 py-2 text-left text-sm transition-colors ${
+                      active
+                        ? "border-primary bg-primary/15 ring-2 ring-primary"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold">{t.label}</span>
+                      <span className={`rounded px-1.5 py-0.5 font-mono text-xs ${active ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+                        {t.wpm} WPM
+                      </span>
+                    </div>
+                    <div className="mt-0.5 text-xs text-muted-foreground">{t.hint}</div>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Selected: <b className="text-foreground">{targetLabel} · {targetWpm} WPM</b> · Pass = Net WPM ≥ {targetWpm} and Accuracy ≥ 90%.
+            </p>
+          </Field>
           <Field label="Duration (minutes)">
             <Group value={duration} onChange={setDuration} options={["1", "3", "5", "10", "15"]} />
           </Field>

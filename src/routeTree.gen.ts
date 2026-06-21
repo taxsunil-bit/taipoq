@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TypingTipsRouteImport } from './routes/typing-tips'
+import { Route as TypingStartGuideRouteImport } from './routes/typing-start-guide'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ResultRouteImport } from './routes/result'
@@ -37,6 +38,11 @@ import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-pa
 const TypingTipsRoute = TypingTipsRouteImport.update({
   id: '/typing-tips',
   path: '/typing-tips',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TypingStartGuideRoute = TypingStartGuideRouteImport.update({
+  id: '/typing-start-guide',
+  path: '/typing-start-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TestRoute = TestRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/result': typeof ResultRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/result': typeof ResultRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/result': typeof ResultRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/terms'
     | '/test'
+    | '/typing-start-guide'
     | '/typing-tips'
     | '/admin/add-paragraph'
     | '/english/lessons'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/terms'
     | '/test'
+    | '/typing-start-guide'
     | '/typing-tips'
     | '/admin/add-paragraph'
     | '/english/lessons'
@@ -297,6 +308,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/terms'
     | '/test'
+    | '/typing-start-guide'
     | '/typing-tips'
     | '/admin/add-paragraph'
     | '/english/lessons'
@@ -324,6 +336,7 @@ export interface RootRouteChildren {
   ResultRoute: typeof ResultRoute
   TermsRoute: typeof TermsRoute
   TestRoute: typeof TestRoute
+  TypingStartGuideRoute: typeof TypingStartGuideRoute
   TypingTipsRoute: typeof TypingTipsRoute
 }
 
@@ -334,6 +347,13 @@ declare module '@tanstack/react-router' {
       path: '/typing-tips'
       fullPath: '/typing-tips'
       preLoaderRoute: typeof TypingTipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/typing-start-guide': {
+      id: '/typing-start-guide'
+      path: '/typing-start-guide'
+      fullPath: '/typing-start-guide'
+      preLoaderRoute: typeof TypingStartGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/test': {
@@ -558,6 +578,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResultRoute: ResultRoute,
   TermsRoute: TermsRoute,
   TestRoute: TestRoute,
+  TypingStartGuideRoute: TypingStartGuideRoute,
   TypingTipsRoute: TypingTipsRoute,
 }
 export const routeTree = rootRouteImport
