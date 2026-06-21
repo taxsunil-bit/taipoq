@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { InfoPage, InfoList, InfoSection } from "@/components/InfoPage";
 
 export const Route = createFileRoute("/typing-tips")({
@@ -49,6 +50,7 @@ const TEST_TIPS = [
 function TypingTips() {
   return (
     <InfoPage title="Typing Tips" subtitle="Simple guidance for regular typing practice and test preparation.">
+      <JobTypingSpeedGuide variant="full" />
       <InfoSection title="How to Improve Typing Speed">
         <InfoList items={SPEED_TIPS} />
       </InfoSection>

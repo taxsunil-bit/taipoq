@@ -4,6 +4,7 @@ import { PageShell, PageHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { TypingScreen, type FinalResult } from "@/components/TypingScreen";
 import { englishLessons, hindiLessons } from "@/lib/sample-data";
 import { getActiveParagraphs, saveResult } from "@/lib/storage";
@@ -105,6 +106,9 @@ function TestPage() {
   return (
     <PageShell>
       <PageHeader title="Typing Test" subtitle="Configure your test, then begin." />
+      <div className="mx-auto mb-6 max-w-3xl">
+        <JobTypingSpeedGuide variant="full" />
+      </div>
       <Card className="mx-auto max-w-3xl">
         <CardHeader>
           <CardTitle>Test Configuration</CardTitle>
