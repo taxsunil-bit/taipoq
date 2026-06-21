@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { playCompletionSound } from "@/lib/audio-feedback";
+import { getSoundSettings } from "@/lib/sound-settings";
 import { getLatestResult, type SavedResult } from "@/lib/storage";
 
 export const Route = createFileRoute("/result")({
@@ -14,7 +16,21 @@ export const Route = createFileRoute("/result")({
 
 function ResultPage() {
   const [result, setResult] = useState<SavedResult | null>(null);
-  useEffect(() => { setResult(getLatestResult()); }, []);
+  const completionPlayedRef = useRef(false);
+
+  useEffect(() => {
+    const r = getLatestResult();
+    setResult(r);
+    if (r && !completionPlayedRef.current) {
+      completionPlayedRef.current = true;
+      try {
+        const s = getSoundSettings();
+        if (s.soundEnabled && s.completionSound) playCompletionSound();
+      } catch {
+        /* never block result display */
+      }
+    }
+  }, []);
 
   if (!result) {
     return (

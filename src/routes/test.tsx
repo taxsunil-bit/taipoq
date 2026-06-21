@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
+import { SoundSettings } from "@/components/SoundSettings";
 import { TypingScreen, type FinalResult } from "@/components/TypingScreen";
 import { englishLessons, hindiLessons } from "@/lib/sample-data";
 import { getActiveParagraphs, saveResult } from "@/lib/storage";
@@ -175,6 +176,7 @@ function TestPage() {
           <Field label="Mistake Highlight">
             <Group value={highlight} onChange={(v) => setHighlight(v as typeof highlight)} options={["On", "Off"]} />
           </Field>
+          <SoundSettings />
           <Button size="lg" onClick={() => setStarted(true)} disabled={inactive}>
             {inactive ? "Mode Coming Soon" : "Start Test"}
           </Button>

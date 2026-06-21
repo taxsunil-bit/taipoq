@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { compareTexts, computeStats, buildMistakes, normalize } from "@/lib/typing-utils";
 import type { LiveStats, MistakeRow } from "@/lib/typing-utils";
+import { playErrorSound, playKeypressSound } from "@/lib/audio-feedback";
+import { getSoundSettings } from "@/lib/sound-settings";
 
 export type FinalResult = LiveStats & {
   mistakeList: MistakeRow[];
@@ -100,8 +102,25 @@ export function TypingScreen({
       // Only allow strict append: new value must start with previous typed value.
       if (val.length < typed.length || !val.startsWith(typed)) return;
     }
-    if (!startedAt && val.length > 0) setStartedAt(Date.now());
-    setTyped(isKruti ? val : normalize(val));
+    const next = isKruti ? val : normalize(val);
+    if (!startedAt && next.length > 0) setStartedAt(Date.now());
+    if (next.length > typed.length) {
+      try {
+        const settings = getSoundSettings();
+        if (settings.soundEnabled) {
+          const i = typed.length;
+          const exp = target[i];
+          const got = next[i];
+          if (exp !== undefined) {
+            if (got === exp && settings.keypressSound) playKeypressSound();
+            else if (got !== exp && settings.errorSound) playErrorSound();
+          }
+        }
+      } catch {
+        /* never block typing */
+      }
+    }
+    setTyped(next);
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
