@@ -8,10 +8,11 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { CookieConsentProvider } from "../components/CookieConsent";
+import { ConsentAwareAnalytics } from "../components/ConsentAwareAnalytics";
 
 function NotFoundComponent() {
   return (
@@ -120,9 +121,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <Analytics />
+      <CookieConsentProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <ConsentAwareAnalytics />
+      </CookieConsentProvider>
     </QueryClientProvider>
   );
 }

@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useCookieConsent } from "@/components/CookieConsent";
 
 const links = [
   { to: "/", label: "Home" },
@@ -10,6 +11,7 @@ const links = [
 ] as const;
 
 export const INFO_LINKS = [
+  { to: "/" as const, label: "Home" },
   { to: "/about" as const, label: "About" },
   { to: "/contact" as const, label: "Contact" },
   { to: "/privacy-policy" as const, label: "Privacy Policy" },
@@ -17,6 +19,19 @@ export const INFO_LINKS = [
   { to: "/disclaimer" as const, label: "Disclaimer" },
   { to: "/typing-tips" as const, label: "Typing Tips" },
 ] as const;
+
+function CookiePreferencesLink() {
+  const { openPreferences } = useCookieConsent();
+  return (
+    <button
+      type="button"
+      onClick={openPreferences}
+      className="text-muted-foreground transition-colors hover:text-foreground"
+    >
+      Cookie Preferences
+    </button>
+  );
+}
 
 export function NavBar() {
   return (
@@ -76,10 +91,12 @@ export function Footer() {
                 key={l.to}
                 to={l.to}
                 className="text-muted-foreground transition-colors hover:text-foreground"
+                activeOptions={{ exact: l.to === "/" }}
               >
                 {l.label}
               </Link>
             ))}
+            <CookiePreferencesLink />
           </nav>
         </div>
         <div className="font-mono text-xs text-muted-foreground">
