@@ -18,7 +18,7 @@ function Contact() {
   return (
     <InfoPage title="Contact">
       <p>
-        For feedback, suggestions, corrections, or collaboration related to TAIPOQ, users may contact the TAIPOQ team through the official contact method that may be provided in a future version.
+        For feedback, suggestions, corrections, collaboration, privacy-related questions, or technical issues related to TAIPOQ, users may contact us at:
       </p>
       <InfoSection title="Project">
         <p className="text-foreground">TAIPOQ</p>
@@ -29,8 +29,11 @@ function Contact() {
       <p>
         If you find any typing error, incorrect Hindi KrutiDev mapping, or technical issue, please share details so the platform can be improved.
       </p>
-      <p className="rounded-lg border border-border bg-surface px-4 py-3 text-sm">
-        Contact details may be added in a future version.
+      <p className="rounded-lg border border-border bg-surface px-4 py-3 text-sm text-foreground">
+        Email:{" "}
+        <a href="mailto:manasdixit5050@gmail.com" className="text-primary underline-offset-4 hover:underline">
+          manasdixit5050@gmail.com
+        </a>
       </p>
     </InfoPage>
   );
