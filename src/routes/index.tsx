@@ -22,8 +22,8 @@ function Home() {
           <div className="pointer-events-none absolute -right-6 -top-10 select-none font-display text-[14rem] font-bold leading-none text-foreground/[0.04] transition-opacity group-hover:text-foreground/[0.08]">
             T
           </div>
-          <div className="relative flex h-full flex-col justify-between gap-10">
-            <div>
+          <div className="relative grid h-full gap-8 md:grid-cols-2 md:grid-rows-[1fr_auto] md:items-center md:gap-x-10 md:gap-y-8">
+            <div className="md:col-start-1 md:row-start-1">
               <div className="mb-8 grid h-12 w-12 place-items-center rounded-xl bg-primary font-display text-xl font-bold text-primary-foreground shadow-lg shadow-primary/20">
                 T
               </div>
@@ -35,7 +35,20 @@ function Home() {
                 designed for students, clerks, advocates, and high-performance typists.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+
+            <div className="mx-auto w-full max-w-[360px] md:col-start-2 md:row-start-1 md:row-span-2 md:max-w-[420px] md:self-center lg:max-w-[460px]">
+              <div className="overflow-hidden rounded-3xl border border-border/60 bg-surface/40 shadow-2xl">
+                <img
+                  src="/images/tipoq-cyber-youth.png"
+                  alt="TAIPOQ cyber youth typing practice visual"
+                  className="h-auto w-full object-contain"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 md:col-start-1 md:row-start-2">
               <span className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                 v1.0 · Prototype
               </span>
