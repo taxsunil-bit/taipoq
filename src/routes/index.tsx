@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
+import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -105,8 +106,32 @@ function Home() {
               KrutiDev / Remington Hindi typing now. Unicode and Phonetic modes coming soon.
             </p>
             <div className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 font-hindi font-semibold text-[oklch(0.4_0.16_45)] transition-transform active:scale-95">
-              शुरू करें
+              आरम्भ करें
             </div>
+          </div>
+        </Link>
+
+        {/* पुस्तकालय / Library */}
+        <Link
+          to="/study-corner"
+          className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
+        >
+          <div>
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              {STUDY_CORNER_LANDING.homeCard.title}
+            </div>
+            <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              {STUDY_CORNER_LANDING.homeCard.title}
+            </h2>
+            <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
+              {STUDY_CORNER_LANDING.homeCard.subtitle}
+            </p>
+            <p className="mt-2 max-w-md font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
+              {STUDY_CORNER_LANDING.homeCard.helper}
+            </p>
+          </div>
+          <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-primary px-5 py-3 font-hindi text-base font-semibold text-primary-foreground transition-transform active:scale-95 sm:w-auto">
+            {STUDY_CORNER_LANDING.homeCard.button}
           </div>
         </Link>
 
@@ -166,7 +191,7 @@ function Home() {
       <JobTypingSpeedGuide variant="compact" />
 
       {/* Secondary nav strip */}
-      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
         {SECONDARY.map((s) => (
           <Link
             key={s.to}
@@ -198,6 +223,7 @@ const FEATURES = [
 ] as const;
 
 const SECONDARY = [
+  { to: "/study-corner" as const, label: "पुस्तकालय / Library" },
   { to: "/english/lessons" as const, label: "English Lessons" },
   { to: "/hindi/lessons" as const, label: "Hindi Lessons" },
   { to: "/progress" as const, label: "My Progress" },

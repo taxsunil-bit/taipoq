@@ -6,6 +6,7 @@ const links = [
   { to: "/english", label: "English" },
   { to: "/hindi", label: "Hindi" },
   { to: "/test", label: "Test" },
+  { to: "/study-corner", label: "पुस्तकालय / Library" },
   { to: "/progress", label: "Progress" },
   { to: "/login", label: "Login" },
 ] as const;
@@ -18,6 +19,7 @@ export const INFO_LINKS = [
   { to: "/terms" as const, label: "Terms" },
   { to: "/disclaimer" as const, label: "Disclaimer" },
   { to: "/typing-tips" as const, label: "Typing Tips" },
+  { to: "/study-corner" as const, label: "पुस्तकालय / Library" },
 ] as const;
 
 function CookiePreferencesLink() {
