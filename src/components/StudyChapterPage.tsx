@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { PageShell, PageHeader } from "@/components/PageShell";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { StudyChapter } from "@/content/studyCornerContent";
+import { cn } from "@/lib/utils";
 
 type StudyChapterPageProps = {
   chapter: StudyChapter;
@@ -10,6 +11,9 @@ type StudyChapterPageProps = {
 
 const chapterNavButtonClass =
   "min-h-11 h-auto whitespace-normal break-words py-3 text-center";
+
+const navLinkClass = (variant: "default" | "outline" = "default", extra?: string) =>
+  cn(buttonVariants({ variant, size: "lg" }), chapterNavButtonClass, extra);
 
 function SectionList({ items }: { items: string[] }) {
   return (
@@ -52,12 +56,12 @@ export function StudyChapterPage({ chapter }: StudyChapterPageProps) {
         <PageHeader title={chapter.title} subtitle={chapter.intro} accent="hindi" />
 
         <div className="flex flex-wrap gap-3">
-          <Button asChild variant="outline" size="lg" className={chapterNavButtonClass}>
-            <Link to={chapter.backTo}>{chapter.backLabel}</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className={chapterNavButtonClass}>
-            <Link to="/study-corner">पुस्तकालय / Library</Link>
-          </Button>
+          <Link to={chapter.backTo} className={navLinkClass("outline")}>
+            {chapter.backLabel}
+          </Link>
+          <Link to="/study-corner" className={navLinkClass("outline")}>
+            पुस्तकालय / Library
+          </Link>
         </div>
 
         {chapter.sections.map((section) => (
@@ -149,21 +153,19 @@ export function StudyChapterPage({ chapter }: StudyChapterPageProps) {
             </CardHeader>
             <CardContent className="flex flex-col gap-3 sm:flex-row">
               {chapter.chapterNav.prev ? (
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className={`${chapterNavButtonClass} flex-1`}
+                <Link
+                  to={chapter.chapterNav.prev.href}
+                  className={navLinkClass("outline", "flex-1")}
                 >
-                  <Link to={chapter.chapterNav.prev.href}>{chapter.chapterNav.prev.label}</Link>
-                </Button>
+                  {chapter.chapterNav.prev.label}
+                </Link>
               ) : (
                 <div className="flex-1" />
               )}
               {chapter.chapterNav.next ? (
-                <Button asChild size="lg" className={`${chapterNavButtonClass} flex-1`}>
-                  <Link to={chapter.chapterNav.next.href}>{chapter.chapterNav.next.label}</Link>
-                </Button>
+                <Link to={chapter.chapterNav.next.href} className={navLinkClass("default", "flex-1")}>
+                  {chapter.chapterNav.next.label}
+                </Link>
               ) : null}
             </CardContent>
           </Card>
@@ -180,9 +182,12 @@ export function StudyChapterPage({ chapter }: StudyChapterPageProps) {
               </p>
             </CardHeader>
             <CardContent>
-              <Button asChild size="lg" className={`${chapterNavButtonClass} w-full sm:w-auto`}>
-                <Link to={chapter.nextStep.href}>{chapter.nextStep.buttonLabel}</Link>
-              </Button>
+              <Link
+                to={chapter.nextStep.href}
+                className={navLinkClass("default", "w-full sm:w-auto")}
+              >
+                {chapter.nextStep.buttonLabel}
+              </Link>
             </CardContent>
           </Card>
         )}

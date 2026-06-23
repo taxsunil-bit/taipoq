@@ -1,7 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader } from "@/components/PageShell";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
+const navLinkClass = (variant: "default" | "outline" = "default", extra?: string) =>
+  cn(
+    buttonVariants({ variant, size: "lg" }),
+    "min-h-11 h-auto whitespace-normal break-words py-3 text-center",
+    extra,
+  );
 
 export const Route = createFileRoute("/study-corner/quiz-result")({
   head: () => ({
@@ -31,12 +39,15 @@ function QuizResult() {
         </Card>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Button asChild size="lg" className="min-h-11">
-            <Link to="/study-corner">पुस्तकालय / Library</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="min-h-11">
-            <Link to="/study-corner/general-awareness/chapter-1">फिर से पढ़ें</Link>
-          </Button>
+          <Link to="/study-corner" className={navLinkClass("default")}>
+            पुस्तकालय / Library
+          </Link>
+          <Link
+            to="/study-corner/general-awareness/chapter-1"
+            className={navLinkClass("outline")}
+          >
+            फिर से पढ़ें
+          </Link>
         </div>
       </div>
     </PageShell>

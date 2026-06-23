@@ -1,8 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader } from "@/components/PageShell";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { STUDY_CORNER_LANDING, STUDY_COURSES } from "@/content/studyCornerContent";
+import { cn } from "@/lib/utils";
+
+const navLinkClass = (extra?: string) =>
+  cn(
+    buttonVariants({ size: "lg" }),
+    "min-h-11 h-auto whitespace-normal break-words py-3 text-center",
+    extra,
+  );
 
 export const Route = createFileRoute("/study-corner/")({
   head: () => ({
@@ -54,9 +62,9 @@ function StudyCornerLanding() {
               </CardHeader>
               <CardContent>
                 {course.available && course.href ? (
-                  <Button asChild size="lg" className="min-h-11 w-full sm:w-auto">
-                    <Link to={course.href}>{course.startLabel}</Link>
-                  </Button>
+                  <Link to={course.href} className={navLinkClass("w-full sm:w-auto")}>
+                    {course.startLabel}
+                  </Link>
                 ) : (
                   <Button
                     disabled

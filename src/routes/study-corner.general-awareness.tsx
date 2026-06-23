@@ -1,8 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader } from "@/components/PageShell";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GA_COURSE } from "@/content/studyCornerContent";
+import { cn } from "@/lib/utils";
+
+const navLinkClass = (variant: "default" | "outline" = "default", extra?: string) =>
+  cn(
+    buttonVariants({ variant, size: "lg" }),
+    "min-h-11 h-auto whitespace-normal break-words py-3 text-center",
+    extra,
+  );
 
 export const Route = createFileRoute("/study-corner/general-awareness")({
   head: () => ({
@@ -23,9 +31,9 @@ function GeneralAwarenessCourse() {
       <div className="mx-auto max-w-3xl space-y-6 font-hindi">
         <PageHeader title={GA_COURSE.title} subtitle={GA_COURSE.subtitle} accent="hindi" />
 
-        <Button asChild variant="outline" size="lg" className="min-h-11">
-          <Link to="/study-corner">← पुस्तकालय / Library</Link>
-        </Button>
+        <Link to="/study-corner" className={navLinkClass("outline")}>
+          ← पुस्तकालय / Library
+        </Link>
 
         <Card className="border-primary/20 bg-primary/5">
           <CardHeader>
@@ -56,9 +64,9 @@ function GeneralAwarenessCourse() {
                         </p>
                       )}
                     </div>
-                    <Button asChild size="lg" className="min-h-11 shrink-0">
-                      <Link to={ch.href}>{ch.buttonLabel}</Link>
-                    </Button>
+                    <Link to={ch.href} className={navLinkClass("default", "shrink-0")}>
+                      {ch.buttonLabel}
+                    </Link>
                   </CardContent>
                 </Card>
               </li>

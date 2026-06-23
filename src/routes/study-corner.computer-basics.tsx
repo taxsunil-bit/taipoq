@@ -1,8 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader } from "@/components/PageShell";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CB_COURSE } from "@/content/studyCornerContent";
+import { cn } from "@/lib/utils";
+
+const navLinkClass = (variant: "default" | "outline" = "default", extra?: string) =>
+  cn(
+    buttonVariants({ variant, size: "lg" }),
+    "min-h-11 h-auto whitespace-normal break-words py-3 text-center",
+    extra,
+  );
 
 export const Route = createFileRoute("/study-corner/computer-basics")({
   head: () => ({
@@ -27,12 +35,12 @@ function ComputerBasicsCourse() {
         <PageHeader title={CB_COURSE.title} subtitle={CB_COURSE.subtitle} accent="hindi" />
 
         <div className="flex flex-wrap gap-3">
-          <Button asChild variant="outline" size="lg" className="min-h-11">
-            <Link to="/study-corner">← पुस्तकालय / Library</Link>
-          </Button>
-          <Button asChild size="lg" className="min-h-11">
-            <Link to={CB_COURSE.firstChapterHref}>{CB_COURSE.firstChapterButtonLabel}</Link>
-          </Button>
+          <Link to="/study-corner" className={navLinkClass("outline")}>
+            ← पुस्तकालय / Library
+          </Link>
+          <Link to={CB_COURSE.firstChapterHref} className={navLinkClass("default")}>
+            {CB_COURSE.firstChapterButtonLabel}
+          </Link>
         </div>
 
         <Card className="border-primary/20 bg-primary/5">
@@ -60,9 +68,9 @@ function ComputerBasicsCourse() {
                       </p>
                     </div>
                     {ch.available && "href" in ch ? (
-                      <Button asChild size="lg" className="min-h-11 shrink-0">
-                        <Link to={ch.href}>{ch.buttonLabel}</Link>
-                      </Button>
+                      <Link to={ch.href} className={navLinkClass("default", "shrink-0")}>
+                        {ch.buttonLabel}
+                      </Link>
                     ) : (
                       <Button disabled size="lg" variant="secondary" className="min-h-11 shrink-0">
                         {ch.buttonLabel}
