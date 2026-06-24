@@ -1,7 +1,9 @@
 import { upcomingExamsFallback } from "@/data/upcomingExamsFallback";
 import type { UpcomingExam, UpcomingExamsPayload } from "@/types/upcomingExams";
 
-const DATA_URL = import.meta.env.VITE_UPCOMING_EXAMS_DATA_URL as string | undefined;
+const DATA_URL =
+  (import.meta.env.VITE_UPCOMING_EXAMS_DATA_URL as string | undefined)?.trim() ||
+  "/data/upcoming-exams.json";
 
 const REQUIRED_FIELDS = [
   "id",
@@ -158,14 +160,7 @@ export type UpcomingExamsLoadResult = {
 };
 
 export async function loadUpcomingExams(): Promise<UpcomingExamsLoadResult> {
-  const url = DATA_URL?.trim();
-  if (!url) {
-    return {
-      payload: upcomingExamsFallback,
-      fromFallback: true,
-      error: "VITE_UPCOMING_EXAMS_DATA_URL is not configured",
-    };
-  }
+  const url = DATA_URL;
 
   try {
     const response = await fetch(url, {
