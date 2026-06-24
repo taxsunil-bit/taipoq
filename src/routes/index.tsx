@@ -148,6 +148,27 @@ function Home() {
           </div>
         </Link>
 
+        {/* आगामी परीक्षाएँ / Upcoming Exams */}
+        <Link
+          to="/upcoming-exams"
+          className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
+        >
+          <div>
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              Upcoming Exams
+            </div>
+            <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              आगामी परीक्षाएँ
+            </h2>
+            <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
+              Central और उत्तर भारत की शासकीय सेवा परीक्षाओं की मुख्य सूचना और official links।
+            </p>
+          </div>
+          <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-primary/30 bg-primary/10 px-5 py-3 font-hindi text-base font-semibold text-primary transition-transform active:scale-95 sm:w-auto">
+            परीक्षाएँ देखें
+          </div>
+        </Link>
+
         {/* Speed Test tile */}
         <Link
           to="/test"
@@ -236,6 +257,7 @@ const FEATURES = [
 ] as const;
 
 const SECONDARY = [
+  { to: "/upcoming-exams" as const, label: "आगामी परीक्षाएँ" },
   { to: "/study-corner" as const, label: "पुस्तकालय / Library" },
   { to: "/english/lessons" as const, label: "English Lessons" },
   { to: "/hindi/lessons" as const, label: "Hindi Lessons" },
