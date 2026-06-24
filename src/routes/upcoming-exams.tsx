@@ -242,6 +242,8 @@ function ExamCard({ exam }: { exam: UpcomingExam }) {
   const prepareLabel = getPrepareLinkLabel(exam.prepareLink);
   const actionButtonClass =
     "h-auto min-h-11 max-w-full whitespace-normal break-words text-center";
+  const officialSourceButtonClass =
+    "relative overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md animate-[official-source-pulse_3s_ease-in-out_infinite] motion-reduce:animate-none";
 
   return (
     <li>
@@ -269,11 +271,18 @@ function ExamCard({ exam }: { exam: UpcomingExam }) {
           </dl>
 
           <div className="flex flex-wrap gap-3 pt-1">
+            <p className="basis-full text-xs leading-relaxed text-muted-foreground">
+              Final details official website पर check करें।
+            </p>
             <a
               href={exam.officialSourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }), actionButtonClass)}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                actionButtonClass,
+                officialSourceButtonClass,
+              )}
             >
               Official Source — {exam.officialSourceLabel}
             </a>
