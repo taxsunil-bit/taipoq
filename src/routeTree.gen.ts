@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UpcomingExamsRouteImport } from './routes/upcoming-exams'
 import { Route as TypingTipsRouteImport } from './routes/typing-tips'
 import { Route as TypingStartGuideRouteImport } from './routes/typing-start-guide'
 import { Route as TestRouteImport } from './routes/test'
@@ -53,6 +54,11 @@ import { Route as StudyCornerComputerBasicsChapter2RouteImport } from './routes/
 import { Route as StudyCornerComputerBasicsChapter1RouteImport } from './routes/study-corner.computer-basics.chapter-1'
 import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-paragraph.$id'
 
+const UpcomingExamsRoute = UpcomingExamsRouteImport.update({
+  id: '/upcoming-exams',
+  path: '/upcoming-exams',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TypingTipsRoute = TypingTipsRouteImport.update({
   id: '/typing-tips',
   path: '/typing-tips',
@@ -302,6 +308,7 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
+  '/upcoming-exams': typeof UpcomingExamsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -343,6 +350,7 @@ export interface FileRoutesByTo {
   '/test': typeof TestRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
+  '/upcoming-exams': typeof UpcomingExamsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -387,6 +395,7 @@ export interface FileRoutesById {
   '/test': typeof TestRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
+  '/upcoming-exams': typeof UpcomingExamsRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -434,6 +443,7 @@ export interface FileRouteTypes {
     | '/test'
     | '/typing-start-guide'
     | '/typing-tips'
+    | '/upcoming-exams'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -475,6 +485,7 @@ export interface FileRouteTypes {
     | '/test'
     | '/typing-start-guide'
     | '/typing-tips'
+    | '/upcoming-exams'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -518,6 +529,7 @@ export interface FileRouteTypes {
     | '/test'
     | '/typing-start-guide'
     | '/typing-tips'
+    | '/upcoming-exams'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -564,10 +576,18 @@ export interface RootRouteChildren {
   TestRoute: typeof TestRoute
   TypingStartGuideRoute: typeof TypingStartGuideRoute
   TypingTipsRoute: typeof TypingTipsRoute
+  UpcomingExamsRoute: typeof UpcomingExamsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upcoming-exams': {
+      id: '/upcoming-exams'
+      path: '/upcoming-exams'
+      fullPath: '/upcoming-exams'
+      preLoaderRoute: typeof UpcomingExamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/typing-tips': {
       id: '/typing-tips'
       path: '/typing-tips'
@@ -1014,6 +1034,7 @@ const rootRouteChildren: RootRouteChildren = {
   TestRoute: TestRoute,
   TypingStartGuideRoute: TypingStartGuideRoute,
   TypingTipsRoute: TypingTipsRoute,
+  UpcomingExamsRoute: UpcomingExamsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

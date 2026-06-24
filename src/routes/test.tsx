@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { z } from "zod";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +12,9 @@ import { englishLessons, hindiLessons } from "@/lib/sample-data";
 import { getActiveParagraphs, saveResult } from "@/lib/storage";
 
 export const Route = createFileRoute("/test")({
+  validateSearch: z.object({
+    language: z.enum(["english", "hindi"]).optional(),
+  }),
   head: () => ({ meta: [{ title: "Typing Test — TAIPOQ" }] }),
   component: TestPage,
 });
@@ -27,8 +31,11 @@ const TARGETS = [
 
 function TestPage() {
   const navigate = useNavigate();
+  const { language } = Route.useSearch();
   const [started, setStarted] = useState(false);
-  const [lang, setLang] = useState<Lang>("English");
+  const [lang, setLang] = useState<Lang>(() =>
+    language === "hindi" ? "Hindi" : language === "english" ? "English" : "English",
+  );
   const [hindiMode, setHindiMode] = useState<HindiMode>("Remington");
   const [duration, setDuration] = useState("3");
   const [difficulty, setDifficulty] = useState<"Beginner" | "Intermediate" | "Advanced" | "Legal Practice">("Intermediate");
