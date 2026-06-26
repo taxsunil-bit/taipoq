@@ -48,6 +48,7 @@ import { Route as StudyCornerGeneralAwarenessChapter4RouteImport } from './route
 import { Route as StudyCornerGeneralAwarenessChapter3RouteImport } from './routes/study-corner.general-awareness.chapter-3'
 import { Route as StudyCornerGeneralAwarenessChapter2RouteImport } from './routes/study-corner.general-awareness.chapter-2'
 import { Route as StudyCornerGeneralAwarenessChapter1RouteImport } from './routes/study-corner.general-awareness.chapter-1'
+import { Route as StudyCornerComputerBasicsWordBasicKnowledgeRouteImport } from './routes/study-corner.computer-basics.word-basic-knowledge'
 import { Route as StudyCornerComputerBasicsExcelBasicKnowledgeRouteImport } from './routes/study-corner.computer-basics.excel-basic-knowledge'
 import { Route as StudyCornerComputerBasicsChapter5RouteImport } from './routes/study-corner.computer-basics.chapter-5'
 import { Route as StudyCornerComputerBasicsChapter4RouteImport } from './routes/study-corner.computer-basics.chapter-4'
@@ -261,6 +262,12 @@ const StudyCornerGeneralAwarenessChapter1Route =
     path: '/chapter-1',
     getParentRoute: () => StudyCornerGeneralAwarenessRoute,
   } as any)
+const StudyCornerComputerBasicsWordBasicKnowledgeRoute =
+  StudyCornerComputerBasicsWordBasicKnowledgeRouteImport.update({
+    id: '/word-basic-knowledge',
+    path: '/word-basic-knowledge',
+    getParentRoute: () => StudyCornerComputerBasicsRoute,
+  } as any)
 const StudyCornerComputerBasicsExcelBasicKnowledgeRoute =
   StudyCornerComputerBasicsExcelBasicKnowledgeRouteImport.update({
     id: '/excel-basic-knowledge',
@@ -342,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/study-corner/computer-basics/chapter-4': typeof StudyCornerComputerBasicsChapter4Route
   '/study-corner/computer-basics/chapter-5': typeof StudyCornerComputerBasicsChapter5Route
   '/study-corner/computer-basics/excel-basic-knowledge': typeof StudyCornerComputerBasicsExcelBasicKnowledgeRoute
+  '/study-corner/computer-basics/word-basic-knowledge': typeof StudyCornerComputerBasicsWordBasicKnowledgeRoute
   '/study-corner/general-awareness/chapter-1': typeof StudyCornerGeneralAwarenessChapter1Route
   '/study-corner/general-awareness/chapter-2': typeof StudyCornerGeneralAwarenessChapter2Route
   '/study-corner/general-awareness/chapter-3': typeof StudyCornerGeneralAwarenessChapter3Route
@@ -384,6 +392,7 @@ export interface FileRoutesByTo {
   '/study-corner/computer-basics/chapter-4': typeof StudyCornerComputerBasicsChapter4Route
   '/study-corner/computer-basics/chapter-5': typeof StudyCornerComputerBasicsChapter5Route
   '/study-corner/computer-basics/excel-basic-knowledge': typeof StudyCornerComputerBasicsExcelBasicKnowledgeRoute
+  '/study-corner/computer-basics/word-basic-knowledge': typeof StudyCornerComputerBasicsWordBasicKnowledgeRoute
   '/study-corner/general-awareness/chapter-1': typeof StudyCornerGeneralAwarenessChapter1Route
   '/study-corner/general-awareness/chapter-2': typeof StudyCornerGeneralAwarenessChapter2Route
   '/study-corner/general-awareness/chapter-3': typeof StudyCornerGeneralAwarenessChapter3Route
@@ -433,6 +442,7 @@ export interface FileRoutesById {
   '/study-corner/computer-basics/chapter-4': typeof StudyCornerComputerBasicsChapter4Route
   '/study-corner/computer-basics/chapter-5': typeof StudyCornerComputerBasicsChapter5Route
   '/study-corner/computer-basics/excel-basic-knowledge': typeof StudyCornerComputerBasicsExcelBasicKnowledgeRoute
+  '/study-corner/computer-basics/word-basic-knowledge': typeof StudyCornerComputerBasicsWordBasicKnowledgeRoute
   '/study-corner/general-awareness/chapter-1': typeof StudyCornerGeneralAwarenessChapter1Route
   '/study-corner/general-awareness/chapter-2': typeof StudyCornerGeneralAwarenessChapter2Route
   '/study-corner/general-awareness/chapter-3': typeof StudyCornerGeneralAwarenessChapter3Route
@@ -483,6 +493,7 @@ export interface FileRouteTypes {
     | '/study-corner/computer-basics/chapter-4'
     | '/study-corner/computer-basics/chapter-5'
     | '/study-corner/computer-basics/excel-basic-knowledge'
+    | '/study-corner/computer-basics/word-basic-knowledge'
     | '/study-corner/general-awareness/chapter-1'
     | '/study-corner/general-awareness/chapter-2'
     | '/study-corner/general-awareness/chapter-3'
@@ -525,6 +536,7 @@ export interface FileRouteTypes {
     | '/study-corner/computer-basics/chapter-4'
     | '/study-corner/computer-basics/chapter-5'
     | '/study-corner/computer-basics/excel-basic-knowledge'
+    | '/study-corner/computer-basics/word-basic-knowledge'
     | '/study-corner/general-awareness/chapter-1'
     | '/study-corner/general-awareness/chapter-2'
     | '/study-corner/general-awareness/chapter-3'
@@ -573,6 +585,7 @@ export interface FileRouteTypes {
     | '/study-corner/computer-basics/chapter-4'
     | '/study-corner/computer-basics/chapter-5'
     | '/study-corner/computer-basics/excel-basic-knowledge'
+    | '/study-corner/computer-basics/word-basic-knowledge'
     | '/study-corner/general-awareness/chapter-1'
     | '/study-corner/general-awareness/chapter-2'
     | '/study-corner/general-awareness/chapter-3'
@@ -880,6 +893,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudyCornerGeneralAwarenessChapter1RouteImport
       parentRoute: typeof StudyCornerGeneralAwarenessRoute
     }
+    '/study-corner/computer-basics/word-basic-knowledge': {
+      id: '/study-corner/computer-basics/word-basic-knowledge'
+      path: '/word-basic-knowledge'
+      fullPath: '/study-corner/computer-basics/word-basic-knowledge'
+      preLoaderRoute: typeof StudyCornerComputerBasicsWordBasicKnowledgeRouteImport
+      parentRoute: typeof StudyCornerComputerBasicsRoute
+    }
     '/study-corner/computer-basics/excel-basic-knowledge': {
       id: '/study-corner/computer-basics/excel-basic-knowledge'
       path: '/excel-basic-knowledge'
@@ -982,6 +1002,7 @@ interface StudyCornerComputerBasicsRouteChildren {
   StudyCornerComputerBasicsChapter4Route: typeof StudyCornerComputerBasicsChapter4Route
   StudyCornerComputerBasicsChapter5Route: typeof StudyCornerComputerBasicsChapter5Route
   StudyCornerComputerBasicsExcelBasicKnowledgeRoute: typeof StudyCornerComputerBasicsExcelBasicKnowledgeRoute
+  StudyCornerComputerBasicsWordBasicKnowledgeRoute: typeof StudyCornerComputerBasicsWordBasicKnowledgeRoute
   StudyCornerComputerBasicsIndexRoute: typeof StudyCornerComputerBasicsIndexRoute
 }
 
@@ -999,6 +1020,8 @@ const StudyCornerComputerBasicsRouteChildren: StudyCornerComputerBasicsRouteChil
       StudyCornerComputerBasicsChapter5Route,
     StudyCornerComputerBasicsExcelBasicKnowledgeRoute:
       StudyCornerComputerBasicsExcelBasicKnowledgeRoute,
+    StudyCornerComputerBasicsWordBasicKnowledgeRoute:
+      StudyCornerComputerBasicsWordBasicKnowledgeRoute,
     StudyCornerComputerBasicsIndexRoute: StudyCornerComputerBasicsIndexRoute,
   }
 
