@@ -7,6 +7,7 @@ const links = [
   { to: "/hindi", label: "Hindi" },
   { to: "/test", label: "Test" },
   { to: "/upcoming-exams", label: "आगामी परीक्षाएँ" },
+  { to: "/word-learning", label: "शब्द अभ्यास" },
   { to: "/study-corner", label: "पुस्तकालय / Library" },
   { to: "/progress", label: "Progress" },
   { to: "/login", label: "Login" },
@@ -21,6 +22,7 @@ export const INFO_LINKS = [
   { to: "/disclaimer" as const, label: "Disclaimer" },
   { to: "/typing-tips" as const, label: "Typing Tips" },
   { to: "/upcoming-exams" as const, label: "आगामी परीक्षाएँ" },
+  { to: "/word-learning" as const, label: "शब्द अभ्यास / Word Learning" },
   { to: "/study-corner" as const, label: "पुस्तकालय / Library" },
 ] as const;
 

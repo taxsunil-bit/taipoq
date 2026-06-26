@@ -124,6 +124,27 @@ function Home() {
           </div>
         </Link>
 
+        {/* शब्द अभ्यास / Word Learning */}
+        <Link
+          to="/word-learning"
+          className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
+        >
+          <div>
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              Word Learning
+            </div>
+            <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              शब्द अभ्यास / Word Learning
+            </h2>
+            <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
+              English typing और Hindi typing के लिए उपयोगी शब्दों का अभ्यास।
+            </p>
+          </div>
+          <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 font-hindi text-base font-semibold text-amber-700 transition-transform active:scale-95 dark:text-amber-300 sm:w-auto">
+            अभ्यास आरम्भ करें
+          </div>
+        </Link>
+
         {/* पुस्तकालय / Library */}
         <Link
           to="/study-corner"
@@ -225,7 +246,7 @@ function Home() {
       <JobTypingSpeedGuide variant="compact" />
 
       {/* Secondary nav strip */}
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
         {SECONDARY.map((s) => (
           <Link
             key={s.to}
@@ -258,6 +279,7 @@ const FEATURES = [
 
 const SECONDARY = [
   { to: "/upcoming-exams" as const, label: "आगामी परीक्षाएँ" },
+  { to: "/word-learning" as const, label: "शब्द अभ्यास / Word Learning" },
   { to: "/study-corner" as const, label: "पुस्तकालय / Library" },
   { to: "/english/lessons" as const, label: "English Lessons" },
   { to: "/hindi/lessons" as const, label: "Hindi Lessons" },

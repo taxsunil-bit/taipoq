@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WordLearningRouteImport } from './routes/word-learning'
 import { Route as UpcomingExamsRouteImport } from './routes/upcoming-exams'
 import { Route as TypingTipsRouteImport } from './routes/typing-tips'
 import { Route as TypingStartGuideRouteImport } from './routes/typing-start-guide'
@@ -55,6 +56,11 @@ import { Route as StudyCornerComputerBasicsChapter2RouteImport } from './routes/
 import { Route as StudyCornerComputerBasicsChapter1RouteImport } from './routes/study-corner.computer-basics.chapter-1'
 import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-paragraph.$id'
 
+const WordLearningRoute = WordLearningRouteImport.update({
+  id: '/word-learning',
+  path: '/word-learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UpcomingExamsRoute = UpcomingExamsRouteImport.update({
   id: '/upcoming-exams',
   path: '/upcoming-exams',
@@ -316,6 +322,7 @@ export interface FileRoutesByFullPath {
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
+  '/word-learning': typeof WordLearningRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -359,6 +366,7 @@ export interface FileRoutesByTo {
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
+  '/word-learning': typeof WordLearningRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -405,6 +413,7 @@ export interface FileRoutesById {
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
+  '/word-learning': typeof WordLearningRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
   '/english/practice': typeof EnglishPracticeRoute
@@ -454,6 +463,7 @@ export interface FileRouteTypes {
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
+    | '/word-learning'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -497,6 +507,7 @@ export interface FileRouteTypes {
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
+    | '/word-learning'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -542,6 +553,7 @@ export interface FileRouteTypes {
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
+    | '/word-learning'
     | '/admin/add-paragraph'
     | '/english/lessons'
     | '/english/practice'
@@ -590,10 +602,18 @@ export interface RootRouteChildren {
   TypingStartGuideRoute: typeof TypingStartGuideRoute
   TypingTipsRoute: typeof TypingTipsRoute
   UpcomingExamsRoute: typeof UpcomingExamsRoute
+  WordLearningRoute: typeof WordLearningRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/word-learning': {
+      id: '/word-learning'
+      path: '/word-learning'
+      fullPath: '/word-learning'
+      preLoaderRoute: typeof WordLearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/upcoming-exams': {
       id: '/upcoming-exams'
       path: '/upcoming-exams'
@@ -1058,6 +1078,7 @@ const rootRouteChildren: RootRouteChildren = {
   TypingStartGuideRoute: TypingStartGuideRoute,
   TypingTipsRoute: TypingTipsRoute,
   UpcomingExamsRoute: UpcomingExamsRoute,
+  WordLearningRoute: WordLearningRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
