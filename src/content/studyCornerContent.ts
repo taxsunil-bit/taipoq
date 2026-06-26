@@ -19,6 +19,7 @@ export type StudyChapterHref =
   | "/study-corner/general-awareness/chapter-4"
   | "/study-corner/general-awareness/chapter-5"
   | "/study-corner/general-awareness/chapter-6"
+  | "/study-corner/general-awareness/model-test-01"
   | "/study-corner/computer-basics"
   | "/study-corner/computer-basics/chapter-1"
   | "/study-corner/computer-basics/chapter-2"
@@ -70,15 +71,27 @@ export const STUDY_CORNER_LANDING = {
   },
 } as const;
 
+export const GA_MODEL_TEST = {
+  titleHi: "सामान्य जागरूकता मॉडल अभ्यास - 01",
+  titleEn: "General Awareness Model Test - 01",
+  meta: "50 प्रश्न • 40 मिनट • 100 अंक",
+  href: "/study-corner/general-awareness/model-test-01" as const,
+  buttonLabel: "अभ्यास आरम्भ करें",
+  sourceNote:
+    "यह अभ्यास-सामग्री पूर्व वर्षों की परीक्षाओं की प्रवृत्ति के आधार पर TAIPOQ द्वारा तैयार की गई मौलिक सामग्री है।",
+} as const;
+
 export const STUDY_COURSES = [
   {
     id: "general-awareness",
-    title: "सामान्य जागरूकता / General Awareness",
+    title: "सामान्य जागरूकता अभ्यास",
+    titleEn: "General Awareness Practice",
     description:
-      "देश, समाज, संविधान, इतिहास, भूगोल, विज्ञान, खेल और Current Affairs की मूलभूत तैयारी।",
+      "SSC, रेलवे, CDS, NDA और उत्तर प्रदेश परीक्षाओं की प्रवृत्ति पर आधारित online अभ्यास।",
+    meta: "50 प्रश्न • 40 मिनट • 100 अंक",
     href: "/study-corner/general-awareness" as const,
     available: true,
-    startLabel: "आरम्भ करें",
+    startLabel: "अभ्यास आरम्भ करें",
   },
   {
     id: "computer-basics",

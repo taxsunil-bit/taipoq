@@ -59,6 +59,9 @@ function StudyCornerLanding() {
                 <CardDescription className="text-base leading-relaxed">
                   {course.description}
                 </CardDescription>
+                {"meta" in course && course.meta ? (
+                  <p className="mt-2 text-sm font-medium text-muted-foreground">{course.meta}</p>
+                ) : null}
               </CardHeader>
               <CardContent>
                 {course.available && course.href ? (
