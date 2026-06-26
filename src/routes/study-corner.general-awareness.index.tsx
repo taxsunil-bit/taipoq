@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/study-corner/general-awareness/")({
   head: () => ({
     meta: [
-      { title: "सामान्य जागरूकता अभ्यास — TAIPOQ" },
+      { title: "सामान्य जागरूकता अभ्यास / General Awareness Practice — TAIPOQ" },
       {
         name: "description",
         content:
@@ -24,9 +24,8 @@ function GeneralAwarenessLanding() {
         <div className="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
           <header className="space-y-2">
             <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-              सामान्य जागरूकता अभ्यास
+              सामान्य जागरूकता अभ्यास / General Awareness Practice
             </h1>
-            <p className="text-base text-slate-600 sm:text-lg">General Awareness Practice</p>
             <p className="max-w-3xl text-base leading-relaxed text-slate-700 sm:text-lg">
               SSC, रेलवे, CDS, NDA और उत्तर प्रदेश परीक्षाओं की प्रवृत्ति पर आधारित सरल online
               अभ्यास।

@@ -84,7 +84,7 @@ export const GA_MODEL_TEST = {
 export const STUDY_COURSES = [
   {
     id: "general-awareness",
-    title: "सामान्य जागरूकता अभ्यास",
+    title: "सामान्य जागरूकता अभ्यास / General Awareness Practice",
     titleEn: "General Awareness Practice",
     description:
       "SSC, रेलवे, CDS, NDA और उत्तर प्रदेश परीक्षाओं की प्रवृत्ति पर आधारित online अभ्यास।",
