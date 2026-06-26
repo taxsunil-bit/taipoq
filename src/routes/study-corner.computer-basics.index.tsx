@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EXCEL_BASICS_MODULE } from "@/content/excelBasicKnowledgeContent";
 import { CB_COURSE } from "@/content/studyCornerContent";
 import { cn } from "@/lib/utils";
 
@@ -81,6 +82,28 @@ function ComputerBasicsCourse() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section aria-labelledby="cb-excel-module-heading">
+          <h2 id="cb-excel-module-heading" className="mb-4 text-xl font-bold text-foreground">
+            विशेष Module
+          </h2>
+          <Card className="border-primary/30 bg-primary/5 transition-colors hover:border-primary/50">
+            <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-muted-foreground">{EXCEL_BASICS_MODULE.titleHindi}</p>
+                <p className="mt-1 text-base font-semibold leading-snug text-foreground md:text-lg">
+                  {EXCEL_BASICS_MODULE.title}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {EXCEL_BASICS_MODULE.description}
+                </p>
+              </div>
+              <Link to={EXCEL_BASICS_MODULE.href} className={navLinkClass("default", "shrink-0")}>
+                {EXCEL_BASICS_MODULE.buttonLabel}
+              </Link>
+            </CardContent>
+          </Card>
         </section>
       </div>
     </PageShell>

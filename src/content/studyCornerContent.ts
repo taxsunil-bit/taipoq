@@ -24,7 +24,8 @@ export type StudyChapterHref =
   | "/study-corner/computer-basics/chapter-2"
   | "/study-corner/computer-basics/chapter-3"
   | "/study-corner/computer-basics/chapter-4"
-  | "/study-corner/computer-basics/chapter-5";
+  | "/study-corner/computer-basics/chapter-5"
+  | "/study-corner/computer-basics/excel-basic-knowledge";
 
 export type StudyChapter = {
   id: string;
@@ -82,7 +83,7 @@ export const STUDY_COURSES = [
     id: "computer-basics",
     title: "कम्प्यूटर का मूलभूत ज्ञान / Computer Basics",
     description:
-      "कम्प्यूटर, Hardware, Software, Input-Output और परीक्षा में पूछे जाने वाले सामान्य प्रश्न।",
+      "कम्प्यूटर, Hardware, Software, Input-Output, Excel / Spreadsheet और परीक्षा में पूछे जाने वाले सामान्य प्रश्न।",
     href: "/study-corner/computer-basics" as const,
     available: true,
     startLabel: "आरम्भ करें",
@@ -166,7 +167,7 @@ export const CB_COURSE = {
   title: "कम्प्यूटर का मूलभूत ज्ञान / Computer Basics",
   subtitle: "नौकरी परीक्षाओं और दैनिक कार्यों के लिए कम्प्यूटर ज्ञान की आसान तैयारी।",
   intro:
-    "कम्प्यूटर का मूलभूत ज्ञान नौकरी परीक्षाओं और दैनिक कार्यों के लिए अत्यधिक उपयोगी है। इस पाठ्यक्रम में कम्प्यूटर, Hardware, Software, Input, Output, Memory, Storage, Internet और Email की जानकारी सरल रूप में मिलेगी।",
+    "कम्प्यूटर का मूलभूत ज्ञान नौकरी परीक्षाओं और दैनिक कार्यों के लिए अत्यधिक उपयोगी है। इस पाठ्यक्रम में कम्प्यूटर, Hardware, Software, Input, Output, Memory, Storage, Internet, Email और Excel / Spreadsheet की जानकारी सरल रूप में मिलेगी।",
   firstChapterHref: "/study-corner/computer-basics/chapter-1" as const,
   firstChapterButtonLabel: "पहला अध्याय पढ़ें",
   chapters: [
