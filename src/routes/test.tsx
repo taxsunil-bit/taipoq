@@ -1,11 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { z } from "zod";
+import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
+import { MobileTestPrepNotice } from "@/components/MobileTestPrepNotice";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { SoundSettings } from "@/components/SoundSettings";
 import { TypingScreen, type FinalResult } from "@/components/TypingScreen";
 import { englishLessons, hindiLessons } from "@/lib/sample-data";
@@ -114,10 +115,16 @@ function TestPage() {
   return (
     <PageShell>
       <PageHeader title="Typing Test" subtitle="Configure your test, then begin." />
-      <div className="mx-auto mb-6 max-w-3xl">
+      <MobileTestPrepNotice
+        practiceTo={lang === "Hindi" ? "/hindi/practice" : "/english/practice"}
+        onContinue={() =>
+          document.getElementById("test-configuration")?.scrollIntoView({ behavior: "smooth" })
+        }
+      />
+      <div className="mx-auto mb-6 hidden max-w-3xl md:block">
         <JobTypingSpeedGuide variant="full" />
       </div>
-      <Card className="mx-auto max-w-3xl">
+      <Card id="test-configuration" className="mx-auto max-w-3xl scroll-mt-24">
         <CardHeader>
           <CardTitle>Test Configuration</CardTitle>
         </CardHeader>
@@ -150,7 +157,7 @@ function TestPage() {
                     type="button"
                     onClick={() => setTargetLabel(t.label)}
                     aria-pressed={active}
-                    className={`rounded-md border px-3 py-2 text-left text-sm transition-colors ${
+                    className={`min-h-11 rounded-md border px-3 py-2 text-left text-sm transition-colors md:min-h-0 ${
                       active
                         ? "border-primary bg-primary/15 ring-2 ring-primary"
                         : "border-border bg-card hover:bg-accent"
@@ -184,8 +191,15 @@ function TestPage() {
             <Group value={highlight} onChange={(v) => setHighlight(v as typeof highlight)} options={["On", "Off"]} />
           </Field>
           <SoundSettings />
-          <Button size="lg" onClick={() => setStarted(true)} disabled={inactive}>
-            {inactive ? "Mode Coming Soon" : "Start Test"}
+          <Button size="lg" className="min-h-11 w-full md:w-auto" onClick={() => setStarted(true)} disabled={inactive}>
+            {inactive ? (
+              "Mode Coming Soon"
+            ) : (
+              <>
+                <span className="md:hidden">Desktop Speed Test — आरम्भ करें</span>
+                <span className="hidden md:inline">Start Test</span>
+              </>
+            )}
           </Button>
         </CardContent>
       </Card>
@@ -209,7 +223,7 @@ function Group({ value, onChange, options }: { value: string; onChange: (v: stri
         <button
           key={o}
           onClick={() => onChange(o)}
-          className={`rounded-md border px-3 py-2 text-sm transition-colors ${
+          className={`min-h-11 rounded-md border px-3 py-2 text-sm transition-colors md:min-h-0 ${
             value === o ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:bg-accent"
           }`}
         >

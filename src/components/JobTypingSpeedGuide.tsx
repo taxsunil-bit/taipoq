@@ -20,12 +20,22 @@ const PRO_LEVEL: SpeedLevel = {
   text: "Fast typing aur serious data-entry practice ke liye.",
 };
 
-export function JobTypingSpeedGuide({ variant = "full" }: { variant?: "compact" | "full" }) {
+export function JobTypingSpeedGuide({
+  variant = "full",
+  testLinkLabel = "Take Speed Test",
+  showTestLink = true,
+  className,
+}: {
+  variant?: "compact" | "full";
+  testLinkLabel?: string;
+  showTestLink?: boolean;
+  className?: string;
+}) {
   const levels = variant === "compact" ? CORE_LEVELS : [...CORE_LEVELS, PRO_LEVEL];
   const wrapperClass =
     variant === "compact"
-      ? "bento-tile mt-6 overflow-hidden p-6 md:p-8"
-      : "rounded-3xl border border-border bg-card/60 p-6 md:p-8";
+      ? cn("bento-tile overflow-hidden p-6 md:p-8", className)
+      : cn("rounded-3xl border border-border bg-card/60 p-6 md:p-8", className);
 
   return (
     <section className={wrapperClass} aria-labelledby="job-typing-speed-heading">
@@ -75,7 +85,7 @@ export function JobTypingSpeedGuide({ variant = "full" }: { variant?: "compact" 
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild>
-              <Link to="/test">Take Speed Test</Link>
+              <Link to="/test">{testLinkLabel}</Link>
             </Button>
             <Button asChild variant="outline">
               <Link to="/typing-start-guide">Learn Finger Placement</Link>
@@ -84,10 +94,10 @@ export function JobTypingSpeedGuide({ variant = "full" }: { variant?: "compact" 
         </>
       )}
 
-      {variant === "compact" && (
+      {variant === "compact" && showTestLink && (
         <div className="mt-5">
-          <Button asChild size="sm">
-            <Link to="/test">Start Target Test</Link>
+          <Button asChild size="sm" className="min-h-11 w-full sm:w-auto">
+            <Link to="/test">{testLinkLabel}</Link>
           </Button>
         </div>
       )}

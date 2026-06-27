@@ -84,7 +84,7 @@ export function NavBar() {
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-border/60">
+    <footer className="mt-20 border-t border-border/60 pb-20 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-6 px-6 py-8 text-sm">
         <div className="flex flex-wrap items-start justify-between gap-6">
           <div>
