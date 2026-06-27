@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
+import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
+import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
 import { cn } from "@/lib/utils";
 
@@ -31,48 +33,76 @@ function HomeMobile() {
   return (
     <div className="space-y-4 overflow-x-hidden md:hidden">
       {/* Hero */}
-      <section className="bento-tile p-5">
+      <section className="bento-tile p-5 font-hindi">
         <div className="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-primary font-display text-lg font-bold text-primary-foreground">
           T
         </div>
         <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
         <p className="mt-2 text-base font-medium leading-snug text-foreground">
-          Free Typing Practice for Govt Job Aspirants
+          Govt Job Computer & Typing Preparation
         </p>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          English + Hindi Typing | Speed Test | Lessons
+          Job Advertisement · MS Word · Excel · Model Papers · Typing
         </p>
       </section>
 
-      {/* Primary actions */}
-      <section className="space-y-3" aria-label="Primary actions">
-        <Link to="/english" className={cn(MOBILE_BTN, "bg-primary text-primary-foreground shadow-sm")}>
-          Start English Practice
+      {/* Primary study & job actions */}
+      <section className="space-y-3 font-hindi" aria-label="Primary actions">
+        <Link
+          to={MOBILE_ROUTES.jobAds}
+          className={cn(MOBILE_BTN, "bg-primary text-primary-foreground shadow-sm")}
+        >
+          Job Advertisement देखें
         </Link>
         <Link
-          to="/hindi"
-          className={cn(
-            MOBILE_BTN,
-            "border border-amber-500/40 bg-amber-500/15 font-hindi text-amber-900 dark:text-amber-100",
-          )}
+          to={MOBILE_ROUTES.msWord}
+          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
         >
-          Start Hindi Practice
+          MS Word सीखें
         </Link>
-        <Link to="/typing-start-guide" className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}>
-          Learn Finger Placement
+        <Link
+          to={MOBILE_ROUTES.excel}
+          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+        >
+          Excel सीखें
+        </Link>
+        <Link
+          to={MOBILE_ROUTES.modelPapers}
+          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+        >
+          Model Paper देखें
+        </Link>
+        <Link
+          to={MOBILE_ROUTES.modelPaperTest}
+          className={cn(MOBILE_BTN, "border border-primary/40 bg-primary/10 text-primary")}
+        >
+          Model Paper Test दें
         </Link>
       </section>
 
-      {/* Using phone? */}
-      <section className="rounded-2xl border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950/40">
-        <h2 className="text-base font-semibold text-foreground">Using phone?</h2>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          Real typing exam practice is best on a computer keyboard. On phone, use TAIPOQ for lessons,
-          keyboard layout, passages and preparation.
-        </p>
+      {/* Phone पर सबसे उपयोगी */}
+      <section className="bento-tile space-y-3 p-5 font-hindi" aria-labelledby="mobile-useful-heading">
+        <h2 id="mobile-useful-heading" className="text-lg font-bold text-foreground">
+          Phone पर सबसे उपयोगी
+        </h2>
+        <ul className="space-y-2">
+          {MOBILE_USEFUL_CARDS.map((card) => (
+            <li key={card.to}>
+              <Link
+                to={card.to}
+                className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm font-medium"
+              >
+                <span>{card.label}</span>
+                <span className="text-muted-foreground" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      {/* How to use TAIPOQ — mobile onboarding */}
+      {/* How to use TAIPOQ — job & study first */}
       <section className="bento-tile space-y-3 p-5 font-hindi" aria-labelledby="mobile-onboarding-heading">
         <h2 id="mobile-onboarding-heading" className="text-lg font-bold text-foreground">
           TAIPOQ कैसे उपयोग करें?
@@ -97,14 +127,7 @@ function HomeMobile() {
                           <Link
                             key={choice.to}
                             to={choice.to}
-                            search={"search" in choice ? choice.search : undefined}
-                            className={cn(
-                              MOBILE_BTN,
-                              "px-3 text-sm",
-                              choice.variant === "hindi"
-                                ? "border border-amber-500/40 bg-amber-500/15 font-hindi text-amber-900 dark:text-amber-100"
-                                : "bg-primary text-primary-foreground",
-                            )}
+                            className={cn(MOBILE_BTN, "px-3 text-sm bg-primary text-primary-foreground")}
                           >
                             {choice.label}
                           </Link>
@@ -142,75 +165,57 @@ function HomeMobile() {
         </ol>
       </section>
 
-      {/* English practice card */}
-      <Link
-        to="/english"
-        className="bento-tile flex flex-col gap-3 p-5"
-        style={{ background: "linear-gradient(135deg, oklch(0.5 0.18 260), oklch(0.38 0.16 265))" }}
-      >
+      {/* Typing Practice — secondary on mobile */}
+      <section className="bento-tile space-y-4 p-5 font-hindi" aria-labelledby="mobile-typing-heading">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/80">EN · QWERTY</p>
-          <h2 className="mt-1 font-display text-xl font-bold text-white">English Typing</h2>
-          <p className="mt-2 text-sm text-white/85">Lessons, passages and Mobile Learning Mode.</p>
-        </div>
-        <span className={cn(MOBILE_BTN, "bg-white text-[oklch(0.4_0.16_265)]")}>Practice Passage</span>
-      </Link>
-
-      {/* Hindi practice card */}
-      <Link
-        to="/hindi"
-        className="bento-tile flex flex-col gap-3 p-5"
-        style={{ background: "linear-gradient(135deg, oklch(0.65 0.16 60), oklch(0.5 0.16 45))" }}
-      >
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/80">HI · KrutiDev</p>
-          <h2 className="mt-1 font-display text-xl font-bold text-white">
-            Hindi Typing <span className="font-hindi">हिन्दी</span>
+          <h2 id="mobile-typing-heading" className="text-lg font-bold text-foreground">
+            Typing Practice
           </h2>
-          <p className="mt-2 text-sm text-white/85">Remington layout lessons and passage practice.</p>
-        </div>
-        <span className={cn(MOBILE_BTN, "bg-white font-hindi text-[oklch(0.4_0.16_45)]")}>अभ्यास आरम्भ करें</span>
-      </Link>
-
-      {/* Library — prominent */}
-      <section className="bento-tile space-y-4 p-5">
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-primary">Mobile Learning Mode</p>
-          <h2 className="mt-1 font-display text-xl font-bold">Learn before speed test</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Speed test के पहले keyboard layout, typing rules और exam targets समझें।
+            Phone पर lessons और passages पढ़ें। वास्तविक speed test computer keyboard पर दें।
           </p>
         </div>
-        <ul className="space-y-2">
-          {LIBRARY_QUICK_LINKS.map((item) => (
-            <li key={item.to}>
-              <Link
-                to={item.to}
-                className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm font-medium"
-              >
-                <span>{item.label}</span>
-                <span className="text-muted-foreground">→</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link to="/study-corner" className={cn(MOBILE_BTN, "bg-primary text-primary-foreground")}>
-          {STUDY_CORNER_LANDING.homeCard.button}
-        </Link>
+        <div className="space-y-2">
+          <Link
+            to="/typing-start-guide"
+            className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+          >
+            Finger Placement
+          </Link>
+          <Link
+            to="/english/practice"
+            className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+          >
+            English Practice
+          </Link>
+          <Link
+            to="/hindi/practice"
+            search={{ mode: "Remington" }}
+            className={cn(
+              MOBILE_BTN,
+              "border border-amber-500/40 bg-amber-500/15 text-amber-900 dark:text-amber-100",
+            )}
+          >
+            Hindi Practice
+          </Link>
+          <Link
+            to="/test"
+            className={cn(
+              MOBILE_BTN,
+              "border border-dashed border-border bg-surface/30 text-foreground",
+            )}
+          >
+            Desktop Speed Test
+          </Link>
+        </div>
       </section>
 
-      {/* Speed targets */}
-      <JobTypingSpeedGuide variant="compact" testLinkLabel="Desktop Speed Test" />
-
-      {/* Desktop speed test note */}
+      {/* Library shortcut */}
       <Link
-        to="/test"
-        className="flex min-h-11 items-center justify-between rounded-xl border border-dashed border-border bg-surface/30 px-4 py-3 text-sm"
+        to="/study-corner"
+        className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-sm font-hindi font-medium"
       >
-        <span>
-          <span className="font-medium">Desktop Speed Test</span>
-          <span className="mt-0.5 block text-xs text-muted-foreground">Computer keyboard पर WPM test</span>
-        </span>
+        <span>{STUDY_CORNER_LANDING.homeCard.title}</span>
         <span className="text-muted-foreground">→</span>
       </Link>
 
@@ -523,46 +528,53 @@ function Arrow() {
 const MOBILE_BTN =
   "inline-flex min-h-11 w-full items-center justify-center rounded-xl px-5 py-3 text-base font-semibold transition-transform active:scale-[0.98]";
 
+const MOBILE_ROUTES = {
+  jobAds: "/upcoming-exams" as const,
+  msWord: WORD_BASICS_HREF,
+  excel: EXCEL_BASICS_HREF,
+  modelPapers: "/study-corner/general-awareness" as const,
+  modelPaperTest: "/study-corner/general-awareness/model-test-01" as const,
+  generalAwareness: "/study-corner/general-awareness" as const,
+  computerBasics: "/study-corner/computer-basics" as const,
+};
+
+const MOBILE_USEFUL_CARDS = [
+  { label: "Job Advertisement / Vacancy Notice", to: MOBILE_ROUTES.jobAds },
+  { label: "MS Word Basic Knowledge", to: MOBILE_ROUTES.msWord },
+  { label: "Excel Basic Knowledge", to: MOBILE_ROUTES.excel },
+  { label: "Model Papers", to: MOBILE_ROUTES.modelPapers },
+  { label: "General Awareness", to: MOBILE_ROUTES.generalAwareness },
+  { label: "Computer Basics", to: MOBILE_ROUTES.computerBasics },
+] as const;
+
 const ONBOARDING_STEPS = [
   {
     step: 1,
-    title: "Finger Placement सीखें",
-    subtext: "Keyboard पर उंगलियों की सही स्थिति समझें।",
-    to: "/typing-start-guide" as const,
+    title: "Job Advertisement देखें",
+    subtext: "भर्ती, योग्यता और परीक्षा की मुख्य जानकारी देखें।",
+    to: MOBILE_ROUTES.jobAds,
   },
   {
     step: 2,
-    title: "Practice Passage करें",
-    subtext: "English या Hindi passage चुनकर अभ्यास करें।",
+    title: "MS Word और Excel सीखें",
+    subtext: "Computer knowledge के आवश्यक topics पढ़ें।",
     choices: [
-      { label: "English Practice", to: "/english/practice" as const, variant: "english" as const },
-      {
-        label: "Hindi Practice",
-        to: "/hindi/practice" as const,
-        search: { mode: "Remington" as const },
-        variant: "hindi" as const,
-      },
+      { label: "MS Word", to: MOBILE_ROUTES.msWord },
+      { label: "Excel", to: MOBILE_ROUTES.excel },
     ],
   },
   {
     step: 3,
-    title: "Speed Target देखें",
-    subtext: "25, 30, 35 और 40 WPM लक्ष्य समझें।",
-    to: "/typing-tips" as const,
+    title: "Model Paper हल करें",
+    subtext: "प्रश्नों से अपनी तैयारी जाँचें।",
+    to: MOBILE_ROUTES.modelPaperTest,
   },
   {
     step: 4,
-    title: "Desktop Speed Test दें",
-    subtext: "वास्तविक typing test computer keyboard पर करें।",
+    title: "Typing Speed Test दें",
+    subtext: "Computer keyboard पर वास्तविक typing test दें।",
     to: "/test" as const,
   },
-] as const;
-
-const LIBRARY_QUICK_LINKS = [
-  { to: "/typing-start-guide" as const, label: "Finger placement" },
-  { to: "/english/lessons" as const, label: "English typing basics" },
-  { to: "/hindi/lessons" as const, label: "Hindi typing basics" },
-  { to: "/typing-tips" as const, label: "Exam target guide" },
 ] as const;
 
 const FEATURES = [
