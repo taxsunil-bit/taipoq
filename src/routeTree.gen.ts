@@ -33,11 +33,13 @@ import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TestsIndexRouteImport } from './routes/tests.index'
 import { Route as StudyCornerIndexRouteImport } from './routes/study-corner.index'
 import { Route as HindiIndexRouteImport } from './routes/hindi.index'
 import { Route as EnglishIndexRouteImport } from './routes/english.index'
 import { Route as CurrentAffairsIndexRouteImport } from './routes/current-affairs.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as TestsSubjectRouteImport } from './routes/tests.$subject'
 import { Route as StudyCornerQuizResultRouteImport } from './routes/study-corner.quiz-result'
 import { Route as StudyCornerGeneralScienceRouteImport } from './routes/study-corner.general-science'
 import { Route as StudyCornerGeneralAwarenessRouteImport } from './routes/study-corner.general-awareness'
@@ -47,9 +49,11 @@ import { Route as HindiLessonsRouteImport } from './routes/hindi.lessons'
 import { Route as EnglishPracticeRouteImport } from './routes/english.practice'
 import { Route as EnglishLessonsRouteImport } from './routes/english.lessons'
 import { Route as AdminAddParagraphRouteImport } from './routes/admin.add-paragraph'
+import { Route as TestsSubjectIndexRouteImport } from './routes/tests.$subject.index'
 import { Route as StudyCornerGeneralScienceIndexRouteImport } from './routes/study-corner.general-science.index'
 import { Route as StudyCornerGeneralAwarenessIndexRouteImport } from './routes/study-corner.general-awareness.index'
 import { Route as StudyCornerComputerBasicsIndexRouteImport } from './routes/study-corner.computer-basics.index'
+import { Route as TestsSubjectPaperIdRouteImport } from './routes/tests.$subject.$paperId'
 import { Route as StudyCornerGeneralScienceModelTest01RouteImport } from './routes/study-corner.general-science.model-test-01'
 import { Route as StudyCornerGeneralScienceChapter4RouteImport } from './routes/study-corner.general-science.chapter-4'
 import { Route as StudyCornerGeneralScienceChapter3RouteImport } from './routes/study-corner.general-science.chapter-3'
@@ -192,6 +196,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TestsIndexRoute = TestsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TestsRoute,
+} as any)
 const StudyCornerIndexRoute = StudyCornerIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -216,6 +225,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const TestsSubjectRoute = TestsSubjectRouteImport.update({
+  id: '/$subject',
+  path: '/$subject',
+  getParentRoute: () => TestsRoute,
 } as any)
 const StudyCornerQuizResultRoute = StudyCornerQuizResultRouteImport.update({
   id: '/quiz-result',
@@ -265,6 +279,11 @@ const AdminAddParagraphRoute = AdminAddParagraphRouteImport.update({
   path: '/add-paragraph',
   getParentRoute: () => AdminRoute,
 } as any)
+const TestsSubjectIndexRoute = TestsSubjectIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TestsSubjectRoute,
+} as any)
 const StudyCornerGeneralScienceIndexRoute =
   StudyCornerGeneralScienceIndexRouteImport.update({
     id: '/',
@@ -283,6 +302,11 @@ const StudyCornerComputerBasicsIndexRoute =
     path: '/',
     getParentRoute: () => StudyCornerComputerBasicsRoute,
   } as any)
+const TestsSubjectPaperIdRoute = TestsSubjectPaperIdRouteImport.update({
+  id: '/$paperId',
+  path: '/$paperId',
+  getParentRoute: () => TestsSubjectRoute,
+} as any)
 const StudyCornerGeneralScienceModelTest01Route =
   StudyCornerGeneralScienceModelTest01RouteImport.update({
     id: '/model-test-01',
@@ -429,7 +453,7 @@ export interface FileRoutesByFullPath {
   '/study-corner': typeof StudyCornerRouteWithChildren
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
-  '/tests': typeof TestsRoute
+  '/tests': typeof TestsRouteWithChildren
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
@@ -443,11 +467,13 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
+  '/tests/$subject': typeof TestsSubjectRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
+  '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
@@ -469,9 +495,11 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-science/chapter-3': typeof StudyCornerGeneralScienceChapter3Route
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
+  '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
+  '/tests/$subject/': typeof TestsSubjectIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -488,7 +516,6 @@ export interface FileRoutesByTo {
   '/result': typeof ResultRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
-  '/tests': typeof TestsRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
@@ -504,6 +531,7 @@ export interface FileRoutesByTo {
   '/english': typeof EnglishIndexRoute
   '/hindi': typeof HindiIndexRoute
   '/study-corner': typeof StudyCornerIndexRoute
+  '/tests': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
@@ -525,9 +553,11 @@ export interface FileRoutesByTo {
   '/study-corner/general-science/chapter-3': typeof StudyCornerGeneralScienceChapter3Route
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
+  '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science': typeof StudyCornerGeneralScienceIndexRoute
+  '/tests/$subject': typeof TestsSubjectIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -550,7 +580,7 @@ export interface FileRoutesById {
   '/study-corner': typeof StudyCornerRouteWithChildren
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
-  '/tests': typeof TestsRoute
+  '/tests': typeof TestsRouteWithChildren
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
@@ -564,11 +594,13 @@ export interface FileRoutesById {
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
+  '/tests/$subject': typeof TestsSubjectRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
+  '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
@@ -590,9 +622,11 @@ export interface FileRoutesById {
   '/study-corner/general-science/chapter-3': typeof StudyCornerGeneralScienceChapter3Route
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
+  '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
+  '/tests/$subject/': typeof TestsSubjectIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -630,11 +664,13 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
     | '/study-corner/quiz-result'
+    | '/tests/$subject'
     | '/admin/'
     | '/current-affairs/'
     | '/english/'
     | '/hindi/'
     | '/study-corner/'
+    | '/tests/'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
     | '/study-corner/computer-basics/chapter-1'
@@ -656,9 +692,11 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-3'
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
+    | '/tests/$subject/$paperId'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
     | '/study-corner/general-science/'
+    | '/tests/$subject/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -675,7 +713,6 @@ export interface FileRouteTypes {
     | '/result'
     | '/terms'
     | '/test'
-    | '/tests'
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
@@ -691,6 +728,7 @@ export interface FileRouteTypes {
     | '/english'
     | '/hindi'
     | '/study-corner'
+    | '/tests'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
     | '/study-corner/computer-basics/chapter-1'
@@ -712,9 +750,11 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-3'
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
+    | '/tests/$subject/$paperId'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
+    | '/tests/$subject'
   id:
     | '__root__'
     | '/'
@@ -750,11 +790,13 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
     | '/study-corner/quiz-result'
+    | '/tests/$subject'
     | '/admin/'
     | '/current-affairs/'
     | '/english/'
     | '/hindi/'
     | '/study-corner/'
+    | '/tests/'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
     | '/study-corner/computer-basics/chapter-1'
@@ -776,9 +818,11 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-3'
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
+    | '/tests/$subject/$paperId'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
     | '/study-corner/general-science/'
+    | '/tests/$subject/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -801,7 +845,7 @@ export interface RootRouteChildren {
   StudyCornerRoute: typeof StudyCornerRouteWithChildren
   TermsRoute: typeof TermsRoute
   TestRoute: typeof TestRoute
-  TestsRoute: typeof TestsRoute
+  TestsRoute: typeof TestsRouteWithChildren
   TypingStartGuideRoute: typeof TypingStartGuideRoute
   TypingTipsRoute: typeof TypingTipsRoute
   UpcomingExamsRoute: typeof UpcomingExamsRoute
@@ -978,6 +1022,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tests/': {
+      id: '/tests/'
+      path: '/'
+      fullPath: '/tests/'
+      preLoaderRoute: typeof TestsIndexRouteImport
+      parentRoute: typeof TestsRoute
+    }
     '/study-corner/': {
       id: '/study-corner/'
       path: '/'
@@ -1012,6 +1063,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/tests/$subject': {
+      id: '/tests/$subject'
+      path: '/$subject'
+      fullPath: '/tests/$subject'
+      preLoaderRoute: typeof TestsSubjectRouteImport
+      parentRoute: typeof TestsRoute
     }
     '/study-corner/quiz-result': {
       id: '/study-corner/quiz-result'
@@ -1076,6 +1134,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAddParagraphRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/tests/$subject/': {
+      id: '/tests/$subject/'
+      path: '/'
+      fullPath: '/tests/$subject/'
+      preLoaderRoute: typeof TestsSubjectIndexRouteImport
+      parentRoute: typeof TestsSubjectRoute
+    }
     '/study-corner/general-science/': {
       id: '/study-corner/general-science/'
       path: '/'
@@ -1096,6 +1161,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/study-corner/computer-basics/'
       preLoaderRoute: typeof StudyCornerComputerBasicsIndexRouteImport
       parentRoute: typeof StudyCornerComputerBasicsRoute
+    }
+    '/tests/$subject/$paperId': {
+      id: '/tests/$subject/$paperId'
+      path: '/$paperId'
+      fullPath: '/tests/$subject/$paperId'
+      preLoaderRoute: typeof TestsSubjectPaperIdRouteImport
+      parentRoute: typeof TestsSubjectRoute
     }
     '/study-corner/general-science/model-test-01': {
       id: '/study-corner/general-science/model-test-01'
@@ -1425,6 +1497,32 @@ const StudyCornerRouteWithChildren = StudyCornerRoute._addFileChildren(
   StudyCornerRouteChildren,
 )
 
+interface TestsSubjectRouteChildren {
+  TestsSubjectPaperIdRoute: typeof TestsSubjectPaperIdRoute
+  TestsSubjectIndexRoute: typeof TestsSubjectIndexRoute
+}
+
+const TestsSubjectRouteChildren: TestsSubjectRouteChildren = {
+  TestsSubjectPaperIdRoute: TestsSubjectPaperIdRoute,
+  TestsSubjectIndexRoute: TestsSubjectIndexRoute,
+}
+
+const TestsSubjectRouteWithChildren = TestsSubjectRoute._addFileChildren(
+  TestsSubjectRouteChildren,
+)
+
+interface TestsRouteChildren {
+  TestsSubjectRoute: typeof TestsSubjectRouteWithChildren
+  TestsIndexRoute: typeof TestsIndexRoute
+}
+
+const TestsRouteChildren: TestsRouteChildren = {
+  TestsSubjectRoute: TestsSubjectRouteWithChildren,
+  TestsIndexRoute: TestsIndexRoute,
+}
+
+const TestsRouteWithChildren = TestsRoute._addFileChildren(TestsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -1445,7 +1543,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudyCornerRoute: StudyCornerRouteWithChildren,
   TermsRoute: TermsRoute,
   TestRoute: TestRoute,
-  TestsRoute: TestsRoute,
+  TestsRoute: TestsRouteWithChildren,
   TypingStartGuideRoute: TypingStartGuideRoute,
   TypingTipsRoute: TypingTipsRoute,
   UpcomingExamsRoute: UpcomingExamsRoute,

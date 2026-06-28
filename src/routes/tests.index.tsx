@@ -1,0 +1,91 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SubjectTestGrid } from "@/components/tests/SubjectTestGrid";
+import { TestCard } from "@/components/tests/TestCard";
+import { PageShell } from "@/components/PageShell";
+import { PACK_PREPARED_DATE, TEST_SUBJECTS } from "@/content/tests/subjects";
+import { getAllPapers } from "@/lib/tests/testGenerator";
+import { cn } from "@/lib/utils";
+
+export const Route = createFileRoute("/tests/")({
+  head: () => ({
+    meta: [
+      { title: "TAIPOQ Tests — All practice free" },
+      {
+        name: "description",
+        content: "Free MCQ tests — Computer, Maths, Reasoning, Current Affairs, PYQ and Model Papers.",
+      },
+    ],
+  }),
+  component: TestsLandingPage,
+});
+
+const LEGACY_TESTS = [
+  { title: "Typing Speed Test", subtitle: "समय आधारित typing speed जाँच", to: "/test" as const },
+  { title: "Model Paper Test", subtitle: "पूर्ण प्रश्नपत्र अभ्यास", to: "/model-paper-test" as const },
+  { title: "Current Affairs Hub", subtitle: "समसामयिक अभ्यास", to: "/current-affairs" as const },
+  { title: "General Science Test", subtitle: "विज्ञान model test", to: "/study-corner/general-science/model-test-01" as const },
+] as const;
+
+const LEGACY_BTN =
+  "flex min-h-[52px] w-full flex-col justify-center rounded-xl border border-border bg-surface px-4 py-3.5 text-left hover:bg-surface-hover";
+
+function TestsLandingPage() {
+  const allPapers = getAllPapers();
+
+  return (
+    <PageShell>
+      <div className="mx-auto max-w-5xl space-y-8 overflow-x-hidden font-hindi">
+        <header className="space-y-2">
+          <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">TAIPOQ Tests</h1>
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+            सभी tests अभी निःशुल्क — Basic practice unlimited और free.
+          </p>
+          <p className="text-xs text-muted-foreground">Pack prepared: {PACK_PREPARED_DATE}</p>
+        </header>
+
+        <section aria-labelledby="basic-subjects-heading" className="space-y-3">
+          <h2 id="basic-subjects-heading" className="text-lg font-bold">
+            विषय चुनें — All subjects open
+          </h2>
+          <SubjectTestGrid subjects={TEST_SUBJECTS} />
+        </section>
+
+        <section aria-labelledby="all-papers-heading" className="space-y-3">
+          <h2 id="all-papers-heading" className="text-lg font-bold">
+            All Test Papers — Free Practice
+          </h2>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {allPapers.map((paper) => (
+              <li key={paper.paperId + paper.subject}>
+                <TestCard paper={paper} />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="legacy-tests-heading" className="space-y-3">
+          <h2 id="legacy-tests-heading" className="text-lg font-bold">
+            Typing & Other TAIPOQ Tests
+          </h2>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {LEGACY_TESTS.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to} className={cn(LEGACY_BTN)}>
+                  <span className="text-base font-semibold">{item.title}</span>
+                  <span className="text-sm text-muted-foreground">{item.subtitle}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <Link
+          to="/"
+          className="inline-flex min-h-10 items-center rounded-xl border border-border bg-surface px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
+          ← Home
+        </Link>
+      </div>
+    </PageShell>
+  );
+}

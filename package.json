@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "validate:upcoming-exams": "node tools/validate-upcoming-exams-json.mjs"
+    "validate:upcoming-exams": "node tools/validate-upcoming-exams-json.mjs",
+    "validate:tests": "node tools/validate-test-paper-pack.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

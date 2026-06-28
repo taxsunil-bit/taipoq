@@ -9,6 +9,8 @@ export const BRAND_ASSETS = {
   /** @deprecated use logoFullLight */
   logoFull: "/brand/taipoq-logo-full-light.png",
   logoSourceJpg: "/brand/taipoq-logo-source.jpg",
+  /** Primary 3D brand logo — light backgrounds only (home, cards). Not for navbar/favicon. */
+  logo3d: "/brand/taipoq-logo-3d.png",
 } as const;
 
 export const NAVBAR_MARK_SIZE = { mobile: 36, desktop: 40 } as const;

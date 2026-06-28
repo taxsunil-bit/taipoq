@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useCookieConsent } from "@/components/CookieConsent";
 import { TaipoqLogo } from "@/components/TaipoqLogo";
 import { BRAND_TAGLINE } from "@/lib/brand";
+import { cn } from "@/lib/utils";
 
 const links = [
   { to: "/", label: "Home" },
@@ -34,27 +35,31 @@ function CookiePreferencesLink() {
     <button
       type="button"
       onClick={openPreferences}
-      className="text-muted-foreground transition-colors hover:text-foreground"
+      className="text-slate-300 transition-colors hover:text-white"
     >
       Cookie Preferences
     </button>
   );
 }
 
+const NAVBAR_BG = "bg-[#08080B]";
+const FOOTER_BG = "bg-[#071A3D]";
+const NAVY_BORDER = "border-white/10";
+
 export function NavBar() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
+    <header
+      className={cn(
+        "sticky top-0 z-40 w-full border-b backdrop-blur-md",
+        NAVBAR_BG,
+        NAVY_BORDER,
+      )}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
         <Link to="/" className="flex min-w-0 items-center gap-2">
-          <TaipoqLogo
-            variant="navbar"
-            width={40}
-            height={40}
-            className="h-9 w-9 md:h-10 md:w-10"
-          />
           <div className="font-display text-lg font-extrabold tracking-tight text-white">TAIPOQ</div>
-          <span className="ml-1 hidden rounded-full border border-border/80 bg-surface/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/80 md:inline">
-            v1.0
+          <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-slate-300">
+            V1.0
           </span>
         </Link>
 
@@ -63,8 +68,11 @@ export function NavBar() {
             <Link
               key={l.to}
               to={l.to}
-              className="rounded-full px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface-hover hover:text-foreground"
-              activeProps={{ className: "rounded-full px-3.5 py-1.5 text-sm font-medium bg-surface-hover text-foreground border border-border" }}
+              className="rounded-full px-3.5 py-1.5 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+              activeProps={{
+                className:
+                  "rounded-full border border-white/10 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white",
+              }}
               activeOptions={{ exact: l.to === "/" }}
             >
               {l.label}
@@ -73,10 +81,22 @@ export function NavBar() {
         </nav>
 
         <details className="relative lg:hidden">
-          <summary className="cursor-pointer list-none rounded-full border border-border bg-surface px-4 py-1.5 text-sm">Menu</summary>
-          <div className="absolute right-0 mt-2 flex w-56 flex-col rounded-2xl border border-border bg-popover p-2 shadow-2xl">
+          <summary className="cursor-pointer list-none rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white">
+            Menu
+          </summary>
+          <div
+            className={cn(
+              "absolute right-0 mt-2 flex w-56 flex-col rounded-2xl border p-2 shadow-2xl shadow-black/30",
+              NAVBAR_BG,
+              NAVY_BORDER,
+            )}
+          >
             {links.map((l) => (
-              <Link key={l.to} to={l.to} className="rounded-lg px-3 py-2 text-sm hover:bg-surface-hover">
+              <Link
+                key={l.to}
+                to={l.to}
+                className="rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white"
+              >
                 {l.label}
               </Link>
             ))}
@@ -89,20 +109,20 @@ export function NavBar() {
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-border/60 pb-20 md:pb-8">
+    <footer className={cn("mt-20 border-t pb-20 md:pb-8", FOOTER_BG, NAVY_BORDER, "text-white")}>
       <div className="mx-auto max-w-7xl space-y-6 px-6 py-8 text-sm">
         <div className="flex flex-wrap items-start justify-between gap-6">
           <div className="space-y-2">
             <TaipoqLogo variant="navbar" width={40} height={40} className="h-10 w-10" />
             <div className="font-display font-bold text-white">TAIPOQ</div>
-            <div className="text-muted-foreground">{BRAND_TAGLINE}</div>
+            <div className="text-slate-300">{BRAND_TAGLINE}</div>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2">
             {INFO_LINKS.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-slate-300 transition-colors hover:text-white"
                 activeOptions={{ exact: l.to === "/" }}
               >
                 {l.label}
@@ -111,7 +131,7 @@ export function Footer() {
             <CookiePreferencesLink />
           </nav>
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
+        <div className="font-mono text-xs text-slate-300">
           © 2026 TAIPOQ. Created by Manas Dixit for job aspirants.
         </div>
       </div>

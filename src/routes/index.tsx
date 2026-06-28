@@ -5,6 +5,7 @@ import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
 import {
+  BRAND_ASSETS,
   MAIN_ACTION_CARD,
   MAIN_ACTION_SUBTITLE,
   TESTS_HUB_BADGE,
@@ -45,6 +46,17 @@ function Home() {
 function HomeMobileHero() {
   return (
     <section className="bento-tile p-5 font-hindi md:hidden">
+      <div className="mb-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+        <img
+          src={BRAND_ASSETS.logo3d}
+          alt="TAIPOQ"
+          width={280}
+          height={200}
+          className="mx-auto h-auto max-h-[160px] w-full max-w-[260px] object-contain"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
       <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
       <p className="mt-2 text-base font-medium leading-snug text-foreground">
         Govt Job Computer & Typing Preparation
@@ -341,11 +353,13 @@ function HomeDesktop() {
             </div>
 
             <div className="mx-auto w-full max-w-[360px] md:col-start-2 md:row-start-1 md:row-span-2 md:max-w-[420px] md:self-center lg:max-w-[460px]">
-              <div className="overflow-hidden rounded-3xl border border-border/60 bg-surface/40 shadow-2xl">
+              <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
                 <img
-                  src="/images/tipoq-cyber-youth.png"
-                  alt="TAIPOQ cyber youth typing practice visual"
-                  className="h-auto w-full object-contain"
+                  src={BRAND_ASSETS.logo3d}
+                  alt="TAIPOQ"
+                  width={320}
+                  height={320}
+                  className="mx-auto h-auto w-full max-w-[320px] object-contain"
                   loading="eager"
                   decoding="async"
                 />
