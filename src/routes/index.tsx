@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
-import { getCurrentAffairsPaper, MIXED_PAPER_ID } from "@/content/currentAffairsPapers";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
 import { cn } from "@/lib/utils";
@@ -28,7 +27,7 @@ function Home() {
         <HomeMobileHero />
         <HomeMobilePrimarySection />
         <div className="hidden md:block">
-          <HomePracticeTestSection />
+          <HomeDesktopPracticeSection />
         </div>
         <HomeMobileBody />
         <HomeDesktop />
@@ -82,38 +81,51 @@ function HomeMobilePrimarySection() {
         </span>
         <span className="mt-2 w-full text-sm font-semibold">सभी Tests देखें →</span>
       </Link>
+      <Link
+        to="/typing-start-guide"
+        className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+      >
+        Typing Guide — Finger Placement
+      </Link>
     </section>
   );
 }
 
-function HomePracticeTestSection() {
+function HomeDesktopPracticeSection() {
   return (
     <section
       className="bento-tile space-y-4 p-5 md:p-6"
-      aria-labelledby="practice-test-heading"
+      aria-labelledby="desktop-practice-heading"
     >
       <div>
-        <h2 id="practice-test-heading" className="font-display text-xl font-bold tracking-tight md:text-2xl">
-          Practice & Test
+        <h2 id="desktop-practice-heading" className="font-display text-xl font-bold tracking-tight md:text-2xl">
+          मुख्य अभ्यास
         </h2>
         <p className="mt-1 font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
-          Typing, Model Paper और Current Affairs अभ्यास
+          Tests, Typing Practice, Library और Job Advertisement
         </p>
       </div>
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {PRACTICE_TEST_ACTIONS.map((action) => (
-          <li key={action.to}>
-            {"search" in action ? (
+        {DESKTOP_PRACTICE_ACTIONS.map((action) => (
+          <li key={action.to + action.title}>
+            {"search" in action && action.search ? (
               <Link
                 to={action.to}
                 search={action.search}
                 className={cn(
-                  PRACTICE_TEST_BTN,
-                  "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+                  PRACTICE_CARD_BTN,
+                  action.highlight
+                    ? "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
+                    : "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
                 )}
               >
                 <span className="text-base font-semibold leading-snug">{action.title}</span>
-                <span className="text-sm font-normal leading-snug text-primary-foreground/85">
+                <span
+                  className={cn(
+                    "text-sm font-normal leading-snug",
+                    action.highlight ? "opacity-90" : "text-primary-foreground/85",
+                  )}
+                >
                   {action.subtitle}
                 </span>
               </Link>
@@ -121,12 +133,19 @@ function HomePracticeTestSection() {
               <Link
                 to={action.to}
                 className={cn(
-                  PRACTICE_TEST_BTN,
-                  "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+                  PRACTICE_CARD_BTN,
+                  action.highlight
+                    ? "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
+                    : "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
                 )}
               >
                 <span className="text-base font-semibold leading-snug">{action.title}</span>
-                <span className="text-sm font-normal leading-snug text-primary-foreground/85">
+                <span
+                  className={cn(
+                    "text-sm font-normal leading-snug",
+                    action.highlight ? "opacity-90" : "text-primary-foreground/85",
+                  )}
+                >
                   {action.subtitle}
                 </span>
               </Link>
@@ -173,28 +192,6 @@ function HomeMobileBody() {
         >
           Excel सीखें
         </Link>
-      </section>
-
-      {/* Phone पर सबसे उपयोगी */}
-      <section className="bento-tile space-y-3 p-5 font-hindi" aria-labelledby="mobile-useful-heading">
-        <h2 id="mobile-useful-heading" className="text-lg font-bold text-foreground">
-          Phone पर सबसे उपयोगी
-        </h2>
-        <ul className="space-y-2">
-          {MOBILE_USEFUL_CARDS.map((card) => (
-            <li key={card.to}>
-              <Link
-                to={card.to}
-                className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm font-medium"
-              >
-                <span>{card.label}</span>
-                <span className="text-muted-foreground" aria-hidden="true">
-                  →
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
       {/* How to use TAIPOQ — job & study first */}
@@ -494,14 +491,14 @@ function HomeDesktop() {
           </div>
         </Link>
 
-        {/* Speed Test tile */}
+        {/* Tests hub tile */}
         <Link
-          to="/test"
+          to="/tests"
           className="bento-tile bento-tile-hover group flex flex-col items-center justify-center p-6 text-center md:col-span-1"
         >
-          <div className="mb-4 rounded-full bg-surface-hover p-4 transition-colors group-hover:bg-accent">
+          <div className="mb-4 rounded-full bg-emerald-500/10 p-4 transition-colors group-hover:bg-emerald-500/20">
             <svg
-              className="h-7 w-7 text-muted-foreground transition-colors group-hover:text-foreground"
+              className="h-7 w-7 text-emerald-700 dark:text-emerald-300"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -510,12 +507,12 @@ function HomeDesktop() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="1.5"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
           </div>
-          <h3 className="font-display font-bold">Take Speed Test</h3>
-          <p className="mt-1 text-sm text-muted-foreground">Get certified in 5 min</p>
+          <h3 className="font-hindi font-bold">परीक्षा अभ्यास / Tests</h3>
+          <p className="mt-1 text-sm text-muted-foreground">सभी Tests एक जगह</p>
         </Link>
 
         {/* Daily Practice tile */}
@@ -602,63 +599,52 @@ function Arrow() {
   );
 }
 
-const MIXED_CA_QUESTION_COUNT = getCurrentAffairsPaper(MIXED_PAPER_ID)?.questions.length ?? 25;
-
 const MOBILE_BTN =
   "inline-flex min-h-11 w-full items-center justify-center rounded-xl px-5 py-3 text-base font-semibold transition-transform active:scale-[0.98]";
 
 const MOBILE_CARD_BTN =
   "inline-flex min-h-[3.25rem] w-full rounded-xl px-5 py-3.5 text-left transition-transform active:scale-[0.98]";
 
-const PRACTICE_TEST_BTN =
+const PRACTICE_CARD_BTN =
   "flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 rounded-xl px-4 py-3.5 text-left transition-transform active:scale-[0.98]";
 
-const PRACTICE_TEST_ACTIONS = [
+const DESKTOP_PRACTICE_ACTIONS = [
   {
-    title: "Take Speed Test",
-    subtitle: "English typing speed test",
-    to: "/test" as const,
+    title: "परीक्षा अभ्यास / Tests",
+    subtitle: "Model Paper, Typing Test, Current Affairs और General Science Test",
+    to: "/tests" as const,
+    highlight: true,
   },
   {
     title: "English Typing Practice",
     subtitle: "English typing अभ्यास",
     to: "/english/practice" as const,
+    highlight: false,
   },
   {
     title: "Hindi Typing Practice",
-    subtitle: "Hindi typing अभ्यास",
+    subtitle: "KrutiDev / Remington अभ्यास",
     to: "/hindi/practice" as const,
     search: { mode: "Remington" as const },
+    highlight: false,
   },
   {
-    title: "MS Word",
-    subtitle: "Computer exam preparation",
-    to: WORD_BASICS_HREF as const,
+    title: STUDY_CORNER_LANDING.homeCard.title,
+    subtitle: "Computer, GA, General Science अध्ययन",
+    to: "/study-corner" as const,
+    highlight: false,
   },
   {
-    title: "Excel",
-    subtitle: "Spreadsheet basics",
-    to: EXCEL_BASICS_HREF as const,
+    title: "आगामी परीक्षाएँ",
+    subtitle: "Job Advertisement / Vacancy Notice",
+    to: "/upcoming-exams" as const,
+    highlight: false,
   },
   {
-    title: "Model Paper",
-    subtitle: "General Awareness अभ्यास",
-    to: "/model-paper" as const,
-  },
-  {
-    title: "Model Paper Test",
-    subtitle: "50 प्रश्न · परीक्षा जैसा अभ्यास",
-    to: "/model-paper-test" as const,
-  },
-  {
-    title: "Current Affairs",
-    subtitle: "SSC · Railway · PET · Police",
-    to: "/current-affairs" as const,
-  },
-  {
-    title: "Current Affairs Test",
-    subtitle: `${MIXED_CA_QUESTION_COUNT} प्रश्न · परीक्षा जैसा अभ्यास`,
-    to: "/current-affairs-test" as const,
+    title: "शब्द अभ्यास / Word Learning",
+    subtitle: "Typing के लिए उपयोगी शब्द",
+    to: "/word-learning" as const,
+    highlight: false,
   },
 ] as const;
 
@@ -667,22 +653,8 @@ const MOBILE_ROUTES = {
   msWord: WORD_BASICS_HREF,
   excel: EXCEL_BASICS_HREF,
   modelPapers: "/study-corner/general-awareness" as const,
-  modelPaperTest: "/study-corner/general-awareness/model-test-01" as const,
   currentAffairs: "/current-affairs" as const,
-  currentAffairsTest: "/current-affairs-test" as const,
-  generalAwareness: "/study-corner/general-awareness" as const,
-  computerBasics: "/study-corner/computer-basics" as const,
 };
-
-const MOBILE_USEFUL_CARDS = [
-  { label: "Job Advertisement / Vacancy Notice", to: MOBILE_ROUTES.jobAds },
-  { label: "MS Word Basic Knowledge", to: MOBILE_ROUTES.msWord },
-  { label: "Excel Basic Knowledge", to: MOBILE_ROUTES.excel },
-  { label: "Model Papers", to: MOBILE_ROUTES.modelPapers },
-  { label: "समसामयिक प्रश्नपत्र / Current Affairs", to: MOBILE_ROUTES.currentAffairs },
-  { label: "General Awareness", to: MOBILE_ROUTES.generalAwareness },
-  { label: "Computer Basics", to: MOBILE_ROUTES.computerBasics },
-] as const;
 
 const ONBOARDING_STEPS = [
   {

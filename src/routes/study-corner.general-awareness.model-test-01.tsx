@@ -17,5 +17,11 @@ export const Route = createFileRoute("/study-corner/general-awareness/model-test
 });
 
 function ModelTestPage() {
-  return <GeneralAwarenessTest dataUrl="/data/general-awareness/model-test-01.json" progressStorageKey={GA_MODEL_TEST_STORAGE_KEY} />;
+  return (
+    <GeneralAwarenessTest
+      dataUrl="/data/general-awareness/model-test-01.json"
+      progressStorageKey={GA_MODEL_TEST_STORAGE_KEY}
+      libraryBackHref="/study-corner/general-awareness"
+    />
+  );
 }

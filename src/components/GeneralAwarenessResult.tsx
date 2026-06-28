@@ -8,6 +8,7 @@ type GeneralAwarenessResultProps = {
   answers: Record<string, number>;
   score: GAScoreResult;
   onRestart: () => void;
+  libraryBackHref?: string;
 };
 
 function optionLabel(index: number): string {
@@ -19,6 +20,7 @@ export function GeneralAwarenessResult({
   answers,
   score,
   onRestart,
+  libraryBackHref = "/study-corner/general-awareness",
 }: GeneralAwarenessResultProps) {
   const label = getResultLabel(score.percentage);
   const topics = Object.entries(score.byTopic).sort((a, b) => a[0].localeCompare(b[0], "hi"));
@@ -122,7 +124,7 @@ export function GeneralAwarenessResult({
           फिर से Test दें
         </button>
         <Link
-          to="/study-corner/general-awareness"
+          to={libraryBackHref}
           className="inline-flex min-h-12 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-center text-base font-semibold text-slate-800 transition-colors hover:bg-slate-50 sm:min-w-[10rem]"
         >
           Library पर वापस जाएँ

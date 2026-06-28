@@ -4,6 +4,7 @@ import { GeneralAwarenessResult } from "@/components/GeneralAwarenessResult";
 import {
   calculateGAScore,
   clearGAProgress,
+  countAttemptedAnswers,
   formatTimer,
   GA_MODEL_TEST_STORAGE_KEY,
   loadGAProgress,
@@ -18,11 +19,13 @@ type Phase = "loading" | "error" | "instructions" | "test" | "confirm" | "result
 type GeneralAwarenessTestProps = {
   dataUrl: string;
   progressStorageKey?: string;
+  libraryBackHref?: string;
 };
 
 export function GeneralAwarenessTest({
   dataUrl,
   progressStorageKey = GA_MODEL_TEST_STORAGE_KEY,
+  libraryBackHref = "/study-corner/general-awareness",
 }: GeneralAwarenessTestProps) {
   const [phase, setPhase] = useState<Phase>("loading");
   const [testData, setTestData] = useState<GATestData | null>(null);
@@ -89,6 +92,14 @@ export function GeneralAwarenessTest({
         if (!prev || prev.submitted) return prev;
         const nextSeconds = prev.remainingSeconds - 1;
         if (nextSeconds <= 0) {
+          if (countAttemptedAnswers(prev.answers) === 0) {
+            clearGAProgress(progressStorageKey);
+            window.setTimeout(() => {
+              setProgress(null);
+              setPhase("instructions");
+            }, 0);
+            return prev;
+          }
           const autoSubmit: GAProgressState = { ...prev, remainingSeconds: 0, submitted: true };
           saveGAProgress(progressStorageKey, autoSubmit);
           window.setTimeout(() => setPhase("result"), 0);
@@ -194,6 +205,7 @@ export function GeneralAwarenessTest({
         answers={progress.answers}
         score={scoreResult}
         onRestart={handleRestart}
+        libraryBackHref={libraryBackHref}
       />,
     );
   }
