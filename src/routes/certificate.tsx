@@ -53,7 +53,18 @@ function Certificate() {
       <div className="mx-auto max-w-4xl">
         <div className="rounded-2xl border-4 border-double border-primary/40 bg-card p-10 text-center shadow-sm print:shadow-none">
           <div className="flex justify-center">
-            <TaipoqLogo variant="icon" width={56} height={56} className="h-14 w-14" />
+            <TaipoqLogo
+              variant="fullDark"
+              width={52}
+              height={52}
+              className="h-[52px] w-auto max-w-[140px] print:hidden"
+            />
+            <TaipoqLogo
+              variant="fullLight"
+              width={52}
+              height={52}
+              className="hidden h-[52px] w-auto max-w-[140px] print:block"
+            />
           </div>
           <div className="mt-3 text-sm uppercase tracking-[0.3em] text-muted-foreground">TAIPOQ</div>
           <h1 className="mt-2 font-display text-3xl font-bold md:text-4xl">TAIPOQ Typing Certificate</h1>

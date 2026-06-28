@@ -1,11 +1,29 @@
 import { BRAND_ASSETS } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
+export type TaipoqLogoVariant = "icon" | "navbar" | "fullLight" | "fullDark" | "full";
+
 type TaipoqLogoProps = {
-  variant?: "icon" | "full";
+  variant?: TaipoqLogoVariant;
   className?: string;
   width?: number;
   height?: number;
+};
+
+const VARIANT_SRC: Record<TaipoqLogoVariant, string> = {
+  icon: BRAND_ASSETS.logoIcon,
+  navbar: BRAND_ASSETS.navbarMark,
+  fullLight: BRAND_ASSETS.logoFullLight,
+  fullDark: BRAND_ASSETS.logoFullDark,
+  full: BRAND_ASSETS.logoFullLight,
+};
+
+const DEFAULT_SIZE: Record<TaipoqLogoVariant, number> = {
+  icon: 40,
+  navbar: 40,
+  fullLight: 140,
+  fullDark: 140,
+  full: 140,
 };
 
 export function TaipoqLogo({
@@ -14,14 +32,12 @@ export function TaipoqLogo({
   width,
   height,
 }: TaipoqLogoProps) {
-  const isFull = variant === "full";
-  const src = isFull ? BRAND_ASSETS.logoFull : BRAND_ASSETS.logoIcon;
-  const w = width ?? (isFull ? 140 : 40);
-  const h = height ?? (isFull ? 140 : 40);
+  const w = width ?? DEFAULT_SIZE[variant];
+  const h = height ?? DEFAULT_SIZE[variant];
 
   return (
     <img
-      src={src}
+      src={VARIANT_SRC[variant]}
       alt="TAIPOQ logo"
       width={w}
       height={h}

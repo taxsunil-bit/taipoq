@@ -1,8 +1,17 @@
 export const BRAND_ASSETS = {
+  /** Blue app mark for dark UI (navbar, favicon, small marks). No wordmark in image. */
+  navbarMark: "/brand/taipoq-navbar-mark.png",
   logoIcon: "/brand/taipoq-logo-icon.png",
-  logoFull: "/brand/taipoq-logo-full.png",
+  /** Full logo with dark navy wordmark — light/white backgrounds only. */
+  logoFullLight: "/brand/taipoq-logo-full-light.png",
+  /** Full logo with white wordmark — dark backgrounds when full lockup is needed. */
+  logoFullDark: "/brand/taipoq-logo-full-dark.png",
+  /** @deprecated use logoFullLight */
+  logoFull: "/brand/taipoq-logo-full-light.png",
   logoSourceJpg: "/brand/taipoq-logo-source.jpg",
 } as const;
+
+export const NAVBAR_MARK_SIZE = { mobile: 36, desktop: 40 } as const;
 
 export const BRAND_TAGLINE = "Govt Job Computer & Typing Preparation";
 

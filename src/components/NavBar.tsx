@@ -47,10 +47,10 @@ export function NavBar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
         <Link to="/" className="flex min-w-0 items-center gap-2">
           <TaipoqLogo
-            variant="icon"
-            width={44}
-            height={44}
-            className="h-9 w-9 rounded-xl border border-blue-400/20 bg-blue-600/10 object-contain md:h-11 md:w-11"
+            variant="navbar"
+            width={40}
+            height={40}
+            className="h-9 w-9 md:h-10 md:w-10"
           />
           <div className="font-display text-lg font-extrabold tracking-tight text-white">TAIPOQ</div>
           <span className="ml-1 hidden rounded-full border border-border/80 bg-surface/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/80 md:inline">
@@ -93,8 +93,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl space-y-6 px-6 py-8 text-sm">
         <div className="flex flex-wrap items-start justify-between gap-6">
           <div className="space-y-2">
-            <TaipoqLogo variant="full" width={140} height={140} className="h-auto w-[140px] max-w-[160px]" />
-            <div className="font-display font-bold">TAIPOQ</div>
+            <TaipoqLogo variant="navbar" width={40} height={40} className="h-10 w-10" />
+            <div className="font-display font-bold text-white">TAIPOQ</div>
             <div className="text-muted-foreground">{BRAND_TAGLINE}</div>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2">

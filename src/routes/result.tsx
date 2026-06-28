@@ -49,7 +49,7 @@ function ResultPage() {
   return (
     <PageShell>
       <div className="mb-3 flex justify-center sm:justify-start">
-        <TaipoqLogo variant="icon" width={36} height={36} className="h-9 w-9 opacity-90" />
+        <TaipoqLogo variant="navbar" width={36} height={36} className="h-9 w-9" />
       </div>
       <PageHeader title="Test Result" subtitle={`${result.language} · ${result.mode} · ${result.title}`} />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

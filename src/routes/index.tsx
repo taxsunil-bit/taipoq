@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
-import { TaipoqLogo } from "@/components/TaipoqLogo";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
@@ -46,7 +45,6 @@ function Home() {
 function HomeMobileHero() {
   return (
     <section className="bento-tile p-5 font-hindi md:hidden">
-      <TaipoqLogo variant="icon" width={40} height={40} className="mb-3 h-10 w-10" />
       <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
       <p className="mt-2 text-base font-medium leading-snug text-foreground">
         Govt Job Computer & Typing Preparation
@@ -333,7 +331,6 @@ function HomeDesktop() {
           </div>
           <div className="relative grid h-full gap-8 md:grid-cols-2 md:grid-rows-[1fr_auto] md:items-center md:gap-x-10 md:gap-y-8">
             <div className="md:col-start-1 md:row-start-1">
-              <TaipoqLogo variant="icon" width={48} height={48} className="mb-8 h-12 w-12" />
               <h1 className="font-display text-6xl font-bold leading-[0.95] tracking-tighter md:text-7xl">
                 TAIPOQ
               </h1>
