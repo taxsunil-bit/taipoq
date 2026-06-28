@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { GeneralAwarenessTest } from "@/components/GeneralAwarenessTest";
+import { GA_MODEL_TEST_STORAGE_KEY } from "@/types/generalAwarenessTest";
 
 export const Route = createFileRoute("/study-corner/general-awareness/model-test-01")({
   head: () => ({
@@ -16,5 +17,5 @@ export const Route = createFileRoute("/study-corner/general-awareness/model-test
 });
 
 function ModelTestPage() {
-  return <GeneralAwarenessTest dataUrl="/data/general-awareness/model-test-01.json" />;
+  return <GeneralAwarenessTest dataUrl="/data/general-awareness/model-test-01.json" progressStorageKey={GA_MODEL_TEST_STORAGE_KEY} />;
 }

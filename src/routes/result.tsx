@@ -132,7 +132,7 @@ function ResultPage() {
       </Card>
 
       <div className="mt-6 flex flex-wrap gap-2">
-        <Button asChild><Link to="/test">Retake Test</Link></Button>
+        <Button asChild><Link to="/test">फिर से Test दें</Link></Button>
         <Button asChild variant="secondary"><Link to="/progress">Go to Dashboard</Link></Button>
         <Button variant="outline" onClick={() => window.print()}>Print Result</Button>
         <Button variant="outline" onClick={() => downloadResult(result)}>Download Result</Button>

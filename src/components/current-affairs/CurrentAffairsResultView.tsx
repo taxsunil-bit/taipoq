@@ -84,7 +84,7 @@ export function CurrentAffairsResultView({ paper, answers, score, onRetake }: Pr
           onClick={onRetake}
           className={cn(BTN, "bg-blue-600 text-white hover:bg-blue-700")}
         >
-          Retake Test
+          फिर से Test दें
         </button>
         <Link
           to="/current-affairs/paper/$paperId"

@@ -40,7 +40,22 @@ export type GAScoreResult = {
   byTopic: Record<string, { correct: number; total: number }>;
 };
 
-export const GA_MODEL_TEST_STORAGE_KEY = "taipoq_ga_model_test_01_progress";
+export function getTestProgressStorageKey(subjectSlug: string, paperSlug: string): string {
+  return `taipoq_${subjectSlug}_${paperSlug}_progress`;
+}
+
+/** @deprecated legacy key — use getTestProgressStorageKey */
+export const GA_MODEL_TEST_LEGACY_STORAGE_KEY = "taipoq_ga_model_test_01_progress";
+
+export const GA_MODEL_TEST_STORAGE_KEY = getTestProgressStorageKey(
+  "general-awareness",
+  "model-test-01",
+);
+
+export const GS_MODEL_TEST_STORAGE_KEY = getTestProgressStorageKey(
+  "general-science",
+  "model-test-01",
+);
 
 export function formatTimer(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -82,10 +97,10 @@ export function calculateGAScore(data: GATestData, answers: Record<string, numbe
   return { correct, wrong, notAttempted, score, percentage, byTopic };
 }
 
-export function loadGAProgress(): GAProgressState | null {
+function readProgress(storageKey: string): GAProgressState | null {
   if (typeof window === "undefined") return null;
   try {
-    const raw = localStorage.getItem(GA_MODEL_TEST_STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey);
     if (!raw) return null;
     return JSON.parse(raw) as GAProgressState;
   } catch {
@@ -93,12 +108,30 @@ export function loadGAProgress(): GAProgressState | null {
   }
 }
 
-export function saveGAProgress(state: GAProgressState): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(GA_MODEL_TEST_STORAGE_KEY, JSON.stringify(state));
+/** Migrate progress saved under the old GA-only key into the subject-scoped key. */
+function migrateLegacyGAProgress(storageKey: string): GAProgressState | null {
+  if (storageKey !== GA_MODEL_TEST_STORAGE_KEY) return null;
+  const legacy = readProgress(GA_MODEL_TEST_LEGACY_STORAGE_KEY);
+  if (!legacy) return null;
+  saveGAProgress(storageKey, legacy);
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(GA_MODEL_TEST_LEGACY_STORAGE_KEY);
+  }
+  return legacy;
 }
 
-export function clearGAProgress(): void {
+export function loadGAProgress(storageKey: string): GAProgressState | null {
+  const saved = readProgress(storageKey);
+  if (saved) return saved;
+  return migrateLegacyGAProgress(storageKey);
+}
+
+export function saveGAProgress(storageKey: string, state: GAProgressState): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(GA_MODEL_TEST_STORAGE_KEY);
+  localStorage.setItem(storageKey, JSON.stringify(state));
+}
+
+export function clearGAProgress(storageKey: string): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(storageKey);
 }

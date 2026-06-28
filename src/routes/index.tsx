@@ -26,7 +26,10 @@ function Home() {
     <PageShell>
       <div className="space-y-4 md:space-y-6">
         <HomeMobileHero />
-        <HomePracticeTestSection />
+        <HomeMobilePrimarySection />
+        <div className="hidden md:block">
+          <HomePracticeTestSection />
+        </div>
         <HomeMobileBody />
         <HomeDesktop />
       </div>
@@ -47,6 +50,38 @@ function HomeMobileHero() {
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         Job Advertisement · MS Word · Excel · Model Papers · Typing
       </p>
+    </section>
+  );
+}
+
+function HomeMobilePrimarySection() {
+  return (
+    <section className="space-y-3 font-hindi md:hidden" aria-label="Primary actions">
+      <Link
+        to={MOBILE_ROUTES.jobAds}
+        className={cn(MOBILE_BTN, "bg-primary text-primary-foreground shadow-sm")}
+      >
+        Job Advertisement देखें
+      </Link>
+      <Link
+        to="/study-corner"
+        className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+      >
+        {STUDY_CORNER_LANDING.homeCard.title}
+      </Link>
+      <Link
+        to="/tests"
+        className={cn(
+          MOBILE_CARD_BTN,
+          "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100",
+        )}
+      >
+        <span className="w-full text-base font-semibold leading-snug">परीक्षा अभ्यास / Tests</span>
+        <span className="w-full text-sm font-normal opacity-90">
+          Model Paper, Typing Test, Current Affairs और General Science Test एक जगह
+        </span>
+        <span className="mt-2 w-full text-sm font-semibold">सभी Tests देखें →</span>
+      </Link>
     </section>
   );
 }
@@ -106,14 +141,8 @@ function HomePracticeTestSection() {
 function HomeMobileBody() {
   return (
     <div className="space-y-4 overflow-x-hidden md:hidden">
-      {/* Primary study & job actions */}
-      <section className="space-y-3 font-hindi" aria-label="Primary actions">
-        <Link
-          to={MOBILE_ROUTES.jobAds}
-          className={cn(MOBILE_BTN, "bg-primary text-primary-foreground shadow-sm")}
-        >
-          Job Advertisement देखें
-        </Link>
+      {/* Study shortcuts — no duplicate test buttons */}
+      <section className="space-y-3 font-hindi" aria-label="Study shortcuts">
         <Link
           to={MOBILE_ROUTES.currentAffairs}
           className={cn(
@@ -127,28 +156,10 @@ function HomeMobileBody() {
           <span className="w-full text-sm font-normal opacity-90">SSC · Railway · PET · Police</span>
         </Link>
         <Link
-          to={MOBILE_ROUTES.currentAffairsTest}
-          className={cn(
-            MOBILE_CARD_BTN,
-            "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100",
-          )}
-        >
-          <span className="w-full text-base font-semibold">Current Affairs Test</span>
-          <span className="w-full text-sm font-normal opacity-90">
-            {MIXED_CA_QUESTION_COUNT} प्रश्न · परीक्षा जैसा अभ्यास
-          </span>
-        </Link>
-        <Link
           to={MOBILE_ROUTES.modelPapers}
           className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
         >
           Model Paper देखें
-        </Link>
-        <Link
-          to={MOBILE_ROUTES.modelPaperTest}
-          className={cn(MOBILE_BTN, "border border-primary/40 bg-primary/10 text-primary")}
-        >
-          Model Paper Test दें
         </Link>
         <Link
           to={MOBILE_ROUTES.msWord}
@@ -282,26 +293,8 @@ function HomeMobileBody() {
           >
             Hindi Practice
           </Link>
-          <Link
-            to="/test"
-            className={cn(
-              MOBILE_BTN,
-              "border border-dashed border-border bg-surface/30 text-foreground",
-            )}
-          >
-            Desktop Speed Test
-          </Link>
         </div>
       </section>
-
-      {/* Library shortcut */}
-      <Link
-        to="/study-corner"
-        className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-sm font-hindi font-medium"
-      >
-        <span>{STUDY_CORNER_LANDING.homeCard.title}</span>
-        <span className="text-muted-foreground">→</span>
-      </Link>
 
       {/* Progress & Certificate */}
       <section className="space-y-3">
@@ -709,15 +702,15 @@ const ONBOARDING_STEPS = [
   },
   {
     step: 3,
-    title: "Model Paper हल करें",
-    subtext: "प्रश्नों से अपनी तैयारी जाँचें।",
-    to: MOBILE_ROUTES.modelPaperTest,
+    title: "परीक्षा अभ्यास दें",
+    subtext: "Model Paper, Current Affairs, General Science और Typing Test एक जगह।",
+    to: "/tests" as const,
   },
   {
     step: 4,
     title: "Typing Speed Test दें",
     subtext: "Computer keyboard पर वास्तविक typing test दें।",
-    to: "/test" as const,
+    to: "/tests" as const,
   },
 ] as const;
 
@@ -729,6 +722,7 @@ const FEATURES = [
 ] as const;
 
 const SECONDARY = [
+  { to: "/tests" as const, label: "परीक्षा अभ्यास / Tests" },
   { to: "/upcoming-exams" as const, label: "आगामी परीक्षाएँ" },
   { to: "/word-learning" as const, label: "शब्द अभ्यास / Word Learning" },
   { to: "/study-corner" as const, label: "पुस्तकालय / Library" },

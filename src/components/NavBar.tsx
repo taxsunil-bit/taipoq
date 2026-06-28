@@ -5,7 +5,7 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/english", label: "English" },
   { to: "/hindi", label: "Hindi" },
-  { to: "/test", label: "Test" },
+  { to: "/tests", label: "Tests" },
   { to: "/upcoming-exams", label: "आगामी परीक्षाएँ" },
   { to: "/word-learning", label: "शब्द अभ्यास" },
   { to: "/study-corner", label: "पुस्तकालय / Library" },

@@ -13,6 +13,7 @@ import { Route as WordLearningRouteImport } from './routes/word-learning'
 import { Route as UpcomingExamsRouteImport } from './routes/upcoming-exams'
 import { Route as TypingTipsRouteImport } from './routes/typing-tips'
 import { Route as TypingStartGuideRouteImport } from './routes/typing-start-guide'
+import { Route as TestsRouteImport } from './routes/tests'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StudyCornerRouteImport } from './routes/study-corner'
@@ -89,6 +90,11 @@ const TypingTipsRoute = TypingTipsRouteImport.update({
 const TypingStartGuideRoute = TypingStartGuideRouteImport.update({
   id: '/typing-start-guide',
   path: '/typing-start-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestsRoute = TestsRouteImport.update({
+  id: '/tests',
+  path: '/tests',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TestRoute = TestRouteImport.update({
@@ -423,6 +429,7 @@ export interface FileRoutesByFullPath {
   '/study-corner': typeof StudyCornerRouteWithChildren
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/tests': typeof TestsRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
@@ -481,6 +488,7 @@ export interface FileRoutesByTo {
   '/result': typeof ResultRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/tests': typeof TestsRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
@@ -542,6 +550,7 @@ export interface FileRoutesById {
   '/study-corner': typeof StudyCornerRouteWithChildren
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/tests': typeof TestsRoute
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
@@ -607,6 +616,7 @@ export interface FileRouteTypes {
     | '/study-corner'
     | '/terms'
     | '/test'
+    | '/tests'
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
@@ -665,6 +675,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/terms'
     | '/test'
+    | '/tests'
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
@@ -725,6 +736,7 @@ export interface FileRouteTypes {
     | '/study-corner'
     | '/terms'
     | '/test'
+    | '/tests'
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
@@ -789,6 +801,7 @@ export interface RootRouteChildren {
   StudyCornerRoute: typeof StudyCornerRouteWithChildren
   TermsRoute: typeof TermsRoute
   TestRoute: typeof TestRoute
+  TestsRoute: typeof TestsRoute
   TypingStartGuideRoute: typeof TypingStartGuideRoute
   TypingTipsRoute: typeof TypingTipsRoute
   UpcomingExamsRoute: typeof UpcomingExamsRoute
@@ -823,6 +836,13 @@ declare module '@tanstack/react-router' {
       path: '/typing-start-guide'
       fullPath: '/typing-start-guide'
       preLoaderRoute: typeof TypingStartGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tests': {
+      id: '/tests'
+      path: '/tests'
+      fullPath: '/tests'
+      preLoaderRoute: typeof TestsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/test': {
@@ -1425,6 +1445,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudyCornerRoute: StudyCornerRouteWithChildren,
   TermsRoute: TermsRoute,
   TestRoute: TestRoute,
+  TestsRoute: TestsRoute,
   TypingStartGuideRoute: TypingStartGuideRoute,
   TypingTipsRoute: TypingTipsRoute,
   UpcomingExamsRoute: UpcomingExamsRoute,

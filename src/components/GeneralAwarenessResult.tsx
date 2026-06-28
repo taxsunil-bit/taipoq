@@ -119,7 +119,7 @@ export function GeneralAwarenessResult({
           onClick={onRestart}
           className="min-h-12 flex-1 rounded-xl bg-blue-600 px-5 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 sm:min-w-[10rem]"
         >
-          पुनः अभ्यास करें
+          फिर से Test दें
         </button>
         <Link
           to="/study-corner/general-awareness"

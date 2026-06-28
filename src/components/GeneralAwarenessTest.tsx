@@ -5,6 +5,7 @@ import {
   calculateGAScore,
   clearGAProgress,
   formatTimer,
+  GA_MODEL_TEST_STORAGE_KEY,
   loadGAProgress,
   saveGAProgress,
   type GATestData,
@@ -16,9 +17,13 @@ type Phase = "loading" | "error" | "instructions" | "test" | "confirm" | "result
 
 type GeneralAwarenessTestProps = {
   dataUrl: string;
+  progressStorageKey?: string;
 };
 
-export function GeneralAwarenessTest({ dataUrl }: GeneralAwarenessTestProps) {
+export function GeneralAwarenessTest({
+  dataUrl,
+  progressStorageKey = GA_MODEL_TEST_STORAGE_KEY,
+}: GeneralAwarenessTestProps) {
   const [phase, setPhase] = useState<Phase>("loading");
   const [testData, setTestData] = useState<GATestData | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -37,7 +42,7 @@ export function GeneralAwarenessTest({ dataUrl }: GeneralAwarenessTestProps) {
         if (cancelled) return;
         setTestData(data);
 
-        const saved = loadGAProgress();
+        const saved = loadGAProgress(progressStorageKey);
         if (saved?.submitted) {
           setProgress(saved);
           setPhase("result");
@@ -56,12 +61,15 @@ export function GeneralAwarenessTest({ dataUrl }: GeneralAwarenessTestProps) {
     return () => {
       cancelled = true;
     };
-  }, [dataUrl]);
+  }, [dataUrl, progressStorageKey]);
 
-  const persist = useCallback((next: GAProgressState) => {
-    setProgress(next);
-    saveGAProgress(next);
-  }, []);
+  const persist = useCallback(
+    (next: GAProgressState) => {
+      setProgress(next);
+      saveGAProgress(progressStorageKey, next);
+    },
+    [progressStorageKey],
+  );
 
   const submitTest = useCallback(
     (state: GAProgressState) => {
@@ -82,12 +90,12 @@ export function GeneralAwarenessTest({ dataUrl }: GeneralAwarenessTestProps) {
         const nextSeconds = prev.remainingSeconds - 1;
         if (nextSeconds <= 0) {
           const autoSubmit: GAProgressState = { ...prev, remainingSeconds: 0, submitted: true };
-          saveGAProgress(autoSubmit);
+          saveGAProgress(progressStorageKey, autoSubmit);
           window.setTimeout(() => setPhase("result"), 0);
           return autoSubmit;
         }
         const next: GAProgressState = { ...prev, remainingSeconds: nextSeconds };
-        saveGAProgress(next);
+        saveGAProgress(progressStorageKey, next);
         return next;
       });
     }, 1000);
@@ -95,7 +103,7 @@ export function GeneralAwarenessTest({ dataUrl }: GeneralAwarenessTestProps) {
     return () => {
       if (timerRef.current) window.clearInterval(timerRef.current);
     };
-  }, [phase, progress?.startedAt, testData]);
+  }, [phase, progress?.startedAt, testData, progressStorageKey]);
 
   const startTest = () => {
     if (!testData) return;
@@ -111,7 +119,7 @@ export function GeneralAwarenessTest({ dataUrl }: GeneralAwarenessTestProps) {
   };
 
   const handleRestart = () => {
-    clearGAProgress();
+    clearGAProgress(progressStorageKey);
     setProgress(null);
     setShowConfirm(false);
     setPhase("instructions");
