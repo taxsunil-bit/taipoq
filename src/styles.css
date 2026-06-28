@@ -125,19 +125,15 @@
 
 @keyframes tests-hub-glow {
   0%, 100% {
-    box-shadow:
-      0 10px 15px -3px rgb(59 130 246 / 0.28),
-      0 4px 6px -4px rgb(37 99 235 / 0.2);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.20);
   }
   50% {
-    box-shadow:
-      0 14px 28px -4px rgb(59 130 246 / 0.38),
-      0 0 0 3px rgb(191 219 254 / 0.35);
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.30);
   }
 }
 
 .tests-hub-card-glow {
-  animation: tests-hub-glow 2.5s ease-in-out infinite;
+  animation: tests-hub-glow 2.8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -45,14 +45,14 @@ export function NavBar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-        <Link to="/" className="flex min-w-0 items-center gap-2.5">
+        <Link to="/" className="flex min-w-0 items-center gap-2">
           <TaipoqLogo
             variant="icon"
-            width={36}
-            height={36}
-            className="h-9 w-9 md:h-10 md:w-10"
+            width={44}
+            height={44}
+            className="h-9 w-9 rounded-xl border border-blue-400/20 bg-blue-600/10 object-contain md:h-11 md:w-11"
           />
-          <div className="font-display text-lg font-extrabold tracking-tight">TAIPOQ</div>
+          <div className="font-display text-lg font-extrabold tracking-tight text-white">TAIPOQ</div>
           <span className="ml-1 hidden rounded-full border border-border/80 bg-surface/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/80 md:inline">
             v1.0
           </span>

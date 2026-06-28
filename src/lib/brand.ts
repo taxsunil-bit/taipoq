@@ -5,3 +5,16 @@ export const BRAND_ASSETS = {
 } as const;
 
 export const BRAND_TAGLINE = "Govt Job Computer & Typing Preparation";
+
+/** Shared blue gradient for home practice / primary action cards (#2563EB → #1D4ED8). */
+export const MAIN_ACTION_CARD =
+  "bg-gradient-to-br from-blue-600 to-blue-700 text-white border border-blue-300/30 shadow-md shadow-blue-950/20 transition-all duration-200 hover:scale-[1.01] hover:shadow-lg hover:shadow-blue-600/20";
+
+export const MAIN_ACTION_SUBTITLE = "text-blue-100";
+
+/** Tests hub only — same base blue; extra border/shadow/glow via badge + CTA. */
+export const TESTS_HUB_CARD_HIGHLIGHT =
+  "tests-hub-card-glow border-blue-200/50 shadow-blue-600/25";
+
+export const TESTS_HUB_BADGE =
+  "absolute right-3 top-3 rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-sm";

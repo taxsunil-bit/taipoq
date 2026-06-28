@@ -5,6 +5,12 @@ import { TaipoqLogo } from "@/components/TaipoqLogo";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
+import {
+  MAIN_ACTION_CARD,
+  MAIN_ACTION_SUBTITLE,
+  TESTS_HUB_BADGE,
+  TESTS_HUB_CARD_HIGHLIGHT,
+} from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -67,12 +73,15 @@ function HomeMobilePrimarySection() {
       >
         {STUDY_CORNER_LANDING.homeCard.title}
       </Link>
-      <Link to="/tests" className={cn(MOBILE_CARD_BTN, TESTS_HUB_CARD, "relative gap-1")}>
+      <Link
+        to="/tests"
+        className={cn(MOBILE_CARD_BTN, MAIN_ACTION_CARD, TESTS_HUB_CARD_HIGHLIGHT, "relative gap-1")}
+      >
         <span className={TESTS_HUB_BADGE}>मुख्य</span>
         <span className="w-full pr-14 text-base font-semibold leading-snug text-white">
           परीक्षा अभ्यास / Tests
         </span>
-        <span className={cn("w-full", TESTS_HUB_SUBTITLE)}>
+        <span className={cn("w-full text-sm font-normal leading-snug", MAIN_ACTION_SUBTITLE)}>
           Model Paper, Typing Test, Current Affairs और General Science Test एक जगह
         </span>
         <span className="mt-1 w-full text-sm font-semibold text-white">सभी Tests देखें →</span>
@@ -120,18 +129,13 @@ function PracticeActionCard({ action }: { action: PracticeAction }) {
       {action.highlight ? <span className={TESTS_HUB_BADGE}>मुख्य</span> : null}
       <span
         className={cn(
-          "text-base font-semibold leading-snug",
-          action.highlight && "pr-14 text-white",
+          "text-base font-semibold leading-snug text-white",
+          action.highlight && "pr-14",
         )}
       >
         {action.title}
       </span>
-      <span
-        className={cn(
-          "text-sm font-normal leading-snug",
-          action.highlight ? TESTS_HUB_SUBTITLE : "text-primary-foreground/85",
-        )}
-      >
+      <span className={cn("text-sm font-normal leading-snug", MAIN_ACTION_SUBTITLE)}>
         {action.subtitle}
       </span>
       {action.highlight ? (
@@ -142,9 +146,8 @@ function PracticeActionCard({ action }: { action: PracticeAction }) {
 
   const className = cn(
     PRACTICE_CARD_BTN,
-    action.highlight
-      ? TESTS_HUB_CARD
-      : "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+    MAIN_ACTION_CARD,
+    action.highlight && TESTS_HUB_CARD_HIGHLIGHT,
   );
 
   if ("search" in action && action.search) {
@@ -610,14 +613,6 @@ const MOBILE_CARD_BTN =
 
 const PRACTICE_CARD_BTN =
   "relative flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 overflow-hidden rounded-xl px-4 py-3.5 text-left transition-all duration-200 active:scale-[0.98]";
-
-const TESTS_HUB_CARD =
-  "tests-hub-card-glow border border-blue-200/50 bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-lg shadow-blue-500/25 hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/35";
-
-const TESTS_HUB_SUBTITLE = "text-sm font-normal leading-snug text-blue-50";
-
-const TESTS_HUB_BADGE =
-  "absolute right-3 top-3 rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-sm";
 
 const DESKTOP_PRACTICE_ACTIONS = [
   {
