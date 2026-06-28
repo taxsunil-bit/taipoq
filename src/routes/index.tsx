@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
+import { getCurrentAffairsPaper, MIXED_PAPER_ID } from "@/content/currentAffairsPapers";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
 import { cn } from "@/lib/utils";
@@ -77,6 +78,24 @@ function HomeMobile() {
           className={cn(MOBILE_BTN, "border border-primary/40 bg-primary/10 text-primary")}
         >
           Model Paper Test दें
+        </Link>
+        <Link
+          to={MOBILE_ROUTES.currentAffairs}
+          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+        >
+          समसामयिक प्रश्नपत्र
+        </Link>
+        <Link
+          to={MOBILE_ROUTES.currentAffairsTest}
+          className={cn(
+            MOBILE_BTN,
+            "min-h-[3.25rem] flex-col items-start gap-0.5 border border-emerald-500/40 bg-emerald-500/10 py-3.5 text-left text-emerald-950 dark:text-emerald-100",
+          )}
+        >
+          <span className="w-full text-base font-semibold">Current Affairs Test</span>
+          <span className="w-full text-sm font-normal opacity-90">
+            {MIXED_CA_QUESTION_COUNT} प्रश्न · परीक्षा जैसा अभ्यास
+          </span>
         </Link>
       </section>
 
@@ -525,6 +544,8 @@ function Arrow() {
   );
 }
 
+const MIXED_CA_QUESTION_COUNT = getCurrentAffairsPaper(MIXED_PAPER_ID)?.questions.length ?? 25;
+
 const MOBILE_BTN =
   "inline-flex min-h-11 w-full items-center justify-center rounded-xl px-5 py-3 text-base font-semibold transition-transform active:scale-[0.98]";
 
@@ -534,6 +555,8 @@ const MOBILE_ROUTES = {
   excel: EXCEL_BASICS_HREF,
   modelPapers: "/study-corner/general-awareness" as const,
   modelPaperTest: "/study-corner/general-awareness/model-test-01" as const,
+  currentAffairs: "/current-affairs" as const,
+  currentAffairsTest: "/current-affairs-test" as const,
   generalAwareness: "/study-corner/general-awareness" as const,
   computerBasics: "/study-corner/computer-basics" as const,
 };
@@ -543,6 +566,7 @@ const MOBILE_USEFUL_CARDS = [
   { label: "MS Word Basic Knowledge", to: MOBILE_ROUTES.msWord },
   { label: "Excel Basic Knowledge", to: MOBILE_ROUTES.excel },
   { label: "Model Papers", to: MOBILE_ROUTES.modelPapers },
+  { label: "समसामयिक प्रश्नपत्र / Current Affairs", to: MOBILE_ROUTES.currentAffairs },
   { label: "General Awareness", to: MOBILE_ROUTES.generalAwareness },
   { label: "Computer Basics", to: MOBILE_ROUTES.computerBasics },
 ] as const;

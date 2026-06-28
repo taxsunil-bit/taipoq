@@ -19,10 +19,14 @@ import { Route as StudyCornerRouteImport } from './routes/study-corner'
 import { Route as ResultRouteImport } from './routes/result'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ModelPaperTestRouteImport } from './routes/model-paper-test'
+import { Route as ModelPaperRouteImport } from './routes/model-paper'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HindiRouteImport } from './routes/hindi'
 import { Route as EnglishRouteImport } from './routes/english'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as CurrentAffairsTestRouteImport } from './routes/current-affairs-test'
+import { Route as CurrentAffairsRouteImport } from './routes/current-affairs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -31,6 +35,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudyCornerIndexRouteImport } from './routes/study-corner.index'
 import { Route as HindiIndexRouteImport } from './routes/hindi.index'
 import { Route as EnglishIndexRouteImport } from './routes/english.index'
+import { Route as CurrentAffairsIndexRouteImport } from './routes/current-affairs.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as StudyCornerQuizResultRouteImport } from './routes/study-corner.quiz-result'
 import { Route as StudyCornerGeneralAwarenessRouteImport } from './routes/study-corner.general-awareness'
@@ -56,6 +61,7 @@ import { Route as StudyCornerComputerBasicsChapter4RouteImport } from './routes/
 import { Route as StudyCornerComputerBasicsChapter3RouteImport } from './routes/study-corner.computer-basics.chapter-3'
 import { Route as StudyCornerComputerBasicsChapter2RouteImport } from './routes/study-corner.computer-basics.chapter-2'
 import { Route as StudyCornerComputerBasicsChapter1RouteImport } from './routes/study-corner.computer-basics.chapter-1'
+import { Route as CurrentAffairsPaperPaperIdRouteImport } from './routes/current-affairs.paper.$paperId'
 import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-paragraph.$id'
 
 const WordLearningRoute = WordLearningRouteImport.update({
@@ -108,6 +114,16 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModelPaperTestRoute = ModelPaperTestRouteImport.update({
+  id: '/model-paper-test',
+  path: '/model-paper-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelPaperRoute = ModelPaperRouteImport.update({
+  id: '/model-paper',
+  path: '/model-paper',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -126,6 +142,16 @@ const EnglishRoute = EnglishRouteImport.update({
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CurrentAffairsTestRoute = CurrentAffairsTestRouteImport.update({
+  id: '/current-affairs-test',
+  path: '/current-affairs-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CurrentAffairsRoute = CurrentAffairsRouteImport.update({
+  id: '/current-affairs',
+  path: '/current-affairs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -167,6 +193,11 @@ const EnglishIndexRoute = EnglishIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => EnglishRoute,
+} as any)
+const CurrentAffairsIndexRoute = CurrentAffairsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CurrentAffairsRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -311,6 +342,12 @@ const StudyCornerComputerBasicsChapter1Route =
     path: '/chapter-1',
     getParentRoute: () => StudyCornerComputerBasicsRoute,
   } as any)
+const CurrentAffairsPaperPaperIdRoute =
+  CurrentAffairsPaperPaperIdRouteImport.update({
+    id: '/paper/$paperId',
+    path: '/paper/$paperId',
+    getParentRoute: () => CurrentAffairsRoute,
+  } as any)
 const AdminEditParagraphIdRoute = AdminEditParagraphIdRouteImport.update({
   id: '/edit-paragraph/$id',
   path: '/edit-paragraph/$id',
@@ -323,10 +360,14 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/certificate': typeof CertificateRoute
   '/contact': typeof ContactRoute
+  '/current-affairs': typeof CurrentAffairsRouteWithChildren
+  '/current-affairs-test': typeof CurrentAffairsTestRoute
   '/disclaimer': typeof DisclaimerRoute
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
+  '/model-paper': typeof ModelPaperRoute
+  '/model-paper-test': typeof ModelPaperTestRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
@@ -346,10 +387,12 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
   '/admin/': typeof AdminIndexRoute
+  '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
+  '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
   '/study-corner/computer-basics/chapter-3': typeof StudyCornerComputerBasicsChapter3Route
@@ -372,8 +415,11 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/certificate': typeof CertificateRoute
   '/contact': typeof ContactRoute
+  '/current-affairs-test': typeof CurrentAffairsTestRoute
   '/disclaimer': typeof DisclaimerRoute
   '/login': typeof LoginRoute
+  '/model-paper': typeof ModelPaperRoute
+  '/model-paper-test': typeof ModelPaperTestRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
@@ -390,10 +436,12 @@ export interface FileRoutesByTo {
   '/hindi/practice': typeof HindiPracticeRoute
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
   '/admin': typeof AdminIndexRoute
+  '/current-affairs': typeof CurrentAffairsIndexRoute
   '/english': typeof EnglishIndexRoute
   '/hindi': typeof HindiIndexRoute
   '/study-corner': typeof StudyCornerIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
+  '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
   '/study-corner/computer-basics/chapter-3': typeof StudyCornerComputerBasicsChapter3Route
@@ -418,10 +466,14 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/certificate': typeof CertificateRoute
   '/contact': typeof ContactRoute
+  '/current-affairs': typeof CurrentAffairsRouteWithChildren
+  '/current-affairs-test': typeof CurrentAffairsTestRoute
   '/disclaimer': typeof DisclaimerRoute
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
+  '/model-paper': typeof ModelPaperRoute
+  '/model-paper-test': typeof ModelPaperTestRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
@@ -441,10 +493,12 @@ export interface FileRoutesById {
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
   '/admin/': typeof AdminIndexRoute
+  '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
+  '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
   '/study-corner/computer-basics/chapter-3': typeof StudyCornerComputerBasicsChapter3Route
@@ -470,10 +524,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/certificate'
     | '/contact'
+    | '/current-affairs'
+    | '/current-affairs-test'
     | '/disclaimer'
     | '/english'
     | '/hindi'
     | '/login'
+    | '/model-paper'
+    | '/model-paper-test'
     | '/privacy-policy'
     | '/progress'
     | '/result'
@@ -493,10 +551,12 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness'
     | '/study-corner/quiz-result'
     | '/admin/'
+    | '/current-affairs/'
     | '/english/'
     | '/hindi/'
     | '/study-corner/'
     | '/admin/edit-paragraph/$id'
+    | '/current-affairs/paper/$paperId'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
     | '/study-corner/computer-basics/chapter-3'
@@ -519,8 +579,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificate'
     | '/contact'
+    | '/current-affairs-test'
     | '/disclaimer'
     | '/login'
+    | '/model-paper'
+    | '/model-paper-test'
     | '/privacy-policy'
     | '/progress'
     | '/result'
@@ -537,10 +600,12 @@ export interface FileRouteTypes {
     | '/hindi/practice'
     | '/study-corner/quiz-result'
     | '/admin'
+    | '/current-affairs'
     | '/english'
     | '/hindi'
     | '/study-corner'
     | '/admin/edit-paragraph/$id'
+    | '/current-affairs/paper/$paperId'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
     | '/study-corner/computer-basics/chapter-3'
@@ -564,10 +629,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/certificate'
     | '/contact'
+    | '/current-affairs'
+    | '/current-affairs-test'
     | '/disclaimer'
     | '/english'
     | '/hindi'
     | '/login'
+    | '/model-paper'
+    | '/model-paper-test'
     | '/privacy-policy'
     | '/progress'
     | '/result'
@@ -587,10 +656,12 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness'
     | '/study-corner/quiz-result'
     | '/admin/'
+    | '/current-affairs/'
     | '/english/'
     | '/hindi/'
     | '/study-corner/'
     | '/admin/edit-paragraph/$id'
+    | '/current-affairs/paper/$paperId'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
     | '/study-corner/computer-basics/chapter-3'
@@ -615,10 +686,14 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   CertificateRoute: typeof CertificateRoute
   ContactRoute: typeof ContactRoute
+  CurrentAffairsRoute: typeof CurrentAffairsRouteWithChildren
+  CurrentAffairsTestRoute: typeof CurrentAffairsTestRoute
   DisclaimerRoute: typeof DisclaimerRoute
   EnglishRoute: typeof EnglishRouteWithChildren
   HindiRoute: typeof HindiRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ModelPaperRoute: typeof ModelPaperRoute
+  ModelPaperTestRoute: typeof ModelPaperTestRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProgressRoute: typeof ProgressRoute
   ResultRoute: typeof ResultRoute
@@ -703,6 +778,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/model-paper-test': {
+      id: '/model-paper-test'
+      path: '/model-paper-test'
+      fullPath: '/model-paper-test'
+      preLoaderRoute: typeof ModelPaperTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/model-paper': {
+      id: '/model-paper'
+      path: '/model-paper'
+      fullPath: '/model-paper'
+      preLoaderRoute: typeof ModelPaperRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -729,6 +818,20 @@ declare module '@tanstack/react-router' {
       path: '/disclaimer'
       fullPath: '/disclaimer'
       preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/current-affairs-test': {
+      id: '/current-affairs-test'
+      path: '/current-affairs-test'
+      fullPath: '/current-affairs-test'
+      preLoaderRoute: typeof CurrentAffairsTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/current-affairs': {
+      id: '/current-affairs'
+      path: '/current-affairs'
+      fullPath: '/current-affairs'
+      preLoaderRoute: typeof CurrentAffairsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -786,6 +889,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/english/'
       preLoaderRoute: typeof EnglishIndexRouteImport
       parentRoute: typeof EnglishRoute
+    }
+    '/current-affairs/': {
+      id: '/current-affairs/'
+      path: '/'
+      fullPath: '/current-affairs/'
+      preLoaderRoute: typeof CurrentAffairsIndexRouteImport
+      parentRoute: typeof CurrentAffairsRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -962,6 +1072,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudyCornerComputerBasicsChapter1RouteImport
       parentRoute: typeof StudyCornerComputerBasicsRoute
     }
+    '/current-affairs/paper/$paperId': {
+      id: '/current-affairs/paper/$paperId'
+      path: '/paper/$paperId'
+      fullPath: '/current-affairs/paper/$paperId'
+      preLoaderRoute: typeof CurrentAffairsPaperPaperIdRouteImport
+      parentRoute: typeof CurrentAffairsRoute
+    }
     '/admin/edit-paragraph/$id': {
       id: '/admin/edit-paragraph/$id'
       path: '/edit-paragraph/$id'
@@ -985,6 +1102,20 @@ const AdminRouteChildren: AdminRouteChildren = {
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface CurrentAffairsRouteChildren {
+  CurrentAffairsIndexRoute: typeof CurrentAffairsIndexRoute
+  CurrentAffairsPaperPaperIdRoute: typeof CurrentAffairsPaperPaperIdRoute
+}
+
+const CurrentAffairsRouteChildren: CurrentAffairsRouteChildren = {
+  CurrentAffairsIndexRoute: CurrentAffairsIndexRoute,
+  CurrentAffairsPaperPaperIdRoute: CurrentAffairsPaperPaperIdRoute,
+}
+
+const CurrentAffairsRouteWithChildren = CurrentAffairsRoute._addFileChildren(
+  CurrentAffairsRouteChildren,
+)
 
 interface EnglishRouteChildren {
   EnglishLessonsRoute: typeof EnglishLessonsRoute
@@ -1111,10 +1242,14 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   CertificateRoute: CertificateRoute,
   ContactRoute: ContactRoute,
+  CurrentAffairsRoute: CurrentAffairsRouteWithChildren,
+  CurrentAffairsTestRoute: CurrentAffairsTestRoute,
   DisclaimerRoute: DisclaimerRoute,
   EnglishRoute: EnglishRouteWithChildren,
   HindiRoute: HindiRouteWithChildren,
   LoginRoute: LoginRoute,
+  ModelPaperRoute: ModelPaperRoute,
+  ModelPaperTestRoute: ModelPaperTestRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProgressRoute: ProgressRoute,
   ResultRoute: ResultRoute,
