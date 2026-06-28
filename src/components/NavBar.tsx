@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useCookieConsent } from "@/components/CookieConsent";
+import { TaipoqLogo } from "@/components/TaipoqLogo";
+import { BRAND_TAGLINE } from "@/lib/brand";
 
 const links = [
   { to: "/", label: "Home" },
@@ -43,12 +45,15 @@ export function NavBar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary font-display text-lg font-bold text-primary-foreground shadow-lg shadow-primary/20">
-            T
-          </div>
-          <div className="font-display text-lg font-bold tracking-tight">TAIPOQ</div>
-          <span className="ml-2 hidden rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:inline">
+        <Link to="/" className="flex min-w-0 items-center gap-2.5">
+          <TaipoqLogo
+            variant="icon"
+            width={36}
+            height={36}
+            className="h-9 w-9 md:h-10 md:w-10"
+          />
+          <div className="font-display text-lg font-extrabold tracking-tight">TAIPOQ</div>
+          <span className="ml-1 hidden rounded-full border border-border/80 bg-surface/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/80 md:inline">
             v1.0
           </span>
         </Link>
@@ -87,9 +92,10 @@ export function Footer() {
     <footer className="mt-20 border-t border-border/60 pb-20 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-6 px-6 py-8 text-sm">
         <div className="flex flex-wrap items-start justify-between gap-6">
-          <div>
+          <div className="space-y-2">
+            <TaipoqLogo variant="full" width={140} height={140} className="h-auto w-[140px] max-w-[160px]" />
             <div className="font-display font-bold">TAIPOQ</div>
-            <div className="text-muted-foreground">Smart English and Hindi typing practice for students and job aspirants.</div>
+            <div className="text-muted-foreground">{BRAND_TAGLINE}</div>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2">
             {INFO_LINKS.map((l) => (

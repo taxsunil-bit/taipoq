@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
+import { TaipoqLogo } from "@/components/TaipoqLogo";
 import { Button } from "@/components/ui/button";
 import { getLatestEligibleResult, getUser, type SavedResult } from "@/lib/storage";
 
@@ -51,7 +52,10 @@ function Certificate() {
     <PageShell>
       <div className="mx-auto max-w-4xl">
         <div className="rounded-2xl border-4 border-double border-primary/40 bg-card p-10 text-center shadow-sm print:shadow-none">
-          <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">TAIPOQ</div>
+          <div className="flex justify-center">
+            <TaipoqLogo variant="icon" width={56} height={56} className="h-14 w-14" />
+          </div>
+          <div className="mt-3 text-sm uppercase tracking-[0.3em] text-muted-foreground">TAIPOQ</div>
           <h1 className="mt-2 font-display text-3xl font-bold md:text-4xl">TAIPOQ Typing Certificate</h1>
           <p className="mt-4 text-muted-foreground">This is to certify that</p>
           <p className="mt-2 text-2xl font-semibold">{data.name}</p>

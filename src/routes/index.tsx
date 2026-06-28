@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
+import { TaipoqLogo } from "@/components/TaipoqLogo";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
@@ -39,9 +40,7 @@ function Home() {
 function HomeMobileHero() {
   return (
     <section className="bento-tile p-5 font-hindi md:hidden">
-      <div className="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-primary font-display text-lg font-bold text-primary-foreground">
-        T
-      </div>
+      <TaipoqLogo variant="icon" width={40} height={40} className="mb-3 h-10 w-10" />
       <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
       <p className="mt-2 text-base font-medium leading-snug text-foreground">
         Govt Job Computer & Typing Preparation
@@ -331,9 +330,7 @@ function HomeDesktop() {
           </div>
           <div className="relative grid h-full gap-8 md:grid-cols-2 md:grid-rows-[1fr_auto] md:items-center md:gap-x-10 md:gap-y-8">
             <div className="md:col-start-1 md:row-start-1">
-              <div className="mb-8 grid h-12 w-12 place-items-center rounded-xl bg-primary font-display text-xl font-bold text-primary-foreground shadow-lg shadow-primary/20">
-                T
-              </div>
+              <TaipoqLogo variant="icon" width={48} height={48} className="mb-8 h-12 w-12" />
               <h1 className="font-display text-6xl font-bold leading-[0.95] tracking-tighter md:text-7xl">
                 TAIPOQ
               </h1>
@@ -615,7 +612,7 @@ const PRACTICE_CARD_BTN =
   "relative flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 overflow-hidden rounded-xl px-4 py-3.5 text-left transition-all duration-200 active:scale-[0.98]";
 
 const TESTS_HUB_CARD =
-  "tests-hub-card-glow border border-blue-300/40 bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/20 hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/30";
+  "tests-hub-card-glow border border-blue-200/50 bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-lg shadow-blue-500/25 hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/35";
 
 const TESTS_HUB_SUBTITLE = "text-sm font-normal leading-snug text-blue-50";
 
