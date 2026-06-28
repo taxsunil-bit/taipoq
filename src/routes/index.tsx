@@ -68,18 +68,15 @@ function HomeMobilePrimarySection() {
       >
         {STUDY_CORNER_LANDING.homeCard.title}
       </Link>
-      <Link
-        to="/tests"
-        className={cn(
-          MOBILE_CARD_BTN,
-          "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100",
-        )}
-      >
-        <span className="w-full text-base font-semibold leading-snug">परीक्षा अभ्यास / Tests</span>
-        <span className="w-full text-sm font-normal opacity-90">
+      <Link to="/tests" className={cn(MOBILE_CARD_BTN, TESTS_HUB_CARD, "relative gap-1")}>
+        <span className={TESTS_HUB_BADGE}>मुख्य</span>
+        <span className="w-full pr-14 text-base font-semibold leading-snug text-white">
+          परीक्षा अभ्यास / Tests
+        </span>
+        <span className={cn("w-full", TESTS_HUB_SUBTITLE)}>
           Model Paper, Typing Test, Current Affairs और General Science Test एक जगह
         </span>
-        <span className="mt-2 w-full text-sm font-semibold">सभी Tests देखें →</span>
+        <span className="mt-1 w-full text-sm font-semibold text-white">सभी Tests देखें →</span>
       </Link>
       <Link
         to="/typing-start-guide"
@@ -108,52 +105,61 @@ function HomeDesktopPracticeSection() {
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {DESKTOP_PRACTICE_ACTIONS.map((action) => (
           <li key={action.to + action.title}>
-            {"search" in action && action.search ? (
-              <Link
-                to={action.to}
-                search={action.search}
-                className={cn(
-                  PRACTICE_CARD_BTN,
-                  action.highlight
-                    ? "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
-                    : "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
-                )}
-              >
-                <span className="text-base font-semibold leading-snug">{action.title}</span>
-                <span
-                  className={cn(
-                    "text-sm font-normal leading-snug",
-                    action.highlight ? "opacity-90" : "text-primary-foreground/85",
-                  )}
-                >
-                  {action.subtitle}
-                </span>
-              </Link>
-            ) : (
-              <Link
-                to={action.to}
-                className={cn(
-                  PRACTICE_CARD_BTN,
-                  action.highlight
-                    ? "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
-                    : "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
-                )}
-              >
-                <span className="text-base font-semibold leading-snug">{action.title}</span>
-                <span
-                  className={cn(
-                    "text-sm font-normal leading-snug",
-                    action.highlight ? "opacity-90" : "text-primary-foreground/85",
-                  )}
-                >
-                  {action.subtitle}
-                </span>
-              </Link>
-            )}
+            <PracticeActionCard action={action} />
           </li>
         ))}
       </ul>
     </section>
+  );
+}
+
+type PracticeAction = (typeof DESKTOP_PRACTICE_ACTIONS)[number];
+
+function PracticeActionCard({ action }: { action: PracticeAction }) {
+  const content = (
+    <>
+      {action.highlight ? <span className={TESTS_HUB_BADGE}>मुख्य</span> : null}
+      <span
+        className={cn(
+          "text-base font-semibold leading-snug",
+          action.highlight && "pr-14 text-white",
+        )}
+      >
+        {action.title}
+      </span>
+      <span
+        className={cn(
+          "text-sm font-normal leading-snug",
+          action.highlight ? TESTS_HUB_SUBTITLE : "text-primary-foreground/85",
+        )}
+      >
+        {action.subtitle}
+      </span>
+      {action.highlight ? (
+        <span className="mt-1 text-sm font-semibold text-white">सभी Tests देखें →</span>
+      ) : null}
+    </>
+  );
+
+  const className = cn(
+    PRACTICE_CARD_BTN,
+    action.highlight
+      ? TESTS_HUB_CARD
+      : "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+  );
+
+  if ("search" in action && action.search) {
+    return (
+      <Link to={action.to} search={action.search} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <Link to={action.to} className={className}>
+      {content}
+    </Link>
   );
 }
 
@@ -606,7 +612,15 @@ const MOBILE_CARD_BTN =
   "inline-flex min-h-[3.25rem] w-full rounded-xl px-5 py-3.5 text-left transition-transform active:scale-[0.98]";
 
 const PRACTICE_CARD_BTN =
-  "flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 rounded-xl px-4 py-3.5 text-left transition-transform active:scale-[0.98]";
+  "relative flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 overflow-hidden rounded-xl px-4 py-3.5 text-left transition-all duration-200 active:scale-[0.98]";
+
+const TESTS_HUB_CARD =
+  "tests-hub-card-glow border border-blue-300/40 bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/20 hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/30";
+
+const TESTS_HUB_SUBTITLE = "text-sm font-normal leading-snug text-blue-50";
+
+const TESTS_HUB_BADGE =
+  "absolute right-3 top-3 rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-sm";
 
 const DESKTOP_PRACTICE_ACTIONS = [
   {
