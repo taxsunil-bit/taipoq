@@ -627,15 +627,25 @@ const PRACTICE_TEST_ACTIONS = [
     to: "/test" as const,
   },
   {
+    title: "English Typing Practice",
+    subtitle: "English typing अभ्यास",
+    to: "/english/practice" as const,
+  },
+  {
     title: "Hindi Typing Practice",
     subtitle: "Hindi typing अभ्यास",
     to: "/hindi/practice" as const,
     search: { mode: "Remington" as const },
   },
   {
-    title: "English Typing Practice",
-    subtitle: "English typing अभ्यास",
-    to: "/english/practice" as const,
+    title: "MS Word",
+    subtitle: "Computer exam preparation",
+    to: WORD_BASICS_HREF as const,
+  },
+  {
+    title: "Excel",
+    subtitle: "Spreadsheet basics",
+    to: EXCEL_BASICS_HREF as const,
   },
   {
     title: "Model Paper",
