@@ -24,29 +24,88 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <PageShell>
-      <HomeMobile />
-      <HomeDesktop />
+      <div className="space-y-4 md:space-y-6">
+        <HomeMobileHero />
+        <HomePracticeTestSection />
+        <HomeMobileBody />
+        <HomeDesktop />
+      </div>
     </PageShell>
   );
 }
 
-function HomeMobile() {
+function HomeMobileHero() {
+  return (
+    <section className="bento-tile p-5 font-hindi md:hidden">
+      <div className="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-primary font-display text-lg font-bold text-primary-foreground">
+        T
+      </div>
+      <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
+      <p className="mt-2 text-base font-medium leading-snug text-foreground">
+        Govt Job Computer & Typing Preparation
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        Job Advertisement · MS Word · Excel · Model Papers · Typing
+      </p>
+    </section>
+  );
+}
+
+function HomePracticeTestSection() {
+  return (
+    <section
+      className="bento-tile space-y-4 p-5 md:p-6"
+      aria-labelledby="practice-test-heading"
+    >
+      <div>
+        <h2 id="practice-test-heading" className="font-display text-xl font-bold tracking-tight md:text-2xl">
+          Practice & Test
+        </h2>
+        <p className="mt-1 font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
+          Typing, Model Paper और Current Affairs अभ्यास
+        </p>
+      </div>
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {PRACTICE_TEST_ACTIONS.map((action) => (
+          <li key={action.to}>
+            {"search" in action ? (
+              <Link
+                to={action.to}
+                search={action.search}
+                className={cn(
+                  PRACTICE_TEST_BTN,
+                  "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+                )}
+              >
+                <span className="text-base font-semibold leading-snug">{action.title}</span>
+                <span className="text-sm font-normal leading-snug text-primary-foreground/85">
+                  {action.subtitle}
+                </span>
+              </Link>
+            ) : (
+              <Link
+                to={action.to}
+                className={cn(
+                  PRACTICE_TEST_BTN,
+                  "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+                )}
+              >
+                <span className="text-base font-semibold leading-snug">{action.title}</span>
+                <span className="text-sm font-normal leading-snug text-primary-foreground/85">
+                  {action.subtitle}
+                </span>
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function HomeMobileBody() {
   return (
     <div className="space-y-4 overflow-x-hidden md:hidden">
-      {/* Hero */}
-      <section className="bento-tile p-5 font-hindi">
-        <div className="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-primary font-display text-lg font-bold text-primary-foreground">
-          T
-        </div>
-        <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
-        <p className="mt-2 text-base font-medium leading-snug text-foreground">
-          Govt Job Computer & Typing Preparation
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          Job Advertisement · MS Word · Excel · Model Papers · Typing
-        </p>
-      </section>
-
       {/* Primary study & job actions */}
       <section className="space-y-3 font-hindi" aria-label="Primary actions">
         <Link
@@ -557,6 +616,48 @@ const MOBILE_BTN =
 
 const MOBILE_CARD_BTN =
   "inline-flex min-h-[3.25rem] w-full rounded-xl px-5 py-3.5 text-left transition-transform active:scale-[0.98]";
+
+const PRACTICE_TEST_BTN =
+  "flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 rounded-xl px-4 py-3.5 text-left transition-transform active:scale-[0.98]";
+
+const PRACTICE_TEST_ACTIONS = [
+  {
+    title: "Take Speed Test",
+    subtitle: "English typing speed test",
+    to: "/test" as const,
+  },
+  {
+    title: "Hindi Typing Practice",
+    subtitle: "Hindi typing अभ्यास",
+    to: "/hindi/practice" as const,
+    search: { mode: "Remington" as const },
+  },
+  {
+    title: "English Typing Practice",
+    subtitle: "English typing अभ्यास",
+    to: "/english/practice" as const,
+  },
+  {
+    title: "Model Paper",
+    subtitle: "General Awareness अभ्यास",
+    to: "/model-paper" as const,
+  },
+  {
+    title: "Model Paper Test",
+    subtitle: "50 प्रश्न · परीक्षा जैसा अभ्यास",
+    to: "/model-paper-test" as const,
+  },
+  {
+    title: "Current Affairs",
+    subtitle: "SSC · Railway · PET · Police",
+    to: "/current-affairs" as const,
+  },
+  {
+    title: "Current Affairs Test",
+    subtitle: `${MIXED_CA_QUESTION_COUNT} प्रश्न · परीक्षा जैसा अभ्यास`,
+    to: "/current-affairs-test" as const,
+  },
+] as const;
 
 const MOBILE_ROUTES = {
   jobAds: "/upcoming-exams" as const,
