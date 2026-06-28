@@ -13,11 +13,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/current-affairs/")({
   head: () => ({
     meta: [
-      { title: "समसामयिक प्रश्नपत्र — TAIPOQ" },
+      { title: "Current Affairs / समसामयिक प्रश्नपत्र — TAIPOQ" },
       {
         name: "description",
         content:
-          "SSC, Railway, PET और Police परीक्षाओं के लिए समसामयिक प्रश्न — Practice और Test Mode।",
+          "SSC, Railway, PET और Police परीक्षाओं के लिए Current Affairs + पृष्ठभूमि + अभ्यास — Practice और Test Mode।",
       },
     ],
   }),
@@ -33,9 +33,11 @@ function CurrentAffairsLanding() {
       <div className="min-h-[calc(100vh-8rem)] overflow-x-hidden bg-slate-50 font-hindi">
         <div className="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
           <header className="space-y-2">
-            <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">समसामयिक प्रश्नपत्र</h1>
+            <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+              Current Affairs / समसामयिक प्रश्नपत्र
+            </h1>
             <p className="max-w-3xl text-base leading-relaxed text-slate-700 sm:text-lg">
-              SSC, Railway, PET और Police परीक्षाओं के लिए घटना + पृष्ठभूमि + अभ्यास
+              SSC, Railway, PET और Police परीक्षाओं के लिए Current Affairs + पृष्ठभूमि + अभ्यास
             </p>
           </header>
 

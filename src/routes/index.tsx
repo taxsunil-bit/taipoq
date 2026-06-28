@@ -56,16 +56,28 @@ function HomeMobile() {
           Job Advertisement देखें
         </Link>
         <Link
-          to={MOBILE_ROUTES.msWord}
-          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+          to={MOBILE_ROUTES.currentAffairs}
+          className={cn(
+            MOBILE_CARD_BTN,
+            "border border-blue-500/40 bg-blue-500/10 text-blue-950 dark:text-blue-100",
+          )}
         >
-          MS Word सीखें
+          <span className="w-full text-base font-semibold leading-snug">
+            Current Affairs / समसामयिक प्रश्नपत्र
+          </span>
+          <span className="w-full text-sm font-normal opacity-90">SSC · Railway · PET · Police</span>
         </Link>
         <Link
-          to={MOBILE_ROUTES.excel}
-          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+          to={MOBILE_ROUTES.currentAffairsTest}
+          className={cn(
+            MOBILE_CARD_BTN,
+            "border border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100",
+          )}
         >
-          Excel सीखें
+          <span className="w-full text-base font-semibold">Current Affairs Test</span>
+          <span className="w-full text-sm font-normal opacity-90">
+            {MIXED_CA_QUESTION_COUNT} प्रश्न · परीक्षा जैसा अभ्यास
+          </span>
         </Link>
         <Link
           to={MOBILE_ROUTES.modelPapers}
@@ -80,22 +92,16 @@ function HomeMobile() {
           Model Paper Test दें
         </Link>
         <Link
-          to={MOBILE_ROUTES.currentAffairs}
+          to={MOBILE_ROUTES.msWord}
           className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
         >
-          समसामयिक प्रश्नपत्र
+          MS Word सीखें
         </Link>
         <Link
-          to={MOBILE_ROUTES.currentAffairsTest}
-          className={cn(
-            MOBILE_BTN,
-            "min-h-[3.25rem] flex-col items-start gap-0.5 border border-emerald-500/40 bg-emerald-500/10 py-3.5 text-left text-emerald-950 dark:text-emerald-100",
-          )}
+          to={MOBILE_ROUTES.excel}
+          className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
         >
-          <span className="w-full text-base font-semibold">Current Affairs Test</span>
-          <span className="w-full text-sm font-normal opacity-90">
-            {MIXED_CA_QUESTION_COUNT} प्रश्न · परीक्षा जैसा अभ्यास
-          </span>
+          Excel सीखें
         </Link>
       </section>
 
@@ -548,6 +554,9 @@ const MIXED_CA_QUESTION_COUNT = getCurrentAffairsPaper(MIXED_PAPER_ID)?.question
 
 const MOBILE_BTN =
   "inline-flex min-h-11 w-full items-center justify-center rounded-xl px-5 py-3 text-base font-semibold transition-transform active:scale-[0.98]";
+
+const MOBILE_CARD_BTN =
+  "inline-flex min-h-[3.25rem] w-full rounded-xl px-5 py-3.5 text-left transition-transform active:scale-[0.98]";
 
 const MOBILE_ROUTES = {
   jobAds: "/upcoming-exams" as const,
