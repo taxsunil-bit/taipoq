@@ -20,6 +20,12 @@ export type StudyChapterHref =
   | "/study-corner/general-awareness/chapter-5"
   | "/study-corner/general-awareness/chapter-6"
   | "/study-corner/general-awareness/model-test-01"
+  | "/study-corner/general-science"
+  | "/study-corner/general-science/chapter-1"
+  | "/study-corner/general-science/chapter-2"
+  | "/study-corner/general-science/chapter-3"
+  | "/study-corner/general-science/chapter-4"
+  | "/study-corner/general-science/model-test-01"
   | "/study-corner/computer-basics"
   | "/study-corner/computer-basics/chapter-1"
   | "/study-corner/computer-basics/chapter-2"
@@ -49,7 +55,11 @@ export type StudyChapter = {
     buttonLabel: string;
     href: StudyChapterHref;
   };
-  backTo: "/study-corner" | "/study-corner/general-awareness" | "/study-corner/computer-basics";
+  backTo:
+    | "/study-corner"
+    | "/study-corner/general-awareness"
+    | "/study-corner/general-science"
+    | "/study-corner/computer-basics";
   backLabel: string;
 };
 
@@ -101,6 +111,23 @@ export const STUDY_COURSES = [
     href: "/study-corner/computer-basics" as const,
     available: true,
     startLabel: "आरम्भ करें",
+  },
+  {
+    id: "general-science",
+    title: "सामान्य विज्ञान / General Science",
+    description: "Physics · Chemistry · Biology · Environment",
+    meta: "4 अध्याय • 25 प्रश्न • Class 6–10 level",
+    href: "/study-corner/general-science" as const,
+    available: true,
+    startLabel: "आरम्भ करें",
+  },
+  {
+    id: "general-science-test",
+    title: "General Science Test",
+    description: "25 प्रश्न · Class 6–10 level",
+    href: "/study-corner/general-science/model-test-01" as const,
+    available: true,
+    startLabel: "टेस्ट शुरू करें",
   },
   {
     id: "coming-soon",

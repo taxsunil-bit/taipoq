@@ -1,0 +1,265 @@
+export type GeneralScienceTestQuestion = {
+  id: string;
+  topic: string;
+  difficulty: "Easy" | "Medium";
+  question: string;
+  options: [string, string, string, string];
+  correctOptionIndex: number;
+  explanation: string;
+};
+
+export type GeneralScienceTestData = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  descriptionHi: string;
+  totalQuestions: number;
+  totalMarks: number;
+  marksPerQuestion: number;
+  durationMinutes: number;
+  negativeMarking: boolean;
+  level: string;
+  sourceType: string;
+  questions: GeneralScienceTestQuestion[];
+};
+
+export const GENERAL_SCIENCE_TEST_DATA: GeneralScienceTestData = {
+  id: "general-science-model-test-01",
+  titleHi: "सामान्य विज्ञान मॉडल टेस्ट - 01",
+  titleEn: "General Science Model Test - 01",
+  descriptionHi: "25 सरल MCQ, 25 अंक, beginners to medium level",
+  totalQuestions: 25,
+  totalMarks: 25,
+  marksPerQuestion: 1,
+  durationMinutes: 20,
+  negativeMarking: false,
+  level: "आरम्भिक से मध्यम",
+  sourceType: "Prepared by TAIPOQ",
+  questions: [
+    {
+      id: "gs-1",
+      topic: "Biology",
+      difficulty: "Easy",
+      question: "मानव शरीर में रक्त का पंपिंग कौन करता है?",
+      options: ["मस्तिष्क", "हृदय", "यकृत", "फेफड़े"],
+      correctOptionIndex: 1,
+      explanation: "हृदय रक्त को पूरे शरीर में पंप करता है।",
+    },
+    {
+      id: "gs-2",
+      topic: "Biology",
+      difficulty: "Easy",
+      question: "विटामिन C से जुड़ा सबसे सामान्य स्रोत क्या है?",
+      options: ["गेहूं", "नींबू", "मक्खन", "चावल"],
+      correctOptionIndex: 1,
+      explanation: "नींबू में विटामिन C अधिक पाया जाता है।",
+    },
+    {
+      id: "gs-3",
+      topic: "Biology",
+      difficulty: "Easy",
+      question: "पौधे अपना भोजन किस प्रक्रिया से बनाते हैं?",
+      options: ["विसरण", "प्रकाश संश्लेषण", "श्वसन", "निषेचन"],
+      correctOptionIndex: 1,
+      explanation: "पौधे प्रकाश संश्लेषण की प्रक्रिया से अपना भोजन बनाते हैं।",
+    },
+    {
+      id: "gs-4",
+      topic: "Biology",
+      difficulty: "Easy",
+      question: "मानव शरीर में पाचन का मुख्य स्थान कौन-सा है?",
+      options: ["फेफड़े", "आँख", "पेट", "किडनी"],
+      correctOptionIndex: 2,
+      explanation: "पेट में भोजन का पाचन मुख्य रूप से होता है।",
+    },
+    {
+      id: "gs-5",
+      topic: "Biology",
+      difficulty: "Easy",
+      question: "कोशिका को जीवन की आधारशिला क्यों माना जाता है?",
+      options: ["क्योंकि यह ऊर्जा बनाती है", "क्योंकि सभी जीवों की संरचना की मूल इकाई है", "क्योंकि यह पानी बनाती है", "क्योंकि यह धूप पकड़ती है"],
+      correctOptionIndex: 1,
+      explanation: "सभी जीवों की संरचना की मूल इकाई कोशिका होती है।",
+    },
+    {
+      id: "gs-6",
+      topic: "Biology",
+      difficulty: "Medium",
+      question: "विटामिन D की कमी से कौन-सी समस्या हो सकती है?",
+      options: ["रक्ताल्पता", "हड्डियों की कमजोरी", "आंखों की कमजोरी", "पाचन समस्या"],
+      correctOptionIndex: 1,
+      explanation: "विटामिन D की कमी से हड्डियों की कमजोरी हो सकती है।",
+    },
+    {
+      id: "gs-7",
+      topic: "Biology",
+      difficulty: "Medium",
+      question: "रोग किसके कारण हो सकते हैं?",
+      options: ["केवल धूप", "केवल पानी", "जीवाणु, वायरस या संक्रमण", "केवल ठंड"],
+      correctOptionIndex: 2,
+      explanation: "रोग जीवाणु, वायरस या संक्रमण के कारण भी हो सकते हैं।",
+    },
+    {
+      id: "gs-8",
+      topic: "Physics",
+      difficulty: "Easy",
+      question: "गति का अर्थ क्या है?",
+      options: ["पानी का बहना", "किसी वस्तु की स्थिति में बदलाव", "धूप का चमकना", "मिट्टी की गंध"],
+      correctOptionIndex: 1,
+      explanation: "गति का अर्थ है किसी वस्तु की स्थिति में परिवर्तन।",
+    },
+    {
+      id: "gs-9",
+      topic: "Physics",
+      difficulty: "Easy",
+      question: "बल किससे जुड़ा है?",
+      options: ["केवल रंग", "केवल स्वाद", "वस्तु की गति या दिशा बदलने से", "केवल ध्वनि"],
+      correctOptionIndex: 2,
+      explanation: "बल वस्तु की गति या दिशा को बदल सकता है।",
+    },
+    {
+      id: "gs-10",
+      topic: "Physics",
+      difficulty: "Easy",
+      question: "ऊर्जा का सबसे बड़ा स्रोत क्या है?",
+      options: ["पानी", "सूर्य", "मिट्टी", "सीमेंट"],
+      correctOptionIndex: 1,
+      explanation: "सूर्य ऊर्जा का प्रमुख स्रोत है।",
+    },
+    {
+      id: "gs-11",
+      topic: "Physics",
+      difficulty: "Medium",
+      question: "आवाज़ किससे बनती है?",
+      options: ["तरंगों से", "केवल रोशनी से", "केवल ठंड से", "केवल धूल से"],
+      correctOptionIndex: 0,
+      explanation: "ध्वनि तरंगों से बनती है।",
+    },
+    {
+      id: "gs-12",
+      topic: "Physics",
+      difficulty: "Medium",
+      question: "बिजली किसके प्रवाह से जुड़ी होती है?",
+      options: ["वायु", "विद्युत प्रवाह", "धुआँ", "काँच"],
+      correctOptionIndex: 1,
+      explanation: "बिजली विद्युत प्रवाह से जुड़ी होती है।",
+    },
+    {
+      id: "gs-13",
+      topic: "Physics",
+      difficulty: "Medium",
+      question: "प्रकाश किसका स्रोत हो सकता है?",
+      options: ["सूर्य", "चंद्रमा", "धुआँ", "मिट्टी"],
+      correctOptionIndex: 0,
+      explanation: "सूर्य प्रकाश का प्रमुख स्रोत है।",
+    },
+    {
+      id: "gs-14",
+      topic: "Chemistry",
+      difficulty: "Easy",
+      question: "अम्ल का स्वाद कैसा होता है?",
+      options: ["मीठा", "खट्टा", "कड़वा", "नमकीन"],
+      correctOptionIndex: 1,
+      explanation: "अम्ल खट्टे होते हैं।",
+    },
+    {
+      id: "gs-15",
+      topic: "Chemistry",
+      difficulty: "Easy",
+      question: "लवण किससे बनता है?",
+      options: ["अम्ल और क्षार", "केवल पानी", "केवल मिट्टी", "केवल धातु"],
+      correctOptionIndex: 0,
+      explanation: "लवण अम्ल और क्षार के मिश्रण से बनते हैं।",
+    },
+    {
+      id: "gs-16",
+      topic: "Chemistry",
+      difficulty: "Easy",
+      question: "धातु की सबसे सामान्य विशेषता क्या है?",
+      options: ["खराब चालक", "कम चमक", "चमकदार और अच्छा चालक", "गंधरहित"],
+      correctOptionIndex: 2,
+      explanation: "धातुएँ सामान्यतः चमकदार और अच्छे चालक होती हैं।",
+    },
+    {
+      id: "gs-17",
+      topic: "Chemistry",
+      difficulty: "Medium",
+      question: "पदार्थ किस रूप में पाया जा सकता है?",
+      options: ["केवल ठोस", "केवल द्रव", "ठोस, द्रव और गैस", "केवल गैस"],
+      correctOptionIndex: 2,
+      explanation: "पदार्थ ठोस, द्रव और गैस तीनों रूपों में पाया जा सकता है।",
+    },
+    {
+      id: "gs-18",
+      topic: "Chemistry",
+      difficulty: "Medium",
+      question: "अधातु आमतौर पर कैसी होती हैं?",
+      options: ["अच्छी चालक", "चमकदार", "खराब चालक", "धातु जैसी"],
+      correctOptionIndex: 2,
+      explanation: "अधातुएँ सामान्यतः खराब चालक होती हैं।",
+    },
+    {
+      id: "gs-19",
+      topic: "Chemistry",
+      difficulty: "Medium",
+      question: "सामान्य रूप से पानी किस तरह का पदार्थ है?",
+      options: ["ठोस", "द्रव", "गैस", "प्लाज्मा"],
+      correctOptionIndex: 1,
+      explanation: "पानी द्रव रूप में पाया जाता है।",
+    },
+    {
+      id: "gs-20",
+      topic: "Environment",
+      difficulty: "Easy",
+      question: "ओज़ोन परत किससे बचाती है?",
+      options: ["वातावरण की नमी", "सूर्य की हानिकारक किरणों", "पानी की बूँदों", "ध्वनि से"],
+      correctOptionIndex: 1,
+      explanation: "ओज़ोन परत सूर्य की हानिकारक किरणों से बचाती है।",
+    },
+    {
+      id: "gs-21",
+      topic: "Environment",
+      difficulty: "Easy",
+      question: "ग्रीनहाउस प्रभाव किससे जुड़ा है?",
+      options: ["गैसों की वृद्धि", "मिट्टी की कमी", "धुआँ की कमी", "तापमान में गिरावट"],
+      correctOptionIndex: 0,
+      explanation: "ग्रीनहाउस प्रभाव गैसों की वृद्धि से जुड़ा है।",
+    },
+    {
+      id: "gs-22",
+      topic: "Environment",
+      difficulty: "Easy",
+      question: "प्रदूषण किसे प्रभावित करता है?",
+      options: ["केवल पेड़", "केवल कंक्रीट", "मानव स्वास्थ्य और पर्यावरण", "केवल धूप"],
+      correctOptionIndex: 2,
+      explanation: "प्रदूषण मानव स्वास्थ्य और पर्यावरण दोनों को प्रभावित करता है।",
+    },
+    {
+      id: "gs-23",
+      topic: "Environment",
+      difficulty: "Medium",
+      question: "पेड़ पर्यावरण के लिए क्यों महत्वपूर्ण हैं?",
+      options: ["क्योंकि वे हवा को दूषित करते हैं", "क्योंकि वे ऑक्सीजन देते हैं", "क्योंकि वे पानी कम करते हैं", "क्योंकि वे केवल सजावट हैं"],
+      correctOptionIndex: 1,
+      explanation: "पेड़ प्रकाश संश्लेषण से ऑक्सीजन देते हैं।",
+    },
+    {
+      id: "gs-24",
+      topic: "Inventions",
+      difficulty: "Easy",
+      question: "किस उपकरण का उपयोग मुख्यतः通信 के लिए होता है?",
+      options: ["मोटर", "दूरभाष", "कुकर", "बिजली का बल्ब"],
+      correctOptionIndex: 1,
+      explanation: "दूरभाष संचार के लिए उपयोग किया जाता है।",
+    },
+    {
+      id: "gs-25",
+      topic: "Inventions",
+      difficulty: "Easy",
+      question: "सौर ऊर्जा किससे प्राप्त होती है?",
+      options: ["सूर्य", "पेड़", "पानी", "मिट्टी"],
+      correctOptionIndex: 0,
+      explanation: "सौर ऊर्जा सूर्य से प्राप्त होती है।",
+    },
+  ],
+};

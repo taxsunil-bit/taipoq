@@ -38,6 +38,7 @@ import { Route as EnglishIndexRouteImport } from './routes/english.index'
 import { Route as CurrentAffairsIndexRouteImport } from './routes/current-affairs.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as StudyCornerQuizResultRouteImport } from './routes/study-corner.quiz-result'
+import { Route as StudyCornerGeneralScienceRouteImport } from './routes/study-corner.general-science'
 import { Route as StudyCornerGeneralAwarenessRouteImport } from './routes/study-corner.general-awareness'
 import { Route as StudyCornerComputerBasicsRouteImport } from './routes/study-corner.computer-basics'
 import { Route as HindiPracticeRouteImport } from './routes/hindi.practice'
@@ -45,8 +46,14 @@ import { Route as HindiLessonsRouteImport } from './routes/hindi.lessons'
 import { Route as EnglishPracticeRouteImport } from './routes/english.practice'
 import { Route as EnglishLessonsRouteImport } from './routes/english.lessons'
 import { Route as AdminAddParagraphRouteImport } from './routes/admin.add-paragraph'
+import { Route as StudyCornerGeneralScienceIndexRouteImport } from './routes/study-corner.general-science.index'
 import { Route as StudyCornerGeneralAwarenessIndexRouteImport } from './routes/study-corner.general-awareness.index'
 import { Route as StudyCornerComputerBasicsIndexRouteImport } from './routes/study-corner.computer-basics.index'
+import { Route as StudyCornerGeneralScienceModelTest01RouteImport } from './routes/study-corner.general-science.model-test-01'
+import { Route as StudyCornerGeneralScienceChapter4RouteImport } from './routes/study-corner.general-science.chapter-4'
+import { Route as StudyCornerGeneralScienceChapter3RouteImport } from './routes/study-corner.general-science.chapter-3'
+import { Route as StudyCornerGeneralScienceChapter2RouteImport } from './routes/study-corner.general-science.chapter-2'
+import { Route as StudyCornerGeneralScienceChapter1RouteImport } from './routes/study-corner.general-science.chapter-1'
 import { Route as StudyCornerGeneralAwarenessModelTest01RouteImport } from './routes/study-corner.general-awareness.model-test-01'
 import { Route as StudyCornerGeneralAwarenessChapter6RouteImport } from './routes/study-corner.general-awareness.chapter-6'
 import { Route as StudyCornerGeneralAwarenessChapter5RouteImport } from './routes/study-corner.general-awareness.chapter-5'
@@ -209,6 +216,12 @@ const StudyCornerQuizResultRoute = StudyCornerQuizResultRouteImport.update({
   path: '/quiz-result',
   getParentRoute: () => StudyCornerRoute,
 } as any)
+const StudyCornerGeneralScienceRoute =
+  StudyCornerGeneralScienceRouteImport.update({
+    id: '/general-science',
+    path: '/general-science',
+    getParentRoute: () => StudyCornerRoute,
+  } as any)
 const StudyCornerGeneralAwarenessRoute =
   StudyCornerGeneralAwarenessRouteImport.update({
     id: '/general-awareness',
@@ -246,6 +259,12 @@ const AdminAddParagraphRoute = AdminAddParagraphRouteImport.update({
   path: '/add-paragraph',
   getParentRoute: () => AdminRoute,
 } as any)
+const StudyCornerGeneralScienceIndexRoute =
+  StudyCornerGeneralScienceIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => StudyCornerGeneralScienceRoute,
+  } as any)
 const StudyCornerGeneralAwarenessIndexRoute =
   StudyCornerGeneralAwarenessIndexRouteImport.update({
     id: '/',
@@ -257,6 +276,36 @@ const StudyCornerComputerBasicsIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => StudyCornerComputerBasicsRoute,
+  } as any)
+const StudyCornerGeneralScienceModelTest01Route =
+  StudyCornerGeneralScienceModelTest01RouteImport.update({
+    id: '/model-test-01',
+    path: '/model-test-01',
+    getParentRoute: () => StudyCornerGeneralScienceRoute,
+  } as any)
+const StudyCornerGeneralScienceChapter4Route =
+  StudyCornerGeneralScienceChapter4RouteImport.update({
+    id: '/chapter-4',
+    path: '/chapter-4',
+    getParentRoute: () => StudyCornerGeneralScienceRoute,
+  } as any)
+const StudyCornerGeneralScienceChapter3Route =
+  StudyCornerGeneralScienceChapter3RouteImport.update({
+    id: '/chapter-3',
+    path: '/chapter-3',
+    getParentRoute: () => StudyCornerGeneralScienceRoute,
+  } as any)
+const StudyCornerGeneralScienceChapter2Route =
+  StudyCornerGeneralScienceChapter2RouteImport.update({
+    id: '/chapter-2',
+    path: '/chapter-2',
+    getParentRoute: () => StudyCornerGeneralScienceRoute,
+  } as any)
+const StudyCornerGeneralScienceChapter1Route =
+  StudyCornerGeneralScienceChapter1RouteImport.update({
+    id: '/chapter-1',
+    path: '/chapter-1',
+    getParentRoute: () => StudyCornerGeneralScienceRoute,
   } as any)
 const StudyCornerGeneralAwarenessModelTest01Route =
   StudyCornerGeneralAwarenessModelTest01RouteImport.update({
@@ -385,6 +434,7 @@ export interface FileRoutesByFullPath {
   '/hindi/practice': typeof HindiPracticeRoute
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsRouteWithChildren
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
+  '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
   '/admin/': typeof AdminIndexRoute
   '/current-affairs/': typeof CurrentAffairsIndexRoute
@@ -407,8 +457,14 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-awareness/chapter-5': typeof StudyCornerGeneralAwarenessChapter5Route
   '/study-corner/general-awareness/chapter-6': typeof StudyCornerGeneralAwarenessChapter6Route
   '/study-corner/general-awareness/model-test-01': typeof StudyCornerGeneralAwarenessModelTest01Route
+  '/study-corner/general-science/chapter-1': typeof StudyCornerGeneralScienceChapter1Route
+  '/study-corner/general-science/chapter-2': typeof StudyCornerGeneralScienceChapter2Route
+  '/study-corner/general-science/chapter-3': typeof StudyCornerGeneralScienceChapter3Route
+  '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
+  '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
+  '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -456,8 +512,14 @@ export interface FileRoutesByTo {
   '/study-corner/general-awareness/chapter-5': typeof StudyCornerGeneralAwarenessChapter5Route
   '/study-corner/general-awareness/chapter-6': typeof StudyCornerGeneralAwarenessChapter6Route
   '/study-corner/general-awareness/model-test-01': typeof StudyCornerGeneralAwarenessModelTest01Route
+  '/study-corner/general-science/chapter-1': typeof StudyCornerGeneralScienceChapter1Route
+  '/study-corner/general-science/chapter-2': typeof StudyCornerGeneralScienceChapter2Route
+  '/study-corner/general-science/chapter-3': typeof StudyCornerGeneralScienceChapter3Route
+  '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
+  '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessIndexRoute
+  '/study-corner/general-science': typeof StudyCornerGeneralScienceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -491,6 +553,7 @@ export interface FileRoutesById {
   '/hindi/practice': typeof HindiPracticeRoute
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsRouteWithChildren
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
+  '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
   '/admin/': typeof AdminIndexRoute
   '/current-affairs/': typeof CurrentAffairsIndexRoute
@@ -513,8 +576,14 @@ export interface FileRoutesById {
   '/study-corner/general-awareness/chapter-5': typeof StudyCornerGeneralAwarenessChapter5Route
   '/study-corner/general-awareness/chapter-6': typeof StudyCornerGeneralAwarenessChapter6Route
   '/study-corner/general-awareness/model-test-01': typeof StudyCornerGeneralAwarenessModelTest01Route
+  '/study-corner/general-science/chapter-1': typeof StudyCornerGeneralScienceChapter1Route
+  '/study-corner/general-science/chapter-2': typeof StudyCornerGeneralScienceChapter2Route
+  '/study-corner/general-science/chapter-3': typeof StudyCornerGeneralScienceChapter3Route
+  '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
+  '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
+  '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -549,6 +618,7 @@ export interface FileRouteTypes {
     | '/hindi/practice'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
+    | '/study-corner/general-science'
     | '/study-corner/quiz-result'
     | '/admin/'
     | '/current-affairs/'
@@ -571,8 +641,14 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness/chapter-5'
     | '/study-corner/general-awareness/chapter-6'
     | '/study-corner/general-awareness/model-test-01'
+    | '/study-corner/general-science/chapter-1'
+    | '/study-corner/general-science/chapter-2'
+    | '/study-corner/general-science/chapter-3'
+    | '/study-corner/general-science/chapter-4'
+    | '/study-corner/general-science/model-test-01'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
+    | '/study-corner/general-science/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -620,8 +696,14 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness/chapter-5'
     | '/study-corner/general-awareness/chapter-6'
     | '/study-corner/general-awareness/model-test-01'
+    | '/study-corner/general-science/chapter-1'
+    | '/study-corner/general-science/chapter-2'
+    | '/study-corner/general-science/chapter-3'
+    | '/study-corner/general-science/chapter-4'
+    | '/study-corner/general-science/model-test-01'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
+    | '/study-corner/general-science'
   id:
     | '__root__'
     | '/'
@@ -654,6 +736,7 @@ export interface FileRouteTypes {
     | '/hindi/practice'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
+    | '/study-corner/general-science'
     | '/study-corner/quiz-result'
     | '/admin/'
     | '/current-affairs/'
@@ -676,8 +759,14 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness/chapter-5'
     | '/study-corner/general-awareness/chapter-6'
     | '/study-corner/general-awareness/model-test-01'
+    | '/study-corner/general-science/chapter-1'
+    | '/study-corner/general-science/chapter-2'
+    | '/study-corner/general-science/chapter-3'
+    | '/study-corner/general-science/chapter-4'
+    | '/study-corner/general-science/model-test-01'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
+    | '/study-corner/general-science/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -911,6 +1000,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudyCornerQuizResultRouteImport
       parentRoute: typeof StudyCornerRoute
     }
+    '/study-corner/general-science': {
+      id: '/study-corner/general-science'
+      path: '/general-science'
+      fullPath: '/study-corner/general-science'
+      preLoaderRoute: typeof StudyCornerGeneralScienceRouteImport
+      parentRoute: typeof StudyCornerRoute
+    }
     '/study-corner/general-awareness': {
       id: '/study-corner/general-awareness'
       path: '/general-awareness'
@@ -960,6 +1056,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAddParagraphRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/study-corner/general-science/': {
+      id: '/study-corner/general-science/'
+      path: '/'
+      fullPath: '/study-corner/general-science/'
+      preLoaderRoute: typeof StudyCornerGeneralScienceIndexRouteImport
+      parentRoute: typeof StudyCornerGeneralScienceRoute
+    }
     '/study-corner/general-awareness/': {
       id: '/study-corner/general-awareness/'
       path: '/'
@@ -973,6 +1076,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/study-corner/computer-basics/'
       preLoaderRoute: typeof StudyCornerComputerBasicsIndexRouteImport
       parentRoute: typeof StudyCornerComputerBasicsRoute
+    }
+    '/study-corner/general-science/model-test-01': {
+      id: '/study-corner/general-science/model-test-01'
+      path: '/model-test-01'
+      fullPath: '/study-corner/general-science/model-test-01'
+      preLoaderRoute: typeof StudyCornerGeneralScienceModelTest01RouteImport
+      parentRoute: typeof StudyCornerGeneralScienceRoute
+    }
+    '/study-corner/general-science/chapter-4': {
+      id: '/study-corner/general-science/chapter-4'
+      path: '/chapter-4'
+      fullPath: '/study-corner/general-science/chapter-4'
+      preLoaderRoute: typeof StudyCornerGeneralScienceChapter4RouteImport
+      parentRoute: typeof StudyCornerGeneralScienceRoute
+    }
+    '/study-corner/general-science/chapter-3': {
+      id: '/study-corner/general-science/chapter-3'
+      path: '/chapter-3'
+      fullPath: '/study-corner/general-science/chapter-3'
+      preLoaderRoute: typeof StudyCornerGeneralScienceChapter3RouteImport
+      parentRoute: typeof StudyCornerGeneralScienceRoute
+    }
+    '/study-corner/general-science/chapter-2': {
+      id: '/study-corner/general-science/chapter-2'
+      path: '/chapter-2'
+      fullPath: '/study-corner/general-science/chapter-2'
+      preLoaderRoute: typeof StudyCornerGeneralScienceChapter2RouteImport
+      parentRoute: typeof StudyCornerGeneralScienceRoute
+    }
+    '/study-corner/general-science/chapter-1': {
+      id: '/study-corner/general-science/chapter-1'
+      path: '/chapter-1'
+      fullPath: '/study-corner/general-science/chapter-1'
+      preLoaderRoute: typeof StudyCornerGeneralScienceChapter1RouteImport
+      parentRoute: typeof StudyCornerGeneralScienceRoute
     }
     '/study-corner/general-awareness/model-test-01': {
       id: '/study-corner/general-awareness/model-test-01'
@@ -1217,9 +1355,39 @@ const StudyCornerGeneralAwarenessRouteWithChildren =
     StudyCornerGeneralAwarenessRouteChildren,
   )
 
+interface StudyCornerGeneralScienceRouteChildren {
+  StudyCornerGeneralScienceChapter1Route: typeof StudyCornerGeneralScienceChapter1Route
+  StudyCornerGeneralScienceChapter2Route: typeof StudyCornerGeneralScienceChapter2Route
+  StudyCornerGeneralScienceChapter3Route: typeof StudyCornerGeneralScienceChapter3Route
+  StudyCornerGeneralScienceChapter4Route: typeof StudyCornerGeneralScienceChapter4Route
+  StudyCornerGeneralScienceModelTest01Route: typeof StudyCornerGeneralScienceModelTest01Route
+  StudyCornerGeneralScienceIndexRoute: typeof StudyCornerGeneralScienceIndexRoute
+}
+
+const StudyCornerGeneralScienceRouteChildren: StudyCornerGeneralScienceRouteChildren =
+  {
+    StudyCornerGeneralScienceChapter1Route:
+      StudyCornerGeneralScienceChapter1Route,
+    StudyCornerGeneralScienceChapter2Route:
+      StudyCornerGeneralScienceChapter2Route,
+    StudyCornerGeneralScienceChapter3Route:
+      StudyCornerGeneralScienceChapter3Route,
+    StudyCornerGeneralScienceChapter4Route:
+      StudyCornerGeneralScienceChapter4Route,
+    StudyCornerGeneralScienceModelTest01Route:
+      StudyCornerGeneralScienceModelTest01Route,
+    StudyCornerGeneralScienceIndexRoute: StudyCornerGeneralScienceIndexRoute,
+  }
+
+const StudyCornerGeneralScienceRouteWithChildren =
+  StudyCornerGeneralScienceRoute._addFileChildren(
+    StudyCornerGeneralScienceRouteChildren,
+  )
+
 interface StudyCornerRouteChildren {
   StudyCornerComputerBasicsRoute: typeof StudyCornerComputerBasicsRouteWithChildren
   StudyCornerGeneralAwarenessRoute: typeof StudyCornerGeneralAwarenessRouteWithChildren
+  StudyCornerGeneralScienceRoute: typeof StudyCornerGeneralScienceRouteWithChildren
   StudyCornerQuizResultRoute: typeof StudyCornerQuizResultRoute
   StudyCornerIndexRoute: typeof StudyCornerIndexRoute
 }
@@ -1228,6 +1396,7 @@ const StudyCornerRouteChildren: StudyCornerRouteChildren = {
   StudyCornerComputerBasicsRoute: StudyCornerComputerBasicsRouteWithChildren,
   StudyCornerGeneralAwarenessRoute:
     StudyCornerGeneralAwarenessRouteWithChildren,
+  StudyCornerGeneralScienceRoute: StudyCornerGeneralScienceRouteWithChildren,
   StudyCornerQuizResultRoute: StudyCornerQuizResultRoute,
   StudyCornerIndexRoute: StudyCornerIndexRoute,
 }
