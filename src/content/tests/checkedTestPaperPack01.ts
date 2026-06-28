@@ -30,7 +30,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "Central Processing Unit",
           "explanation": "CPU का अर्थ Central Processing Unit है। यह computer instructions process करता है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -51,7 +51,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "RAM",
           "explanation": "RAM में रखा data power बंद होने पर मिट जाता है, इसलिए यह volatile memory है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -72,7 +72,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "Keyboard",
           "explanation": "Keyboard से data और commands computer में डाली जाती हैं।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -93,7 +93,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "Printer",
           "explanation": "Printer computer output को paper पर print करता है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -114,7 +114,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "Hardware और software resources manage करना",
           "explanation": "Operating system computer resources, files, memory और user interaction manage करता है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -135,7 +135,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "Web address",
           "explanation": "URL किसी web page या internet resource का address होता है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -156,7 +156,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "Portable document sharing",
           "explanation": "PDF documents को fixed layout में share करने के लिए commonly use होता है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -177,7 +177,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "Letters, numbers और symbols का mix",
           "explanation": "Strong password में अनुमान लगाना कठिन बनाने के लिए mixed characters होने चाहिए।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -198,7 +198,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "Carbon Copy",
           "explanation": "CC यानी Carbon Copy; इससे दूसरे recipient को email की copy भेजी जाती है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -219,7 +219,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "Permanent/secondary storage",
           "explanation": "Hard disk secondary storage है, जिसमें data power off होने के बाद भी रहता है।",
-          "sourceCheck": "Checked against official/recognized exam pattern sources: SSC syllabus/notice, CTET archive, and other official syllabus references.",
+          "sourceCheck": "Checked against standard computer fundamentals / ICT basics.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1368,7 +1368,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "26 January 1950",
           "explanation": "भारत का संविधान 26 January 1950 को लागू हुआ।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1389,7 +1389,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "लोकसभा और राज्यसभा",
           "explanation": "Indian Parliament consists of Lok Sabha and Rajya Sabha with the President as part of Parliament constitutionally; common exam answer for two houses is Lok Sabha and Rajya Sabha.",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1410,7 +1410,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "गंगा",
           "explanation": "भारत में बहने वाली longest river commonly Ganga मानी जाती है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1431,7 +1431,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "1947",
           "explanation": "भारत 15 August 1947 को स्वतंत्र हुआ।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1452,7 +1452,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "RBI",
           "explanation": "Reserve Bank of India भारत का central bank है और currency issue system से जुड़ा है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1473,7 +1473,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "24",
           "explanation": "Ashoka Chakra में 24 spokes होती हैं।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1494,7 +1494,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "5 June",
           "explanation": "World Environment Day 5 June को मनाया जाता है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1515,7 +1515,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "6",
           "explanation": "Cricket में एक over में सामान्यतः 6 legal deliveries होती हैं।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1536,7 +1536,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "Bharat Ratna",
           "explanation": "Bharat Ratna भारत का highest civilian award है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1557,7 +1557,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "1945",
           "explanation": "United Nations की स्थापना 1945 में हुई।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -1796,7 +1796,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
       "access": "practice_pass",
       "durationMinutes": 12,
       "questionCount": 10,
-      "intro": "Date-stamped current affairs pilot paper. Refresh before long-term use.",
+      "intro": "Date-stamped current affairs pilot paper (source checked 2026-06-29). Refresh before long-term use.",
       "questions": [
         {
           "id": "CA-2026-001",
@@ -2133,13 +2133,13 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "language": "hi",
           "question": "शुद्ध वाक्य चुनिए:",
           "options": [
-            "मैं बाजार गया था।",
-            "मैं बाजार गए था।",
-            "मैं बाजार गई था।",
-            "मैं बाजार जाता थी।"
+            "मैं विद्यालय गया था।",
+            "मैं विद्यालय गए था।",
+            "मैं विद्यालय गई था।",
+            "मैं विद्यालय जाता थी।"
           ],
           "answerIndex": 0,
-          "answer": "मैं बाजार गया था।",
+          "answer": "मैं विद्यालय गया था।",
           "explanation": "कर्ता 'मैं' पुरुष वक्ता मानकर सही रूप 'गया था' है।",
           "sourceCheck": "Checked against standard Hindi grammar usage.",
           "tags": [],
@@ -2503,7 +2503,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 1,
           "answer": "लखनऊ",
           "explanation": "उत्तर प्रदेश की राजधानी लखनऊ है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2524,7 +2524,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "प्रयागराज",
           "explanation": "गंगा, यमुना और पौराणिक सरस्वती का संगम प्रयागराज में माना जाता है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2545,7 +2545,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 2,
           "answer": "वाराणसी",
           "explanation": "काशी विश्वनाथ मंदिर वाराणसी में है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2566,7 +2566,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "लक्ष्मीबाई",
           "explanation": "झाँसी की रानी लक्ष्मीबाई 1857 के विद्रोह से जुड़ी प्रमुख वीरांगना थीं।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2587,7 +2587,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "धान और गेहूँ",
           "explanation": "UP में गेहूँ और धान प्रमुख खाद्यान्न फसलें हैं।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2608,7 +2608,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "आगरा",
           "explanation": "ताजमहल आगरा में स्थित है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2629,7 +2629,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "भगवान राम",
           "explanation": "अयोध्या भगवान राम की जन्मभूमि परंपरा से जुड़ी है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2650,7 +2650,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "उत्तर भारत",
           "explanation": "उत्तर प्रदेश भारत के उत्तरी भाग में स्थित है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2671,7 +2671,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "वाराणसी",
           "explanation": "Banaras Hindu University वाराणसी में है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2692,7 +2692,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
           "answerIndex": 0,
           "answer": "आगरा",
           "explanation": "यमुना आगरा से होकर बहती है, जहाँ ताजमहल स्थित है।",
-          "sourceCheck": "Checked against standard NCERT-level school science/social science concepts.",
+          "sourceCheck": "Checked against standard static GK / public reference knowledge.",
           "tags": [],
           "reviewed": true,
           "createdBy": "taipoq"
@@ -2702,13 +2702,13 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
     },
     {
       "file": "13_PYQ_PRACTICE_TEST_PAPER.md",
-      "title": "PYQ Practice Pattern Test Paper 01",
+      "title": "PYQ Practice Guide Test 01",
       "subject": "PYQ Practice",
       "level": "moderate",
       "access": "practice_pass",
       "durationMinutes": 15,
       "questionCount": 10,
-      "intro": "Original PYQ-pattern/product-safety paper. Not copied from any PYQ.",
+      "intro": "Original guide test for PYQ tagging, source safety, and practice structure. Not copied from any PYQ.",
       "questions": [
         {
           "id": "PYQ-PATTERN-001",
@@ -2952,9 +2952,9 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
     },
     {
       "file": "14_MODEL_PAPER_01.md",
-      "title": "TAIPOQ Mini Model Paper 01",
+      "title": "TAIPOQ Basic Mixed Model Paper 01",
       "subject": "Model Papers",
-      "level": "moderate",
+      "level": "basic",
       "access": "exam_pass",
       "durationMinutes": 15,
       "questionCount": 10,
