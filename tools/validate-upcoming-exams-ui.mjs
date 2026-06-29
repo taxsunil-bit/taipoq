@@ -47,12 +47,18 @@ if (!existsSync(ROUTE_PATH)) {
 
   const requiredPatterns = [
     { label: "Open Government Jobs heading", re: /Open Government Jobs/ },
-    { label: "SectorChipBar", re: /function SectorChipBar/ },
+    { label: "Sector jump chip bar", re: /function SectorJumpChipBar/ },
+    { label: "Sector grouped job sections", re: /function SectorJobSection/ },
+    { label: "Sector section headings", re: /sector-heading-/ },
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
     { label: "filterVerifiedPublicVacanciesBySector", re: /filterVerifiedPublicVacanciesBySector/ },
     { label: "loadVacanciesPreview", re: /loadVacanciesPreview/ },
+    { label: "Railway sector heading", re: /label: "Railway"/ },
+    { label: "Bank Specialist sector heading", re: /label: "Bank Specialist"/ },
+    { label: "Judicial Jobs sector heading", re: /label: "Judicial Jobs"/ },
     { label: "DRDO sector chip", re: /DRDO \/ R&D/ },
     { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },
+    { label: "Grouped sections container", re: /id="open-jobs-by-sector"/ },
   ];
 
   for (const { label, re } of requiredPatterns) {
