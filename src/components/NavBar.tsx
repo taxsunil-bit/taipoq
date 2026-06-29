@@ -13,7 +13,7 @@ const links = [
   { to: "/word-learning", label: "शब्द अभ्यास" },
   { to: "/study-corner", label: "पुस्तकालय / Library" },
   { to: "/progress", label: "Progress" },
-  { to: "/login", label: "Login" },
+  { to: "/login", label: "Local Profile" },
 ] as const;
 
 export const INFO_LINKS = [

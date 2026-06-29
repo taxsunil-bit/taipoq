@@ -63,7 +63,7 @@ export const GS_MODEL_TEST = {
   titleEn: "General Science Test",
   meta: "25 प्रश्न • 25 अंक • Class 6–10 level",
   href: "/study-corner/general-science/model-test-01" as const,
-  buttonLabel: "टेस्ट शुरू करें",
+  buttonLabel: "टेस्ट आरम्भ करें",
   sourceNote: "यह टेस्ट सरल स्तर पर तैयार किया गया है और कोई ऋणात्मक अंकन नहीं है।",
 } as const;
 

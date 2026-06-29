@@ -196,8 +196,7 @@ function TestPage() {
               "Mode Coming Soon"
             ) : (
               <>
-                <span className="md:hidden">Desktop Speed Test — आरम्भ करें</span>
-                <span className="hidden md:inline">Start Test</span>
+                Start Test / आरम्भ करें
               </>
             )}
           </Button>

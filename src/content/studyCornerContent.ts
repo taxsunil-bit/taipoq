@@ -127,7 +127,7 @@ export const STUDY_COURSES = [
     description: "25 प्रश्न · Class 6–10 level",
     href: "/study-corner/general-science/model-test-01" as const,
     available: true,
-    startLabel: "टेस्ट शुरू करें",
+    startLabel: "टेस्ट आरम्भ करें",
   },
   {
     id: "ssc-cgl-pattern-practice",
