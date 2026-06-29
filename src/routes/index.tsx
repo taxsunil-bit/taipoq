@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
+import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
 import { STUDY_CORNER_LANDING } from "@/content/studyCornerContent";
 import {
@@ -191,6 +192,18 @@ function HomeMobileBody() {
             Current Affairs / समसामयिक प्रश्नपत्र
           </span>
           <span className="w-full text-sm font-normal opacity-90">SSC · Railway · PET · Police</span>
+        </Link>
+        <Link
+          to={MOBILE_ROUTES.sscCglPractice}
+          className={cn(
+            MOBILE_CARD_BTN,
+            "border border-indigo-500/40 bg-indigo-500/10 text-indigo-950 dark:text-indigo-100",
+          )}
+        >
+          <span className="w-full text-base font-semibold leading-snug">SSC CGL Practice</span>
+          <span className="w-full text-sm font-normal opacity-90">
+            Maths, Reasoning, English, GK — 100 starter questions.
+          </span>
         </Link>
         <Link
           to={MOBILE_ROUTES.modelPapers}
@@ -671,6 +684,7 @@ const MOBILE_ROUTES = {
   excel: EXCEL_BASICS_HREF,
   modelPapers: "/study-corner/general-awareness" as const,
   currentAffairs: "/current-affairs" as const,
+  sscCglPractice: SSC_CGL_PATTERN_PRACTICE_HREF,
 };
 
 const ONBOARDING_STEPS = [

@@ -130,6 +130,15 @@ export const STUDY_COURSES = [
     startLabel: "टेस्ट शुरू करें",
   },
   {
+    id: "ssc-cgl-pattern-practice",
+    title: "SSC CGL Pattern Practice",
+    description: "100 starter questions for Tier-I pattern practice.",
+    meta: "4 sections • 100 questions • Tier-I pattern",
+    href: "/study-corner/ssc-cgl-pattern-practice" as const,
+    available: true,
+    startLabel: "Read Practice Questions",
+  },
+  {
     id: "coming-soon",
     title: "आने वाले अध्याय",
     description:

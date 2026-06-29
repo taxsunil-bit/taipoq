@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SubjectTestGrid } from "@/components/tests/SubjectTestGrid";
 import { TestCard } from "@/components/tests/TestCard";
 import { PageShell } from "@/components/PageShell";
+import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
 import { PACK_PREPARED_DATE, TEST_SUBJECTS } from "@/content/tests/subjects";
 import { getAllPapers } from "@/lib/tests/testGenerator";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,9 @@ const LEGACY_TESTS = [
 const LEGACY_BTN =
   "flex min-h-[52px] w-full flex-col justify-center rounded-xl border border-border bg-surface px-4 py-3.5 text-left hover:bg-surface-hover";
 
+const SSC_CGL_PRACTICE_CARD =
+  "flex min-h-[52px] w-full flex-col justify-center rounded-xl border border-blue-300/30 bg-gradient-to-br from-blue-600 to-blue-700 px-4 py-4 text-white shadow-md shadow-blue-950/20 transition-all duration-200 hover:scale-[1.01] hover:shadow-lg hover:shadow-blue-600/20";
+
 function TestsLandingPage() {
   const allPapers = getAllPapers();
 
@@ -47,6 +51,16 @@ function TestsLandingPage() {
           <h2 id="basic-subjects-heading" className="text-lg font-bold">
             विषय चुनें — All subjects open
           </h2>
+          <Link to={SSC_CGL_PATTERN_PRACTICE_HREF} className={cn(SSC_CGL_PRACTICE_CARD)}>
+            <span className="text-base font-semibold leading-snug">SSC CGL Pattern Practice</span>
+            <span className="mt-1 text-sm leading-relaxed text-blue-100">
+              100 starter questions — Maths, Reasoning, English, General Awareness
+            </span>
+            <span className="mt-1 text-[11px] text-amber-100/90">
+              TAIPOQ original illustrative practice
+            </span>
+            <span className="mt-2 text-sm font-semibold text-white">Open Practice →</span>
+          </Link>
           <SubjectTestGrid subjects={TEST_SUBJECTS} />
         </section>
 
