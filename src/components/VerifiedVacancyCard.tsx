@@ -15,6 +15,21 @@ type VerifiedVacancyCardProps = {
 const compactBtn =
   "h-9 min-h-10 px-2.5 text-xs sm:h-9 sm:min-h-9 sm:px-3 sm:text-sm whitespace-nowrap";
 
+const VAGUE_EXAM_FRAGMENTS = [
+  "official notice देखें",
+  "official advertisement देखें",
+  "official calendar देखें",
+  "घोषित नहीं",
+  "तिथि घोषित नहीं",
+] as const;
+
+function isMeaningfulDetailText(value: string | undefined): boolean {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) return false;
+  const lower = trimmed.toLowerCase();
+  return !VAGUE_EXAM_FRAGMENTS.some((fragment) => lower.includes(fragment));
+}
+
 function CompactLine({
   label,
   value,
@@ -85,6 +100,10 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const startDate = formatDateDDMMYYYY(item.applicationStartDate);
   const endDate = formatDateDDMMYYYY(item.applicationEndDate);
   const primaryPrepLink = item.preparationLinks[0];
+  const examLine = isMeaningfulDetailText(item.examWindowText) ? item.examWindowText.trim() : undefined;
+  const noticeLine = isMeaningfulDetailText(item.notificationWindowText)
+    ? item.notificationWindowText.trim()
+    : undefined;
 
   return (
     <li>
@@ -95,7 +114,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
               variant="outline"
               className="border-emerald-400/40 bg-emerald-500/15 px-1.5 py-0 text-[11px] font-medium text-emerald-300"
             >
-              Verified Job Update
+              Verified Open Job
             </Badge>
             <Badge
               variant="outline"
@@ -113,23 +132,36 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             </p>
           </div>
 
+          {endDate ? (
+            <p className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-xs leading-snug">
+              <span className="text-muted-foreground">अंतिम तिथि: </span>
+              <span className="font-semibold text-emerald-100">{endDate}</span>
+            </p>
+          ) : null}
+
           <div className="space-y-0.5">
-            {startDate && endDate ? (
-              <CompactLine
-                label="आवेदन"
-                value={`${startDate} से ${endDate}`}
-                emphasize
-              />
-            ) : endDate ? (
-              <CompactLine label="अंतिम तिथि" value={endDate} emphasize />
-            ) : startDate ? (
-              <CompactLine label="आवेदन प्रारम्भ" value={startDate} emphasize />
-            ) : null}
-            <CompactLine label="कुल पद" value={item.vacanciesText} />
+            {startDate ? <CompactLine label="आवेदन आरम्भ" value={startDate} emphasize /> : null}
+            {endDate ? <CompactLine label="अंतिम तिथि" value={endDate} emphasize /> : null}
+            {noticeLine ? <CompactLine label="सूचना" value={noticeLine} /> : null}
+            {examLine ? <CompactLine label="परीक्षा / चयन" value={examLine} /> : null}
+            <CompactLine label="रिक्तियाँ" value={item.vacanciesText} />
             <CompactLine label="योग्यता" value={item.qualificationShort} />
           </div>
 
           <div className="flex flex-wrap gap-1.5 pt-0.5">
+            {showSource ? (
+              <a
+                href={item.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
+              >
+                Official Source
+              </a>
+            ) : null}
+
+            {primaryPrepLink ? <PreparationLinkButton href={primaryPrepLink} /> : null}
+
             <button
               type="button"
               onClick={() => setExpanded((open) => !open)}
@@ -144,24 +176,11 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                 href={item.officialNoticeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
+                className={cn(buttonVariants({ variant: "ghost", size: "sm" }), compactBtn)}
               >
                 Official Notice
               </a>
             ) : null}
-
-            {showSource ? (
-              <a
-                href={item.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
-              >
-                Official Source
-              </a>
-            ) : null}
-
-            {primaryPrepLink ? <PreparationLinkButton href={primaryPrepLink} /> : null}
           </div>
 
           {expanded ? (

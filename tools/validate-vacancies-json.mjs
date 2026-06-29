@@ -262,6 +262,11 @@ items.forEach((item, index) => {
   }
 
   if (isVerifiedPublishCandidate(item)) {
+    if (!parseIsoDate(item.applicationStartDate)) {
+      fail(
+        `${rowLabel}: active/closing_soon verified item requires valid applicationStartDate (YYYY-MM-DD)`,
+      );
+    }
     if (!parseIsoDate(item.applicationEndDate)) {
       fail(
         `${rowLabel}: active/closing_soon verified item requires valid applicationEndDate (YYYY-MM-DD)`,

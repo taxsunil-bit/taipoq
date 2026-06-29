@@ -1,273 +1,65 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { VerifiedVacancyCard } from "@/components/VerifiedVacancyCard";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
+  filterVerifiedPublicVacanciesBySector,
   getVerifiedPublicVacancies,
-  groupVerifiedPublicVacancies,
   isVerifiedVacanciesEnabled,
   loadVacanciesPreview,
+  type VerifiedJobSector,
 } from "@/lib/vacancies";
-import {
-  formatDateDDMMYYYY,
-  formatDisplayDate,
-  getPrepareLinkLabel,
-  loadUpcomingExams,
-  resolvePrepareLink,
-} from "@/lib/upcomingExams";
+import { formatDateDDMMYYYY, formatDisplayDate } from "@/lib/upcomingExams";
 import { cn } from "@/lib/utils";
 import type { VacancyItem } from "@/types/vacancy";
-import type { UpcomingExam } from "@/types/upcomingExams";
 
 export const Route = createFileRoute("/upcoming-exams")({
   head: () => ({
     meta: [
-      { title: "Upcoming Exams & Job Updates — TAIPOQ" },
+      { title: "Open Government Jobs — TAIPOQ" },
       {
         name: "description",
         content:
-          "Upcoming government exams and verified job updates with official source links and TAIPOQ preparation.",
+          "Verified open government job advertisements with official source links and TAIPOQ preparation.",
       },
     ],
   }),
   component: UpcomingExamsPage,
 });
 
-type TypingFilter = "all" | "yes" | "no";
-
-type ExamDisplay = {
-  compactWatchlist: boolean;
-  statusBadge: string;
-  statusLine?: string;
-  applicationLine?: string;
-  reapplicationLine?: string;
-  correctionLine?: string;
-  correctionLabel?: string;
-  notificationLine?: string;
-  lastDateLine?: string;
-  examLine?: string;
-  calendarHint?: string;
-  qualificationLine: string;
-  showTyping: boolean;
-  typingLine: string;
-};
-
-const VAGUE_NOTIFICATION = "Official notification देखें";
-const VAGUE_STATUS = "Official website check करें";
-const OFFICIAL_CALENDAR_HINT = "Official calendar देखें";
-
-const PLACEHOLDER_FRAGMENTS = [
-  VAGUE_NOTIFICATION,
-  VAGUE_STATUS,
-  OFFICIAL_CALENDAR_HINT,
-  "तिथि घोषित नहीं",
-  "घोषित नहीं",
-] as const;
-
-function isPlaceholderText(
-  value: string | undefined | null,
-  options?: { treatCalendarHintAsPlaceholder?: boolean },
-): boolean {
-  const trimmed = (value ?? "").trim();
-  if (!trimmed) return true;
-  if (PLACEHOLDER_FRAGMENTS.some((fragment) => trimmed === fragment || trimmed.includes(fragment))) {
-    return true;
-  }
-  if (options?.treatCalendarHintAsPlaceholder && trimmed === OFFICIAL_CALENDAR_HINT) {
-    return true;
-  }
-  return false;
-}
-
-function hasExactDateDisplay(value: string | undefined | null): boolean {
-  const trimmed = (value ?? "").trim();
-  if (!trimmed) return false;
-  if (/\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(trimmed)) return true;
-  if (/\d{4}-\d{2}-\d{2}/.test(trimmed)) return true;
-  return false;
-}
-
-function shouldRenderDetailValue(
-  value: string | undefined,
-  options?: { requireExactDate?: boolean },
-): boolean {
-  if (isPlaceholderText(value, { treatCalendarHintAsPlaceholder: options?.requireExactDate })) {
-    return false;
-  }
-  if (options?.requireExactDate && !hasExactDateDisplay(value)) return false;
-  return Boolean(value?.trim());
-}
-
-function DetailRow({
-  label,
-  value,
-  emphasize = false,
-  requireExactDate = false,
-}: {
-  label: string;
-  value?: string;
-  emphasize?: boolean;
-  requireExactDate?: boolean;
-}) {
-  if (!shouldRenderDetailValue(value, { requireExactDate })) return null;
-
-  return (
-    <p>
-      <span className="text-muted-foreground">{label}: </span>
-      <span className={emphasize ? "font-semibold text-foreground" : "text-foreground"}>
-        {value}
-      </span>
-    </p>
-  );
-}
-
-const compactBtn =
-  "h-9 min-h-10 px-2.5 text-xs sm:h-9 sm:min-h-9 sm:px-3 sm:text-sm whitespace-nowrap";
-
-const ctaBtn =
-  "h-10 min-h-11 w-full px-4 text-sm sm:h-10 sm:min-h-10 sm:w-auto sm:min-w-[220px]";
-
-function hasExactDateHint(text: string): boolean {
-  return /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(text);
-}
-
-function isVagueExamWatchCard(exam: UpcomingExam): boolean {
-  const notification = exam.notificationWindow.trim();
-  const status = exam.status.trim();
-
-  if (hasExactDateHint(notification) || hasExactDateHint(status)) {
-    return false;
-  }
-  if (
-    status.includes("समाप्त") ||
-    status.includes("संशोधन") ||
-    status.toLowerCase().includes("correction")
-  ) {
-    return false;
-  }
-  if (notification === VAGUE_NOTIFICATION || status === VAGUE_STATUS) {
-    return true;
-  }
-  return notification.toLowerCase().includes("official calendar");
-}
-
-function shortenCalendarText(text: string, vague = false): string {
-  const trimmed = text.trim();
-  if (vague || !trimmed || trimmed === VAGUE_NOTIFICATION) {
-    return OFFICIAL_CALENDAR_HINT;
-  }
-  if (trimmed.toLowerCase().includes("official calendar")) {
-    return OFFICIAL_CALENDAR_HINT;
-  }
-  if (trimmed.length > 72) {
-    return `${trimmed.slice(0, 69)}…`;
-  }
-  return trimmed;
-}
-
-function getExamDisplay(exam: UpcomingExam): ExamDisplay {
-  if (exam.id === "ssc-cgl-2026") {
-    return {
-      compactWatchlist: false,
-      statusBadge: "संशोधन अवधि",
-      statusLine: "आवेदन समाप्त",
-      applicationLine: "21/05/2026 से 22/06/2026",
-      reapplicationLine: "23/06/2026 से 25/06/2026",
-      correctionLine: "01/07/2026 से 03/07/2026",
-      correctionLabel: "संशोधन",
-      examLine: "official SSC notice देखें",
-      qualificationLine: exam.qualification,
-      showTyping: false,
-      typingLine: "",
-    };
-  }
-
-  const vague = isVagueExamWatchCard(exam);
-
-  if (vague) {
-    return {
-      compactWatchlist: true,
-      statusBadge: "Exam Watch",
-      calendarHint: OFFICIAL_CALENDAR_HINT,
-      qualificationLine: exam.qualification,
-      showTyping: false,
-      typingLine: "",
-    };
-  }
-
-  const notificationRaw = exam.notificationWindow.trim();
-  const statusRaw = exam.status.trim();
-  const notificationLine =
-    hasExactDateDisplay(notificationRaw) && !isPlaceholderText(notificationRaw)
-      ? shortenCalendarText(notificationRaw)
-      : undefined;
-  const lastDateLine =
-    hasExactDateDisplay(statusRaw) && !isPlaceholderText(statusRaw) ? statusRaw : undefined;
-
-  return {
-    compactWatchlist: false,
-    statusBadge: isPlaceholderText(statusRaw) ? "Exam Watch" : statusRaw,
-    statusLine:
-      isPlaceholderText(statusRaw) || hasExactDateDisplay(statusRaw) ? undefined : statusRaw,
-    notificationLine,
-    lastDateLine,
-    examLine: isPlaceholderText(exam.examWindow) ? undefined : shortenCalendarText(exam.examWindow),
-    qualificationLine: exam.qualification,
-    showTyping: true,
-    typingLine: exam.typingRequired,
-  };
-}
+const SECTOR_OPTIONS: { id: VerifiedJobSector; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "railway", label: "Railway" },
+  { id: "banking", label: "Banking" },
+  { id: "bank_specialist", label: "Bank Specialist" },
+  { id: "insurance", label: "Insurance" },
+  { id: "defence", label: "Defence" },
+  { id: "drdo", label: "DRDO / R&D" },
+  { id: "upsc", label: "UPSC" },
+  { id: "dsssb", label: "DSSSB / Delhi Govt" },
+  { id: "judicial", label: "Judicial Jobs" },
+];
 
 function UpcomingExamsPage() {
   const verifiedEnabled = isVerifiedVacanciesEnabled();
-  const [exams, setExams] = useState<UpcomingExam[]>([]);
+  const [vacancyItems, setVacancyItems] = useState<VacancyItem[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string | undefined>();
-  const [fromFallback, setFromFallback] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const [verifiedVacancies, setVerifiedVacancies] = useState<VacancyItem[]>([]);
-  const [verifiedSections, setVerifiedSections] = useState({
-    general: [] as VacancyItem[],
-    judicial: [] as VacancyItem[],
-    bankSpecialist: [] as VacancyItem[],
-  });
   const [verifiedLoading, setVerifiedLoading] = useState(verifiedEnabled);
-
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const [watchlistOpen, setWatchlistOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [department, setDepartment] = useState("all");
-  const [status, setStatus] = useState("all");
-  const [typingFilter, setTypingFilter] = useState<TypingFilter>("all");
+  const [selectedSector, setSelectedSector] = useState<VerifiedJobSector>("all");
 
   useEffect(() => {
-    let cancelled = false;
-    loadUpcomingExams().then((result) => {
-      if (cancelled) return;
-      setExams(result.payload.exams);
-      setLastUpdated(result.payload.lastUpdated);
-      setFromFallback(result.fromFallback);
-      setLoading(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!verifiedEnabled) return;
+    if (!verifiedEnabled) {
+      setVerifiedLoading(false);
+      return;
+    }
 
     let cancelled = false;
     loadVacanciesPreview().then((result) => {
       if (cancelled) return;
-      const items = result.payload.items;
-      setVerifiedVacancies(getVerifiedPublicVacancies(items));
-      setVerifiedSections(groupVerifiedPublicVacancies(items));
+      setVacancyItems(result.payload.items);
+      setLastUpdated(result.payload.lastUpdated);
       setVerifiedLoading(false);
     });
 
@@ -276,456 +68,142 @@ function UpcomingExamsPage() {
     };
   }, [verifiedEnabled]);
 
-  const activeExams = useMemo(() => exams.filter((e) => e.active), [exams]);
-
-  const departments = useMemo(
-    () => [...new Set(activeExams.map((e) => e.department))].sort(),
-    [activeExams],
+  const verifiedVacancies = useMemo(
+    () => getVerifiedPublicVacancies(vacancyItems),
+    [vacancyItems],
   );
 
-  const statuses = useMemo(
-    () => [...new Set(activeExams.map((e) => e.status))].sort(),
-    [activeExams],
+  const sectorVerifiedJobs = useMemo(
+    () => filterVerifiedPublicVacanciesBySector(vacancyItems, selectedSector),
+    [vacancyItems, selectedSector],
   );
 
-  const filteredExams = useMemo(() => {
-    return activeExams.filter((exam) => {
-      if (department !== "all" && exam.department !== department) return false;
-      if (status !== "all" && exam.status !== status) return false;
-
-      if (typingFilter === "yes") {
-        const t = exam.typingRequired.toLowerCase();
-        if (!t.includes("yes") && !t.startsWith("yes")) return false;
-      }
-      if (typingFilter === "no") {
-        const t = exam.typingRequired.toLowerCase();
-        if (t.includes("yes")) return false;
-      }
-
-      if (query.trim()) {
-        const q = query.trim().toLowerCase();
-        const haystack = [
-          exam.examName,
-          exam.department,
-          exam.qualification,
-          exam.preparationFocus,
-        ]
-          .join(" ")
-          .toLowerCase();
-        if (!haystack.includes(q)) return false;
-      }
-
-      return true;
-    });
-  }, [activeExams, department, status, typingFilter, query]);
-
-  const datedExamCards = useMemo(
-    () => filteredExams.filter((exam) => !isVagueExamWatchCard(exam)),
-    [filteredExams],
-  );
-
-  const watchlistExamCards = useMemo(
-    () => filteredExams.filter((exam) => isVagueExamWatchCard(exam)),
-    [filteredExams],
-  );
-
-  const watchlistCount = watchlistExamCards.length;
-  const datedUpdateCount = datedExamCards.length;
-
-  const filtersActive =
-    query.trim() !== "" ||
-    department !== "all" ||
-    status !== "all" ||
-    typingFilter !== "all";
-
-  const listLoading = loading || (verifiedEnabled && verifiedLoading);
+  const sectorCounts = useMemo(() => {
+    const counts: Partial<Record<VerifiedJobSector, number>> = {
+      all: verifiedVacancies.length,
+    };
+    for (const sector of SECTOR_OPTIONS) {
+      if (sector.id === "all") continue;
+      counts[sector.id] = filterVerifiedPublicVacanciesBySector(vacancyItems, sector.id).length;
+    }
+    return counts;
+  }, [vacancyItems, verifiedVacancies.length]);
 
   return (
     <PageShell>
       <div className="mx-auto max-w-5xl space-y-3">
         <PageHeader
-          title="Upcoming Exams & Job Updates"
-          subtitle="Official links और preparation — final details official website पर verify करें।"
+          title="Open Government Jobs"
+          subtitle="Verified open advertisements only — exact application dates from official sources."
         />
 
         <Card className="border-amber-400/40 bg-amber-500/15">
           <CardContent className="space-y-1 p-2.5 text-[11px] leading-relaxed sm:p-3 sm:text-xs">
             <p className="font-semibold text-amber-50">Important disclaimer</p>
             <p className="text-amber-100/90">
-              यह page अभ्यास-दिशा और official links के लिए है। आवेदन से पहले visitor स्वयं official
-              website पर final दिनांक, योग्यता, fee और नियम check करें। TAIPOQ final eligibility या
-              dates की जिम्मेदारी नहीं लेता।
+              यह page केवल verified open job advertisements दिखाता है। आवेदन से पहले visitor
+              स्वयं official website पर final दिनांक, योग्यता, fee और नियम check करें। TAIPOQ final
+              eligibility या dates की जिम्मेदारी नहीं लेता।
             </p>
           </CardContent>
         </Card>
 
-        {fromFallback && !loading ? (
-          <p className="text-[11px] text-muted-foreground">
-            Data source unavailable. Showing saved exam list.
-          </p>
-        ) : null}
-
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          {verifiedEnabled ? (
-            <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal">
-              Verified: {verifiedVacancies.length}
-            </Badge>
-          ) : null}
-          <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal">
-            Exam updates: {datedUpdateCount}
-          </Badge>
-          {lastUpdated ? (
-            <span className="text-[10px] text-muted-foreground">
-              Updated {formatDateDDMMYYYY(lastUpdated) || formatDisplayDate(lastUpdated)}
-            </span>
-          ) : null}
-          <button
-            type="button"
-            onClick={() => setFiltersOpen((open) => !open)}
-            className="text-[10px] text-muted-foreground underline-offset-2 hover:underline"
-            aria-expanded={filtersOpen}
-          >
-            Filters
-          </button>
-        </div>
-
-        {listLoading ? (
-          <p className="text-sm text-muted-foreground">Loading…</p>
-        ) : datedExamCards.length === 0 &&
-          watchlistCount === 0 &&
-          (!verifiedEnabled || verifiedVacancies.length === 0) ? (
+        {!verifiedEnabled ? (
           <Card className="border-border bg-card/80">
             <CardContent className="p-3 text-sm text-muted-foreground">
-              No exams match your filters. Try clearing filters or check back later.
+              Verified open jobs are not enabled in this build. Set VITE_SHOW_VERIFIED_VACANCIES=true.
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-2">
-            {verifiedEnabled && verifiedSections.general.length > 0 ? (
+          <>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal">
+                Open verified: {verifiedVacancies.length}
+              </Badge>
+              {lastUpdated ? (
+                <span className="text-[10px] text-muted-foreground">
+                  Updated {formatDateDDMMYYYY(lastUpdated) || formatDisplayDate(lastUpdated)}
+                </span>
+              ) : null}
+            </div>
+
+            <SectorChipBar
+              options={SECTOR_OPTIONS}
+              selected={selectedSector}
+              onSelect={setSelectedSector}
+              counts={sectorCounts}
+            />
+
+            {verifiedLoading ? (
+              <p className="text-sm text-muted-foreground">Loading…</p>
+            ) : sectorVerifiedJobs.length > 0 ? (
               <ul className="flex flex-col gap-2">
-                {verifiedSections.general.map((item) => (
+                {sectorVerifiedJobs.map((item) => (
                   <VerifiedVacancyCard key={item.id} item={item} />
                 ))}
               </ul>
-            ) : null}
-
-            {verifiedEnabled && verifiedSections.judicial.length > 0 ? (
-              <VerifiedVacancySection
-                title="Judicial Jobs"
-                subtitle="High Court, DLSA और judicial authority posts — exact closing date verified."
-                items={verifiedSections.judicial}
-              />
-            ) : null}
-
-            {verifiedEnabled && verifiedSections.bankSpecialist.length > 0 ? (
-              <VerifiedVacancySection
-                title="Bank Specialist"
-                subtitle="Contractual / specialist banking posts — BOB and similar drives."
-                items={verifiedSections.bankSpecialist}
-              />
-            ) : null}
-
-            <ul className="flex flex-col gap-2">
-              {datedExamCards.map((exam) => (
-                <ExamCard key={exam.id} exam={exam} />
-              ))}
-            </ul>
-
-            {watchlistCount > 0 ? (
-              <OtherExamUpdatesSection
-                count={watchlistCount}
-                open={watchlistOpen}
-                onToggle={() => setWatchlistOpen((value) => !value)}
-                exams={watchlistExamCards}
-              />
-            ) : null}
-          </div>
+            ) : (
+              <Card className="border-border/70 bg-muted/10">
+                <CardContent className="p-3 text-sm text-muted-foreground">
+                  इस sector में अभी कोई verified open job नहीं है।
+                </CardContent>
+              </Card>
+            )}
+          </>
         )}
-
-        {filtersOpen ? (
-          <Card className="border-border/60 bg-card/50 shadow-none">
-            <CardContent className="grid gap-2 p-3 sm:grid-cols-2">
-              <div className="space-y-1 sm:col-span-2">
-                <Label htmlFor="exam-search" className="text-xs">
-                  Search
-                </Label>
-                <Input
-                  id="exam-search"
-                  className="h-8 text-sm"
-                  placeholder="Exam name, department…"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-              </div>
-              <FilterSelect
-                id="department-filter"
-                label="Department"
-                value={department}
-                onChange={setDepartment}
-                options={[
-                  { value: "all", label: "All departments" },
-                  ...departments.map((d) => ({ value: d, label: d })),
-                ]}
-              />
-              <FilterSelect
-                id="status-filter"
-                label="Status"
-                value={status}
-                onChange={setStatus}
-                options={[
-                  { value: "all", label: "All statuses" },
-                  ...statuses.map((s) => ({ value: s, label: s })),
-                ]}
-              />
-              <FilterSelect
-                id="typing-filter"
-                label="Typing required"
-                value={typingFilter}
-                onChange={(v) => setTypingFilter(v as TypingFilter)}
-                options={[
-                  { value: "all", label: "All" },
-                  { value: "yes", label: "Typing required" },
-                  { value: "no", label: "No typing / study only" },
-                ]}
-              />
-              {filtersActive ? (
-                <p className="text-[11px] text-muted-foreground sm:col-span-2">
-                  Filters active — list may differ from default view.
-                </p>
-              ) : null}
-            </CardContent>
-          </Card>
-        ) : null}
       </div>
     </PageShell>
   );
 }
 
-function VerifiedVacancySection({
-  title,
-  subtitle,
-  items,
-}: {
-  title: string;
-  subtitle: string;
-  items: VacancyItem[];
-}) {
-  return (
-    <section className="space-y-2 rounded-xl border border-emerald-500/15 bg-emerald-500/5 p-3 sm:p-4">
-      <div className="space-y-0.5">
-        <h2 className="text-sm font-semibold text-foreground">{title}</h2>
-        <p className="text-[11px] text-muted-foreground">{subtitle}</p>
-        <p className="text-[10px] text-muted-foreground">{items.length} live verified</p>
-      </div>
-      <ul className="flex flex-col gap-2">
-        {items.map((item) => (
-          <VerifiedVacancyCard key={item.id} item={item} />
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-function OtherExamUpdatesSection({
-  count,
-  open,
-  onToggle,
-  exams,
-}: {
-  count: number;
-  open: boolean;
-  onToggle: () => void;
-  exams: UpcomingExam[];
-}) {
-  return (
-    <section className="rounded-xl border border-border/80 bg-muted/10 p-3 sm:p-4">
-      <div className="space-y-1">
-        <h2 className="text-sm font-semibold text-foreground">अन्य परीक्षा सूचनाएँ</h2>
-        <p className="text-xs text-muted-foreground">
-          SSC, Railway, Banking, Defence और अन्य exam calendar links.
-        </p>
-        <p className="text-[11px] text-muted-foreground">{count} exam updates available.</p>
-      </div>
-
-      <button
-        type="button"
-        onClick={onToggle}
-        className={cn(
-          buttonVariants({ variant: open ? "secondary" : "default", size: "sm" }),
-          ctaBtn,
-          "mt-3",
-        )}
-        aria-expanded={open}
-      >
-        {open ? "सूचनाएँ छिपाएँ" : `सभी ${count} सूचनाएँ दिखाएँ`}
-      </button>
-
-      {open ? (
-        <ul className="mt-3 flex flex-col gap-2 border-t border-border/50 pt-3">
-          {/* Do not render placeholder date rows for vague watchlist cards.
-              Exact verified date = show date row. No exact date = compact Exam Watch row only. */}
-          {exams.map((exam) => (
-            <ExamCard key={exam.id} exam={exam} watchlist />
-          ))}
-        </ul>
-      ) : null}
-    </section>
-  );
-}
-
-function FilterSelect({
-  id,
-  label,
-  value,
-  onChange,
+function SectorChipBar({
   options,
+  selected,
+  onSelect,
+  counts,
 }: {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  options: { value: string; label: string }[];
+  options: { id: VerifiedJobSector; label: string }[];
+  selected: VerifiedJobSector;
+  onSelect: (sector: VerifiedJobSector) => void;
+  counts: Partial<Record<VerifiedJobSector, number>>;
 }) {
   return (
-    <div className="space-y-1">
-      <Label htmlFor={id} className="text-xs">
-        {label}
-      </Label>
-      <select
-        id={id}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="flex h-8 w-full rounded-md border border-input bg-transparent px-2 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-function ExamCard({ exam, watchlist = false }: { exam: UpcomingExam; watchlist?: boolean }) {
-  const prepare = resolvePrepareLink(exam.prepareLink);
-  const prepareLabel = getPrepareLinkLabel(exam.prepareLink);
-  const display = getExamDisplay(exam);
-  const isCompact = watchlist || display.compactWatchlist;
-
-  return (
-    <li>
-      <Card
-        className={cn(
-          "border-border/70 bg-card/80 shadow-sm",
-          isCompact && "border-dashed bg-card/60",
-        )}
-      >
-        <CardContent className={cn("space-y-2", isCompact ? "p-2.5" : "p-3")}>
-          {isCompact ? (
-            <>
-              <h3 className="text-sm font-semibold leading-snug text-foreground">{exam.examName}</h3>
-              <p className="text-xs text-muted-foreground">
-                {exam.department} · {display.statusBadge}
-              </p>
-              {display.calendarHint ? (
-                <p className="text-xs text-muted-foreground">{display.calendarHint}</p>
-              ) : null}
-              {display.qualificationLine?.trim() ? (
-                <p className="text-xs leading-snug">
-                  <span className="text-muted-foreground">योग्यता: </span>
-                  <span className="text-foreground">{display.qualificationLine}</span>
-                </p>
-              ) : null}
-            </>
-          ) : (
-            <>
-              <div className="flex flex-wrap items-center gap-1.5">
-                <Badge variant="outline" className="px-1.5 py-0 text-[11px] font-normal">
-                  {exam.department}
-                </Badge>
-                <Badge
-                  variant="secondary"
-                  className="px-1.5 py-0 text-[11px] font-medium text-foreground"
-                >
-                  {display.statusBadge}
-                </Badge>
-              </div>
-
-              <h3 className="text-sm font-semibold leading-snug text-foreground">{exam.examName}</h3>
-
-              <div className="space-y-0.5 text-xs leading-snug">
-                <DetailRow label="स्थिति" value={display.statusLine} emphasize />
-                <DetailRow label="आवेदन" value={display.applicationLine} emphasize requireExactDate />
-                <DetailRow
-                  label="पुनः आवेदन"
-                  value={display.reapplicationLine}
-                  emphasize
-                  requireExactDate
-                />
-                <DetailRow
-                  label={display.correctionLabel ?? "संशोधन"}
-                  value={display.correctionLine}
-                  emphasize
-                  requireExactDate
-                />
-                <DetailRow label="सूचना" value={display.notificationLine} requireExactDate />
-                <DetailRow label="अंतिम तिथि" value={display.lastDateLine} emphasize requireExactDate />
-                <DetailRow label="परीक्षा" value={display.examLine} />
-                {display.qualificationLine?.trim() ? (
-                  <p>
-                    <span className="text-muted-foreground">योग्यता: </span>
-                    {display.qualificationLine}
-                  </p>
-                ) : null}
-                {display.showTyping ? (
-                  <p>
-                    <span className="text-muted-foreground">Typing: </span>
-                    {display.typingLine}
-                  </p>
-                ) : null}
-              </div>
-            </>
-          )}
-
-          <div className="flex flex-wrap gap-1.5">
-            <a
-              href={exam.officialSourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
-            >
-              Official Source
-            </a>
-
-            {prepare.external ? (
-              <a
-                href={prepare.to}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn)}
-              >
-                Prepare
-              </a>
-            ) : prepare.to === "/test" && "search" in prepare ? (
-              <Link
-                to="/test"
-                search={prepare.search}
-                className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn)}
-              >
-                {prepareLabel}
-              </Link>
-            ) : (
-              <Link
-                to={prepare.to}
-                className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn)}
-              >
-                Prepare
-              </Link>
+    <div
+      className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      role="tablist"
+      aria-label="Job sectors"
+    >
+      {options.map((option) => {
+        const isSelected = selected === option.id;
+        const count = counts[option.id];
+        return (
+          <button
+            key={option.id}
+            type="button"
+            role="tab"
+            aria-selected={isSelected}
+            onClick={() => onSelect(option.id)}
+            className={cn(
+              "shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+              isSelected
+                ? "border-primary bg-primary/15 text-primary shadow-sm"
+                : "border-border/80 bg-muted/20 text-muted-foreground hover:border-border hover:text-foreground",
             )}
-          </div>
-        </CardContent>
-      </Card>
-    </li>
+          >
+            {option.label}
+            {typeof count === "number" ? (
+              <span
+                className={cn(
+                  "ml-1 tabular-nums",
+                  isSelected ? "text-primary/80" : "text-muted-foreground/80",
+                )}
+              >
+                ({count})
+              </span>
+            ) : null}
+          </button>
+        );
+      })}
+    </div>
   );
 }

@@ -165,29 +165,43 @@ export function isBankSpecialistVacancyCategory(category: string | undefined): b
   return (category ?? "").toLowerCase().includes("bank specialist");
 }
 
-export type VerifiedVacancySections = {
-  general: VacancyItem[];
-  judicial: VacancyItem[];
-  bankSpecialist: VacancyItem[];
-};
+export type VerifiedJobSector =
+  | "all"
+  | "railway"
+  | "banking"
+  | "bank_specialist"
+  | "insurance"
+  | "defence"
+  | "drdo"
+  | "upsc"
+  | "dsssb"
+  | "judicial";
 
-export function groupVerifiedPublicVacancies(items: VacancyItem[]): VerifiedVacancySections {
+export function getVerifiedVacancySector(
+  item: VacancyItem,
+): Exclude<VerifiedJobSector, "all"> | null {
+  const category = (item.category ?? "").toLowerCase();
+
+  if (isJudicialVacancyCategory(item.category)) return "judicial";
+  if (isBankSpecialistVacancyCategory(item.category)) return "bank_specialist";
+  if (category.includes("railway") || category.includes("rrb")) return "railway";
+  if (category.includes("dsssb") || category.includes("delhi govt")) return "dsssb";
+  if (category.includes("drdo") || category.includes("r&d")) return "drdo";
+  if (category.includes("upsc")) return "upsc";
+  if (category.includes("insurance")) return "insurance";
+  if (category.includes("defence") || category.includes("navy")) return "defence";
+  if (category.includes("banking")) return "banking";
+
+  return null;
+}
+
+export function filterVerifiedPublicVacanciesBySector(
+  items: VacancyItem[],
+  sector: VerifiedJobSector,
+): VacancyItem[] {
   const verified = getVerifiedPublicVacancies(items);
-  const general: VacancyItem[] = [];
-  const judicial: VacancyItem[] = [];
-  const bankSpecialist: VacancyItem[] = [];
-
-  for (const item of verified) {
-    if (isJudicialVacancyCategory(item.category)) {
-      judicial.push(item);
-    } else if (isBankSpecialistVacancyCategory(item.category)) {
-      bankSpecialist.push(item);
-    } else {
-      general.push(item);
-    }
-  }
-
-  return { general, judicial, bankSpecialist };
+  if (sector === "all") return verified;
+  return verified.filter((item) => getVerifiedVacancySector(item) === sector);
 }
 
 export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] {
@@ -198,22 +212,33 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     if (item.isPreparationOnly) return false;
     if (item.sourceType === "cross_check_only") return false;
     if (item.status !== "active" && item.status !== "closing_soon") return false;
+    if (!parseIsoDate(item.applicationStartDate)) return false;
     if (!isLiveVacancyByClosingDate(item.applicationEndDate)) return false;
+    if (!isHttpsUrl(item.sourceUrl)) return false;
     return true;
   });
 
   const order = [
-    "indian-navy-agniveer-apprentice-0127-0227-2026",
-    "indian-navy-ssc-various-entries-jun-2027",
+    "rrb-technician-cen-02-2026",
+    "dsssb-advt-03-2026",
     "sbi-po-2026",
+    "sbi-law-officer-sco-2026",
+    "sbi-bank-medical-officer-sco-2026",
+    "sbi-defence-banking-advisor-sco-2026",
     "new-india-assurance-apprentice-2026-27",
-    "upsc-advt-07-2026",
     "bob-cic-regular-2026",
-    "gujarat-hc-legal-assistant-2026",
-    "ahc-pla-ghazipur-2026",
-    "ahc-pla-sant-kabir-nagar-2026",
     "bob-cic-contractual-2026",
     "bob-it-fte-2026",
+    "upsc-advt-07-2026",
+    "indian-navy-ssc-various-entries-jun-2027",
+    "indian-navy-agniveer-apprentice-0127-0227-2026",
+    "drdo-deal-apprentice-2026-27",
+    "drdo-dysl-qt-jrf-2026",
+    "gujarat-hc-legal-assistant-2026",
+    "ahc-pla-ghazipur-2026",
+    "ahc-pla-baghpat-2026",
+    "ahc-pla-sonbhadra-2026",
+    "ahc-pla-sant-kabir-nagar-2026",
   ];
 
   return verified.sort((a, b) => {
