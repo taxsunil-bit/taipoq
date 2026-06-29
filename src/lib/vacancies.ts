@@ -250,7 +250,3 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     return ai - bi;
   });
 }
-
-export function isVerifiedVacanciesEnabled(): boolean {
-  return import.meta.env.VITE_SHOW_VERIFIED_VACANCIES === "true";
-}

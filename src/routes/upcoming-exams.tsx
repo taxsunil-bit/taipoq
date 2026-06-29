@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   filterVerifiedPublicVacanciesBySector,
   getVerifiedPublicVacancies,
-  isVerifiedVacanciesEnabled,
   loadVacanciesPreview,
   type VerifiedJobSector,
 } from "@/lib/vacancies";
@@ -43,18 +42,12 @@ const SECTOR_OPTIONS: { id: VerifiedJobSector; label: string }[] = [
 ];
 
 function UpcomingExamsPage() {
-  const verifiedEnabled = isVerifiedVacanciesEnabled();
   const [vacancyItems, setVacancyItems] = useState<VacancyItem[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string | undefined>();
-  const [verifiedLoading, setVerifiedLoading] = useState(verifiedEnabled);
+  const [verifiedLoading, setVerifiedLoading] = useState(true);
   const [selectedSector, setSelectedSector] = useState<VerifiedJobSector>("all");
 
   useEffect(() => {
-    if (!verifiedEnabled) {
-      setVerifiedLoading(false);
-      return;
-    }
-
     let cancelled = false;
     loadVacanciesPreview().then((result) => {
       if (cancelled) return;
@@ -66,7 +59,7 @@ function UpcomingExamsPage() {
     return () => {
       cancelled = true;
     };
-  }, [verifiedEnabled]);
+  }, []);
 
   const verifiedVacancies = useMemo(
     () => getVerifiedPublicVacancies(vacancyItems),
@@ -108,48 +101,38 @@ function UpcomingExamsPage() {
           </CardContent>
         </Card>
 
-        {!verifiedEnabled ? (
-          <Card className="border-border bg-card/80">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal">
+            Open verified: {verifiedVacancies.length}
+          </Badge>
+          {lastUpdated ? (
+            <span className="text-[10px] text-muted-foreground">
+              Updated {formatDateDDMMYYYY(lastUpdated) || formatDisplayDate(lastUpdated)}
+            </span>
+          ) : null}
+        </div>
+
+        <SectorChipBar
+          options={SECTOR_OPTIONS}
+          selected={selectedSector}
+          onSelect={setSelectedSector}
+          counts={sectorCounts}
+        />
+
+        {verifiedLoading ? (
+          <p className="text-sm text-muted-foreground">Loading…</p>
+        ) : sectorVerifiedJobs.length > 0 ? (
+          <ul className="flex flex-col gap-2">
+            {sectorVerifiedJobs.map((item) => (
+              <VerifiedVacancyCard key={item.id} item={item} />
+            ))}
+          </ul>
+        ) : (
+          <Card className="border-border/70 bg-muted/10">
             <CardContent className="p-3 text-sm text-muted-foreground">
-              Verified open jobs are not enabled in this build. Set VITE_SHOW_VERIFIED_VACANCIES=true.
+              इस sector में अभी कोई verified open job नहीं है।
             </CardContent>
           </Card>
-        ) : (
-          <>
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal">
-                Open verified: {verifiedVacancies.length}
-              </Badge>
-              {lastUpdated ? (
-                <span className="text-[10px] text-muted-foreground">
-                  Updated {formatDateDDMMYYYY(lastUpdated) || formatDisplayDate(lastUpdated)}
-                </span>
-              ) : null}
-            </div>
-
-            <SectorChipBar
-              options={SECTOR_OPTIONS}
-              selected={selectedSector}
-              onSelect={setSelectedSector}
-              counts={sectorCounts}
-            />
-
-            {verifiedLoading ? (
-              <p className="text-sm text-muted-foreground">Loading…</p>
-            ) : sectorVerifiedJobs.length > 0 ? (
-              <ul className="flex flex-col gap-2">
-                {sectorVerifiedJobs.map((item) => (
-                  <VerifiedVacancyCard key={item.id} item={item} />
-                ))}
-              </ul>
-            ) : (
-              <Card className="border-border/70 bg-muted/10">
-                <CardContent className="p-3 text-sm text-muted-foreground">
-                  इस sector में अभी कोई verified open job नहीं है।
-                </CardContent>
-              </Card>
-            )}
-          </>
         )}
       </div>
     </PageShell>

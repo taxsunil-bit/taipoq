@@ -34,6 +34,11 @@ if (!existsSync(ROUTE_PATH)) {
     { label: "ExamCard component", re: /function ExamCard/ },
     { label: "Apply button label", re: />\s*Apply\s*</ },
     { label: "Official calendar watchlist hint", re: /Official calendar देखें/ },
+    { label: "Verified vacancies feature flag gate", re: /isVerifiedVacanciesEnabled|VITE_SHOW_VERIFIED_VACANCIES/ },
+    {
+      label: "Verified jobs disabled warning",
+      re: /Verified open jobs are not enabled in this build/,
+    },
   ];
 
   for (const { label, re } of forbiddenUiPatterns) {
@@ -45,6 +50,7 @@ if (!existsSync(ROUTE_PATH)) {
     { label: "SectorChipBar", re: /function SectorChipBar/ },
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
     { label: "filterVerifiedPublicVacanciesBySector", re: /filterVerifiedPublicVacanciesBySector/ },
+    { label: "loadVacanciesPreview", re: /loadVacanciesPreview/ },
     { label: "DRDO sector chip", re: /DRDO \/ R&D/ },
     { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },
   ];
