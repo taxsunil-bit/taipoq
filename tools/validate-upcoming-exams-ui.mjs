@@ -41,6 +41,7 @@ if (!existsSync(ROUTE_PATH)) {
     },
     { label: "Sector jump scroll chips", re: /function SectorJumpChipBar|scrollIntoView/ },
     { label: "Always-visible grouped sector sections", re: /function SectorJobSection|open-jobs-by-sector/ },
+    { label: "Single-line hidden sector chips", re: /overflow-x-auto.*SectorFilterChipBar|SectorFilterChipBar[\s\S]*overflow-x-auto/ },
   ];
 
   for (const { label, re } of forbiddenUiPatterns) {
@@ -50,6 +51,7 @@ if (!existsSync(ROUTE_PATH)) {
   const requiredPatterns = [
     { label: "Open Government Jobs heading", re: /Open Government Jobs/ },
     { label: "Sector filter chip bar", re: /function SectorFilterChipBar/ },
+    { label: "Sector chips flex wrap", re: /flex flex-wrap gap-/ },
     { label: "selectedSector state", re: /selectedSector/ },
     { label: "filteredJobs list", re: /filteredJobs/ },
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
