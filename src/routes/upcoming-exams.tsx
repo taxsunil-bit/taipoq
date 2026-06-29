@@ -40,26 +40,96 @@ export const Route = createFileRoute("/upcoming-exams")({
 type TypingFilter = "all" | "yes" | "no";
 
 type ExamDisplay = {
+  compactWatchlist: boolean;
   statusBadge: string;
   statusLine?: string;
+  applicationLine?: string;
+  reapplicationLine?: string;
   correctionLine?: string;
   correctionLabel?: string;
-  notificationLine: string;
-  lastDateLine: string;
-  examLine: string;
+  notificationLine?: string;
+  lastDateLine?: string;
+  examLine?: string;
+  calendarHint?: string;
   qualificationLine: string;
   showTyping: boolean;
   typingLine: string;
 };
+
+const VAGUE_NOTIFICATION = "Official notification देखें";
+const VAGUE_STATUS = "Official website check करें";
+const OFFICIAL_CALENDAR_HINT = "Official calendar देखें";
+
+const PLACEHOLDER_FRAGMENTS = [
+  VAGUE_NOTIFICATION,
+  VAGUE_STATUS,
+  OFFICIAL_CALENDAR_HINT,
+  "तिथि घोषित नहीं",
+  "घोषित नहीं",
+] as const;
+
+function isPlaceholderText(
+  value: string | undefined | null,
+  options?: { treatCalendarHintAsPlaceholder?: boolean },
+): boolean {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) return true;
+  if (PLACEHOLDER_FRAGMENTS.some((fragment) => trimmed === fragment || trimmed.includes(fragment))) {
+    return true;
+  }
+  if (options?.treatCalendarHintAsPlaceholder && trimmed === OFFICIAL_CALENDAR_HINT) {
+    return true;
+  }
+  return false;
+}
+
+function hasExactDateDisplay(value: string | undefined | null): boolean {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) return false;
+  if (/\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(trimmed)) return true;
+  if (/\d{4}-\d{2}-\d{2}/.test(trimmed)) return true;
+  return false;
+}
+
+function shouldRenderDetailValue(
+  value: string | undefined,
+  options?: { requireExactDate?: boolean },
+): boolean {
+  if (isPlaceholderText(value, { treatCalendarHintAsPlaceholder: options?.requireExactDate })) {
+    return false;
+  }
+  if (options?.requireExactDate && !hasExactDateDisplay(value)) return false;
+  return Boolean(value?.trim());
+}
+
+function DetailRow({
+  label,
+  value,
+  emphasize = false,
+  requireExactDate = false,
+}: {
+  label: string;
+  value?: string;
+  emphasize?: boolean;
+  requireExactDate?: boolean;
+}) {
+  if (!shouldRenderDetailValue(value, { requireExactDate })) return null;
+
+  return (
+    <p>
+      <span className="text-muted-foreground">{label}: </span>
+      <span className={emphasize ? "font-semibold text-foreground" : "text-foreground"}>
+        {value}
+      </span>
+    </p>
+  );
+}
 
 const compactBtn =
   "h-9 min-h-10 px-2.5 text-xs sm:h-9 sm:min-h-9 sm:px-3 sm:text-sm whitespace-nowrap";
 
 const ctaBtn =
   "h-10 min-h-11 w-full px-4 text-sm sm:h-10 sm:min-h-10 sm:w-auto sm:min-w-[220px]";
-
-const VAGUE_NOTIFICATION = "Official notification देखें";
-const VAGUE_STATUS = "Official website check करें";
 
 function hasExactDateHint(text: string): boolean {
   return /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(text);
@@ -88,10 +158,10 @@ function isVagueExamWatchCard(exam: UpcomingExam): boolean {
 function shortenCalendarText(text: string, vague = false): string {
   const trimmed = text.trim();
   if (vague || !trimmed || trimmed === VAGUE_NOTIFICATION) {
-    return "Official calendar देखें";
+    return OFFICIAL_CALENDAR_HINT;
   }
   if (trimmed.toLowerCase().includes("official calendar")) {
-    return "Official calendar देखें";
+    return OFFICIAL_CALENDAR_HINT;
   }
   if (trimmed.length > 72) {
     return `${trimmed.slice(0, 69)}…`;
@@ -102,13 +172,14 @@ function shortenCalendarText(text: string, vague = false): string {
 function getExamDisplay(exam: UpcomingExam): ExamDisplay {
   if (exam.id === "ssc-cgl-2026") {
     return {
+      compactWatchlist: false,
       statusBadge: "संशोधन अवधि",
       statusLine: "आवेदन समाप्त",
+      applicationLine: "21/05/2026 से 22/06/2026",
+      reapplicationLine: "23/06/2026 से 25/06/2026",
       correctionLine: "01/07/2026 से 03/07/2026",
-      correctionLabel: "संशोधन अवधि",
-      notificationLine: "आवेदन समाप्त",
-      lastDateLine: "आवेदन समाप्त",
-      examLine: "final dates ssc.gov.in पर देखें",
+      correctionLabel: "संशोधन",
+      examLine: "official SSC notice देखें",
       qualificationLine: exam.qualification,
       showTyping: false,
       typingLine: "",
@@ -117,17 +188,36 @@ function getExamDisplay(exam: UpcomingExam): ExamDisplay {
 
   const vague = isVagueExamWatchCard(exam);
 
+  if (vague) {
+    return {
+      compactWatchlist: true,
+      statusBadge: "Exam Watch",
+      calendarHint: OFFICIAL_CALENDAR_HINT,
+      qualificationLine: exam.qualification,
+      showTyping: false,
+      typingLine: "",
+    };
+  }
+
+  const notificationRaw = exam.notificationWindow.trim();
+  const statusRaw = exam.status.trim();
+  const notificationLine =
+    hasExactDateDisplay(notificationRaw) && !isPlaceholderText(notificationRaw)
+      ? shortenCalendarText(notificationRaw)
+      : undefined;
+  const lastDateLine =
+    hasExactDateDisplay(statusRaw) && !isPlaceholderText(statusRaw) ? statusRaw : undefined;
+
   return {
-    statusBadge: vague ? "Exam Watch" : exam.status,
-    notificationLine: vague ? "तिथि घोषित नहीं" : shortenCalendarText(exam.notificationWindow),
-    lastDateLine: vague
-      ? "तिथि घोषित नहीं"
-      : hasExactDateHint(exam.status)
-        ? exam.status
-        : "तिथि घोषित नहीं",
-    examLine: shortenCalendarText(exam.examWindow, vague),
+    compactWatchlist: false,
+    statusBadge: isPlaceholderText(statusRaw) ? "Exam Watch" : statusRaw,
+    statusLine:
+      isPlaceholderText(statusRaw) || hasExactDateDisplay(statusRaw) ? undefined : statusRaw,
+    notificationLine,
+    lastDateLine,
+    examLine: isPlaceholderText(exam.examWindow) ? undefined : shortenCalendarText(exam.examWindow),
     qualificationLine: exam.qualification,
-    showTyping: !vague,
+    showTyping: true,
     typingLine: exam.typingRequired,
   };
 }
@@ -420,6 +510,8 @@ function OtherExamUpdatesSection({
 
       {open ? (
         <ul className="mt-3 flex flex-col gap-2 border-t border-border/50 pt-3">
+          {/* Do not render placeholder date rows for vague watchlist cards.
+              Exact verified date = show date row. No exact date = compact Exam Watch row only. */}
           {exams.map((exam) => (
             <ExamCard key={exam.id} exam={exam} watchlist />
           ))}
@@ -467,76 +559,82 @@ function ExamCard({ exam, watchlist = false }: { exam: UpcomingExam; watchlist?:
   const prepare = resolvePrepareLink(exam.prepareLink);
   const prepareLabel = getPrepareLinkLabel(exam.prepareLink);
   const display = getExamDisplay(exam);
-  const vagueDates = watchlist;
+  const isCompact = watchlist || display.compactWatchlist;
 
   return (
     <li>
       <Card
         className={cn(
           "border-border/70 bg-card/80 shadow-sm",
-          watchlist && "border-dashed bg-card/60",
+          isCompact && "border-dashed bg-card/60",
         )}
       >
-        <CardContent className="space-y-2 p-3">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <Badge variant="outline" className="px-1.5 py-0 text-[11px] font-normal">
-              {exam.department}
-            </Badge>
-            <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-medium text-foreground">
-              {display.statusBadge}
-            </Badge>
-          </div>
+        <CardContent className={cn("space-y-2", isCompact ? "p-2.5" : "p-3")}>
+          {isCompact ? (
+            <>
+              <h3 className="text-sm font-semibold leading-snug text-foreground">{exam.examName}</h3>
+              <p className="text-xs text-muted-foreground">
+                {exam.department} · {display.statusBadge}
+              </p>
+              {display.calendarHint ? (
+                <p className="text-xs text-muted-foreground">{display.calendarHint}</p>
+              ) : null}
+              {display.qualificationLine?.trim() ? (
+                <p className="text-xs leading-snug">
+                  <span className="text-muted-foreground">योग्यता: </span>
+                  <span className="text-foreground">{display.qualificationLine}</span>
+                </p>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <div className="flex flex-wrap items-center gap-1.5">
+                <Badge variant="outline" className="px-1.5 py-0 text-[11px] font-normal">
+                  {exam.department}
+                </Badge>
+                <Badge
+                  variant="secondary"
+                  className="px-1.5 py-0 text-[11px] font-medium text-foreground"
+                >
+                  {display.statusBadge}
+                </Badge>
+              </div>
 
-          <h3 className="text-sm font-semibold leading-snug text-foreground">{exam.examName}</h3>
+              <h3 className="text-sm font-semibold leading-snug text-foreground">{exam.examName}</h3>
 
-          <div className="space-y-0.5 text-xs leading-snug">
-            {display.statusLine ? (
-              <p>
-                <span className="text-muted-foreground">स्थिति: </span>
-                <span className="font-medium text-foreground">{display.statusLine}</span>
-              </p>
-            ) : null}
-            {display.correctionLine ? (
-              <p>
-                <span className="text-muted-foreground">
-                  {display.correctionLabel ?? "संशोधन"}:{" "}
-                </span>
-                <span className="font-semibold text-foreground">{display.correctionLine}</span>
-              </p>
-            ) : null}
-            <p>
-              <span className="text-muted-foreground">सूचना: </span>
-              <span className={vagueDates ? "text-muted-foreground" : "text-foreground"}>
-                {display.notificationLine}
-              </span>
-            </p>
-            <p>
-              <span className="text-muted-foreground">अंतिम तिथि: </span>
-              <span
-                className={
-                  vagueDates ? "text-muted-foreground" : "font-semibold text-foreground"
-                }
-              >
-                {display.lastDateLine}
-              </span>
-            </p>
-            <p>
-              <span className="text-muted-foreground">परीक्षा: </span>
-              <span className={vagueDates ? "text-muted-foreground" : "text-foreground"}>
-                {display.examLine}
-              </span>
-            </p>
-            <p>
-              <span className="text-muted-foreground">योग्यता: </span>
-              {display.qualificationLine}
-            </p>
-            {display.showTyping ? (
-              <p>
-                <span className="text-muted-foreground">Typing: </span>
-                {display.typingLine}
-              </p>
-            ) : null}
-          </div>
+              <div className="space-y-0.5 text-xs leading-snug">
+                <DetailRow label="स्थिति" value={display.statusLine} emphasize />
+                <DetailRow label="आवेदन" value={display.applicationLine} emphasize requireExactDate />
+                <DetailRow
+                  label="पुनः आवेदन"
+                  value={display.reapplicationLine}
+                  emphasize
+                  requireExactDate
+                />
+                <DetailRow
+                  label={display.correctionLabel ?? "संशोधन"}
+                  value={display.correctionLine}
+                  emphasize
+                  requireExactDate
+                />
+                <DetailRow label="सूचना" value={display.notificationLine} requireExactDate />
+                <DetailRow label="अंतिम तिथि" value={display.lastDateLine} emphasize requireExactDate />
+                <DetailRow label="परीक्षा" value={display.examLine} />
+                {display.qualificationLine?.trim() ? (
+                  <p>
+                    <span className="text-muted-foreground">योग्यता: </span>
+                    {display.qualificationLine}
+                  </p>
+                ) : null}
+                {display.showTyping ? (
+                  <p>
+                    <span className="text-muted-foreground">Typing: </span>
+                    {display.typingLine}
+                  </p>
+                ) : null}
+              </div>
+            </>
+          )}
 
           <div className="flex flex-wrap gap-1.5">
             <a
