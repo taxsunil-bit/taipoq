@@ -65,6 +65,7 @@ const VERIFIED_PUBLISH_STATUSES = new Set(["active", "closing_soon"]);
 const ALLOWED_VERIFIED_SOURCE_TYPES = new Set(["official", "official_pdf", "employment_news"]);
 const GENERIC_STATUS_LABEL = "Official website check करें";
 const GENERIC_NOTIFICATION_TEXT = "Official notification देखें";
+const LIVE_LIST_REFERENCE_DATE = "2026-06-30";
 
 const errors = [];
 const warnings = [];
@@ -104,6 +105,19 @@ function isHttpsUrl(url) {
 function isIsoDate(value) {
   if (!value) return true;
   return /^\d{4}-\d{2}-\d{2}$/.test(String(value).trim());
+}
+
+function parseIsoDate(value) {
+  const trimmed = String(value ?? "").trim();
+  if (!isIsoDate(trimmed)) return null;
+  return trimmed;
+}
+
+function isLiveVacancyByClosingDate(applicationEndDate, referenceDate = LIVE_LIST_REFERENCE_DATE) {
+  const end = parseIsoDate(applicationEndDate);
+  const ref = parseIsoDate(referenceDate);
+  if (!end || !ref) return false;
+  return end >= ref;
 }
 
 function scanForbiddenDates(item, rowLabel) {
@@ -248,6 +262,15 @@ items.forEach((item, index) => {
   }
 
   if (isVerifiedPublishCandidate(item)) {
+    if (!parseIsoDate(item.applicationEndDate)) {
+      fail(
+        `${rowLabel}: active/closing_soon verified item requires valid applicationEndDate (YYYY-MM-DD)`,
+      );
+    } else if (!isLiveVacancyByClosingDate(item.applicationEndDate)) {
+      fail(
+        `${rowLabel}: active/closing_soon verified item has expired applicationEndDate ${item.applicationEndDate} (reference ${LIVE_LIST_REFERENCE_DATE})`,
+      );
+    }
     if (!ALLOWED_VERIFIED_SOURCE_TYPES.has(item.sourceType)) {
       fail(
         `${rowLabel}: active/closing_soon verified item must have sourceType official, official_pdf, or employment_news`,

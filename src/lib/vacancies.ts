@@ -16,6 +16,37 @@ export function formatVacancyStatusLabel(status: VacancyStatus): string {
   return VACANCY_STATUS_LABELS[status] ?? status;
 }
 
+/** Jobs with closing date before this ISO day are excluded from the public live list. */
+export const LIVE_LIST_REFERENCE_DATE = "2026-06-30";
+
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function parseIsoDate(value: string | undefined): string | null {
+  const trimmed = value?.trim();
+  if (!trimmed || !ISO_DATE_RE.test(trimmed)) return null;
+  const [year, month, day] = trimmed.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return null;
+  }
+  return trimmed;
+}
+
+/** Live on reference day when exact closing date exists and closing date >= reference date. */
+export function isLiveVacancyByClosingDate(
+  applicationEndDate: string | undefined,
+  referenceDate: string = LIVE_LIST_REFERENCE_DATE,
+): boolean {
+  const end = parseIsoDate(applicationEndDate);
+  const ref = parseIsoDate(referenceDate);
+  if (!end || !ref) return false;
+  return end >= ref;
+}
+
 const PREVIEW_DATA_URL = "/data/vacancies.preview.json";
 
 const EMPTY_PAYLOAD: VacanciesPayload = {
@@ -133,7 +164,9 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     if (item.status === "archive" || item.status === "closed") return false;
     if (item.isPreparationOnly) return false;
     if (item.sourceType === "cross_check_only") return false;
-    return item.status === "active" || item.status === "closing_soon";
+    if (item.status !== "active" && item.status !== "closing_soon") return false;
+    if (!isLiveVacancyByClosingDate(item.applicationEndDate)) return false;
+    return true;
   });
 
   const order = [
