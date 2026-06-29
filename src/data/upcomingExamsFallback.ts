@@ -2,7 +2,7 @@ import type { UpcomingExamsPayload } from "@/types/upcomingExams";
 
 /** Human-verified fallback list — used when remote CSV/JSON is unavailable. */
 export const upcomingExamsFallback: UpcomingExamsPayload = {
-  lastUpdated: "2026-06-23",
+  lastUpdated: "2026-06-29",
   exams: [
     {
       id: "rrb-ntpc-2026",
@@ -54,18 +54,19 @@ export const upcomingExamsFallback: UpcomingExamsPayload = {
     },
     {
       id: "ssc-cgl-2026",
-      examName: "SSC CGL",
+      examName: "SSC CGL 2026",
       department: "Staff Selection Commission",
       qualification: "Graduate (as per notification)",
-      notificationWindow: "As per official SSC notification",
-      examWindow: "As per official exam calendar",
+      notificationWindow:
+        "Application closed; correction window 01/07/2026 to 03/07/2026 — confirm on official SSC notice",
+      examWindow: "Exam schedule घोषित नहीं until official calendar",
       typingRequired: "Check post — CPT/DEST may apply",
-      status: "Watch official notification",
+      status: "आवेदन समाप्त; संशोधन अवधि 01/07/2026 से 03/07/2026",
       officialSourceLabel: "SSC Official Website",
       officialSourceUrl: "https://ssc.gov.in/",
-      prepareLink: "/test?language=english",
-      preparationFocus: "English typing + General Awareness basics",
-      lastChecked: "2026-06-23",
+      prepareLink: "/study-corner/ssc-cgl-pattern-practice",
+      preparationFocus: "SSC CGL Tier-I pattern practice — not an application link",
+      lastChecked: "2026-06-29",
       active: true,
     },
     {
@@ -81,23 +82,7 @@ export const upcomingExamsFallback: UpcomingExamsPayload = {
       officialSourceUrl: "https://dsssb.delhi.gov.in/",
       prepareLink: "/test?language=hindi",
       preparationFocus: "Hindi + English typing and General Awareness",
-      lastChecked: "2026-06-23",
-      active: true,
-    },
-    {
-      id: "ga-library-prep",
-      examName: "General Awareness (Library prep)",
-      department: "TAIPOQ Library",
-      qualification: "All aspirants",
-      notificationWindow: "Self-paced study",
-      examWindow: "Anytime",
-      typingRequired: "No — study material only",
-      status: "Available now",
-      officialSourceLabel: "TAIPOQ Library",
-      officialSourceUrl: "https://www.taipoq.com/study-corner",
-      prepareLink: "/study-corner",
-      preparationFocus: "General Awareness + Computer Basics free chapters",
-      lastChecked: "2026-06-23",
+      lastChecked: "2026-06-29",
       active: true,
     },
   ],

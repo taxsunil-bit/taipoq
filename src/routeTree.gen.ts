@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WordLearningRouteImport } from './routes/word-learning'
+import { Route as VacanciesPreviewRouteImport } from './routes/vacancies-preview'
 import { Route as UpcomingExamsRouteImport } from './routes/upcoming-exams'
 import { Route as TypingTipsRouteImport } from './routes/typing-tips'
 import { Route as TypingStartGuideRouteImport } from './routes/typing-start-guide'
@@ -40,6 +41,7 @@ import { Route as EnglishIndexRouteImport } from './routes/english.index'
 import { Route as CurrentAffairsIndexRouteImport } from './routes/current-affairs.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as TestsSubjectRouteImport } from './routes/tests.$subject'
+import { Route as StudyCornerSscCglPatternPracticeRouteImport } from './routes/study-corner.ssc-cgl-pattern-practice'
 import { Route as StudyCornerQuizResultRouteImport } from './routes/study-corner.quiz-result'
 import { Route as StudyCornerGeneralScienceRouteImport } from './routes/study-corner.general-science'
 import { Route as StudyCornerGeneralAwarenessRouteImport } from './routes/study-corner.general-awareness'
@@ -79,6 +81,11 @@ import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-pa
 const WordLearningRoute = WordLearningRouteImport.update({
   id: '/word-learning',
   path: '/word-learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VacanciesPreviewRoute = VacanciesPreviewRouteImport.update({
+  id: '/vacancies-preview',
+  path: '/vacancies-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UpcomingExamsRoute = UpcomingExamsRouteImport.update({
@@ -231,6 +238,12 @@ const TestsSubjectRoute = TestsSubjectRouteImport.update({
   path: '/$subject',
   getParentRoute: () => TestsRoute,
 } as any)
+const StudyCornerSscCglPatternPracticeRoute =
+  StudyCornerSscCglPatternPracticeRouteImport.update({
+    id: '/ssc-cgl-pattern-practice',
+    path: '/ssc-cgl-pattern-practice',
+    getParentRoute: () => StudyCornerRoute,
+  } as any)
 const StudyCornerQuizResultRoute = StudyCornerQuizResultRouteImport.update({
   id: '/quiz-result',
   path: '/quiz-result',
@@ -457,6 +470,7 @@ export interface FileRoutesByFullPath {
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
+  '/vacancies-preview': typeof VacanciesPreviewRoute
   '/word-learning': typeof WordLearningRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
@@ -467,6 +481,7 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
+  '/study-corner/ssc-cgl-pattern-practice': typeof StudyCornerSscCglPatternPracticeRoute
   '/tests/$subject': typeof TestsSubjectRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/current-affairs/': typeof CurrentAffairsIndexRoute
@@ -519,6 +534,7 @@ export interface FileRoutesByTo {
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
+  '/vacancies-preview': typeof VacanciesPreviewRoute
   '/word-learning': typeof WordLearningRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
@@ -526,6 +542,7 @@ export interface FileRoutesByTo {
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
+  '/study-corner/ssc-cgl-pattern-practice': typeof StudyCornerSscCglPatternPracticeRoute
   '/admin': typeof AdminIndexRoute
   '/current-affairs': typeof CurrentAffairsIndexRoute
   '/english': typeof EnglishIndexRoute
@@ -584,6 +601,7 @@ export interface FileRoutesById {
   '/typing-start-guide': typeof TypingStartGuideRoute
   '/typing-tips': typeof TypingTipsRoute
   '/upcoming-exams': typeof UpcomingExamsRoute
+  '/vacancies-preview': typeof VacanciesPreviewRoute
   '/word-learning': typeof WordLearningRoute
   '/admin/add-paragraph': typeof AdminAddParagraphRoute
   '/english/lessons': typeof EnglishLessonsRoute
@@ -594,6 +612,7 @@ export interface FileRoutesById {
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
+  '/study-corner/ssc-cgl-pattern-practice': typeof StudyCornerSscCglPatternPracticeRoute
   '/tests/$subject': typeof TestsSubjectRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/current-affairs/': typeof CurrentAffairsIndexRoute
@@ -654,6 +673,7 @@ export interface FileRouteTypes {
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
+    | '/vacancies-preview'
     | '/word-learning'
     | '/admin/add-paragraph'
     | '/english/lessons'
@@ -664,6 +684,7 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
     | '/study-corner/quiz-result'
+    | '/study-corner/ssc-cgl-pattern-practice'
     | '/tests/$subject'
     | '/admin/'
     | '/current-affairs/'
@@ -716,6 +737,7 @@ export interface FileRouteTypes {
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
+    | '/vacancies-preview'
     | '/word-learning'
     | '/admin/add-paragraph'
     | '/english/lessons'
@@ -723,6 +745,7 @@ export interface FileRouteTypes {
     | '/hindi/lessons'
     | '/hindi/practice'
     | '/study-corner/quiz-result'
+    | '/study-corner/ssc-cgl-pattern-practice'
     | '/admin'
     | '/current-affairs'
     | '/english'
@@ -780,6 +803,7 @@ export interface FileRouteTypes {
     | '/typing-start-guide'
     | '/typing-tips'
     | '/upcoming-exams'
+    | '/vacancies-preview'
     | '/word-learning'
     | '/admin/add-paragraph'
     | '/english/lessons'
@@ -790,6 +814,7 @@ export interface FileRouteTypes {
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
     | '/study-corner/quiz-result'
+    | '/study-corner/ssc-cgl-pattern-practice'
     | '/tests/$subject'
     | '/admin/'
     | '/current-affairs/'
@@ -849,6 +874,7 @@ export interface RootRouteChildren {
   TypingStartGuideRoute: typeof TypingStartGuideRoute
   TypingTipsRoute: typeof TypingTipsRoute
   UpcomingExamsRoute: typeof UpcomingExamsRoute
+  VacanciesPreviewRoute: typeof VacanciesPreviewRoute
   WordLearningRoute: typeof WordLearningRoute
 }
 
@@ -859,6 +885,13 @@ declare module '@tanstack/react-router' {
       path: '/word-learning'
       fullPath: '/word-learning'
       preLoaderRoute: typeof WordLearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vacancies-preview': {
+      id: '/vacancies-preview'
+      path: '/vacancies-preview'
+      fullPath: '/vacancies-preview'
+      preLoaderRoute: typeof VacanciesPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/upcoming-exams': {
@@ -1070,6 +1103,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/tests/$subject'
       preLoaderRoute: typeof TestsSubjectRouteImport
       parentRoute: typeof TestsRoute
+    }
+    '/study-corner/ssc-cgl-pattern-practice': {
+      id: '/study-corner/ssc-cgl-pattern-practice'
+      path: '/ssc-cgl-pattern-practice'
+      fullPath: '/study-corner/ssc-cgl-pattern-practice'
+      preLoaderRoute: typeof StudyCornerSscCglPatternPracticeRouteImport
+      parentRoute: typeof StudyCornerRoute
     }
     '/study-corner/quiz-result': {
       id: '/study-corner/quiz-result'
@@ -1481,6 +1521,7 @@ interface StudyCornerRouteChildren {
   StudyCornerGeneralAwarenessRoute: typeof StudyCornerGeneralAwarenessRouteWithChildren
   StudyCornerGeneralScienceRoute: typeof StudyCornerGeneralScienceRouteWithChildren
   StudyCornerQuizResultRoute: typeof StudyCornerQuizResultRoute
+  StudyCornerSscCglPatternPracticeRoute: typeof StudyCornerSscCglPatternPracticeRoute
   StudyCornerIndexRoute: typeof StudyCornerIndexRoute
 }
 
@@ -1490,6 +1531,7 @@ const StudyCornerRouteChildren: StudyCornerRouteChildren = {
     StudyCornerGeneralAwarenessRouteWithChildren,
   StudyCornerGeneralScienceRoute: StudyCornerGeneralScienceRouteWithChildren,
   StudyCornerQuizResultRoute: StudyCornerQuizResultRoute,
+  StudyCornerSscCglPatternPracticeRoute: StudyCornerSscCglPatternPracticeRoute,
   StudyCornerIndexRoute: StudyCornerIndexRoute,
 }
 
@@ -1547,6 +1589,7 @@ const rootRouteChildren: RootRouteChildren = {
   TypingStartGuideRoute: TypingStartGuideRoute,
   TypingTipsRoute: TypingTipsRoute,
   UpcomingExamsRoute: UpcomingExamsRoute,
+  VacanciesPreviewRoute: VacanciesPreviewRoute,
   WordLearningRoute: WordLearningRoute,
 }
 export const routeTree = rootRouteImport

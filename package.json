@@ -11,6 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "validate:upcoming-exams": "node tools/validate-upcoming-exams-json.mjs",
+    "migrate:vacancies": "node tools/migrate-upcoming-exams-to-vacancies.mjs",
+    "validate:vacancies": "node tools/validate-vacancies-json.mjs",
     "validate:tests": "node tools/validate-test-paper-pack.mjs"
   },
   "dependencies": {

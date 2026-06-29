@@ -200,10 +200,20 @@ export function formatDisplayDate(isoLike: string | undefined): string {
   }).format(new Date(parsed));
 }
 
+/** UI-only: ISO YYYY-MM-DD → DD/MM/YYYY */
+export function formatDateDDMMYYYY(isoLike: string | undefined): string {
+  if (!isoLike?.trim()) return "";
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoLike.trim());
+  if (!match) return isoLike.trim();
+  const [, year, month, day] = match;
+  return `${day}/${month}/${year}`;
+}
+
 export type PrepareLinkTarget =
   | { to: "/test"; search: { language: "english" | "hindi" } }
   | { to: "/study-corner" }
   | { to: "/study-corner/general-awareness" }
+  | { to: "/study-corner/ssc-cgl-pattern-practice" }
   | { to: string; external?: boolean };
 
 export function resolvePrepareLink(prepareLink: string): PrepareLinkTarget {
@@ -213,6 +223,9 @@ export function resolvePrepareLink(prepareLink: string): PrepareLinkTarget {
   }
   if (link.includes("language=hindi")) {
     return { to: "/test", search: { language: "hindi" } };
+  }
+  if (link.startsWith("/study-corner/ssc-cgl-pattern-practice")) {
+    return { to: "/study-corner/ssc-cgl-pattern-practice" };
   }
   if (link.startsWith("/study-corner/general-awareness")) {
     return { to: "/study-corner/general-awareness" };
@@ -229,6 +242,7 @@ export function resolvePrepareLink(prepareLink: string): PrepareLinkTarget {
 export function getPrepareLinkLabel(prepareLink: string): string {
   if (prepareLink.includes("language=english")) return "English Typing Practice";
   if (prepareLink.includes("language=hindi")) return "Hindi Typing Practice";
+  if (prepareLink.includes("ssc-cgl-pattern-practice")) return "SSC CGL Pattern Practice";
   if (prepareLink.includes("general-awareness")) return "General Awareness Library";
   if (prepareLink.includes("study-corner")) return "Library / Study Material";
   return "Prepare on TAIPOQ";

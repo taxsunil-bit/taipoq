@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-24",
+  "lastUpdated": "2026-06-29",
   "exams": [
     {
       "id": "ssc-chsl-2026",
@@ -22,15 +22,15 @@
       "examName": "SSC CGL 2026",
       "department": "Central — SSC",
       "qualification": "Graduate as per official notification",
-      "notificationWindow": "Official notification देखें",
-      "examWindow": "Official calendar देखें; final दिनांक official website पर देखें",
+      "notificationWindow": "Application closed; correction window 01/07/2026 to 03/07/2026 — confirm on official SSC notice",
+      "examWindow": "Exam schedule घोषित नहीं until official calendar; final dates on ssc.gov.in",
       "typingRequired": "Check post — CPT/DEST may apply (as per official notification)",
-      "status": "Official website check करें",
-      "officialSourceLabel": "SSC Calendar",
-      "officialSourceUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
-      "prepareLink": "/study-corner/general-awareness",
-      "preparationFocus": "General Awareness + English comprehension",
-      "lastChecked": "2026-06-24",
+      "status": "आवेदन समाप्त; संशोधन अवधि 01/07/2026 से 03/07/2026",
+      "officialSourceLabel": "SSC Official",
+      "officialSourceUrl": "https://ssc.gov.in/",
+      "prepareLink": "/study-corner/ssc-cgl-pattern-practice",
+      "preparationFocus": "SSC CGL Tier-I pattern practice — not an application link",
+      "lastChecked": "2026-06-29",
       "active": true
     },
     {

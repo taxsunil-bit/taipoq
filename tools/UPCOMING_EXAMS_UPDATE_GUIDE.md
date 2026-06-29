@@ -170,9 +170,27 @@ git push origin main
 
 - `active=true` but blank `officialSourceUrl`
 - `active=true` but status contains `"verification pending"`
+- `active=true` but status is exactly `"Official website check करें"` (too generic)
+- `active=true` but `notificationWindow` is exactly `"Official notification देखें"` (too vague)
 - Blank `lastChecked`
 - `prepareLink` not starting with `/test` or `/study-corner`
 - `officialSourceUrl` not HTTPS
+
+---
+
+## Vacancy Safety Rules
+
+Use these rules when maintaining exam/vacancy-style rows (aligned with TAIPOQ vacancy research policy):
+
+- **Do not show expired applications as active apply targets.** If the last application date has passed, set status to `आवेदन समाप्त` or move the row to archive (`active: false`).
+- **If a date is unknown**, use `घोषित नहीं` / `Not announced` — never use placeholder dates such as `01/01/1970` or `1 Jan 1970`.
+- **Departmental-only exams** (e.g. SSC LDCE/JSA departmental) must be marked `सीमित विभागीय परीक्षा` and not mixed with open public vacancy cards.
+- **When application is closed** but correction or exam prep is still relevant, say so explicitly in `status` and `notificationWindow` — do not imply Apply Now.
+- **Do not publish coaching sites, private job portals, or Telegram links** as the final `officialSourceUrl`.
+- **Source priority:** official recruitment website → official notification PDF → Employment News / Rozgar Samachar → reputed news for cross-check only.
+- **Apprenticeship / training entries** (e.g. Agniveer apprentice) must be labelled as apprenticeship/training, not as a regular permanent job card.
+- **Vacancy counts:** only show numbers confirmed in the official notice; otherwise use `घोषित नहीं` or `लगभग / tentative` with source note.
+- **Archive:** keep closed notices in JSON with `active: false` for history; do not delete without backup.
 
 ---
 
@@ -183,6 +201,7 @@ git push origin main
 | `/test?language=english` | English typing practice |
 | `/test?language=hindi` | Hindi typing practice |
 | `/study-corner/general-awareness` | GA library |
+| `/study-corner/ssc-cgl-pattern-practice` | SSC CGL Tier-I pattern practice (not official PYQ) |
 | `/study-corner` | Study Corner landing |
 
 ---

@@ -63,7 +63,7 @@ function HomeMobileHero() {
         Govt Job Computer & Typing Preparation
       </p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        Job Advertisement · MS Word · Excel · Model Papers · Typing
+        Upcoming Exams · MS Word · Excel · Model Papers · Typing
       </p>
     </section>
   );
@@ -76,7 +76,7 @@ function HomeMobilePrimarySection() {
         to={MOBILE_ROUTES.jobAds}
         className={cn(MOBILE_BTN, "bg-primary text-primary-foreground shadow-sm")}
       >
-        Job Advertisement देखें
+        Exam Updates देखें
       </Link>
       <Link
         to="/study-corner"
@@ -118,7 +118,7 @@ function HomeDesktopPracticeSection() {
           मुख्य अभ्यास
         </h2>
         <p className="mt-1 font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
-          Tests, Typing Practice, Library और Job Advertisement
+          Tests, Typing Practice और Library
         </p>
       </div>
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -500,24 +500,24 @@ function HomeDesktop() {
           </div>
         </Link>
 
-        {/* Upcoming Exams */}
+        {/* Upcoming Exams & Job Updates */}
         <Link
           to="/upcoming-exams"
           className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
         >
           <div>
             <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              Upcoming Exams
+              Upcoming Exams & Job Updates
             </div>
             <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              आगामी परीक्षाएँ
+              Upcoming Exams & Job Updates
             </h2>
             <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
-              Central और उत्तर भारत की शासकीय सेवा परीक्षाओं की मुख्य सूचना और official links।
+              Official links, exam updates और verified job updates एक स्थान पर.
             </p>
           </div>
           <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-primary/30 bg-primary/10 px-5 py-3 font-hindi text-base font-semibold text-primary transition-transform active:scale-95 sm:w-auto">
-            परीक्षाएँ देखें
+            Exam Updates देखें
           </div>
         </Link>
 
@@ -665,12 +665,6 @@ const DESKTOP_PRACTICE_ACTIONS = [
     highlight: false,
   },
   {
-    title: "आगामी परीक्षाएँ",
-    subtitle: "Job Advertisement / Vacancy Notice",
-    to: "/upcoming-exams" as const,
-    highlight: false,
-  },
-  {
     title: "शब्द अभ्यास / Word Learning",
     subtitle: "Typing के लिए उपयोगी शब्द",
     to: "/word-learning" as const,
@@ -690,8 +684,8 @@ const MOBILE_ROUTES = {
 const ONBOARDING_STEPS = [
   {
     step: 1,
-    title: "Job Advertisement देखें",
-    subtext: "भर्ती, योग्यता और परीक्षा की मुख्य जानकारी देखें।",
+    title: "Upcoming Exams & Job Updates",
+    subtext: "Official links, exam updates और verified job updates एक स्थान पर.",
     to: MOBILE_ROUTES.jobAds,
   },
   {

@@ -175,6 +175,17 @@ exams.forEach((row, index) => {
     if (/verification pending/i.test(status)) {
       warn(`${rowLabel} (id=${id || "?"}): active=true but status contains "verification pending"`);
     }
+    if (status === "Official website check करें") {
+      warn(
+        `${rowLabel} (id=${id || "?"}): active=true but status is generic "Official website check करें" — use a specific verified status`,
+      );
+    }
+    const notificationWindow = String(row.notificationWindow ?? "").trim();
+    if (notificationWindow === "Official notification देखें") {
+      warn(
+        `${rowLabel} (id=${id || "?"}): active=true but notificationWindow is vague "Official notification देखें" — add verified dates or घोषित नहीं`,
+      );
+    }
   }
 });
 
