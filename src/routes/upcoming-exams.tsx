@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   getVerifiedPublicVacancies,
+  groupVerifiedPublicVacancies,
   isVerifiedVacanciesEnabled,
   loadVacanciesPreview,
 } from "@/lib/vacancies";
@@ -230,6 +231,11 @@ function UpcomingExamsPage() {
   const [loading, setLoading] = useState(true);
 
   const [verifiedVacancies, setVerifiedVacancies] = useState<VacancyItem[]>([]);
+  const [verifiedSections, setVerifiedSections] = useState({
+    general: [] as VacancyItem[],
+    judicial: [] as VacancyItem[],
+    bankSpecialist: [] as VacancyItem[],
+  });
   const [verifiedLoading, setVerifiedLoading] = useState(verifiedEnabled);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -259,7 +265,9 @@ function UpcomingExamsPage() {
     let cancelled = false;
     loadVacanciesPreview().then((result) => {
       if (cancelled) return;
-      setVerifiedVacancies(getVerifiedPublicVacancies(result.payload.items));
+      const items = result.payload.items;
+      setVerifiedVacancies(getVerifiedPublicVacancies(items));
+      setVerifiedSections(groupVerifiedPublicVacancies(items));
       setVerifiedLoading(false);
     });
 
@@ -393,12 +401,31 @@ function UpcomingExamsPage() {
           </Card>
         ) : (
           <div className="space-y-2">
+            {verifiedEnabled && verifiedSections.general.length > 0 ? (
+              <ul className="flex flex-col gap-2">
+                {verifiedSections.general.map((item) => (
+                  <VerifiedVacancyCard key={item.id} item={item} />
+                ))}
+              </ul>
+            ) : null}
+
+            {verifiedEnabled && verifiedSections.judicial.length > 0 ? (
+              <VerifiedVacancySection
+                title="Judicial Jobs"
+                subtitle="High Court, DLSA और judicial authority posts — exact closing date verified."
+                items={verifiedSections.judicial}
+              />
+            ) : null}
+
+            {verifiedEnabled && verifiedSections.bankSpecialist.length > 0 ? (
+              <VerifiedVacancySection
+                title="Bank Specialist"
+                subtitle="Contractual / specialist banking posts — BOB and similar drives."
+                items={verifiedSections.bankSpecialist}
+              />
+            ) : null}
+
             <ul className="flex flex-col gap-2">
-              {verifiedEnabled
-                ? verifiedVacancies.map((item) => (
-                    <VerifiedVacancyCard key={item.id} item={item} />
-                  ))
-                : null}
               {datedExamCards.map((exam) => (
                 <ExamCard key={exam.id} exam={exam} />
               ))}
@@ -471,6 +498,31 @@ function UpcomingExamsPage() {
         ) : null}
       </div>
     </PageShell>
+  );
+}
+
+function VerifiedVacancySection({
+  title,
+  subtitle,
+  items,
+}: {
+  title: string;
+  subtitle: string;
+  items: VacancyItem[];
+}) {
+  return (
+    <section className="space-y-2 rounded-xl border border-emerald-500/15 bg-emerald-500/5 p-3 sm:p-4">
+      <div className="space-y-0.5">
+        <h2 className="text-sm font-semibold text-foreground">{title}</h2>
+        <p className="text-[11px] text-muted-foreground">{subtitle}</p>
+        <p className="text-[10px] text-muted-foreground">{items.length} live verified</p>
+      </div>
+      <ul className="flex flex-col gap-2">
+        {items.map((item) => (
+          <VerifiedVacancyCard key={item.id} item={item} />
+        ))}
+      </ul>
+    </section>
   );
 }
 

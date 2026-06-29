@@ -157,6 +157,39 @@ export function isHttpsUrl(url: string | undefined): boolean {
   }
 }
 
+export function isJudicialVacancyCategory(category: string | undefined): boolean {
+  return (category ?? "").toLowerCase().includes("judicial jobs");
+}
+
+export function isBankSpecialistVacancyCategory(category: string | undefined): boolean {
+  return (category ?? "").toLowerCase().includes("bank specialist");
+}
+
+export type VerifiedVacancySections = {
+  general: VacancyItem[];
+  judicial: VacancyItem[];
+  bankSpecialist: VacancyItem[];
+};
+
+export function groupVerifiedPublicVacancies(items: VacancyItem[]): VerifiedVacancySections {
+  const verified = getVerifiedPublicVacancies(items);
+  const general: VacancyItem[] = [];
+  const judicial: VacancyItem[] = [];
+  const bankSpecialist: VacancyItem[] = [];
+
+  for (const item of verified) {
+    if (isJudicialVacancyCategory(item.category)) {
+      judicial.push(item);
+    } else if (isBankSpecialistVacancyCategory(item.category)) {
+      bankSpecialist.push(item);
+    } else {
+      general.push(item);
+    }
+  }
+
+  return { general, judicial, bankSpecialist };
+}
+
 export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] {
   const verified = items.filter((item) => {
     if (!item.active) return false;
@@ -175,6 +208,12 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     "sbi-po-2026",
     "new-india-assurance-apprentice-2026-27",
     "upsc-advt-07-2026",
+    "bob-cic-regular-2026",
+    "gujarat-hc-legal-assistant-2026",
+    "ahc-pla-ghazipur-2026",
+    "ahc-pla-sant-kabir-nagar-2026",
+    "bob-cic-contractual-2026",
+    "bob-it-fte-2026",
   ];
 
   return verified.sort((a, b) => {
