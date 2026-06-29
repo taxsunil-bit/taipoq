@@ -39,6 +39,8 @@ if (!existsSync(ROUTE_PATH)) {
       label: "Verified jobs disabled warning",
       re: /Verified open jobs are not enabled in this build/,
     },
+    { label: "Sector jump scroll chips", re: /function SectorJumpChipBar|scrollIntoView/ },
+    { label: "Always-visible grouped sector sections", re: /function SectorJobSection|open-jobs-by-sector/ },
   ];
 
   for (const { label, re } of forbiddenUiPatterns) {
@@ -47,18 +49,16 @@ if (!existsSync(ROUTE_PATH)) {
 
   const requiredPatterns = [
     { label: "Open Government Jobs heading", re: /Open Government Jobs/ },
-    { label: "Sector jump chip bar", re: /function SectorJumpChipBar/ },
-    { label: "Sector grouped job sections", re: /function SectorJobSection/ },
-    { label: "Sector section headings", re: /sector-heading-/ },
+    { label: "Sector filter chip bar", re: /function SectorFilterChipBar/ },
+    { label: "selectedSector state", re: /selectedSector/ },
+    { label: "filteredJobs list", re: /filteredJobs/ },
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
     { label: "filterVerifiedPublicVacanciesBySector", re: /filterVerifiedPublicVacanciesBySector/ },
     { label: "loadVacanciesPreview", re: /loadVacanciesPreview/ },
-    { label: "Railway sector heading", re: /label: "Railway"/ },
-    { label: "Bank Specialist sector heading", re: /label: "Bank Specialist"/ },
-    { label: "Judicial Jobs sector heading", re: /label: "Judicial Jobs"/ },
+    { label: "Empty sector message", re: /इस क्षेत्र में अभी कोई verified open job नहीं है/ },
     { label: "DRDO sector chip", re: /DRDO \/ R&D/ },
     { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },
-    { label: "Grouped sections container", re: /id="open-jobs-by-sector"/ },
+    { label: "Judicial Jobs sector chip", re: /Judicial Jobs/ },
   ];
 
   for (const { label, re } of requiredPatterns) {

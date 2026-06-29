@@ -28,9 +28,8 @@ export const Route = createFileRoute("/upcoming-exams")({
   component: UpcomingExamsPage,
 });
 
-type SectorGroupDef = { id: Exclude<VerifiedJobSector, "all">; label: string };
-
-const SECTOR_GROUP_ORDER: SectorGroupDef[] = [
+const SECTOR_OPTIONS: { id: VerifiedJobSector; label: string }[] = [
+  { id: "all", label: "All" },
   { id: "railway", label: "Railway" },
   { id: "banking", label: "Banking" },
   { id: "bank_specialist", label: "Bank Specialist" },
@@ -42,18 +41,23 @@ const SECTOR_GROUP_ORDER: SectorGroupDef[] = [
   { id: "judicial", label: "Judicial Jobs" },
 ];
 
-const SECTOR_JUMP_OPTIONS: { id: VerifiedJobSector; label: string }[] = [
-  { id: "all", label: "All" },
-  ...SECTOR_GROUP_ORDER,
-];
+function getSectorResultsTitle(sector: VerifiedJobSector): string {
+  if (sector === "all") return "All Open Government Jobs";
+  const option = SECTOR_OPTIONS.find((row) => row.id === sector);
+  return option ? `${option.label} Jobs` : "Open Government Jobs";
+}
 
-type SectorJobGroup = SectorGroupDef & { items: VacancyItem[] };
+function formatVerifiedJobCount(count: number): string {
+  return count === 1
+    ? "1 verified open advertisement"
+    : `${count} verified open advertisements`;
+}
 
 function UpcomingExamsPage() {
   const [vacancyItems, setVacancyItems] = useState<VacancyItem[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string | undefined>();
   const [verifiedLoading, setVerifiedLoading] = useState(true);
-  const [activeJump, setActiveJump] = useState<VerifiedJobSector>("all");
+  const [selectedSector, setSelectedSector] = useState<VerifiedJobSector>("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -74,33 +78,21 @@ function UpcomingExamsPage() {
     [vacancyItems],
   );
 
-  const sectorGroups = useMemo((): SectorJobGroup[] => {
-    return SECTOR_GROUP_ORDER.map((sector) => ({
-      ...sector,
-      items: filterVerifiedPublicVacanciesBySector(vacancyItems, sector.id),
-    })).filter((group) => group.items.length > 0);
-  }, [vacancyItems]);
+  const filteredJobs = useMemo(
+    () => filterVerifiedPublicVacanciesBySector(vacancyItems, selectedSector),
+    [vacancyItems, selectedSector],
+  );
 
   const sectorCounts = useMemo(() => {
     const counts: Partial<Record<VerifiedJobSector, number>> = {
       all: verifiedVacancies.length,
     };
-    for (const sector of SECTOR_GROUP_ORDER) {
+    for (const sector of SECTOR_OPTIONS) {
+      if (sector.id === "all") continue;
       counts[sector.id] = filterVerifiedPublicVacanciesBySector(vacancyItems, sector.id).length;
     }
     return counts;
   }, [vacancyItems, verifiedVacancies.length]);
-
-  function handleSectorJump(sector: VerifiedJobSector) {
-    setActiveJump(sector);
-
-    if (sector === "all") {
-      document.getElementById("open-jobs-by-sector")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-
-    document.getElementById(`sector-${sector}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
 
   return (
     <PageShell>
@@ -132,89 +124,76 @@ function UpcomingExamsPage() {
           ) : null}
         </div>
 
-        <SectorJumpChipBar
-          options={SECTOR_JUMP_OPTIONS}
-          active={activeJump}
-          onJump={handleSectorJump}
+        <SectorFilterChipBar
+          options={SECTOR_OPTIONS}
+          selected={selectedSector}
+          onSelect={setSelectedSector}
           counts={sectorCounts}
         />
 
         {verifiedLoading ? (
           <p className="text-sm text-muted-foreground">Loading…</p>
-        ) : sectorGroups.length > 0 ? (
-          <div id="open-jobs-by-sector" className="space-y-6">
-            {sectorGroups.map((group) => (
-              <SectorJobSection key={group.id} group={group} />
-            ))}
-          </div>
         ) : (
-          <Card className="border-border/70 bg-muted/10">
-            <CardContent className="p-3 text-sm text-muted-foreground">
-              अभी कोई verified open job नहीं है।
-            </CardContent>
-          </Card>
+          <>
+            <div className="space-y-0.5">
+              <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+                {getSectorResultsTitle(selectedSector)}
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                {formatVerifiedJobCount(filteredJobs.length)}
+              </p>
+            </div>
+
+            {filteredJobs.length > 0 ? (
+              <ul className="flex flex-col gap-2">
+                {filteredJobs.map((item) => (
+                  <VerifiedVacancyCard key={item.id} item={item} />
+                ))}
+              </ul>
+            ) : (
+              <Card className="border-border/70 bg-muted/10">
+                <CardContent className="p-3 text-sm text-muted-foreground">
+                  इस क्षेत्र में अभी कोई verified open job नहीं है।
+                </CardContent>
+              </Card>
+            )}
+          </>
         )}
       </div>
     </PageShell>
   );
 }
 
-function SectorJobSection({ group }: { group: SectorJobGroup }) {
-  return (
-    <section
-      id={`sector-${group.id}`}
-      aria-labelledby={`sector-heading-${group.id}`}
-      className="scroll-mt-20 space-y-2"
-    >
-      <div className="flex items-baseline justify-between gap-2 border-b border-border/70 pb-1.5">
-        <h2
-          id={`sector-heading-${group.id}`}
-          className="text-base font-semibold tracking-tight text-foreground sm:text-lg"
-        >
-          {group.label}
-        </h2>
-        <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">
-          {group.items.length} open
-        </span>
-      </div>
-      <ul className="flex flex-col gap-2">
-        {group.items.map((item) => (
-          <VerifiedVacancyCard key={item.id} item={item} />
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-function SectorJumpChipBar({
+function SectorFilterChipBar({
   options,
-  active,
-  onJump,
+  selected,
+  onSelect,
   counts,
 }: {
   options: { id: VerifiedJobSector; label: string }[];
-  active: VerifiedJobSector;
-  onJump: (sector: VerifiedJobSector) => void;
+  selected: VerifiedJobSector;
+  onSelect: (sector: VerifiedJobSector) => void;
   counts: Partial<Record<VerifiedJobSector, number>>;
 }) {
   return (
     <div
       className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      role="navigation"
-      aria-label="Jump to job sector"
+      role="tablist"
+      aria-label="Filter jobs by sector"
     >
       {options.map((option) => {
-        const isActive = active === option.id;
+        const isSelected = selected === option.id;
         const count = counts[option.id];
         return (
           <button
             key={option.id}
             type="button"
-            aria-current={isActive ? "true" : undefined}
-            onClick={() => onJump(option.id)}
+            role="tab"
+            aria-selected={isSelected}
+            onClick={() => onSelect(option.id)}
             className={cn(
               "shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
-              isActive
+              isSelected
                 ? "border-primary bg-primary/15 text-primary shadow-sm"
                 : "border-border/80 bg-muted/20 text-muted-foreground hover:border-border hover:text-foreground",
             )}
@@ -224,7 +203,7 @@ function SectorJumpChipBar({
               <span
                 className={cn(
                   "ml-1 tabular-nums",
-                  isActive ? "text-primary/80" : "text-muted-foreground/80",
+                  isSelected ? "text-primary/80" : "text-muted-foreground/80",
                 )}
               >
                 ({count})
