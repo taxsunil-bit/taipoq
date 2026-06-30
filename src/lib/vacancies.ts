@@ -16,6 +16,53 @@ export function formatVacancyStatusLabel(status: VacancyStatus): string {
   return VACANCY_STATUS_LABELS[status] ?? status;
 }
 
+const VACANCY_DISPLAY_TEXT_REPLACEMENTS: readonly { pattern: RegExp; replacement: string }[] = [
+  { pattern: /Official CEN देखें/gi, replacement: "View Official CEN" },
+  { pattern: /official PDF देखें/gi, replacement: "view official PDF" },
+  { pattern: /Official advertisement देखें/gi, replacement: "View official advertisement" },
+  { pattern: /official advertisement देखें/gi, replacement: "view official advertisement" },
+  { pattern: /Official notice देखें/gi, replacement: "View official notice" },
+  { pattern: /official notice देखें/gi, replacement: "view official notice" },
+  { pattern: /Official notification देखें/gi, replacement: "View official notification" },
+  { pattern: /Official calendar देखें/gi, replacement: "View official calendar" },
+  { pattern: /official calendar देखें/gi, replacement: "view official calendar" },
+  { pattern: /PDF देखें/gi, replacement: "View PDF" },
+  { pattern: /final दिनांक official website पर देखें/gi, replacement: "see official website for final dates" },
+  { pattern: /Official website पर CBT \/ written exam schedule देखें/gi, replacement: "See CBT / written exam schedule on official website" },
+  { pattern: /Official website पर CBT schedule देखें/gi, replacement: "See CBT schedule on official website" },
+  { pattern: /Official website पर/gi, replacement: "On official website" },
+  { pattern: /Exam schedule घोषित नहीं/gi, replacement: "Exam schedule not announced" },
+  { pattern: /घोषित नहीं/g, replacement: "Not announced" },
+  { pattern: /तिथि घोषित नहीं/g, replacement: "Date not announced" },
+  { pattern: /देखें/g, replacement: "View" },
+];
+
+/** Normalize legacy Hindi fragments in vacancy field text shown on cards. */
+export function normalizeVacancyDisplayText(value: string | undefined): string {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) return "";
+  let text = trimmed;
+  for (const { pattern, replacement } of VACANCY_DISPLAY_TEXT_REPLACEMENTS) {
+    text = text.replace(pattern, replacement);
+  }
+  return text;
+}
+
+const VAGUE_VACANCY_TEXT_FRAGMENTS = [
+  "view official notice",
+  "view official advertisement",
+  "view official calendar",
+  "not announced",
+  "date not announced",
+] as const;
+
+export function isMeaningfulVacancyDetailText(value: string | undefined): boolean {
+  const normalized = normalizeVacancyDisplayText(value);
+  if (!normalized) return false;
+  const lower = normalized.toLowerCase();
+  return !VAGUE_VACANCY_TEXT_FRAGMENTS.some((fragment) => lower.includes(fragment));
+}
+
 /** Jobs with closing date before this ISO day are excluded from the public live list. */
 export const LIVE_LIST_REFERENCE_DATE = "2026-07-01";
 

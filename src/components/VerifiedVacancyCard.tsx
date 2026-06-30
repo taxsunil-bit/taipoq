@@ -3,7 +3,13 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatVacancyStatusLabel, isHttpsUrl, isJudicialLocalVacancyCategory } from "@/lib/vacancies";
+import {
+  formatVacancyStatusLabel,
+  isHttpsUrl,
+  isJudicialLocalVacancyCategory,
+  isMeaningfulVacancyDetailText,
+  normalizeVacancyDisplayText,
+} from "@/lib/vacancies";
 import { formatDateDDMMYYYY, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
 import type { VacancyItem } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
@@ -15,19 +21,8 @@ type VerifiedVacancyCardProps = {
 const compactBtn =
   "h-9 min-h-10 px-2.5 text-xs sm:h-9 sm:min-h-9 sm:px-3 sm:text-sm whitespace-nowrap";
 
-const VAGUE_EXAM_FRAGMENTS = [
-  "official notice देखें",
-  "official advertisement देखें",
-  "official calendar देखें",
-  "घोषित नहीं",
-  "तिथि घोषित नहीं",
-] as const;
-
-function isMeaningfulDetailText(value: string | undefined): boolean {
-  const trimmed = (value ?? "").trim();
-  if (!trimmed) return false;
-  const lower = trimmed.toLowerCase();
-  return !VAGUE_EXAM_FRAGMENTS.some((fragment) => lower.includes(fragment));
+function displayText(value: string | undefined): string {
+  return normalizeVacancyDisplayText(value);
 }
 
 function CompactLine({
@@ -100,9 +95,11 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const startDate = formatDateDDMMYYYY(item.applicationStartDate);
   const endDate = formatDateDDMMYYYY(item.applicationEndDate);
   const primaryPrepLink = item.preparationLinks[0];
-  const examLine = isMeaningfulDetailText(item.examWindowText) ? item.examWindowText.trim() : undefined;
-  const noticeLine = isMeaningfulDetailText(item.notificationWindowText)
-    ? item.notificationWindowText.trim()
+  const examLine = isMeaningfulVacancyDetailText(item.examWindowText)
+    ? displayText(item.examWindowText)
+    : undefined;
+  const noticeLine = isMeaningfulVacancyDetailText(item.notificationWindowText)
+    ? displayText(item.notificationWindowText)
     : undefined;
 
   return (
@@ -160,8 +157,8 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             {endDate ? <CompactLine label="Last Date" value={endDate} emphasize /> : null}
             {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
             {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
-            <CompactLine label="Vacancies" value={item.vacanciesText} />
-            <CompactLine label="Eligibility" value={item.qualificationShort} />
+            <CompactLine label="Vacancies" value={displayText(item.vacanciesText)} />
+            <CompactLine label="Eligibility" value={displayText(item.qualificationShort)} />
           </div>
 
           <div className="flex flex-wrap gap-1.5 pt-0.5">
@@ -213,16 +210,16 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                     emphasize
                   />
                 ) : null}
-                <CompactLine label="Age Limit" value={item.ageLimitShort} />
-                <CompactLine label="Fee" value={item.feeShort} />
-                <CompactLine label="Selection Process" value={item.selectionProcessShort} />
-                <CompactLine label="Notification Window" value={item.notificationWindowText} />
-                <CompactLine label="Exam / Selection Date" value={item.examWindowText} />
+                <CompactLine label="Age Limit" value={displayText(item.ageLimitShort)} />
+                <CompactLine label="Fee" value={displayText(item.feeShort)} />
+                <CompactLine label="Selection Process" value={displayText(item.selectionProcessShort)} />
+                <CompactLine label="Notification Window" value={displayText(item.notificationWindowText)} />
+                <CompactLine label="Exam / Selection Date" value={displayText(item.examWindowText)} />
               </div>
 
               <p className="rounded border border-border/50 bg-muted/15 p-2 text-[11px] leading-relaxed text-muted-foreground">
                 <span className="font-medium text-foreground">Trust note: </span>
-                {item.trustNote}
+                {displayText(item.trustNote)}
               </p>
 
               <div className="flex flex-wrap gap-1.5">
