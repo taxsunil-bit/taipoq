@@ -155,7 +155,7 @@ function UpcomingExamsPage() {
             ) : (
               <Card className="border-border/70 bg-muted/10">
                 <CardContent className="p-3 text-sm text-muted-foreground">
-                  इस क्षेत्र में अभी कोई verified open job नहीं है।
+                  No verified open jobs in this sector yet.
                 </CardContent>
               </Card>
             )}

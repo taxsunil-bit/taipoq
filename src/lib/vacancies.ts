@@ -1,15 +1,15 @@
 import type { VacanciesPayload, VacancyItem, VacancyStatus } from "@/types/vacancy";
 
 const VACANCY_STATUS_LABELS: Record<VacancyStatus, string> = {
-  closing_soon: "अंतिम तिथि निकट",
-  active: "आवेदन चालू",
-  correction_window: "संशोधन अवधि",
-  archive: "पुरानी सूचना",
-  verification_pending: "जाँच शेष",
-  preparation_only: "तैयारी हेतु",
-  closed: "आवेदन समाप्त",
-  exam_process: "परीक्षा चरण",
-  departmental: "विभागीय",
+  closing_soon: "Closing Soon",
+  active: "Applications Open",
+  correction_window: "Correction Window",
+  archive: "Archived",
+  verification_pending: "Verification Pending",
+  preparation_only: "Preparation Only",
+  closed: "Closed",
+  exam_process: "Exam Stage",
+  departmental: "Departmental",
 };
 
 export function formatVacancyStatusLabel(status: VacancyStatus): string {

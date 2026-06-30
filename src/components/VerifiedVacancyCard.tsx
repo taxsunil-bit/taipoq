@@ -50,7 +50,6 @@ function CompactLine({
 function PreparationLinkButton({ href, className }: { href: string; className?: string }) {
   const prepare = resolvePrepareLink(href);
   const label = getPrepareLinkLabel(href);
-  const text = label === "Prepare" ? "तैयारी करें" : label;
 
   if (prepare.external) {
     return (
@@ -60,7 +59,7 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
         rel="noopener noreferrer"
         className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn, className)}
       >
-        तैयारी करें
+        {label}
       </a>
     );
   }
@@ -72,7 +71,7 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
         search={prepare.search}
         className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn, className)}
       >
-        {text}
+        {label}
       </Link>
     );
   }
@@ -82,7 +81,7 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
       to={prepare.to}
       className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn, className)}
     >
-      {text}
+      {label}
     </Link>
   );
 }
@@ -118,12 +117,20 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
               Verified Open Job
             </Badge>
             {isJudiciaryLocal ? (
-              <Badge
-                variant="outline"
-                className="border-amber-400/40 bg-amber-500/15 px-1.5 py-0 text-[11px] font-medium text-amber-200"
-              >
-                Judiciary Local / PLA
-              </Badge>
+              <>
+                <Badge
+                  variant="outline"
+                  className="border-amber-400/40 bg-amber-500/15 px-1.5 py-0 text-[11px] font-medium text-amber-200"
+                >
+                  PLA / Local Notice
+                </Badge>
+                <Badge
+                  variant="outline"
+                  className="border-amber-400/30 bg-amber-500/10 px-1.5 py-0 text-[10px] font-medium text-amber-100/90"
+                >
+                  Judiciary Local / PLA
+                </Badge>
+              </>
             ) : null}
             <Badge
               variant="outline"
@@ -143,18 +150,18 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
 
           {endDate ? (
             <p className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-xs leading-snug">
-              <span className="text-muted-foreground">अंतिम तिथि: </span>
+              <span className="text-muted-foreground">Last Date: </span>
               <span className="font-semibold text-emerald-100">{endDate}</span>
             </p>
           ) : null}
 
           <div className="space-y-0.5">
-            {startDate ? <CompactLine label="आवेदन आरम्भ" value={startDate} emphasize /> : null}
-            {endDate ? <CompactLine label="अंतिम तिथि" value={endDate} emphasize /> : null}
-            {noticeLine ? <CompactLine label="सूचना" value={noticeLine} /> : null}
-            {examLine ? <CompactLine label="परीक्षा / चयन" value={examLine} /> : null}
-            <CompactLine label="रिक्तियाँ" value={item.vacanciesText} />
-            <CompactLine label="योग्यता" value={item.qualificationShort} />
+            {startDate ? <CompactLine label="Application Start" value={startDate} emphasize /> : null}
+            {endDate ? <CompactLine label="Last Date" value={endDate} emphasize /> : null}
+            {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
+            {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
+            <CompactLine label="Vacancies" value={item.vacanciesText} />
+            <CompactLine label="Eligibility" value={item.qualificationShort} />
           </div>
 
           <div className="flex flex-wrap gap-1.5 pt-0.5">
@@ -177,7 +184,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
               className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn)}
               aria-expanded={expanded}
             >
-              {expanded ? "Details छिपाएँ" : "Details देखें"}
+              {expanded ? "Hide Details" : "Show Details"}
             </button>
 
             {showNotice && item.officialNoticeUrl ? (
@@ -196,21 +203,21 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             <div className="space-y-2 border-t border-border/50 pt-2">
               <div className="space-y-0.5">
                 {startDate ? (
-                  <CompactLine label="आवेदन प्रारम्भ" value={startDate} emphasize />
+                  <CompactLine label="Application Start" value={startDate} emphasize />
                 ) : null}
-                {endDate ? <CompactLine label="अंतिम तिथि" value={endDate} emphasize /> : null}
+                {endDate ? <CompactLine label="Last Date" value={endDate} emphasize /> : null}
                 {item.correctionStartDate && item.correctionEndDate ? (
                   <CompactLine
-                    label="संशोधन"
-                    value={`${formatDateDDMMYYYY(item.correctionStartDate)} से ${formatDateDDMMYYYY(item.correctionEndDate)}`}
+                    label="Correction Window"
+                    value={`${formatDateDDMMYYYY(item.correctionStartDate)} to ${formatDateDDMMYYYY(item.correctionEndDate)}`}
                     emphasize
                   />
                 ) : null}
-                <CompactLine label="आयु सीमा" value={item.ageLimitShort} />
-                <CompactLine label="शुल्क" value={item.feeShort} />
-                <CompactLine label="चयन प्रक्रिया" value={item.selectionProcessShort} />
-                <CompactLine label="सूचना अवधि" value={item.notificationWindowText} />
-                <CompactLine label="परीक्षा / चयन तिथि" value={item.examWindowText} />
+                <CompactLine label="Age Limit" value={item.ageLimitShort} />
+                <CompactLine label="Fee" value={item.feeShort} />
+                <CompactLine label="Selection Process" value={item.selectionProcessShort} />
+                <CompactLine label="Notification Window" value={item.notificationWindowText} />
+                <CompactLine label="Exam / Selection Date" value={item.examWindowText} />
               </div>
 
               <p className="rounded border border-border/50 bg-muted/15 p-2 text-[11px] leading-relaxed text-muted-foreground">

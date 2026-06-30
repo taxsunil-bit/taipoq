@@ -57,7 +57,7 @@ if (!existsSync(ROUTE_PATH)) {
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
     { label: "filterVerifiedPublicVacanciesBySector", re: /filterVerifiedPublicVacanciesBySector/ },
     { label: "loadVacanciesPreview", re: /loadVacanciesPreview/ },
-    { label: "Empty sector message", re: /इस क्षेत्र में अभी कोई verified open job नहीं है/ },
+    { label: "Empty sector message", re: /No verified open jobs in this sector yet/ },
     { label: "DRDO sector chip", re: /DRDO \/ R&D/ },
     { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },
     { label: "Judicial Jobs sector chip", re: /Judicial Jobs/ },
