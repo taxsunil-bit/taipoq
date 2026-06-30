@@ -17,7 +17,7 @@ export function formatVacancyStatusLabel(status: VacancyStatus): string {
 }
 
 /** Jobs with closing date before this ISO day are excluded from the public live list. */
-export const LIVE_LIST_REFERENCE_DATE = "2026-06-30";
+export const LIVE_LIST_REFERENCE_DATE = "2026-07-01";
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -173,6 +173,7 @@ export type VerifiedJobSector =
   | "insurance"
   | "defence"
   | "drdo"
+  | "space_research"
   | "upsc"
   | "dsssb"
   | "judicial";
@@ -186,6 +187,7 @@ export function getVerifiedVacancySector(
   if (isBankSpecialistVacancyCategory(item.category)) return "bank_specialist";
   if (category.includes("railway") || category.includes("rrb")) return "railway";
   if (category.includes("dsssb") || category.includes("delhi govt")) return "dsssb";
+  if (category.includes("isro") || category.includes("space / research")) return "space_research";
   if (category.includes("drdo") || category.includes("r&d")) return "drdo";
   if (category.includes("upsc")) return "upsc";
   if (category.includes("insurance")) return "insurance";
@@ -221,6 +223,7 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
   const order = [
     "rrb-technician-cen-02-2026",
     "dsssb-advt-03-2026",
+    "isro-istrac-02-2026",
     "sbi-po-2026",
     "sbi-law-officer-sco-2026",
     "sbi-bank-medical-officer-sco-2026",
@@ -235,10 +238,6 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     "drdo-deal-apprentice-2026-27",
     "drdo-dysl-qt-jrf-2026",
     "gujarat-hc-legal-assistant-2026",
-    "ahc-pla-ghazipur-2026",
-    "ahc-pla-baghpat-2026",
-    "ahc-pla-sonbhadra-2026",
-    "ahc-pla-sant-kabir-nagar-2026",
   ];
 
   return verified.sort((a, b) => {

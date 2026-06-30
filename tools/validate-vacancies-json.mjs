@@ -65,7 +65,7 @@ const VERIFIED_PUBLISH_STATUSES = new Set(["active", "closing_soon"]);
 const ALLOWED_VERIFIED_SOURCE_TYPES = new Set(["official", "official_pdf", "employment_news"]);
 const GENERIC_STATUS_LABEL = "Official website check करें";
 const GENERIC_NOTIFICATION_TEXT = "Official notification देखें";
-const LIVE_LIST_REFERENCE_DATE = "2026-06-30";
+const LIVE_LIST_REFERENCE_DATE = "2026-07-01";
 
 const errors = [];
 const warnings = [];
