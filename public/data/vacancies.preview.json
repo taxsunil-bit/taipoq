@@ -294,9 +294,9 @@
       "id": "ahc-pla-ghazipur-2026",
       "title": "AHC — PLA Member, Ghazipur (U.P.)",
       "organisation": "District Legal Services Authority, Ghazipur",
-      "category": "Judicial Jobs / PLA Member / Uttar Pradesh",
-      "status": "archive",
-      "statusLabel": "Judiciary Local / PLA — not in main student vacancy list",
+      "category": "Judiciary Local / PLA / Contract / Uttar Pradesh",
+      "status": "closing_soon",
+      "statusLabel": "Offline PLA आवेदन; अंतिम तिथि 06/07/2026 — Judiciary Local / Contract",
       "isAllIndia": false,
       "isDepartmental": false,
       "isPreparationOnly": false,
@@ -313,20 +313,20 @@
       "sourceType": "official_pdf",
       "sourceUrl": "https://www.allahabadhighcourt.in/calendar/itemWiseList.jsp?group=7",
       "sourceLabel": "Allahabad High Court Recruitment List",
-      "sourceCheckedDate": "2026-06-30",
-      "trustNote": "Judiciary local PLA notice — archived from main student vacancy list per TAIPOQ policy. See official AHC calendar for district PLA posts.",
+      "sourceCheckedDate": "2026-07-01",
+      "trustNote": "Judiciary local PLA / contract notice — not normal student recruitment. Offline application per district PLA PDF. Closing 06/07/2026 verified from official AHC recruitment calendar.",
       "preparationLinks": [
         "/study-corner/general-awareness"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ahc-pla-sant-kabir-nagar-2026",
       "title": "AHC — PLA Member, Sant Kabir Nagar (U.P.)",
       "organisation": "District Legal Services Authority, Sant Kabir Nagar",
-      "category": "Judicial Jobs / PLA Member / Uttar Pradesh",
-      "status": "archive",
-      "statusLabel": "Judiciary Local / PLA — not in main student vacancy list",
+      "category": "Judiciary Local / PLA / Contract / Uttar Pradesh",
+      "status": "active",
+      "statusLabel": "Offline PLA आवेदन; अंतिम तिथि 09/07/2026 — Judiciary Local / Contract",
       "isAllIndia": false,
       "isDepartmental": false,
       "isPreparationOnly": false,
@@ -343,12 +343,12 @@
       "sourceType": "official_pdf",
       "sourceUrl": "https://www.allahabadhighcourt.in/calendar/itemWiseList.jsp?group=7",
       "sourceLabel": "Allahabad High Court Recruitment List",
-      "sourceCheckedDate": "2026-06-30",
-      "trustNote": "Judiciary local PLA notice — archived from main student vacancy list per TAIPOQ policy.",
+      "sourceCheckedDate": "2026-07-01",
+      "trustNote": "Judiciary local PLA / contract notice — not normal student recruitment. 2 PLA Member posts. Closing 09/07/2026 verified from official AHC recruitment calendar.",
       "preparationLinks": [
         "/study-corner/general-awareness"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "rrb-technician-cen-02-2026",
@@ -607,9 +607,9 @@
       "id": "ahc-pla-baghpat-2026",
       "title": "AHC — PLA Member, Baghpat (U.P.)",
       "organisation": "District Legal Services Authority, Baghpat",
-      "category": "Judicial Jobs / PLA Member / Uttar Pradesh",
-      "status": "archive",
-      "statusLabel": "Judiciary Local / PLA — not in main student vacancy list",
+      "category": "Judiciary Local / PLA / Contract / Uttar Pradesh",
+      "status": "active",
+      "statusLabel": "Offline PLA आवेदन; अंतिम तिथि 09/07/2026 — Judiciary Local / Contract",
       "isAllIndia": false,
       "isDepartmental": false,
       "isPreparationOnly": false,
@@ -626,20 +626,20 @@
       "sourceType": "official_pdf",
       "sourceUrl": "https://www.allahabadhighcourt.in/calendar/itemWiseList.jsp?group=7",
       "sourceLabel": "Allahabad High Court Recruitment List",
-      "sourceCheckedDate": "2026-06-30",
-      "trustNote": "Judiciary local PLA notice — archived from main student vacancy list per TAIPOQ policy.",
+      "sourceCheckedDate": "2026-07-01",
+      "trustNote": "Judiciary local PLA / contract notice — not normal student recruitment. Offline application. Closing 09/07/2026 verified from official AHC recruitment calendar.",
       "preparationLinks": [
         "/study-corner/general-awareness"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ahc-pla-sonbhadra-2026",
       "title": "AHC — PLA Member, Sonbhadra (U.P.)",
       "organisation": "District Legal Services Authority, Sonbhadra",
-      "category": "Judicial Jobs / PLA Member / Uttar Pradesh",
-      "status": "archive",
-      "statusLabel": "Judiciary Local / PLA — not in main student vacancy list",
+      "category": "Judiciary Local / PLA / Contract / Uttar Pradesh",
+      "status": "active",
+      "statusLabel": "Offline PLA आवेदन; अंतिम तिथि 08/07/2026 — Judiciary Local / Contract",
       "isAllIndia": false,
       "isDepartmental": false,
       "isPreparationOnly": false,
@@ -656,12 +656,12 @@
       "sourceType": "official_pdf",
       "sourceUrl": "https://www.allahabadhighcourt.in/calendar/itemWiseList.jsp?group=7",
       "sourceLabel": "Allahabad High Court Recruitment List",
-      "sourceCheckedDate": "2026-06-30",
-      "trustNote": "Judiciary local PLA notice — archived from main student vacancy list per TAIPOQ policy.",
+      "sourceCheckedDate": "2026-07-01",
+      "trustNote": "Judiciary local PLA / contract notice — not normal student recruitment. Offline application. Closing 08/07/2026 verified from official AHC recruitment calendar.",
       "preparationLinks": [
         "/study-corner/general-awareness"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "bank-of-india-credit-officer-2026",

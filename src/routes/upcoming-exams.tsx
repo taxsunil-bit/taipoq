@@ -40,6 +40,7 @@ const SECTOR_OPTIONS: { id: VerifiedJobSector; label: string }[] = [
   { id: "upsc", label: "UPSC" },
   { id: "dsssb", label: "DSSSB / Delhi Govt" },
   { id: "judicial", label: "Judicial Jobs" },
+  { id: "judiciary_local", label: "Judiciary Local / PLA / Contract" },
 ];
 
 function getSectorResultsTitle(sector: VerifiedJobSector): string {

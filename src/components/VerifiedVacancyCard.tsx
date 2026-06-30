@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatVacancyStatusLabel, isHttpsUrl } from "@/lib/vacancies";
+import { formatVacancyStatusLabel, isHttpsUrl, isJudicialLocalVacancyCategory } from "@/lib/vacancies";
 import { formatDateDDMMYYYY, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
 import type { VacancyItem } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
@@ -96,6 +96,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
 
   const showSource = isHttpsUrl(item.sourceUrl);
   const showNotice = isHttpsUrl(item.officialNoticeUrl);
+  const isJudiciaryLocal = isJudicialLocalVacancyCategory(item.category);
   const statusPill = formatVacancyStatusLabel(item.status);
   const startDate = formatDateDDMMYYYY(item.applicationStartDate);
   const endDate = formatDateDDMMYYYY(item.applicationEndDate);
@@ -116,6 +117,14 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             >
               Verified Open Job
             </Badge>
+            {isJudiciaryLocal ? (
+              <Badge
+                variant="outline"
+                className="border-amber-400/40 bg-amber-500/15 px-1.5 py-0 text-[11px] font-medium text-amber-200"
+              >
+                Judiciary Local / PLA
+              </Badge>
+            ) : null}
             <Badge
               variant="outline"
               className="border-border/80 bg-muted/25 px-1.5 py-0 text-[11px] font-medium text-foreground"

@@ -157,8 +157,14 @@ export function isHttpsUrl(url: string | undefined): boolean {
   }
 }
 
+export function isJudicialLocalVacancyCategory(category: string | undefined): boolean {
+  const value = (category ?? "").toLowerCase();
+  return value.includes("judiciary local") || value.includes("pla member") || value.includes("pla / contract");
+}
+
 export function isJudicialVacancyCategory(category: string | undefined): boolean {
-  return (category ?? "").toLowerCase().includes("judicial jobs");
+  if (isJudicialLocalVacancyCategory(category)) return false;
+  return (category ?? "").toLowerCase().includes("judicial");
 }
 
 export function isBankSpecialistVacancyCategory(category: string | undefined): boolean {
@@ -176,13 +182,15 @@ export type VerifiedJobSector =
   | "space_research"
   | "upsc"
   | "dsssb"
-  | "judicial";
+  | "judicial"
+  | "judiciary_local";
 
 export function getVerifiedVacancySector(
   item: VacancyItem,
 ): Exclude<VerifiedJobSector, "all"> | null {
   const category = (item.category ?? "").toLowerCase();
 
+  if (isJudicialLocalVacancyCategory(item.category)) return "judiciary_local";
   if (isJudicialVacancyCategory(item.category)) return "judicial";
   if (isBankSpecialistVacancyCategory(item.category)) return "bank_specialist";
   if (category.includes("railway") || category.includes("rrb")) return "railway";
@@ -238,6 +246,10 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     "drdo-deal-apprentice-2026-27",
     "drdo-dysl-qt-jrf-2026",
     "gujarat-hc-legal-assistant-2026",
+    "ahc-pla-ghazipur-2026",
+    "ahc-pla-baghpat-2026",
+    "ahc-pla-sonbhadra-2026",
+    "ahc-pla-sant-kabir-nagar-2026",
   ];
 
   return verified.sort((a, b) => {
