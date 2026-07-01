@@ -13,6 +13,7 @@
     "validate:upcoming-exams": "node tools/validate-upcoming-exams-json.mjs",
     "migrate:vacancies": "node tools/migrate-upcoming-exams-to-vacancies.mjs",
     "validate:vacancies": "node tools/validate-vacancies-json.mjs",
+    "smoke:vacancies": "node tools/smoke-test-vacancies-live.mjs",
     "validate:upcoming-exams-ui": "node tools/validate-upcoming-exams-ui.mjs",
     "validate:tests": "node tools/validate-test-paper-pack.mjs",
     "validate:pack-02": "node tools/validate-test-paper-pack-02.mjs",

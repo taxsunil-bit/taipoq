@@ -38,6 +38,8 @@ const SECTOR_OPTIONS: { id: VerifiedJobSector; label: string }[] = [
   { id: "drdo", label: "DRDO / R&D" },
   { id: "space_research", label: "Space / Research" },
   { id: "upsc", label: "UPSC" },
+  { id: "state_psc", label: "State PSC / PCS" },
+  { id: "medical_central", label: "Medical / Central Govt" },
   { id: "dsssb", label: "DSSSB / Delhi Govt" },
   { id: "judicial", label: "Judicial Jobs" },
   { id: "judiciary_local", label: "Judiciary Local / PLA / Contract" },

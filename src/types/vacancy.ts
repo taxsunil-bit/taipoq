@@ -28,6 +28,8 @@ export type VacancyItem = {
   isPreparationOnly: boolean;
   applicationStartDate?: string;
   applicationEndDate?: string;
+  /** Optional closing time for display, e.g. "23:59" or "17:00". */
+  applicationEndTime?: string;
   correctionStartDate?: string;
   correctionEndDate?: string;
   vacanciesText: string;

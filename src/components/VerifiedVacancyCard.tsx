@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  formatVacancyApplicationEndDisplay,
+  formatVacancyApplicationStartDisplay,
+  formatVacancyApplyWindowStrip,
   formatVacancyStatusLabel,
   isHttpsUrl,
   isJudicialLocalVacancyCategory,
@@ -92,8 +95,15 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const showNotice = isHttpsUrl(item.officialNoticeUrl);
   const isJudiciaryLocal = isJudicialLocalVacancyCategory(item.category);
   const statusPill = formatVacancyStatusLabel(item.status);
-  const startDate = formatDateDDMMYYYY(item.applicationStartDate);
-  const endDate = formatDateDDMMYYYY(item.applicationEndDate);
+  const applyWindowStrip = formatVacancyApplyWindowStrip(
+    item.applicationStartDate,
+    item.applicationEndDate,
+  );
+  const applicationStart = formatVacancyApplicationStartDisplay(item.applicationStartDate);
+  const applicationEnd = formatVacancyApplicationEndDisplay(
+    item.applicationEndDate,
+    item.applicationEndTime,
+  );
   const primaryPrepLink = item.preparationLinks[0];
   const examLine = isMeaningfulVacancyDetailText(item.examWindowText)
     ? displayText(item.examWindowText)
@@ -145,16 +155,17 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             </p>
           </div>
 
-          {endDate ? (
+          {applyWindowStrip ? (
             <p className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-xs leading-snug">
-              <span className="text-muted-foreground">Last Date: </span>
-              <span className="font-semibold text-emerald-100">{endDate}</span>
+              <span className="font-semibold text-emerald-100">{applyWindowStrip}</span>
             </p>
           ) : null}
 
           <div className="space-y-0.5">
-            {startDate ? <CompactLine label="Application Start" value={startDate} emphasize /> : null}
-            {endDate ? <CompactLine label="Last Date" value={endDate} emphasize /> : null}
+            <CompactLine label="Application Start" value={applicationStart} emphasize />
+            {applicationEnd ? (
+              <CompactLine label="Application End" value={applicationEnd} emphasize />
+            ) : null}
             {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
             {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
             <CompactLine label="Vacancies" value={displayText(item.vacanciesText)} />
@@ -199,10 +210,6 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
           {expanded ? (
             <div className="space-y-2 border-t border-border/50 pt-2">
               <div className="space-y-0.5">
-                {startDate ? (
-                  <CompactLine label="Application Start" value={startDate} emphasize />
-                ) : null}
-                {endDate ? <CompactLine label="Last Date" value={endDate} emphasize /> : null}
                 {item.correctionStartDate && item.correctionEndDate ? (
                   <CompactLine
                     label="Correction Window"
@@ -210,10 +217,16 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                     emphasize
                   />
                 ) : null}
+                {item.correctionEndDate && !item.correctionStartDate ? (
+                  <CompactLine
+                    label="Correction / Modification End"
+                    value={formatDateDDMMYYYY(item.correctionEndDate)}
+                    emphasize
+                  />
+                ) : null}
                 <CompactLine label="Age Limit" value={displayText(item.ageLimitShort)} />
                 <CompactLine label="Fee" value={displayText(item.feeShort)} />
                 <CompactLine label="Selection Process" value={displayText(item.selectionProcessShort)} />
-                <CompactLine label="Notification Window" value={displayText(item.notificationWindowText)} />
                 <CompactLine label="Exam / Selection Date" value={displayText(item.examWindowText)} />
               </div>
 

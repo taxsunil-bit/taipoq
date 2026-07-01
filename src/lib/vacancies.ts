@@ -1,4 +1,5 @@
 import type { VacanciesPayload, VacancyItem, VacancyStatus } from "@/types/vacancy";
+import { formatDateDDMMYYYY } from "@/lib/upcomingExams";
 
 const VACANCY_STATUS_LABELS: Record<VacancyStatus, string> = {
   closing_soon: "Closing Soon",
@@ -61,6 +62,33 @@ export function isMeaningfulVacancyDetailText(value: string | undefined): boolea
   if (!normalized) return false;
   const lower = normalized.toLowerCase();
   return !VAGUE_VACANCY_TEXT_FRAGMENTS.some((fragment) => lower.includes(fragment));
+}
+
+/** Highlight strip when both application dates exist. */
+export function formatVacancyApplyWindowStrip(
+  applicationStartDate: string | undefined,
+  applicationEndDate: string | undefined,
+): string | null {
+  const start = formatDateDDMMYYYY(applicationStartDate);
+  const end = formatDateDDMMYYYY(applicationEndDate);
+  if (start && end) return `Apply Window: ${start} → ${end}`;
+  if (end && !start) return `Last Date: ${end}`;
+  return null;
+}
+
+export function formatVacancyApplicationEndDisplay(
+  applicationEndDate: string | undefined,
+  applicationEndTime: string | undefined,
+): string {
+  const end = formatDateDDMMYYYY(applicationEndDate);
+  if (!end) return "";
+  const time = applicationEndTime?.trim();
+  return time ? `${end}, ${time}` : end;
+}
+
+export function formatVacancyApplicationStartDisplay(applicationStartDate: string | undefined): string {
+  const start = formatDateDDMMYYYY(applicationStartDate);
+  return start || "Not announced";
 }
 
 /** Jobs with closing date before this ISO day are excluded from the public live list. */
@@ -228,6 +256,8 @@ export type VerifiedJobSector =
   | "drdo"
   | "space_research"
   | "upsc"
+  | "state_psc"
+  | "medical_central"
   | "dsssb"
   | "judicial"
   | "judiciary_local";
@@ -240,6 +270,8 @@ export function getVerifiedVacancySector(
   if (isJudicialLocalVacancyCategory(item.category)) return "judiciary_local";
   if (isJudicialVacancyCategory(item.category)) return "judicial";
   if (isBankSpecialistVacancyCategory(item.category)) return "bank_specialist";
+  if (category.includes("state psc") || category.includes("/ pcs")) return "state_psc";
+  if (category.includes("medical / central") || category.includes("aiims")) return "medical_central";
   if (category.includes("railway") || category.includes("rrb")) return "railway";
   if (category.includes("dsssb") || category.includes("delhi govt")) return "dsssb";
   if (category.includes("isro") || category.includes("space / research")) return "space_research";
@@ -247,7 +279,7 @@ export function getVerifiedVacancySector(
   if (category.includes("upsc")) return "upsc";
   if (category.includes("insurance")) return "insurance";
   if (category.includes("defence") || category.includes("navy")) return "defence";
-  if (category.includes("banking")) return "banking";
+  if (category.includes("banking") || category.includes("ibps")) return "banking";
 
   return null;
 }
@@ -276,10 +308,18 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
   });
 
   const order = [
-    "rrb-technician-cen-02-2026",
-    "dsssb-advt-03-2026",
-    "isro-istrac-02-2026",
+    "delhi-hjs-examination-2026",
+    "aiims-cre-5-2026",
+    "indian-navy-agniveer-apprentice-0127-0227-2026",
     "sbi-po-2026",
+    "ibps-po-mt-xvi-2026",
+    "dsssb-advt-03-2026",
+    "rrb-technician-cen-02-2026",
+    "uppsc-pcs-2026",
+    "indian-navy-ssc-various-entries-jun-2027",
+    "gujarat-hc-legal-assistant-2026",
+    "upsc-advt-07-2026",
+    "isro-istrac-02-2026",
     "sbi-law-officer-sco-2026",
     "sbi-bank-medical-officer-sco-2026",
     "sbi-defence-banking-advisor-sco-2026",
@@ -287,12 +327,8 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     "bob-cic-regular-2026",
     "bob-cic-contractual-2026",
     "bob-it-fte-2026",
-    "upsc-advt-07-2026",
-    "indian-navy-ssc-various-entries-jun-2027",
-    "indian-navy-agniveer-apprentice-0127-0227-2026",
     "drdo-deal-apprentice-2026-27",
     "drdo-dysl-qt-jrf-2026",
-    "gujarat-hc-legal-assistant-2026",
     "ahc-pla-ghazipur-2026",
     "ahc-pla-baghpat-2026",
     "ahc-pla-sonbhadra-2026",

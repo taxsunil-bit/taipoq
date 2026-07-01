@@ -131,12 +131,13 @@ function scanForbiddenDates(item, rowLabel) {
       }
     }
   }
-  for (const key of [
+  const isoDateFields = [
     "applicationStartDate",
     "applicationEndDate",
     "correctionStartDate",
     "correctionEndDate",
-  ]) {
+  ];
+  for (const key of isoDateFields) {
     const val = item[key];
     if (val !== undefined && val !== null && String(val).trim() !== "") {
       if (!isIsoDate(val)) {

@@ -62,6 +62,8 @@ if (!existsSync(ROUTE_PATH)) {
     { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },
     { label: "Judicial Jobs sector chip", re: /Judicial Jobs/ },
     { label: "Judiciary Local sector chip", re: /Judiciary Local \/ PLA \/ Contract/ },
+    { label: "State PSC sector chip", re: /State PSC \/ PCS/ },
+    { label: "Medical Central sector chip", re: /Medical \/ Central Govt/ },
   ];
 
   for (const { label, re } of requiredPatterns) {
