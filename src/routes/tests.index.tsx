@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SubjectTestGrid } from "@/components/tests/SubjectTestGrid";
 import { TestCard } from "@/components/tests/TestCard";
+import { CurrentAffairsToughPack02Card } from "@/components/current-affairs-pack-02/CurrentAffairsToughPack02Card";
 import { PageShell } from "@/components/PageShell";
 import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
 import { PACK_PREPARED_DATE, TEST_SUBJECTS } from "@/content/tests/subjects";
@@ -75,6 +76,13 @@ function TestsLandingPage() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section aria-labelledby="tough-pack-heading" className="space-y-3">
+          <h2 id="tough-pack-heading" className="text-lg font-bold">
+            Tough Current Affairs Pack
+          </h2>
+          <CurrentAffairsToughPack02Card />
         </section>
 
         <section aria-labelledby="legacy-tests-heading" className="space-y-3">

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { CurrentAffairsPaperCard } from "@/components/current-affairs/CurrentAffairsPaperCard";
+import { CurrentAffairsToughPack02Card } from "@/components/current-affairs-pack-02/CurrentAffairsToughPack02Card";
 import { PageShell } from "@/components/PageShell";
 import {
   CURRENT_AFFAIRS_EXAM_FILTERS,
@@ -80,6 +81,7 @@ function CurrentAffairsLanding() {
             <h2 id="ca-papers-heading" className="text-lg font-bold text-slate-900">
               प्रश्नपत्र
             </h2>
+            <CurrentAffairsToughPack02Card />
             {papers.length === 0 ? (
               <p className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
                 इस exam के लिए अभी कोई paper नहीं है।

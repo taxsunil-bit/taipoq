@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
+import { ToughMockChallengePopup } from "@/components/ToughMockChallengePopup";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
 import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
 import { WORD_BASICS_HREF } from "@/content/wordBasicKnowledgeContent";
@@ -30,17 +31,20 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <PageShell>
-      <div className="space-y-4 md:space-y-6">
-        <HomeMobileHero />
-        <HomeMobilePrimarySection />
-        <div className="hidden md:block">
-          <HomeDesktopPracticeSection />
+    <>
+      <ToughMockChallengePopup />
+      <PageShell>
+        <div className="space-y-4 md:space-y-6">
+          <HomeMobileHero />
+          <HomeMobilePrimarySection />
+          <div className="hidden md:block">
+            <HomeDesktopPracticeSection />
+          </div>
+          <HomeMobileBody />
+          <HomeDesktop />
         </div>
-        <HomeMobileBody />
-        <HomeDesktop />
-      </div>
-    </PageShell>
+      </PageShell>
+    </>
   );
 }
 

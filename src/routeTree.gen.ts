@@ -23,6 +23,7 @@ import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ModelPaperTestRouteImport } from './routes/model-paper-test'
 import { Route as ModelPaperRouteImport } from './routes/model-paper'
+import { Route as MockTestRouteImport } from './routes/mock-test'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HindiRouteImport } from './routes/hindi'
 import { Route as EnglishRouteImport } from './routes/english'
@@ -36,6 +37,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TestsIndexRouteImport } from './routes/tests.index'
 import { Route as StudyCornerIndexRouteImport } from './routes/study-corner.index'
+import { Route as ModelPaperIndexRouteImport } from './routes/model-paper.index'
 import { Route as HindiIndexRouteImport } from './routes/hindi.index'
 import { Route as EnglishIndexRouteImport } from './routes/english.index'
 import { Route as CurrentAffairsIndexRouteImport } from './routes/current-affairs.index'
@@ -46,6 +48,8 @@ import { Route as StudyCornerQuizResultRouteImport } from './routes/study-corner
 import { Route as StudyCornerGeneralScienceRouteImport } from './routes/study-corner.general-science'
 import { Route as StudyCornerGeneralAwarenessRouteImport } from './routes/study-corner.general-awareness'
 import { Route as StudyCornerComputerBasicsRouteImport } from './routes/study-corner.computer-basics'
+import { Route as ModelPaperCurrentAffairsPack02RouteImport } from './routes/model-paper.current-affairs-pack-02'
+import { Route as MockTestCurrentAffairsPack02RouteImport } from './routes/mock-test.current-affairs-pack-02'
 import { Route as HindiPracticeRouteImport } from './routes/hindi.practice'
 import { Route as HindiLessonsRouteImport } from './routes/hindi.lessons'
 import { Route as EnglishPracticeRouteImport } from './routes/english.practice'
@@ -148,6 +152,11 @@ const ModelPaperRoute = ModelPaperRouteImport.update({
   path: '/model-paper',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MockTestRoute = MockTestRouteImport.update({
+  id: '/mock-test',
+  path: '/mock-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -213,6 +222,11 @@ const StudyCornerIndexRoute = StudyCornerIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StudyCornerRoute,
 } as any)
+const ModelPaperIndexRoute = ModelPaperIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ModelPaperRoute,
+} as any)
 const HindiIndexRoute = HindiIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -266,6 +280,18 @@ const StudyCornerComputerBasicsRoute =
     id: '/computer-basics',
     path: '/computer-basics',
     getParentRoute: () => StudyCornerRoute,
+  } as any)
+const ModelPaperCurrentAffairsPack02Route =
+  ModelPaperCurrentAffairsPack02RouteImport.update({
+    id: '/current-affairs-pack-02',
+    path: '/current-affairs-pack-02',
+    getParentRoute: () => ModelPaperRoute,
+  } as any)
+const MockTestCurrentAffairsPack02Route =
+  MockTestCurrentAffairsPack02RouteImport.update({
+    id: '/current-affairs-pack-02',
+    path: '/current-affairs-pack-02',
+    getParentRoute: () => MockTestRoute,
   } as any)
 const HindiPracticeRoute = HindiPracticeRouteImport.update({
   id: '/practice',
@@ -458,7 +484,8 @@ export interface FileRoutesByFullPath {
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
-  '/model-paper': typeof ModelPaperRoute
+  '/mock-test': typeof MockTestRouteWithChildren
+  '/model-paper': typeof ModelPaperRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
@@ -477,6 +504,8 @@ export interface FileRoutesByFullPath {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
+  '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsRouteWithChildren
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
@@ -487,6 +516,7 @@ export interface FileRoutesByFullPath {
   '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
+  '/model-paper/': typeof ModelPaperIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
   '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
@@ -524,7 +554,7 @@ export interface FileRoutesByTo {
   '/current-affairs-test': typeof CurrentAffairsTestRoute
   '/disclaimer': typeof DisclaimerRoute
   '/login': typeof LoginRoute
-  '/model-paper': typeof ModelPaperRoute
+  '/mock-test': typeof MockTestRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
@@ -541,12 +571,15 @@ export interface FileRoutesByTo {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
+  '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
   '/study-corner/quiz-result': typeof StudyCornerQuizResultRoute
   '/study-corner/ssc-cgl-pattern-practice': typeof StudyCornerSscCglPatternPracticeRoute
   '/admin': typeof AdminIndexRoute
   '/current-affairs': typeof CurrentAffairsIndexRoute
   '/english': typeof EnglishIndexRoute
   '/hindi': typeof HindiIndexRoute
+  '/model-paper': typeof ModelPaperIndexRoute
   '/study-corner': typeof StudyCornerIndexRoute
   '/tests': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
@@ -589,7 +622,8 @@ export interface FileRoutesById {
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
-  '/model-paper': typeof ModelPaperRoute
+  '/mock-test': typeof MockTestRouteWithChildren
+  '/model-paper': typeof ModelPaperRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
@@ -608,6 +642,8 @@ export interface FileRoutesById {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
+  '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsRouteWithChildren
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessRouteWithChildren
   '/study-corner/general-science': typeof StudyCornerGeneralScienceRouteWithChildren
@@ -618,6 +654,7 @@ export interface FileRoutesById {
   '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
+  '/model-paper/': typeof ModelPaperIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
   '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
@@ -661,6 +698,7 @@ export interface FileRouteTypes {
     | '/english'
     | '/hindi'
     | '/login'
+    | '/mock-test'
     | '/model-paper'
     | '/model-paper-test'
     | '/privacy-policy'
@@ -680,6 +718,8 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/mock-test/current-affairs-pack-02'
+    | '/model-paper/current-affairs-pack-02'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
@@ -690,6 +730,7 @@ export interface FileRouteTypes {
     | '/current-affairs/'
     | '/english/'
     | '/hindi/'
+    | '/model-paper/'
     | '/study-corner/'
     | '/tests/'
     | '/admin/edit-paragraph/$id'
@@ -727,7 +768,7 @@ export interface FileRouteTypes {
     | '/current-affairs-test'
     | '/disclaimer'
     | '/login'
-    | '/model-paper'
+    | '/mock-test'
     | '/model-paper-test'
     | '/privacy-policy'
     | '/progress'
@@ -744,12 +785,15 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/mock-test/current-affairs-pack-02'
+    | '/model-paper/current-affairs-pack-02'
     | '/study-corner/quiz-result'
     | '/study-corner/ssc-cgl-pattern-practice'
     | '/admin'
     | '/current-affairs'
     | '/english'
     | '/hindi'
+    | '/model-paper'
     | '/study-corner'
     | '/tests'
     | '/admin/edit-paragraph/$id'
@@ -791,6 +835,7 @@ export interface FileRouteTypes {
     | '/english'
     | '/hindi'
     | '/login'
+    | '/mock-test'
     | '/model-paper'
     | '/model-paper-test'
     | '/privacy-policy'
@@ -810,6 +855,8 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/mock-test/current-affairs-pack-02'
+    | '/model-paper/current-affairs-pack-02'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
@@ -820,6 +867,7 @@ export interface FileRouteTypes {
     | '/current-affairs/'
     | '/english/'
     | '/hindi/'
+    | '/model-paper/'
     | '/study-corner/'
     | '/tests/'
     | '/admin/edit-paragraph/$id'
@@ -862,7 +910,8 @@ export interface RootRouteChildren {
   EnglishRoute: typeof EnglishRouteWithChildren
   HindiRoute: typeof HindiRouteWithChildren
   LoginRoute: typeof LoginRoute
-  ModelPaperRoute: typeof ModelPaperRoute
+  MockTestRoute: typeof MockTestRouteWithChildren
+  ModelPaperRoute: typeof ModelPaperRouteWithChildren
   ModelPaperTestRoute: typeof ModelPaperTestRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProgressRoute: typeof ProgressRoute
@@ -978,6 +1027,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModelPaperRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mock-test': {
+      id: '/mock-test'
+      path: '/mock-test'
+      fullPath: '/mock-test'
+      preLoaderRoute: typeof MockTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -1069,6 +1125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudyCornerIndexRouteImport
       parentRoute: typeof StudyCornerRoute
     }
+    '/model-paper/': {
+      id: '/model-paper/'
+      path: '/'
+      fullPath: '/model-paper/'
+      preLoaderRoute: typeof ModelPaperIndexRouteImport
+      parentRoute: typeof ModelPaperRoute
+    }
     '/hindi/': {
       id: '/hindi/'
       path: '/'
@@ -1138,6 +1201,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/study-corner/computer-basics'
       preLoaderRoute: typeof StudyCornerComputerBasicsRouteImport
       parentRoute: typeof StudyCornerRoute
+    }
+    '/model-paper/current-affairs-pack-02': {
+      id: '/model-paper/current-affairs-pack-02'
+      path: '/current-affairs-pack-02'
+      fullPath: '/model-paper/current-affairs-pack-02'
+      preLoaderRoute: typeof ModelPaperCurrentAffairsPack02RouteImport
+      parentRoute: typeof ModelPaperRoute
+    }
+    '/mock-test/current-affairs-pack-02': {
+      id: '/mock-test/current-affairs-pack-02'
+      path: '/current-affairs-pack-02'
+      fullPath: '/mock-test/current-affairs-pack-02'
+      preLoaderRoute: typeof MockTestCurrentAffairsPack02RouteImport
+      parentRoute: typeof MockTestRoute
     }
     '/hindi/practice': {
       id: '/hindi/practice'
@@ -1416,6 +1493,32 @@ const HindiRouteChildren: HindiRouteChildren = {
 
 const HindiRouteWithChildren = HindiRoute._addFileChildren(HindiRouteChildren)
 
+interface MockTestRouteChildren {
+  MockTestCurrentAffairsPack02Route: typeof MockTestCurrentAffairsPack02Route
+}
+
+const MockTestRouteChildren: MockTestRouteChildren = {
+  MockTestCurrentAffairsPack02Route: MockTestCurrentAffairsPack02Route,
+}
+
+const MockTestRouteWithChildren = MockTestRoute._addFileChildren(
+  MockTestRouteChildren,
+)
+
+interface ModelPaperRouteChildren {
+  ModelPaperCurrentAffairsPack02Route: typeof ModelPaperCurrentAffairsPack02Route
+  ModelPaperIndexRoute: typeof ModelPaperIndexRoute
+}
+
+const ModelPaperRouteChildren: ModelPaperRouteChildren = {
+  ModelPaperCurrentAffairsPack02Route: ModelPaperCurrentAffairsPack02Route,
+  ModelPaperIndexRoute: ModelPaperIndexRoute,
+}
+
+const ModelPaperRouteWithChildren = ModelPaperRoute._addFileChildren(
+  ModelPaperRouteChildren,
+)
+
 interface StudyCornerComputerBasicsRouteChildren {
   StudyCornerComputerBasicsChapter1Route: typeof StudyCornerComputerBasicsChapter1Route
   StudyCornerComputerBasicsChapter2Route: typeof StudyCornerComputerBasicsChapter2Route
@@ -1577,7 +1680,8 @@ const rootRouteChildren: RootRouteChildren = {
   EnglishRoute: EnglishRouteWithChildren,
   HindiRoute: HindiRouteWithChildren,
   LoginRoute: LoginRoute,
-  ModelPaperRoute: ModelPaperRoute,
+  MockTestRoute: MockTestRouteWithChildren,
+  ModelPaperRoute: ModelPaperRouteWithChildren,
   ModelPaperTestRoute: ModelPaperTestRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProgressRoute: ProgressRoute,
