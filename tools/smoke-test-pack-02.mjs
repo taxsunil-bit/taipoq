@@ -97,7 +97,30 @@ mustInclude(
 mustInclude("src/routes/current-affairs.index.tsx", "CurrentAffairsToughPack02Card", "CA Pack 02 card");
 mustInclude("src/components/current-affairs-pack-02/CurrentAffairsToughPack02Card.tsx", "/model-paper/current-affairs-pack-02", "CA model link");
 mustInclude("src/components/current-affairs-pack-02/CurrentAffairsToughPack02Card.tsx", "/mock-test/current-affairs-pack-02", "CA mock link");
+mustInclude("src/components/current-affairs-pack-02/CurrentAffairsToughPack02Card.tsx", "New Tough Challenge", "featured badge");
+mustInclude("src/components/current-affairs-pack-02/CurrentAffairsToughPack02Card.tsx", "Start Mock Test", "primary CTA");
 mustInclude("src/routes/tests.index.tsx", "CurrentAffairsToughPack02Card", "tests Pack 02 card");
+
+// Pack 02 featured near top (before main content sections)
+const caIndex = read("src/routes/current-affairs.index.tsx");
+const caCardPos = caIndex.indexOf("CurrentAffairsToughPack02Card");
+const caMixedPos = caIndex.indexOf("Mixed Practice");
+const caPapersPos = caIndex.indexOf("ca-papers-heading");
+if (caCardPos === -1 || caCardPos > caMixedPos || caCardPos > caPapersPos) {
+  fail("current-affairs: Pack 02 card must appear near top, before mixed practice and paper list");
+} else {
+  pass("current-affairs: Pack 02 card is top-highlighted");
+}
+
+const testsIndex = read("src/routes/tests.index.tsx");
+const testsCardPos = testsIndex.indexOf("CurrentAffairsToughPack02Card");
+const testsSubjectsPos = testsIndex.indexOf("basic-subjects-heading");
+const testsPapersPos = testsIndex.indexOf("all-papers-heading");
+if (testsCardPos === -1 || testsCardPos > testsSubjectsPos || testsCardPos > testsPapersPos) {
+  fail("tests: Pack 02 card must appear near top, before subject grid and paper list");
+} else {
+  pass("tests: Pack 02 card is top-highlighted");
+}
 
 // 5. Home popup mount
 mustInclude("src/routes/index.tsx", "ToughMockChallengePopup", "home popup mount");

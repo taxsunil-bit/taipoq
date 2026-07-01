@@ -48,6 +48,8 @@ function TestsLandingPage() {
           <p className="text-xs text-muted-foreground">Pack prepared: {PACK_PREPARED_DATE}</p>
         </header>
 
+        <CurrentAffairsToughPack02Card />
+
         <section aria-labelledby="basic-subjects-heading" className="space-y-3">
           <h2 id="basic-subjects-heading" className="text-lg font-bold">
             विषय चुनें — All subjects open
@@ -76,13 +78,6 @@ function TestsLandingPage() {
               </li>
             ))}
           </ul>
-        </section>
-
-        <section aria-labelledby="tough-pack-heading" className="space-y-3">
-          <h2 id="tough-pack-heading" className="text-lg font-bold">
-            Tough Current Affairs Pack
-          </h2>
-          <CurrentAffairsToughPack02Card />
         </section>
 
         <section aria-labelledby="legacy-tests-heading" className="space-y-3">

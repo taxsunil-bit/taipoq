@@ -42,6 +42,8 @@ function CurrentAffairsLanding() {
             </p>
           </header>
 
+          <CurrentAffairsToughPack02Card />
+
           <Link
             to="/current-affairs/paper/$paperId"
             params={{ paperId: MIXED_PAPER_ID }}
@@ -81,7 +83,6 @@ function CurrentAffairsLanding() {
             <h2 id="ca-papers-heading" className="text-lg font-bold text-slate-900">
               प्रश्नपत्र
             </h2>
-            <CurrentAffairsToughPack02Card />
             {papers.length === 0 ? (
               <p className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
                 इस exam के लिए अभी कोई paper नहीं है।
