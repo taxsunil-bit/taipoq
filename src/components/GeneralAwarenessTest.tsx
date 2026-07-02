@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { PageShell } from "@/components/PageShell";
 import { GeneralAwarenessResult } from "@/components/GeneralAwarenessResult";
+import { isGaGsSharedFoundationPaper } from "@/lib/gaGsMockTestRegistry";
+import {
+  analyzeGaGsMockResult,
+  createGaGsSubmissionGuard,
+  mapSharedScoreToGAScoreResult,
+  scoreGaGsMockTest,
+} from "@/lib/gaGsMockTestScoring";
 import {
   calculateGAScore,
   clearGAProgress,
@@ -20,19 +27,27 @@ type GeneralAwarenessTestProps = {
   dataUrl: string;
   progressStorageKey?: string;
   libraryBackHref?: string;
+  subjectSlug?: string;
+  paperSlug?: string;
 };
 
 export function GeneralAwarenessTest({
   dataUrl,
   progressStorageKey = GA_MODEL_TEST_STORAGE_KEY,
   libraryBackHref = "/study-corner/general-awareness",
+  subjectSlug,
+  paperSlug,
 }: GeneralAwarenessTestProps) {
+  const useSharedFoundation = Boolean(
+    subjectSlug && paperSlug && isGaGsSharedFoundationPaper(subjectSlug, paperSlug),
+  );
   const [phase, setPhase] = useState<Phase>("loading");
   const [testData, setTestData] = useState<GATestData | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [progress, setProgress] = useState<GAProgressState | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const submitGuardRef = useRef(createGaGsSubmissionGuard());
 
   useEffect(() => {
     let cancelled = false;
@@ -76,10 +91,16 @@ export function GeneralAwarenessTest({
 
   const submitTest = useCallback(
     (state: GAProgressState) => {
-      const submitted: GAProgressState = { ...state, submitted: true };
-      persist(submitted);
-      setShowConfirm(false);
-      setPhase("result");
+      submitGuardRef.current.trySubmit(() => {
+        const submitted: GAProgressState = {
+          ...state,
+          remainingSeconds: Math.max(0, state.remainingSeconds),
+          submitted: true,
+        };
+        persist(submitted);
+        setShowConfirm(false);
+        setPhase("result");
+      });
     },
     [persist],
   );
@@ -94,6 +115,7 @@ export function GeneralAwarenessTest({
         if (nextSeconds <= 0) {
           if (countAttemptedAnswers(prev.answers) === 0) {
             clearGAProgress(progressStorageKey);
+            submitGuardRef.current.reset();
             window.setTimeout(() => {
               setProgress(null);
               setPhase("instructions");
@@ -101,8 +123,10 @@ export function GeneralAwarenessTest({
             return prev;
           }
           const autoSubmit: GAProgressState = { ...prev, remainingSeconds: 0, submitted: true };
-          saveGAProgress(progressStorageKey, autoSubmit);
-          window.setTimeout(() => setPhase("result"), 0);
+          submitGuardRef.current.trySubmit(() => {
+            saveGAProgress(progressStorageKey, autoSubmit);
+            window.setTimeout(() => setPhase("result"), 0);
+          });
           return autoSubmit;
         }
         const next: GAProgressState = { ...prev, remainingSeconds: nextSeconds };
@@ -118,6 +142,7 @@ export function GeneralAwarenessTest({
 
   const startTest = () => {
     if (!testData) return;
+    submitGuardRef.current.reset();
     const initial: GAProgressState = {
       startedAt: new Date().toISOString(),
       currentQuestionIndex: 0,
@@ -131,15 +156,29 @@ export function GeneralAwarenessTest({
 
   const handleRestart = () => {
     clearGAProgress(progressStorageKey);
+    submitGuardRef.current.reset();
     setProgress(null);
     setShowConfirm(false);
     setPhase("instructions");
   };
 
-  const scoreResult = useMemo(() => {
+  const scored = useMemo(() => {
     if (!testData || !progress) return null;
-    return calculateGAScore(testData, progress.answers);
-  }, [testData, progress]);
+    if (useSharedFoundation && subjectSlug) {
+      const shared = scoreGaGsMockTest(testData, progress.answers, subjectSlug);
+      return {
+        score: mapSharedScoreToGAScoreResult(testData, shared),
+        analysis: analyzeGaGsMockResult(testData, shared, subjectSlug),
+      };
+    }
+    return {
+      score: calculateGAScore(testData, progress.answers),
+      analysis: null,
+    };
+  }, [testData, progress, useSharedFoundation, subjectSlug]);
+
+  const scoreResult = scored?.score ?? null;
+  const analysisResult = scored?.analysis ?? null;
 
   const attemptedCount = progress ? Object.keys(progress.answers).length : 0;
   const totalQuestions = testData?.totalQuestions ?? 0;
@@ -204,6 +243,7 @@ export function GeneralAwarenessTest({
         testData={testData}
         answers={progress.answers}
         score={scoreResult}
+        analysis={analysisResult}
         onRestart={handleRestart}
         libraryBackHref={libraryBackHref}
       />,
@@ -379,7 +419,7 @@ export function GeneralAwarenessTest({
             </div>
           </div>
         )}
-      </div>,
+      </div>
     );
   }
 

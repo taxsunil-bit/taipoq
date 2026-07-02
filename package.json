@@ -23,7 +23,9 @@
     "smoke:welcome": "node tools/smoke-test-welcome-overlay.mjs",
     "smoke:daily-mission": "node tools/smoke-test-daily-mission.mjs",
     "smoke:typing-analysis": "node tools/smoke-test-typing-analysis.mjs",
-    "smoke:mock-foundation": "node tools/smoke-test-mock-test-foundation.mjs"
+    "smoke:mock-foundation": "node tools/smoke-test-mock-test-foundation.mjs",
+    "validate:ga-gs-foundation": "npx tsx tools/validate-ga-gs-foundation.ts",
+    "smoke:ga-gs-foundation": "node tools/smoke-test-ga-gs-foundation.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

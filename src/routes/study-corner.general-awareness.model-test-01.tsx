@@ -22,6 +22,8 @@ function ModelTestPage() {
       dataUrl="/data/general-awareness/model-test-01.json"
       progressStorageKey={GA_MODEL_TEST_STORAGE_KEY}
       libraryBackHref="/study-corner/general-awareness"
+      subjectSlug="general-awareness"
+      paperSlug="model-test-01"
     />
   );
 }

@@ -1,12 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import type { GATestData, GAScoreResult } from "@/types/generalAwarenessTest";
 import { getResultLabel } from "@/types/generalAwarenessTest";
+import type { MockTestAnalysis } from "@/types/mockTest";
 import { cn } from "@/lib/utils";
 
 type GeneralAwarenessResultProps = {
   testData: GATestData;
   answers: Record<string, number>;
   score: GAScoreResult;
+  analysis?: MockTestAnalysis | null;
   onRestart: () => void;
   libraryBackHref?: string;
 };
@@ -19,6 +21,7 @@ export function GeneralAwarenessResult({
   testData,
   answers,
   score,
+  analysis,
   onRestart,
   libraryBackHref = "/study-corner/general-awareness",
 }: GeneralAwarenessResultProps) {
@@ -42,6 +45,16 @@ export function GeneralAwarenessResult({
           <p className="text-2xl font-bold text-blue-700">{score.percentage}%</p>
           <p className="mt-1 text-base font-semibold text-blue-800">{label}</p>
         </div>
+        {analysis?.recommendation ? (
+          <p className="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-left text-sm leading-relaxed text-slate-800 sm:text-base">
+            {analysis.recommendation}
+          </p>
+        ) : null}
+        {analysis?.weakAreas?.length ? (
+          <p className="mt-3 text-sm text-slate-600">
+            Weak topics: {analysis.weakAreas.join(", ")}
+          </p>
+        ) : null}
       </div>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
