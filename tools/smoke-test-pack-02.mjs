@@ -191,7 +191,8 @@ if (pack02) {
 mustInclude("src/lib/tests/testGenerator.ts", "checkedTestPaperPack01", "Pack 01 still wired in generator");
 
 // 9. Mock test view expectations
-mustInclude("src/components/current-affairs-pack-02/CurrentAffairsPack02MockTestView.tsx", "durationMinutes * 60", "30-min timer");
+mustInclude("src/components/current-affairs-pack-02/CurrentAffairsPack02MockTestView.tsx", "scoringContract.durationSeconds", "30-min timer");
+mustInclude("src/components/current-affairs-pack-02/CurrentAffairsPack02MockTestView.tsx", "scorePack02MockTest", "shared scoring");
 mustInclude("src/components/current-affairs-pack-02/CurrentAffairsPack02MockTestView.tsx", "handleRetake", "retake support");
 mustInclude("src/components/current-affairs-pack-02/CurrentAffairsPack02ModelPaperView.tsx", "revealAnswer", "study mode answers");
 

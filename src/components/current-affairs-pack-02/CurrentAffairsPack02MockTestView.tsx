@@ -1,7 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CurrentAffairsToughPack02 } from "@/content/tests/currentAffairsToughPack02";
 import { TOUGH_PACK_02_TOPIC_LABELS } from "@/content/tests/currentAffairsToughPack02";
+import {
+  analyzePack02MockResult,
+  createPack02SubmissionGuard,
+  formatPack02NegativeMarkingLabel,
+  getPack02ScoringContract,
+  nextRemainingSeconds,
+  scorePack02MockTest,
+  shouldAutoSubmitAtSeconds,
+} from "@/lib/currentAffairsPack02Scoring";
 import { cn } from "@/lib/utils";
 import { Pack02PaperHeader } from "./Pack02PaperHeader";
 import { Pack02QuestionBlock } from "./Pack02QuestionBlock";
@@ -21,53 +30,55 @@ const BTN =
 
 export function CurrentAffairsPack02MockTestView({ pack }: Props) {
   const total = pack.questions.length;
+  const scoringContract = useMemo(() => getPack02ScoringContract(pack), [pack]);
+  const submitGuardRef = useRef(createPack02SubmissionGuard());
   const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [finished, setFinished] = useState(false);
-  const [secondsLeft, setSecondsLeft] = useState(pack.durationMinutes * 60);
+  const [secondsLeft, setSecondsLeft] = useState(scoringContract.durationSeconds);
 
   const question = pack.questions[index];
   const selectedIndex = answers[question.id] ?? null;
 
   const submitTest = useCallback(() => {
-    setFinished(true);
-    setStarted(false);
+    submitGuardRef.current.trySubmit(() => {
+      setFinished(true);
+      setStarted(false);
+    });
   }, []);
 
   useEffect(() => {
     if (!started || finished) return;
     const id = window.setInterval(() => {
       setSecondsLeft((prev) => {
-        if (prev <= 1) {
+        if (shouldAutoSubmitAtSeconds(prev)) {
           submitTest();
           return 0;
         }
-        return prev - 1;
+        return nextRemainingSeconds(prev);
       });
     }, 1000);
     return () => window.clearInterval(id);
   }, [started, finished, submitTest]);
 
-  const score = useMemo(() => {
-    let correct = 0;
-    for (const q of pack.questions) {
-      if (answers[q.id] === q.answerIndex) correct += 1;
-    }
-    return {
-      correct,
-      wrong: total - correct,
-      total,
-      marks: correct * pack.marksPerQuestion,
-    };
-  }, [answers, pack.questions, pack.marksPerQuestion, total]);
+  const scoreResult = useMemo(() => {
+    if (!finished) return null;
+    return scorePack02MockTest(pack, answers);
+  }, [finished, pack, answers]);
+
+  const analysis = useMemo(() => {
+    if (!scoreResult) return null;
+    return analyzePack02MockResult(pack, scoreResult);
+  }, [scoreResult, pack]);
 
   const handleRetake = () => {
+    submitGuardRef.current.reset();
     setAnswers({});
     setIndex(0);
     setFinished(false);
     setStarted(false);
-    setSecondsLeft(pack.durationMinutes * 60);
+    setSecondsLeft(scoringContract.durationSeconds);
   };
 
   if (!started && !finished) {
@@ -78,9 +89,10 @@ export function CurrentAffairsPack02MockTestView({ pack }: Props) {
           <h2 className="text-lg font-bold text-blue-950">Mock Test निर्देश</h2>
           <ul className="mt-3 list-inside list-disc space-y-1 text-sm leading-relaxed text-blue-900">
             <li>कुल {pack.totalQuestions} प्रश्न — {pack.durationMinutes} मिनट</li>
+            <li>हर सही उत्तर पर +{scoringContract.marksPerCorrect} अंक</li>
             <li>Submit से पहले उत्तर नहीं दिखेंगे</li>
             <li>Submit के बाद score, सही उत्तर और व्याख्या दिखेगी</li>
-            <li>Negative marking: {pack.negativeMarks}</li>
+            <li>Negative marking: {formatPack02NegativeMarkingLabel(pack.negativeMarks)}</li>
           </ul>
           <button
             type="button"
@@ -94,25 +106,34 @@ export function CurrentAffairsPack02MockTestView({ pack }: Props) {
     );
   }
 
-  if (finished) {
-    const percent = total > 0 ? Math.round((score.correct / total) * 100) : 0;
+  if (finished && scoreResult) {
     return (
       <div className="space-y-5 font-hindi">
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="text-xl font-bold text-slate-900">Mock Test Result</h2>
           <p className="mt-2 text-3xl font-bold text-blue-700">
-            {score.correct} / {score.total}{" "}
-            <span className="text-lg font-semibold text-slate-600">({percent}%)</span>
+            {scoreResult.correct} / {scoreResult.totalQuestions}{" "}
+            <span className="text-lg font-semibold text-slate-600">({scoreResult.percentage}%)</span>
           </p>
-          <p className="mt-1 text-sm text-slate-600">कुल अंक: {score.marks}</p>
+          <p className="mt-1 text-sm text-slate-600">
+            कुल अंक: {scoreResult.score} / {scoreResult.maximumMarks}
+          </p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
             <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-800">
-              सही: {score.correct}
+              सही: {scoreResult.correct}
             </span>
             <span className="rounded-full bg-red-50 px-3 py-1 font-medium text-red-800">
-              गलत: {score.wrong}
+              गलत: {scoreResult.incorrect}
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
+              अनुत्तरित: {scoreResult.unanswered}
             </span>
           </div>
+          {analysis?.recommendation ? (
+            <p className="mt-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-relaxed text-blue-900">
+              {analysis.recommendation}
+            </p>
+          ) : null}
         </section>
 
         <section className="space-y-4" aria-labelledby="pack02-review-heading">
