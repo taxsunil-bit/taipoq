@@ -15,6 +15,8 @@ function ModelTestPage() {
       dataUrl="/data/general-science/model-test-01.json"
       progressStorageKey={GS_MODEL_TEST_STORAGE_KEY}
       libraryBackHref="/study-corner/general-science"
+      subjectSlug="general-science"
+      paperSlug="model-test-01"
     />
   );
 }

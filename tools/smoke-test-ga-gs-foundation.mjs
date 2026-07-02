@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Smoke test for GA/GS shared-foundation pilot (Phase 6).
+ * Smoke test for GA/GS shared-foundation (Phase 6 + Phase 7).
  * Run: npm run smoke:ga-gs-foundation
  */
 
@@ -60,25 +60,41 @@ mustExist("public/data/general-science/model-test-01.json");
 mustInclude("src/lib/gaGsMockTestAdapter.ts", "adaptGaGsJsonPaper", "adapter");
 mustInclude("src/lib/gaGsMockTestScoring.ts", "scoreGaGsMockTest", "shared scoring");
 mustInclude("src/lib/gaGsMockTestRegistry.ts", "isGaGsSharedFoundationPaper", "registry helper");
-mustInclude("src/components/GeneralAwarenessTest.tsx", "isGaGsSharedFoundationPaper", "pilot branch");
+mustInclude("src/lib/gaGsMockTestRegistry.ts", "general-awareness/model-test-01", "GA registry entry");
+mustInclude("src/lib/gaGsMockTestRegistry.ts", "general-science/model-test-01", "GS registry entry");
+
+const registrySrc = readFileSync(path.join(ROOT, "src/lib/gaGsMockTestRegistry.ts"), "utf8");
+const registryEntries = (registrySrc.match(/general-(awareness|science)\/model-test-01/g) ?? []).length;
+if (registryEntries !== 2) fail(`Registry must contain exactly 2 papers, found ${registryEntries}`);
+else pass("Registry count is exactly 2");
+
+mustInclude("src/components/GeneralAwarenessTest.tsx", "isGaGsSharedFoundationPaper", "shared foundation branch");
 mustInclude("src/components/GeneralAwarenessTest.tsx", "scoreGaGsMockTest", "shared scorer in component");
 mustInclude("src/components/GeneralAwarenessTest.tsx", "createGaGsSubmissionGuard", "submission guard");
 mustInclude("src/components/GeneralAwarenessTest.tsx", "calculateGAScore", "legacy fallback scorer");
+mustInclude("src/components/GeneralAwarenessResult.tsx", "analysis?.recommendation", "result analysis marker");
+
 mustInclude(
   "src/routes/study-corner.general-awareness.model-test-01.tsx",
   'subjectSlug="general-awareness"',
-  "pilot route props",
+  "GA route props",
 );
 mustInclude(
   "src/routes/study-corner.general-science.model-test-01.tsx",
-  "GeneralAwarenessTest",
-  "GS legacy route",
+  'subjectSlug="general-science"',
+  "GS route props",
 );
-mustNotInclude(
+mustInclude(
   "src/routes/study-corner.general-science.model-test-01.tsx",
-  "subjectSlug",
-  "GS route not pilot",
+  'paperSlug="model-test-01"',
+  "GS paper slug",
 );
+mustInclude(
+  "src/routes/study-corner.general-science.model-test-01.tsx",
+  "/data/general-science/model-test-01.json",
+  "GS JSON path unchanged",
+);
+
 mustInclude(
   "src/types/generalAwarenessTest.ts",
   "getTestProgressStorageKey",
@@ -97,6 +113,7 @@ mustInclude(
 
 mustNotInclude("src/components/GeneralAwarenessTest.tsx", "dailyMission", "no Daily Mission hook");
 mustNotInclude("src/lib/mockTestFoundationRegistry.ts", "ga-model-test-01", "GA not in hub registry");
+mustNotInclude("src/lib/mockTestFoundationRegistry.ts", "general-science-model-test-01", "GS not in hub registry");
 mustNotInclude("src/lib/gaGsMockTestRegistry.ts", "current-affairs-tough-pack-02", "Pack 02 not in GA/GS registry");
 mustNotInclude("src/lib/currentAffairsPack02Adapter.ts", "gaGsMockTest", "Pack 02 adapter untouched");
 

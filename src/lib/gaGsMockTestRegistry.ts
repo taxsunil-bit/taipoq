@@ -2,6 +2,7 @@ export type GaGsFoundationPaperKey = `${string}/${string}`;
 
 export const GA_GS_SHARED_FOUNDATION_PAPERS = new Set<GaGsFoundationPaperKey>([
   "general-awareness/model-test-01",
+  "general-science/model-test-01",
 ]);
 
 export function toGaGsFoundationPaperKey(subjectSlug: string, paperSlug: string): GaGsFoundationPaperKey {

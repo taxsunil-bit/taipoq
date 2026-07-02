@@ -28,13 +28,17 @@ import {
 import { isSharedMockFoundationPaper } from "../src/lib/mockTestFoundationRegistry.ts";
 import { hasValidationErrors } from "../src/lib/mockTestValidation.ts";
 import type { GATestData, GATestQuestion } from "../src/types/generalAwarenessTest.ts";
-import { getTestProgressStorageKey } from "../src/types/generalAwarenessTest.ts";
+import {
+  getTestProgressStorageKey,
+  sanitizeGAProgressState,
+} from "../src/types/generalAwarenessTest.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
 const errors: string[] = [];
-const parityLines: string[] = [];
+const gaParityLines: string[] = [];
+const gsParityLines: string[] = [];
 
 function assert(condition: boolean, message: string) {
   if (!condition) errors.push(message);
@@ -79,8 +83,8 @@ const inventory: InventoryRow[] = [
     durationMinutes: 0,
     negativeMarking: false,
     storageKey: getTestProgressStorageKey("general-science", "model-test-01"),
-    engine: "legacy",
-    pilotEligible: "YES — fallback candidate",
+    engine: "shared-foundation",
+    pilotEligible: "YES — migrated Phase 7",
   },
 ];
 
@@ -155,30 +159,36 @@ function buildAnswers(
   return answers;
 }
 
-function comparePilotParity(data: GATestData, subjectSlug: string, mode: Parameters<typeof buildAnswers>[1]) {
+function comparePilotParity(
+  data: GATestData,
+  subjectSlug: string,
+  mode: Parameters<typeof buildAnswers>[1],
+  labelPrefix: "GA" | "GS",
+) {
   const answers = buildAnswers(data, mode);
   const legacy = scoreGaGsLegacyInline(data, answers);
   const shared = scoreGaGsMockTest(data, answers, subjectSlug);
   const mapped = mapSharedScoreToGAScoreResult(data, shared);
   const rawScore = shared.positiveMarks - shared.negativeMarks;
+  const outputLines = labelPrefix === "GA" ? gaParityLines : gsParityLines;
 
-  assertEq(mapped.correct, legacy.correct, `${mode} correct`);
-  assertEq(mapped.wrong, legacy.wrong, `${mode} wrong`);
-  assertEq(mapped.notAttempted, legacy.notAttempted, `${mode} notAttempted`);
-  assertEq(mapped.score, legacy.score, `${mode} score`);
-  assertEq(mapped.percentage, legacy.percentage, `${mode} percentage`);
-  assertEq(shared.attempted, legacy.correct + legacy.wrong, `${mode} attempted`);
-  assertEq(shared.incorrect, legacy.wrong, `${mode} incorrect`);
-  assertEq(shared.unanswered, legacy.notAttempted, `${mode} unanswered`);
-  assertEq(shared.negativeMarks, 0, `${mode} deductions`);
-  assertEq(shared.score, rawScore >= 0 ? rawScore : 0, `${mode} score before floor`);
+  assertEq(mapped.correct, legacy.correct, `${labelPrefix} ${mode} correct`);
+  assertEq(mapped.wrong, legacy.wrong, `${labelPrefix} ${mode} wrong`);
+  assertEq(mapped.notAttempted, legacy.notAttempted, `${labelPrefix} ${mode} notAttempted`);
+  assertEq(mapped.score, legacy.score, `${labelPrefix} ${mode} score`);
+  assertEq(mapped.percentage, legacy.percentage, `${labelPrefix} ${mode} percentage`);
+  assertEq(shared.attempted, legacy.correct + legacy.wrong, `${labelPrefix} ${mode} attempted`);
+  assertEq(shared.incorrect, legacy.wrong, `${labelPrefix} ${mode} incorrect`);
+  assertEq(shared.unanswered, legacy.notAttempted, `${labelPrefix} ${mode} unanswered`);
+  assertEq(shared.negativeMarks, 0, `${labelPrefix} ${mode} deductions`);
+  assertEq(shared.score, rawScore >= 0 ? rawScore : 0, `${labelPrefix} ${mode} score before floor`);
 
   for (const [topic, stats] of Object.entries(legacy.byTopic)) {
-    assertEq(mapped.byTopic[topic]?.correct ?? 0, stats.correct, `${mode} topic ${topic} correct`);
-    assertEq(mapped.byTopic[topic]?.total ?? 0, stats.total, `${mode} topic ${topic} total`);
+    assertEq(mapped.byTopic[topic]?.correct ?? 0, stats.correct, `${labelPrefix} ${mode} topic ${topic} correct`);
+    assertEq(mapped.byTopic[topic]?.total ?? 0, stats.total, `${labelPrefix} ${mode} topic ${topic} total`);
   }
 
-  parityLines.push(
+  outputLines.push(
     `${mode}: attempted=${shared.attempted} correct=${shared.correct} incorrect=${shared.incorrect} unanswered=${shared.unanswered} score=${shared.score}/${shared.maximumMarks} (${mapped.percentage}%)`,
   );
 }
@@ -208,25 +218,54 @@ const jsonErrors = [...gaIssues, ...gsIssues].filter((issue) => issue.severity =
 const adapterErrors = jsonErrors;
 
 assertEq(jsonErrors, 0, "JSON validation errors");
-assert(isGaGsSharedFoundationPaper("general-awareness", "model-test-01"), "pilot registry includes GA model-test-01");
-assert(!isGaGsSharedFoundationPaper("general-science", "model-test-01"), "GS remains legacy fallback");
-assertEq(GA_GS_SHARED_FOUNDATION_PAPERS.size, 1, "pilot count");
+assert(isGaGsSharedFoundationPaper("general-awareness", "model-test-01"), "registry includes GA model-test-01");
+assert(isGaGsSharedFoundationPaper("general-science", "model-test-01"), "registry includes GS model-test-01");
+assertEq(GA_GS_SHARED_FOUNDATION_PAPERS.size, 2, "shared foundation paper count");
 assert(!isSharedMockFoundationPaper("general-awareness", "model-test-01"), "GA not in hub registry");
+assert(!isSharedMockFoundationPaper("general-science", "model-test-01"), "GS not in hub registry");
 
-const pilotContract = getGaGsScoringContract(gaData);
-assertEq(pilotContract.marksPerCorrect, 2, "pilot marksPerCorrect");
-assertEq(pilotContract.maximumMarks, 100, "pilot maximumMarks");
-assertEq(pilotContract.durationSeconds, 2400, "pilot durationSeconds");
-assert(!pilotContract.negativeMarkingApplied, "pilot negative marking not applied");
+assertEq(gaData.id, "ga-model-test-01", "GA paper ID");
+assertEq(gsData.id, "general-science-model-test-01", "GS paper ID");
+assertEq(gsData.totalQuestions, 25, "GS question count");
+assertEq(gsData.totalMarks, 25, "GS total marks");
+assertEq(gsData.marksPerQuestion, 1, "GS marks per question");
+assertEq(gsData.durationMinutes, 20, "GS duration");
+assertEq(gsData.negativeMarking, false, "GS negative marking flag");
 
-const adaptedPilot = adaptGaGsJsonPaper(gaData, "general-awareness");
-assertEq(adaptedPilot.questions.length, 50, "adapted pilot question count");
-assert(!hasValidationErrors(validateGaGsJsonPaper(gaData, "general-awareness")), "canonical pilot validation");
+const gsTopics = new Set(gsData.questions.map((question) => question.topic));
+assertEq(gsTopics.size, 5, "GS topic count");
+
+const gaContract = getGaGsScoringContract(gaData);
+assertEq(gaContract.marksPerCorrect, 2, "GA marksPerCorrect");
+assertEq(gaContract.maximumMarks, 100, "GA maximumMarks");
+assertEq(gaContract.durationSeconds, 2400, "GA durationSeconds");
+assert(!gaContract.negativeMarkingApplied, "GA negative marking not applied");
+
+const adaptedGa = adaptGaGsJsonPaper(gaData, "general-awareness");
+assertEq(adaptedGa.questions.length, 50, "adapted GA question count");
+assert(!hasValidationErrors(validateGaGsJsonPaper(gaData, "general-awareness")), "canonical GA validation");
 
 const gsContract = getGaGsScoringContract(gsData);
+assertEq(gsContract.marksPerCorrect, 1, "GS marksPerCorrect");
+assertEq(gsContract.maximumMarks, 25, "GS maximumMarks");
+assertEq(gsContract.durationSeconds, 1200, "GS durationSeconds");
 assert(!gsContract.negativeMarkingApplied, "GS negative marking not applied");
 
-const pilotFixtures = [
+const adaptedGs = adaptGaGsJsonPaper(gsData, "general-science");
+assertEq(adaptedGs.questions.length, 25, "adapted GS question count");
+assert(!hasValidationErrors(validateGaGsJsonPaper(gsData, "general-science")), "canonical GS validation");
+
+const legacyGsProgress = sanitizeGAProgressState({
+  startedAt: "2026-01-01T00:00:00.000Z",
+  currentQuestionIndex: 2,
+  answers: { "gs-q-01": 1 },
+  remainingSeconds: 900,
+  submitted: false,
+});
+assert(legacyGsProgress !== null, "legacy GS progress record remains readable");
+assertEq(legacyGsProgress?.answers["gs-q-01"], 1, "legacy GS answer preserved");
+
+const parityFixtures = [
   "all-unanswered",
   "all-correct",
   "all-incorrect",
@@ -239,8 +278,11 @@ const pilotFixtures = [
   "timeout-one-correct",
 ] as const;
 
-for (const fixture of pilotFixtures) {
-  comparePilotParity(gaData, "general-awareness", fixture);
+for (const fixture of parityFixtures) {
+  comparePilotParity(gaData, "general-awareness", fixture, "GA");
+}
+for (const fixture of parityFixtures) {
+  comparePilotParity(gsData, "general-science", fixture, "GS");
 }
 
 assertEq(clampGaGsRemainingSeconds(-3), 0, "clamp negative seconds");
@@ -258,34 +300,39 @@ submitCount = 0;
 assert(guard.trySubmit(() => { submitCount += 1; }), "submit after reset");
 assertEq(submitCount, 1, "reset restores submit");
 
-const timeoutAnswers = buildAnswers(gaData, "timeout-one-correct");
+const timeoutAnswers = buildAnswers(gsData, "timeout-one-correct");
 const timeoutGuard = createGaGsSubmissionGuard();
 let timeoutFinished = false;
 timeoutGuard.trySubmit(() => { timeoutFinished = true; });
 timeoutGuard.trySubmit(() => { timeoutFinished = false; });
-assert(timeoutFinished, "timeout submit once");
-const timeoutScore = scoreGaGsMockTest(gaData, timeoutAnswers, "general-awareness");
-assertEq(timeoutScore.correct, 1, "timeout preserves answer");
+assert(timeoutFinished, "GS timeout submit once");
+const timeoutScore = scoreGaGsMockTest(gsData, timeoutAnswers, "general-science");
+assertEq(timeoutScore.correct, 1, "GS timeout preserves answer");
 
 const gaPaperCount = 1;
 const gsPaperCount = 1;
-const pilotCount = GA_GS_SHARED_FOUNDATION_PAPERS.size;
-const legacyCount = gaPaperCount + gsPaperCount - pilotCount;
-const parityFailures = errors.filter((entry) => entry.includes(" parity") || entry.includes(" correct") || entry.includes(" score")).length;
+const sharedCount = GA_GS_SHARED_FOUNDATION_PAPERS.size;
+const legacyCount = gaPaperCount + gsPaperCount - sharedCount;
+const parityFailures = errors.filter((entry) => entry.startsWith("GA ") || entry.startsWith("GS ")).length;
 
 console.log("");
 console.log(`GA/GS JSON papers discovered: ${gaPaperCount + gsPaperCount}`);
 console.log(`GA papers: ${gaPaperCount}`);
 console.log(`GS papers: ${gsPaperCount}`);
-console.log(`Pilot papers: ${pilotCount}`);
+console.log(`Shared foundation papers: ${sharedCount}`);
 console.log(`Legacy fallback papers: ${legacyCount}`);
+console.log(`GA parity fixtures: ${parityFixtures.length}`);
+console.log(`GS parity fixtures: ${parityFixtures.length}`);
+console.log(`Total parity fixtures: ${parityFixtures.length * 2}`);
+console.log(`Parity failures: ${parityFailures}`);
 console.log(`JSON validation errors: ${jsonErrors}`);
 console.log(`Adapter validation errors: ${adapterErrors}`);
-console.log(`Pilot parity fixtures: ${pilotFixtures.length}`);
-console.log(`Parity failures: ${parityFailures}`);
 console.log("");
-console.log("Pilot parity results:");
-for (const line of parityLines) console.log(` - ${line}`);
+console.log("GA parity results:");
+for (const line of gaParityLines) console.log(` - ${line}`);
+console.log("");
+console.log("GS parity results:");
+for (const line of gsParityLines) console.log(` - ${line}`);
 
 if (errors.length) {
   console.log(`\nFAIL (${errors.length} errors)`);
