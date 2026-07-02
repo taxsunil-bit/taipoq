@@ -28,6 +28,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as HindiRouteImport } from './routes/hindi'
 import { Route as EnglishRouteImport } from './routes/english'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as DailyMissionRouteImport } from './routes/daily-mission'
 import { Route as CurrentAffairsTestRouteImport } from './routes/current-affairs-test'
 import { Route as CurrentAffairsRouteImport } from './routes/current-affairs'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -175,6 +176,11 @@ const EnglishRoute = EnglishRouteImport.update({
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DailyMissionRoute = DailyMissionRouteImport.update({
+  id: '/daily-mission',
+  path: '/daily-mission',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CurrentAffairsTestRoute = CurrentAffairsTestRouteImport.update({
@@ -480,6 +486,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/current-affairs': typeof CurrentAffairsRouteWithChildren
   '/current-affairs-test': typeof CurrentAffairsTestRoute
+  '/daily-mission': typeof DailyMissionRoute
   '/disclaimer': typeof DisclaimerRoute
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
@@ -552,6 +559,7 @@ export interface FileRoutesByTo {
   '/certificate': typeof CertificateRoute
   '/contact': typeof ContactRoute
   '/current-affairs-test': typeof CurrentAffairsTestRoute
+  '/daily-mission': typeof DailyMissionRoute
   '/disclaimer': typeof DisclaimerRoute
   '/login': typeof LoginRoute
   '/mock-test': typeof MockTestRouteWithChildren
@@ -618,6 +626,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/current-affairs': typeof CurrentAffairsRouteWithChildren
   '/current-affairs-test': typeof CurrentAffairsTestRoute
+  '/daily-mission': typeof DailyMissionRoute
   '/disclaimer': typeof DisclaimerRoute
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
@@ -694,6 +703,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/current-affairs'
     | '/current-affairs-test'
+    | '/daily-mission'
     | '/disclaimer'
     | '/english'
     | '/hindi'
@@ -766,6 +776,7 @@ export interface FileRouteTypes {
     | '/certificate'
     | '/contact'
     | '/current-affairs-test'
+    | '/daily-mission'
     | '/disclaimer'
     | '/login'
     | '/mock-test'
@@ -831,6 +842,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/current-affairs'
     | '/current-affairs-test'
+    | '/daily-mission'
     | '/disclaimer'
     | '/english'
     | '/hindi'
@@ -906,6 +918,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CurrentAffairsRoute: typeof CurrentAffairsRouteWithChildren
   CurrentAffairsTestRoute: typeof CurrentAffairsTestRoute
+  DailyMissionRoute: typeof DailyMissionRoute
   DisclaimerRoute: typeof DisclaimerRoute
   EnglishRoute: typeof EnglishRouteWithChildren
   HindiRoute: typeof HindiRouteWithChildren
@@ -1060,6 +1073,13 @@ declare module '@tanstack/react-router' {
       path: '/disclaimer'
       fullPath: '/disclaimer'
       preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/daily-mission': {
+      id: '/daily-mission'
+      path: '/daily-mission'
+      fullPath: '/daily-mission'
+      preLoaderRoute: typeof DailyMissionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/current-affairs-test': {
@@ -1676,6 +1696,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CurrentAffairsRoute: CurrentAffairsRouteWithChildren,
   CurrentAffairsTestRoute: CurrentAffairsTestRoute,
+  DailyMissionRoute: DailyMissionRoute,
   DisclaimerRoute: DisclaimerRoute,
   EnglishRoute: EnglishRouteWithChildren,
   HindiRoute: HindiRouteWithChildren,

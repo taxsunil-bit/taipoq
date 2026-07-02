@@ -10,6 +10,11 @@ import { getSubjectTitle } from "@/content/tests/subjects";
 import { canAccessPaper } from "@/lib/tests/testAccess";
 import { createShuffledSession, getAllPapers, getPaperBySlugs, getPaperRouteParams } from "@/lib/tests/testGenerator";
 import { scoreTestAttempt } from "@/lib/tests/testScoring";
+import {
+  isDailyMissionCurrentAffairsPaper,
+  isDailyMissionMiniMockPaper,
+  markDailyMissionTaskComplete,
+} from "@/lib/dailyMission";
 import { getTestAttempt, saveTestAttempt } from "@/lib/tests/testStorage";
 import type { TestAttemptAnswers } from "@/lib/tests/testTypes";
 
@@ -100,6 +105,11 @@ function PaperTestPage() {
       attemptedAt: new Date().toISOString(),
       answers,
     });
+    if (isDailyMissionCurrentAffairsPaper(subject, paper.paperId)) {
+      markDailyMissionTaskComplete("currentAffairs", { source: "tests-hub-current-affairs" });
+    } else if (isDailyMissionMiniMockPaper(subject, paper.paperId)) {
+      markDailyMissionTaskComplete("miniMock", { source: "tests-hub-model-paper-01" });
+    }
     setPhase("result");
   }
 

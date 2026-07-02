@@ -13,6 +13,7 @@ import {
   isMeaningfulVacancyDetailText,
   normalizeVacancyDisplayText,
 } from "@/lib/vacancies";
+import { markDailyMissionTaskComplete } from "@/lib/dailyMission";
 import { formatDateDDMMYYYY, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
 import type { VacancyItem } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
@@ -82,6 +83,10 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
       {label}
     </Link>
   );
+}
+
+function handleVerifiedJobReview(source: string) {
+  markDailyMissionTaskComplete("jobUpdate", { source });
 }
 
 export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
@@ -178,6 +183,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                 href={item.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => handleVerifiedJobReview("vacancy-official-source")}
                 className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
               >
                 Official Source
@@ -200,6 +206,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                 href={item.officialNoticeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => handleVerifiedJobReview("vacancy-official-notice")}
                 className={cn(buttonVariants({ variant: "ghost", size: "sm" }), compactBtn)}
               >
                 Official Notice
@@ -241,6 +248,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                     href={item.officialNoticeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => handleVerifiedJobReview("vacancy-official-notice")}
                     className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
                   >
                     Official Notice
@@ -252,6 +260,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                     href={item.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => handleVerifiedJobReview("vacancy-official-source")}
                     className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
                   >
                     Official Source

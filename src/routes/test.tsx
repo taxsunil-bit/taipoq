@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { SoundSettings } from "@/components/SoundSettings";
 import { TypingScreen, type FinalResult } from "@/components/TypingScreen";
 import { englishLessons, hindiLessons } from "@/lib/sample-data";
+import { markDailyMissionTaskComplete } from "@/lib/dailyMission";
 import { getActiveParagraphs, saveResult } from "@/lib/storage";
 
 export const Route = createFileRoute("/test")({
@@ -88,6 +89,7 @@ function TestPage() {
       targetWpm,
       targetLabel,
     });
+    markDailyMissionTaskComplete("typing", { source: "typing-test" });
     navigate({ to: "/result" });
   }
 

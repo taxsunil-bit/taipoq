@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
+import { DailyMissionSection } from "@/components/DailyMissionSection";
 import { ToughMockChallengePopup } from "@/components/ToughMockChallengePopup";
 import { EXCEL_BASICS_HREF } from "@/content/excelBasicKnowledgeContent";
 import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
@@ -40,6 +41,7 @@ function Home() {
           <div className="hidden md:block">
             <HomeDesktopPracticeSection />
           </div>
+          <DailyMissionSection />
           <HomeMobileBody />
           <HomeDesktop />
         </div>
