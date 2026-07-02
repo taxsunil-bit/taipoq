@@ -61,6 +61,9 @@ function Practice() {
       mistakeHighlight: true,
       passed: r.netWpm >= 25 && r.accuracy >= 90,
       mistakeList: r.mistakeList,
+      targetText: r.target,
+      typedText: r.typed,
+      analysisLang: "kruti",
     });
     navigate({ to: "/result" });
   }

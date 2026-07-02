@@ -86,6 +86,14 @@ function TestPage() {
       mistakeHighlight: highlight === "On",
       passed,
       mistakeList: r.mistakeList,
+      targetText: r.target,
+      typedText: r.typed,
+      analysisLang:
+        lang === "English"
+          ? "en"
+          : hindiMode === "Remington"
+            ? "kruti"
+            : "hi",
       targetWpm,
       targetLabel,
     });

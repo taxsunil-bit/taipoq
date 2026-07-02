@@ -1,6 +1,7 @@
 // localStorage utilities for TAIPOQ prototype (SSR-safe).
 
 import type { MistakeRow } from "./typing-utils";
+import type { AnalysisLang } from "./typingAnalysis";
 
 export type Language = "English" | "Hindi";
 export type HindiMode = "Unicode" | "Remington" | "Phonetic";
@@ -26,6 +27,10 @@ export type SavedResult = {
   mistakeHighlight: boolean;
   passed: boolean;
   mistakeList: MistakeRow[];
+  // Optional — stored for improvement analysis on /result (older records omit these).
+  targetText?: string;
+  typedText?: string;
+  analysisLang?: AnalysisLang;
   // Optional — Phase 1 job-target feature. Older results have this undefined.
   targetWpm?: number;
   targetLabel?: string;

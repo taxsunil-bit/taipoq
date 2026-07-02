@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { TypingImprovementAnalysis } from "@/components/TypingImprovementAnalysis";
 import { playCompletionSound } from "@/lib/audio-feedback";
 import { getSoundSettings } from "@/lib/sound-settings";
 import { getLatestResult, type SavedResult } from "@/lib/storage";
@@ -104,6 +105,8 @@ function ResultPage() {
           </Card>
         );
       })()}
+
+      <TypingImprovementAnalysis result={result} />
 
       <Card className="mt-6">
         <CardHeader><CardTitle>Mistake Details ({result.mistakeList.length})</CardTitle></CardHeader>

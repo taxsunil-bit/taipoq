@@ -19,7 +19,8 @@
     "validate:pack-02": "node tools/validate-test-paper-pack-02.mjs",
     "smoke:pack-02": "node tools/smoke-test-pack-02.mjs",
     "smoke:welcome": "node tools/smoke-test-welcome-overlay.mjs",
-    "smoke:daily-mission": "node tools/smoke-test-daily-mission.mjs"
+    "smoke:daily-mission": "node tools/smoke-test-daily-mission.mjs",
+    "smoke:typing-analysis": "node tools/smoke-test-typing-analysis.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
