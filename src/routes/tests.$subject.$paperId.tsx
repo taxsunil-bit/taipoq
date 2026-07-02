@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { AnswerReview } from "@/components/tests/AnswerReview";
+import { MockTestResultSummary } from "@/components/mock-test/MockTestResultSummary";
 import { QuestionPanel } from "@/components/tests/QuestionPanel";
 import { TestLevelBadge } from "@/components/tests/TestLevelBadge";
 import { TestResultSummary } from "@/components/tests/TestResultSummary";
@@ -9,6 +10,13 @@ import { PageShell } from "@/components/PageShell";
 import { getSubjectTitle } from "@/content/tests/subjects";
 import { canAccessPaper } from "@/lib/tests/testAccess";
 import { createShuffledSession, getAllPapers, getPaperBySlugs, getPaperRouteParams } from "@/lib/tests/testGenerator";
+import { analyzeMockTestResult } from "@/lib/mockTestAnalysis";
+import {
+  adaptShuffledSession,
+  scoreHubSessionViaMockEngine,
+  toLegacyScoreSummary,
+} from "@/lib/mockTestAdapters";
+import { isMockTestPilotPaper } from "@/types/mockTest";
 import { scoreTestAttempt } from "@/lib/tests/testScoring";
 import {
   isDailyMissionCurrentAffairsPaper,
@@ -81,10 +89,25 @@ function PaperTestPage() {
   const [answers, setAnswers] = useState<TestAttemptAnswers>({});
   const lastAttempt = getTestAttempt(subject, paperId);
 
+  const isPilot = isMockTestPilotPaper(subject, paperId);
+
   const result = useMemo(() => {
     if (phase !== "result") return null;
+    if (isPilot) {
+      return toLegacyScoreSummary(scoreHubSessionViaMockEngine(questions, answers));
+    }
     return scoreTestAttempt(questions, answers);
-  }, [phase, questions, answers]);
+  }, [phase, questions, answers, isPilot]);
+
+  const pilotMockResult = useMemo(() => {
+    if (!isPilot || phase !== "result") return null;
+    return scoreHubSessionViaMockEngine(questions, answers);
+  }, [isPilot, phase, questions, answers]);
+
+  const pilotAnalysis = useMemo(() => {
+    if (!pilotMockResult) return null;
+    return analyzeMockTestResult(adaptShuffledSession(questions), pilotMockResult);
+  }, [pilotMockResult, questions]);
 
   function handleStart() {
     setAnswers({});
@@ -93,7 +116,9 @@ function PaperTestPage() {
   }
 
   function handleSubmit() {
-    const scored = scoreTestAttempt(questions, answers);
+    const scored = isPilot
+      ? toLegacyScoreSummary(scoreHubSessionViaMockEngine(questions, answers))
+      : scoreTestAttempt(questions, answers);
     saveTestAttempt({
       paperId: paper.paperId,
       subject: paper.subject,
@@ -185,11 +210,20 @@ function PaperTestPage() {
 
         {unlocked && phase === "result" && result ? (
           <>
-            <TestResultSummary
-              title={paper.title}
-              result={result}
-              attemptedAt={new Date().toISOString()}
-            />
+            {isPilot && pilotMockResult && pilotAnalysis ? (
+              <MockTestResultSummary
+                title={paper.title}
+                result={pilotMockResult}
+                analysis={pilotAnalysis}
+                attemptedAt={new Date().toISOString()}
+              />
+            ) : (
+              <TestResultSummary
+                title={paper.title}
+                result={result}
+                attemptedAt={new Date().toISOString()}
+              />
+            )}
             <section className="space-y-3">
               <h2 className="text-lg font-bold">उत्तर समीक्षा / Answer Review</h2>
               <AnswerReview
