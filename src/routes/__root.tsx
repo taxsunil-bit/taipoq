@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CookieConsentProvider } from "../components/CookieConsent";
 import { ConsentAwareAnalytics } from "../components/ConsentAwareAnalytics";
+import { WelcomeMotivationOverlay } from "../components/WelcomeMotivationOverlay";
 
 function NotFoundComponent() {
   return (
@@ -127,6 +128,7 @@ function RootComponent() {
       <CookieConsentProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
+        <WelcomeMotivationOverlay />
         <ConsentAwareAnalytics />
       </CookieConsentProvider>
     </QueryClientProvider>

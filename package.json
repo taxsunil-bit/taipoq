@@ -17,7 +17,8 @@
     "validate:upcoming-exams-ui": "node tools/validate-upcoming-exams-ui.mjs",
     "validate:tests": "node tools/validate-test-paper-pack.mjs",
     "validate:pack-02": "node tools/validate-test-paper-pack-02.mjs",
-    "smoke:pack-02": "node tools/smoke-test-pack-02.mjs"
+    "smoke:pack-02": "node tools/smoke-test-pack-02.mjs",
+    "smoke:welcome": "node tools/smoke-test-welcome-overlay.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -206,3 +206,75 @@
 .tough-popup-badge:nth-child(4) {
   animation-delay: 1.2s;
 }
+
+@keyframes taipoqWelcomeBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes taipoqWelcomeCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes taipoqWelcomeGlowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, oklch(0.75 0.14 75) 25%, transparent),
+      0 0 48px color-mix(in oklch, oklch(0.72 0.14 75) 18%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, oklch(0.78 0.15 75) 35%, transparent),
+      0 0 64px color-mix(in oklch, oklch(0.75 0.14 75) 28%, transparent);
+  }
+}
+
+@keyframes taipoqWelcomeProgress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+@keyframes taipoqWelcomeExit {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.taipoq-welcome-backdrop-in {
+  animation: taipoqWelcomeBackdropIn 300ms ease-out forwards;
+}
+
+.taipoq-welcome-card-in {
+  animation: taipoqWelcomeCardIn 600ms ease-out forwards;
+}
+
+.taipoq-welcome-glow-pulse {
+  border-radius: 1rem;
+  animation: taipoqWelcomeGlowPulse 2.5s ease-in-out infinite;
+}
+
+.taipoq-welcome-progress-bar {
+  animation: taipoqWelcomeProgress 15s linear forwards;
+}
+
+.taipoq-welcome-exit {
+  animation: taipoqWelcomeExit 250ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taipoq-welcome-card-in,
+  .taipoq-welcome-glow-pulse,
+  .taipoq-welcome-progress-bar {
+    animation: none !important;
+  }
+  .taipoq-welcome-backdrop-in,
+  .taipoq-welcome-exit {
+    animation-duration: 150ms;
+  }
+}
