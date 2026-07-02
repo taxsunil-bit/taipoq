@@ -56,11 +56,14 @@ mustExist("src/lib/mockTestAdapters.ts");
 mustExist("src/lib/mockTestScoring.ts");
 mustExist("src/lib/mockTestAnalysis.ts");
 mustExist("src/components/mock-test/MockTestResultSummary.tsx");
+mustExist("src/lib/mockTestFoundationRegistry.ts");
+mustExist("src/lib/mockTestHubIntegration.ts");
 mustExist("tools/validate-mock-test-foundation.ts");
 
-mustInclude("src/types/mockTest.ts", "model-paper-01", "pilot id");
-mustInclude("src/routes/tests.$subject.$paperId.tsx", "isMockTestPilotPaper", "pilot guard");
-mustInclude("src/routes/tests.$subject.$paperId.tsx", "MockTestResultSummary", "pilot result UI");
+mustInclude("src/lib/mockTestFoundationRegistry.ts", "SHARED_MOCK_FOUNDATION_PAPERS", "central registry");
+mustInclude("src/routes/tests.$subject.$paperId.tsx", "usesSharedMockFoundation", "shared foundation guard");
+mustInclude("src/routes/tests.$subject.$paperId.tsx", "MockTestResultSummary", "shared result UI");
+mustInclude("src/routes/tests.$subject.$paperId.tsx", "scoreHubPaperAttempt", "hub integration scorer");
 mustInclude("src/routes/tests.$subject.$paperId.tsx", "isDailyMissionMiniMockPaper", "mini mock hook");
 mustInclude("src/routes/tests.$subject.$paperId.tsx", "isDailyMissionCurrentAffairsPaper", "CA hook");
 mustInclude("src/lib/tests/testScoring.ts", "scoreTestAttempt", "legacy scorer preserved");

@@ -8,16 +8,13 @@ import { TestResultSummary } from "@/components/tests/TestResultSummary";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/PageShell";
 import { getSubjectTitle } from "@/content/tests/subjects";
+import {
+  buildSharedHubResultView,
+  scoreHubPaperAttempt,
+  usesSharedMockFoundation,
+} from "@/lib/mockTestHubIntegration";
 import { canAccessPaper } from "@/lib/tests/testAccess";
 import { createShuffledSession, getAllPapers, getPaperBySlugs, getPaperRouteParams } from "@/lib/tests/testGenerator";
-import { analyzeMockTestResult } from "@/lib/mockTestAnalysis";
-import {
-  adaptShuffledSession,
-  scoreHubSessionViaMockEngine,
-  toLegacyScoreSummary,
-} from "@/lib/mockTestAdapters";
-import { isMockTestPilotPaper } from "@/types/mockTest";
-import { scoreTestAttempt } from "@/lib/tests/testScoring";
 import {
   isDailyMissionCurrentAffairsPaper,
   isDailyMissionMiniMockPaper,
@@ -80,6 +77,7 @@ function PaperTestPage() {
   }
 
   const unlocked = canAccessPaper(paper);
+  const useSharedFoundation = usesSharedMockFoundation(subject, paperId);
   const [phase, setPhase] = useState<Phase>("intro");
   const [sessionKey, setSessionKey] = useState(0);
   const questions = useMemo(
@@ -89,25 +87,15 @@ function PaperTestPage() {
   const [answers, setAnswers] = useState<TestAttemptAnswers>({});
   const lastAttempt = getTestAttempt(subject, paperId);
 
-  const isPilot = isMockTestPilotPaper(subject, paperId);
-
   const result = useMemo(() => {
     if (phase !== "result") return null;
-    if (isPilot) {
-      return toLegacyScoreSummary(scoreHubSessionViaMockEngine(questions, answers));
-    }
-    return scoreTestAttempt(questions, answers);
-  }, [phase, questions, answers, isPilot]);
+    return scoreHubPaperAttempt(subject, paperId, questions, answers);
+  }, [phase, questions, answers, subject, paperId]);
 
-  const pilotMockResult = useMemo(() => {
-    if (!isPilot || phase !== "result") return null;
-    return scoreHubSessionViaMockEngine(questions, answers);
-  }, [isPilot, phase, questions, answers]);
-
-  const pilotAnalysis = useMemo(() => {
-    if (!pilotMockResult) return null;
-    return analyzeMockTestResult(adaptShuffledSession(questions), pilotMockResult);
-  }, [pilotMockResult, questions]);
+  const sharedResultView = useMemo(() => {
+    if (phase !== "result" || !useSharedFoundation) return null;
+    return buildSharedHubResultView(subject, paperId, questions, answers);
+  }, [phase, useSharedFoundation, subject, paperId, questions, answers]);
 
   function handleStart() {
     setAnswers({});
@@ -116,9 +104,7 @@ function PaperTestPage() {
   }
 
   function handleSubmit() {
-    const scored = isPilot
-      ? toLegacyScoreSummary(scoreHubSessionViaMockEngine(questions, answers))
-      : scoreTestAttempt(questions, answers);
+    const scored = scoreHubPaperAttempt(subject, paperId, questions, answers);
     saveTestAttempt({
       paperId: paper.paperId,
       subject: paper.subject,
@@ -210,11 +196,11 @@ function PaperTestPage() {
 
         {unlocked && phase === "result" && result ? (
           <>
-            {isPilot && pilotMockResult && pilotAnalysis ? (
+            {useSharedFoundation && sharedResultView ? (
               <MockTestResultSummary
                 title={paper.title}
-                result={pilotMockResult}
-                analysis={pilotAnalysis}
+                result={sharedResultView.mockResult}
+                analysis={sharedResultView.analysis}
                 attemptedAt={new Date().toISOString()}
               />
             ) : (

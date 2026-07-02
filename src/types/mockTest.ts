@@ -84,10 +84,13 @@ export type MockTestAnalysis = {
   recommendation: string;
 };
 
-/** Pilot paper for Phase 3 shared foundation validation. */
+/** Phase 3 pilot paper — included in shared foundation registry. */
 export const MOCK_TEST_PILOT_PAPER_ID = "model-paper-01";
 export const MOCK_TEST_PILOT_SUBJECT_SLUG = "model-papers";
 
+export { isSharedMockFoundationPaper } from "@/lib/mockTestFoundationRegistry";
+
+/** @deprecated Use isSharedMockFoundationPaper — pilot is part of the full hub registry. */
 export function isMockTestPilotPaper(subjectSlug: string, paperId: string): boolean {
   return subjectSlug === MOCK_TEST_PILOT_SUBJECT_SLUG && paperId === MOCK_TEST_PILOT_PAPER_ID;
 }
