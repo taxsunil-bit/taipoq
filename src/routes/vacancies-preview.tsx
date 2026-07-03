@@ -86,6 +86,13 @@ function VacanciesPreviewPage() {
           accent="english"
         />
 
+        <div
+          role="status"
+          className="rounded-md border border-rose-500/50 bg-rose-500/15 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-rose-100"
+        >
+          PREVIEW — NOT PUBLISHED
+        </div>
+
         <Card className="border-rose-500/30 bg-rose-500/5">
           <CardContent className="p-5 text-sm leading-relaxed text-muted-foreground">
             <p className="font-semibold text-foreground">

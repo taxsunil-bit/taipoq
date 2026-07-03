@@ -1,0 +1,92 @@
+{
+  "description": "Approved pre-existing tsc --noEmit errors. Regenerate with `npm run typecheck:baseline -- --update`. New signatures fail the gate.",
+  "generatedAt": "2026-07-03T19:36:34.048Z",
+  "totalErrors": 17,
+  "errors": [
+    {
+      "file": "src/components/tests/SubjectTestGrid.tsx",
+      "code": "TS2353",
+      "message": "Object literal may only specify known properties, and 'subject' does not exist in type 'ParamsReducerFn<RouterCore<Route<Register, any, \"/\", \"/\", string, \"__root__\", undefined, {}, { queryClient: QueryClient; }, AnyContext, AnyContext, ... 6 more ..., undefined>, \"never\", false, RouterHistory, Record<...>>, \"PATH\", string, \"/tests/$subject/\">'."
+    },
+    {
+      "file": "src/components/tests/SubjectTestGrid.tsx",
+      "code": "TS2820",
+      "message": "Type '\"/tests/$subject/\"' is not assignable to type '\".\" | \"..\" | \"/privacy-policy\" | \"/\" | \"/about\" | \"/certificate\" | \"/contact\" | \"/current-affairs-test\" | \"/daily-mission\" | \"/disclaimer\" | \"/login\" | \"/mock-test\" | \"/model-paper-test\" | ... 50 more ... | \"/tests/$subject\"'. Did you mean '\"/tests/$subject\"'?"
+    },
+    {
+      "file": "src/components/VacancyPreviewCard.tsx",
+      "code": "TS2339",
+      "message": "Property 'external' does not exist on type 'PrepareLinkTarget'. Property 'external' does not exist on type '{ to: \"/test\"; search: { language: \"english\" | \"hindi\"; }; }'."
+    },
+    {
+      "file": "src/components/VerifiedVacancyCard.tsx",
+      "code": "TS2339",
+      "message": "Property 'external' does not exist on type 'PrepareLinkTarget'. Property 'external' does not exist on type '{ to: \"/test\"; search: { language: \"english\" | \"hindi\"; }; }'."
+    },
+    {
+      "file": "src/lib/google-analytics.ts",
+      "code": "TS2339",
+      "message": "Property 'length' does not exist on type 'never'."
+    },
+    {
+      "file": "src/lib/typingAnalysis.ts",
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types 'true | undefined' and 'false' have no overlap."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS18048",
+      "message": "'paper' is possibly 'undefined'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS18048",
+      "message": "'paper' is possibly 'undefined'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS18048",
+      "message": "'paper' is possibly 'undefined'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS18048",
+      "message": "'paper' is possibly 'undefined'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS18048",
+      "message": "'paper' is possibly 'undefined'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS2353",
+      "message": "Object literal may only specify known properties, and 'subject' does not exist in type 'ParamsReducerFn<RouterCore<Route<Register, any, \"/\", \"/\", string, \"__root__\", undefined, {}, { queryClient: QueryClient; }, AnyContext, AnyContext, ... 6 more ..., undefined>, \"never\", false, RouterHistory, Record<...>>, \"PATH\", string, \"/tests/$subject/\">'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS2353",
+      "message": "Object literal may only specify known properties, and 'subject' does not exist in type 'ParamsReducerFn<RouterCore<Route<Register, any, \"/\", \"/\", string, \"__root__\", undefined, {}, { queryClient: QueryClient; }, AnyContext, AnyContext, ... 6 more ..., undefined>, \"never\", false, RouterHistory, Record<...>>, \"PATH\", string, \"/tests/$subject/\">'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS2353",
+      "message": "Object literal may only specify known properties, and 'subject' does not exist in type 'ParamsReducerFn<RouterCore<Route<Register, any, \"/\", \"/\", string, \"__root__\", undefined, {}, { queryClient: QueryClient; }, AnyContext, AnyContext, ... 6 more ..., undefined>, \"never\", false, RouterHistory, Record<...>>, \"PATH\", string, \"/tests/$subject/\">'."
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS2820",
+      "message": "Type '\"/tests/$subject/\"' is not assignable to type '\".\" | \"..\" | \"/privacy-policy\" | \"/\" | \"/about\" | \"/certificate\" | \"/contact\" | \"/current-affairs-test\" | \"/daily-mission\" | \"/disclaimer\" | \"/login\" | \"/mock-test\" | \"/model-paper-test\" | ... 50 more ... | \"/tests/$subject\"'. Did you mean '\"/tests/$subject\"'?"
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS2820",
+      "message": "Type '\"/tests/$subject/\"' is not assignable to type '\".\" | \"..\" | \"/privacy-policy\" | \"/\" | \"/about\" | \"/certificate\" | \"/contact\" | \"/current-affairs-test\" | \"/daily-mission\" | \"/disclaimer\" | \"/login\" | \"/mock-test\" | \"/model-paper-test\" | ... 50 more ... | \"/tests/$subject\"'. Did you mean '\"/tests/$subject\"'?"
+    },
+    {
+      "file": "src/routes/tests.$subject.$paperId.tsx",
+      "code": "TS2820",
+      "message": "Type '\"/tests/$subject/\"' is not assignable to type '\".\" | \"..\" | \"/privacy-policy\" | \"/\" | \"/about\" | \"/certificate\" | \"/contact\" | \"/current-affairs-test\" | \"/daily-mission\" | \"/disclaimer\" | \"/login\" | \"/mock-test\" | \"/model-paper-test\" | ... 50 more ... | \"/tests/$subject\"'. Did you mean '\"/tests/$subject\"'?"
+    }
+  ]
+}

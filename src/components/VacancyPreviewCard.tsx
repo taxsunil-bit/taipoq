@@ -2,7 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { canShowApplyButton, isHttpsUrl } from "@/lib/vacancies";
+import {
+  canShowApplyButton,
+  classifyVacancyTrust,
+  getVacancyTrustLabel,
+  isHttpsUrl,
+} from "@/lib/vacancies";
 import { formatDisplayDate, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
 import type { VacancyItem } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
@@ -104,11 +109,19 @@ function PreparationLinkButton({ href }: { href: string }) {
   );
 }
 
+const TRUST_BADGE_CLASS: Record<string, string> = {
+  VERIFIED_PUBLISHED: "border-emerald-500/40 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300",
+  LEGACY_PUBLIC_UNVERIFIED: "border-slate-500/40 bg-slate-500/10 text-slate-800 dark:text-slate-200",
+  REVIEW_REQUIRED: "border-amber-500/40 bg-amber-500/10 text-amber-900 dark:text-amber-200",
+  EXCLUDED_FROM_PUBLIC: "border-rose-500/30 bg-rose-500/10 text-rose-800 dark:text-rose-300",
+};
+
 export function VacancyPreviewCard({ item }: VacancyPreviewCardProps) {
   const showApply = canShowApplyButton(item);
   const showSource = isHttpsUrl(item.sourceUrl);
   const showNotice =
     isHttpsUrl(item.officialNoticeUrl) && item.officialNoticeUrl !== item.sourceUrl;
+  const trustClass = classifyVacancyTrust(item);
 
   return (
     <Card className={cn("transition-colors", cardSurfaceClass(item))}>
@@ -127,6 +140,13 @@ export function VacancyPreviewCard({ item }: VacancyPreviewCardProps) {
               className={statusBadgeClass(item.status, item.isPreparationOnly)}
             >
               {item.status}
+            </Badge>
+            <Badge
+              variant="outline"
+              className={TRUST_BADGE_CLASS[trustClass] ?? "border-border text-muted-foreground"}
+              title={getVacancyTrustLabel(trustClass)}
+            >
+              {trustClass}
             </Badge>
             {!item.active ? (
               <Badge variant="outline" className="border-border text-muted-foreground">

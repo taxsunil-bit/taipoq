@@ -1,4 +1,10 @@
-import type { VacanciesPayload, VacancyItem, VacancyStatus } from "@/types/vacancy";
+import type {
+  VacanciesPayload,
+  VacancyItem,
+  VacancyLifecycleStatus,
+  VacancyStatus,
+  VacancyVerificationStatus,
+} from "@/types/vacancy";
 import { formatDateDDMMYYYY } from "@/lib/upcomingExams";
 
 const VACANCY_STATUS_LABELS: Record<VacancyStatus, string> = {
@@ -122,71 +128,26 @@ export function isLiveVacancyByClosingDate(
   return end >= ref;
 }
 
-const PREVIEW_DATA_URL = "/data/vacancies.preview.json";
+// Vacancy data loaders live in a pure, framework-free core module so their
+// URL routing can be proven at runtime by the preview-leak sentinel test.
+// This is the SINGLE loader implementation — re-exported, never duplicated.
+export {
+  LIVE_DATA_URL,
+  PREVIEW_DATA_URL,
+  loadVacanciesLive,
+  loadVacanciesPreview,
+  normalizeVacanciesPayload,
+  classifyVacancyTrust,
+  getVacancyTrustLabel,
+  strictPublicationContractPasses,
+} from "./vacanciesSource.mjs";
+export type { VacanciesLoadResult } from "./vacanciesSource.mjs";
 
-const EMPTY_PAYLOAD: VacanciesPayload = {
-  lastUpdated: "",
-  source: "Preview unavailable",
-  items: [],
-};
-
+/** @deprecated Use VacanciesLoadResult. Retained for backward compatibility. */
 export type VacanciesPreviewLoadResult = {
   payload: VacanciesPayload;
   error?: string;
 };
-
-function isVacancyItem(value: unknown): value is VacancyItem {
-  if (!value || typeof value !== "object") return false;
-  const row = value as Record<string, unknown>;
-  return (
-    typeof row.id === "string" &&
-    typeof row.title === "string" &&
-    typeof row.status === "string" &&
-    Array.isArray(row.preparationLinks)
-  );
-}
-
-function normalizePayload(raw: unknown): VacanciesPayload {
-  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
-    return EMPTY_PAYLOAD;
-  }
-
-  const obj = raw as Record<string, unknown>;
-  const list = Array.isArray(obj.items) ? obj.items : [];
-  const items = list.filter(isVacancyItem);
-
-  return {
-    lastUpdated: typeof obj.lastUpdated === "string" ? obj.lastUpdated : "",
-    source: typeof obj.source === "string" ? obj.source : "Preview unavailable",
-    items,
-  };
-}
-
-export async function loadVacanciesPreview(): Promise<VacanciesPreviewLoadResult> {
-  try {
-    const response = await fetch(PREVIEW_DATA_URL, {
-      method: "GET",
-      headers: { Accept: "application/json" },
-    });
-
-    if (!response.ok) {
-      return {
-        payload: EMPTY_PAYLOAD,
-        error: `HTTP ${response.status}`,
-      };
-    }
-
-    const raw = (await response.json()) as unknown;
-    const payload = normalizePayload(raw);
-
-    return { payload };
-  } catch (error) {
-    return {
-      payload: EMPTY_PAYLOAD,
-      error: error instanceof Error ? error.message : String(error),
-    };
-  }
-}
 
 export function countVacanciesByStatus(items: VacancyItem[]) {
   const counts: Record<string, number> = {
@@ -343,4 +304,55 @@ export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] 
     if (bi === -1) return -1;
     return ai - bi;
   });
+}
+
+/**
+ * Compatibility mapping layer — Update Safety System (Phase 1).
+ *
+ * Existing records use the legacy `status` enum + `active` flag and do not
+ * carry `lifecycleStatus` / `verificationStatus`. These helpers derive the new
+ * model from the legacy schema when the explicit fields are absent, so both
+ * models can coexist without a destructive migration.
+ */
+export function deriveVacancyLifecycleStatus(item: VacancyItem): VacancyLifecycleStatus {
+  if (item.lifecycleStatus) return item.lifecycleStatus;
+  switch (item.status) {
+    case "archive":
+    case "closed":
+      return "expired";
+    case "verification_pending":
+      return "review";
+    case "preparation_only":
+    case "departmental":
+    case "exam_process":
+      return "review";
+    case "active":
+    case "closing_soon":
+    case "correction_window":
+      // Only treat as published when it clears the live public gate.
+      return isVacancyPubliclyVerified(item) ? "published" : "review";
+    default:
+      return "review";
+  }
+}
+
+export function deriveVacancyVerificationStatus(item: VacancyItem): VacancyVerificationStatus {
+  if (item.verificationStatus) return item.verificationStatus;
+  if (item.status === "verification_pending") return "pending";
+  if (item.sourceType === "cross_check_only") return "manual_confirmation_required";
+  return isVacancyPubliclyVerified(item) ? "verified" : "pending";
+}
+
+/** Legacy "is this record fit for the public verified list" predicate (single item). */
+export function isVacancyPubliclyVerified(item: VacancyItem): boolean {
+  if (!item.active) return false;
+  if (item.status === "verification_pending") return false;
+  if (item.status === "archive" || item.status === "closed") return false;
+  if (item.isPreparationOnly) return false;
+  if (item.sourceType === "cross_check_only") return false;
+  if (item.status !== "active" && item.status !== "closing_soon") return false;
+  if (!parseIsoDate(item.applicationStartDate)) return false;
+  if (!isLiveVacancyByClosingDate(item.applicationEndDate)) return false;
+  if (!isHttpsUrl(item.sourceUrl)) return false;
+  return true;
 }

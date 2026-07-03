@@ -42,6 +42,8 @@ if (!existsSync(ROUTE_PATH)) {
     { label: "Sector jump scroll chips", re: /function SectorJumpChipBar|scrollIntoView/ },
     { label: "Always-visible grouped sector sections", re: /function SectorJobSection|open-jobs-by-sector/ },
     { label: "Single-line hidden sector chips", re: /overflow-x-auto.*SectorFilterChipBar|SectorFilterChipBar[\s\S]*overflow-x-auto/ },
+    { label: "Public preview loader (must load live only)", re: /loadVacanciesPreview/ },
+    { label: "Public preview query switch", re: /useVacancyPreviewMode|[?&]preview=1|get\(["']preview["']\)/ },
   ];
 
   for (const { label, re } of forbiddenUiPatterns) {
@@ -56,7 +58,7 @@ if (!existsSync(ROUTE_PATH)) {
     { label: "filteredJobs list", re: /filteredJobs/ },
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
     { label: "filterVerifiedPublicVacanciesBySector", re: /filterVerifiedPublicVacanciesBySector/ },
-    { label: "loadVacanciesPreview", re: /loadVacanciesPreview/ },
+    { label: "loadVacanciesLive (live-only public loader)", re: /loadVacanciesLive/ },
     { label: "Empty sector message", re: /No verified open jobs in this sector yet/ },
     { label: "DRDO sector chip", re: /DRDO \/ R&D/ },
     { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },

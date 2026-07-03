@@ -10,10 +10,14 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const DATA_PATH = path.join(ROOT, "public", "data", "vacancies.preview.json");
+const LIVE_PATH = path.join(ROOT, "public", "data", "vacancies.json");
+const PREVIEW_PATH = path.join(ROOT, "public", "data", "vacancies.preview.json");
+// Production serves the live file; fall back to preview only if live is absent.
+const DATA_PATH = existsSync(LIVE_PATH) ? LIVE_PATH : PREVIEW_PATH;
 const CARD_PATH = path.join(ROOT, "src", "components", "VerifiedVacancyCard.tsx");
 const VACANCIES_TS = path.join(ROOT, "src", "lib", "vacancies.ts");
 const ROUTE_PATH = path.join(ROOT, "src", "routes", "upcoming-exams.tsx");
+const PREVIEW_ROUTE_PATH = path.join(ROOT, "src", "routes", "vacancies-preview.tsx");
 
 const LIVE_LIST_REFERENCE_DATE = "2026-07-01";
 const FORBIDDEN_DATE = "01/01/1970";
@@ -117,8 +121,14 @@ function applyWindowStrip(start, end) {
 console.log("TAIPOQ — Live Vacancies Smoke Test");
 console.log("=".repeat(48));
 
+if (!existsSync(LIVE_PATH)) {
+  fail("Missing public/data/vacancies.json (published live data)");
+} else {
+  pass("Live data file vacancies.json present");
+}
+
 if (!existsSync(DATA_PATH)) {
-  fail("Missing vacancies.preview.json");
+  fail("Missing vacancy data file");
   process.exit(1);
 }
 
@@ -127,6 +137,47 @@ const items = data.items ?? [];
 const verified = getVerifiedPublic(items);
 
 pass(`Live verified public jobs: ${verified.length}`);
+
+// Production loads only live data; preview must not leak into the public page.
+if (existsSync(ROUTE_PATH)) {
+  const publicRouteSrc = readFileSync(ROUTE_PATH, "utf8");
+  if (!publicRouteSrc.includes("loadVacanciesLive")) {
+    fail("upcoming-exams route must load live data via loadVacanciesLive");
+  } else {
+    pass("Public route loads live vacancy data");
+  }
+  if (publicRouteSrc.includes("loadVacanciesPreview")) {
+    fail("Public route must NOT reference the preview loader");
+  } else {
+    pass("Public route has no preview loader reference");
+  }
+  if (/[?&]preview=1|useVacancyPreviewMode|get\(["']preview["']\)/.test(publicRouteSrc)) {
+    fail("Public route must NOT expose a preview query switch");
+  } else {
+    pass("Public route has no preview query switch");
+  }
+}
+
+// No draft/review record may pass the verified-public gate.
+for (const item of verified) {
+  if (item.status === "verification_pending") {
+    fail(`${item.id}: verification_pending leaked into verified-public list`);
+  }
+  if (item.lifecycleStatus && item.lifecycleStatus !== "published") {
+    fail(`${item.id}: non-published lifecycleStatus "${item.lifecycleStatus}" in verified list`);
+  }
+}
+pass("No draft/review record leaked into verified-public list");
+
+// Preview review page must carry the explicit preview marker.
+if (existsSync(PREVIEW_ROUTE_PATH)) {
+  const previewRouteSrc = readFileSync(PREVIEW_ROUTE_PATH, "utf8");
+  if (!previewRouteSrc.includes("PREVIEW — NOT PUBLISHED")) {
+    fail("vacancies-preview route must show 'PREVIEW — NOT PUBLISHED' marker");
+  } else {
+    pass("Preview route shows preview marker");
+  }
+}
 
 if (verified.length < 25) {
   fail(`Expected at least 25 live verified jobs, got ${verified.length}`);

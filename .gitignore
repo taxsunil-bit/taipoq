@@ -35,3 +35,7 @@ dist-ssr
 tools/social/
 
 reference/
+
+# Local-only vacancy Update Safety System artifacts
+backups/
+reports/vacancy-updates/

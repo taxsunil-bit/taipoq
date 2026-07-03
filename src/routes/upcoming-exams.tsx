@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   filterVerifiedPublicVacanciesBySector,
   getVerifiedPublicVacancies,
-  loadVacanciesPreview,
+  loadVacanciesLive,
   type VerifiedJobSector,
 } from "@/lib/vacancies";
 import { formatDateDDMMYYYY, formatDisplayDate } from "@/lib/upcomingExams";
@@ -63,9 +63,11 @@ function UpcomingExamsPage() {
   const [verifiedLoading, setVerifiedLoading] = useState(true);
   const [selectedSector, setSelectedSector] = useState<VerifiedJobSector>("all");
 
+  // The public page loads ONLY published live data — in every environment.
+  // There is deliberately no preview switch (query param, env, or storage).
   useEffect(() => {
     let cancelled = false;
-    loadVacanciesPreview().then((result) => {
+    loadVacanciesLive().then((result) => {
       if (cancelled) return;
       setVacancyItems(result.payload.items);
       setLastUpdated(result.payload.lastUpdated);

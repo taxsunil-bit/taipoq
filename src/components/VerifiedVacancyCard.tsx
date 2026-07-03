@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  classifyVacancyTrust,
   formatVacancyApplicationEndDisplay,
   formatVacancyApplicationStartDisplay,
   formatVacancyApplyWindowStrip,
@@ -98,6 +99,8 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
 
   const showSource = isHttpsUrl(item.sourceUrl);
   const showNotice = isHttpsUrl(item.officialNoticeUrl);
+  const trustClass = classifyVacancyTrust(item);
+  const isFullyVerified = trustClass === "VERIFIED_PUBLISHED";
   const isJudiciaryLocal = isJudicialLocalVacancyCategory(item.category);
   const statusPill = formatVacancyStatusLabel(item.status);
   const applyWindowStrip = formatVacancyApplyWindowStrip(
@@ -122,12 +125,22 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
       <Card className="border-emerald-500/20 bg-card/80 shadow-sm">
         <CardContent className="space-y-2 p-3">
           <div className="flex flex-wrap items-center gap-1.5">
-            <Badge
-              variant="outline"
-              className="border-emerald-400/40 bg-emerald-500/15 px-1.5 py-0 text-[11px] font-medium text-emerald-300"
-            >
-              Verified Open Job
-            </Badge>
+            {isFullyVerified ? (
+              <Badge
+                variant="outline"
+                className="border-emerald-400/40 bg-emerald-500/15 px-1.5 py-0 text-[11px] font-medium text-emerald-300"
+              >
+                Verified Open Job
+              </Badge>
+            ) : (
+              <Badge
+                variant="outline"
+                title="Preserved public listing. Confirm details on the official website before applying."
+                className="border-slate-400/40 bg-slate-500/15 px-1.5 py-0 text-[11px] font-medium text-slate-200"
+              >
+                Open listing — verification review pending
+              </Badge>
+            )}
             {isJudiciaryLocal ? (
               <>
                 <Badge
