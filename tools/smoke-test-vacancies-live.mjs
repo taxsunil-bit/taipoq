@@ -7,6 +7,13 @@
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  computePublicVacancySummary,
+  filterVerifiedPublicVacanciesBySector,
+  getVerifiedPublicVacancies,
+  getVerifiedVacancySector,
+  resolveVacancyDataUpdatedIso,
+} from "../src/lib/vacancyPublicCore.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -21,6 +28,7 @@ const PREVIEW_ROUTE_PATH = path.join(ROOT, "src", "routes", "vacancies-preview.t
 
 const LIVE_LIST_REFERENCE_DATE = "2026-07-01";
 const FORBIDDEN_DATE = "01/01/1970";
+const AUDIT_CLOCK = { now: () => new Date("2026-07-05T04:00:00.000Z") };
 const NEW_JOB_IDS = [
   "delhi-hjs-examination-2026",
   "ibps-po-mt-xvi-2026",
@@ -43,64 +51,6 @@ function parseIsoDate(value) {
   const trimmed = String(value ?? "").trim();
   if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return null;
   return trimmed;
-}
-
-function isLiveVacancyByClosingDate(applicationEndDate) {
-  const end = parseIsoDate(applicationEndDate);
-  const ref = parseIsoDate(LIVE_LIST_REFERENCE_DATE);
-  if (!end || !ref) return false;
-  return end >= ref;
-}
-
-function isHttpsUrl(url) {
-  try {
-    return new URL(String(url).trim()).protocol === "https:";
-  } catch {
-    return false;
-  }
-}
-
-function isJudicialLocalCategory(category) {
-  const value = (category ?? "").toLowerCase();
-  return value.includes("judiciary local") || value.includes("pla member") || value.includes("pla / contract");
-}
-
-function isJudicialCategory(category) {
-  if (isJudicialLocalCategory(category)) return false;
-  return (category ?? "").toLowerCase().includes("judicial");
-}
-
-function getSector(item) {
-  const category = (item.category ?? "").toLowerCase();
-  if (isJudicialLocalCategory(item.category)) return "judiciary_local";
-  if (isJudicialCategory(item.category)) return "judicial";
-  if (category.includes("bank specialist")) return "bank_specialist";
-  if (category.includes("state psc") || category.includes("/ pcs")) return "state_psc";
-  if (category.includes("medical / central") || category.includes("aiims")) return "medical_central";
-  if (category.includes("railway") || category.includes("rrb")) return "railway";
-  if (category.includes("dsssb") || category.includes("delhi govt")) return "dsssb";
-  if (category.includes("isro") || category.includes("space / research")) return "space_research";
-  if (category.includes("drdo") || category.includes("r&d")) return "drdo";
-  if (category.includes("upsc")) return "upsc";
-  if (category.includes("insurance")) return "insurance";
-  if (category.includes("defence") || category.includes("navy")) return "defence";
-  if (category.includes("banking") || category.includes("ibps")) return "banking";
-  return null;
-}
-
-function getVerifiedPublic(items) {
-  return items.filter((item) => {
-    if (!item.active) return false;
-    if (item.status === "verification_pending") return false;
-    if (item.status === "archive" || item.status === "closed") return false;
-    if (item.isPreparationOnly) return false;
-    if (item.sourceType === "cross_check_only") return false;
-    if (item.status !== "active" && item.status !== "closing_soon") return false;
-    if (!parseIsoDate(item.applicationStartDate)) return false;
-    if (!isLiveVacancyByClosingDate(item.applicationEndDate)) return false;
-    if (!isHttpsUrl(item.sourceUrl)) return false;
-    return true;
-  });
 }
 
 function formatDDMMYYYY(iso) {
@@ -134,9 +84,11 @@ if (!existsSync(DATA_PATH)) {
 
 const data = JSON.parse(readFileSync(DATA_PATH, "utf8"));
 const items = data.items ?? [];
-const verified = getVerifiedPublic(items);
+const summary = computePublicVacancySummary(items, AUDIT_CLOCK);
+const verified = summary.displayed;
 
-pass(`Live verified public jobs: ${verified.length}`);
+pass(`Open public job cards (IST audit clock): ${verified.length}`);
+pass(`Open listings window count: ${summary.openListings}`);
 
 // Production loads only live data; preview must not leak into the public page.
 if (existsSync(ROUTE_PATH)) {
@@ -179,10 +131,17 @@ if (existsSync(PREVIEW_ROUTE_PATH)) {
   }
 }
 
-if (verified.length < 25) {
-  fail(`Expected at least 25 live verified jobs, got ${verified.length}`);
+if (verified.length < 24) {
+  fail(`Expected at least 24 open public jobs on audit date, got ${verified.length}`);
 } else {
-  pass("Live count is at least 25");
+  pass("Open public count is at least 24 on audit date");
+}
+
+const aiims = items.find((i) => i.id === "aiims-cre-5-2026");
+if (aiims && verified.some((v) => v.id === "aiims-cre-5-2026")) {
+  fail("AIIMS CRE-5 must be excluded after 2026-07-03 17:00 IST");
+} else {
+  pass("AIIMS CRE-5 excluded after deadline");
 }
 
 const titles = new Set();
@@ -203,24 +162,24 @@ for (const id of NEW_JOB_IDS) {
 const delhi = items.find((i) => i.id === "delhi-hjs-examination-2026");
 const ibps = items.find((i) => i.id === "ibps-po-mt-xvi-2026");
 const uppsc = items.find((i) => i.id === "uppsc-pcs-2026");
-const aiims = items.find((i) => i.id === "aiims-cre-5-2026");
+const aiimsRow = items.find((i) => i.id === "aiims-cre-5-2026");
 
-if (delhi && getSector(delhi) !== "judicial") fail("Delhi HJS must be under Judicial Jobs sector");
-else if (delhi) pass("Delhi HJS under Judicial Jobs");
+if (delhi && getVerifiedVacancySector(delhi) !== "judicial") fail("Delhi HJS must be under Judicial Exams sector");
+else if (delhi) pass("Delhi HJS under Judicial Exams");
 
-if (delhi && getSector(delhi) === "judiciary_local") fail("Delhi HJS must not be under Judiciary Local");
-else if (delhi) pass("Delhi HJS not under Judiciary Local");
+if (delhi && getVerifiedVacancySector(delhi) === "contract_local") fail("Delhi HJS must not be under Contract / Local");
+else if (delhi) pass("Delhi HJS not under Contract / Local");
 
-if (ibps && getSector(ibps) !== "banking") fail("IBPS PO/MT-XVI must be under Banking");
+if (ibps && getVerifiedVacancySector(ibps) !== "banking") fail("IBPS PO/MT-XVI must be under Banking");
 else if (ibps) pass("IBPS PO/MT-XVI under Banking");
 
-if (uppsc && getSector(uppsc) !== "state_psc") fail("UPPSC PCS must be under State PSC / PCS");
+if (uppsc && getVerifiedVacancySector(uppsc) !== "state_psc") fail("UPPSC PCS must be under State PSC / PCS");
 else if (uppsc) pass("UPPSC PCS under State PSC / PCS");
 
-if (uppsc && getSector(uppsc) === "upsc") fail("UPPSC PCS must not be under UPSC");
+if (uppsc && getVerifiedVacancySector(uppsc) === "upsc") fail("UPPSC PCS must not be under UPSC");
 
-if (aiims && getSector(aiims) !== "medical_central") fail("AIIMS CRE-5 must be under Medical / Central Govt");
-else if (aiims) pass("AIIMS CRE-5 under Medical / Central Govt");
+if (aiimsRow && getVerifiedVacancySector(aiimsRow) !== "medical") fail("AIIMS CRE-5 must be under Medical");
+else if (aiimsRow) pass("AIIMS CRE-5 under Medical");
 
 const rrb = items.find((i) => i.id === "rrb-technician-cen-02-2026");
 if (rrb) {
@@ -284,14 +243,33 @@ else pass("No duplicate Last Date label in card details");
 const routeSrc = readFileSync(ROUTE_PATH, "utf8");
 if (!routeSrc.includes("State PSC / PCS")) fail("Missing State PSC / PCS chip");
 else pass("State PSC / PCS chip present");
-if (!routeSrc.includes("Medical / Central Govt")) fail("Missing Medical / Central Govt chip");
-else pass("Medical / Central Govt chip present");
+if (!routeSrc.includes("Open listings:")) fail("Missing honest Open listings summary");
+else pass("Honest Open listings summary present");
+if (!routeSrc.includes("Vacancy data updated:")) fail("Missing Vacancy data updated label");
+else pass("Vacancy data updated label present");
+if (routeSrc.includes("Open verified:")) fail("Misleading Open verified summary must be removed");
+else pass("No misleading Open verified summary");
+
+const updatedIso = resolveVacancyDataUpdatedIso(data);
+if (!updatedIso || formatDDMMYYYY(updatedIso) !== "01/07/2026") {
+  fail(`Expected dataset update date 01/07/2026 from metadata, got ${updatedIso}`);
+} else {
+  pass("Dataset update date from lastUpdated metadata");
+}
 
 const sectorCounts = {};
 for (const item of verified) {
-  const s = getSector(item) ?? "other";
+  const s = getVerifiedVacancySector(item) ?? "other";
   sectorCounts[s] = (sectorCounts[s] ?? 0) + 1;
 }
+
+for (const [sector, count] of Object.entries(sectorCounts)) {
+  const filtered = filterVerifiedPublicVacanciesBySector(items, sector, AUDIT_CLOCK);
+  if (filtered.length !== count) {
+    fail(`Sector count mismatch for ${sector}: chip ${count} vs filter ${filtered.length}`);
+  }
+}
+pass("Sector chip counts match filterVerifiedPublicVacanciesBySector");
 
 console.log("\nSector counts (live verified):");
 for (const [k, v] of Object.entries(sectorCounts).sort()) {

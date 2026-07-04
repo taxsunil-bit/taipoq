@@ -98,34 +98,59 @@ export function formatVacancyApplicationStartDisplay(applicationStartDate: strin
 }
 
 /** Jobs with closing date before this ISO day are excluded from the public live list. */
-export const LIVE_LIST_REFERENCE_DATE = "2026-07-01";
+export { LIVE_LIST_REFERENCE_DATE } from "./vacancyPublicCore.mjs";
 
-const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+import {
+  computePublicVacancySummary as computePublicVacancySummaryCore,
+  filterVerifiedPublicVacanciesBySector as filterVerifiedPublicVacanciesBySectorCore,
+  getApplicationDeadlineMs as getApplicationDeadlineMsCore,
+  getVerifiedPublicVacancies as getVerifiedPublicVacanciesCore,
+  getVerifiedVacancySector as getVerifiedVacancySectorCore,
+  getVacancyClockNow as getVacancyClockNowCore,
+  isApprenticeshipVacancy as isApprenticeshipVacancyCore,
+  isContractLocalVacancy as isContractLocalVacancyCore,
+  isJudicialLocalVacancyCategory as isJudicialLocalVacancyCategoryCore,
+  isJudicialVacancyCategory as isJudicialVacancyCategoryCore,
+  isLawLegalVacancy as isLawLegalVacancyCore,
+  isLiveVacancyByClosingDate as isLiveVacancyByClosingDateCore,
+  isSpecialistExperiencedVacancy as isSpecialistExperiencedVacancyCore,
+  isVacancyApplicationWindowOpen as isVacancyApplicationWindowOpenCore,
+  isVacancyPubliclyVerified as isVacancyPubliclyVerifiedCore,
+  parseIsoDate as parseIsoDateCore,
+  resolveVacancyDataUpdatedIso as resolveVacancyDataUpdatedIsoCore,
+  VACANCY_DATE_ONLY_CLOSING_TIME as VACANCY_DATE_ONLY_CLOSING_TIME_CORE,
+} from "./vacancyPublicCore.mjs";
+import { classifyVacancyTrust } from "./vacanciesSource.mjs";
+
+export const VACANCY_DATE_ONLY_CLOSING_TIME = VACANCY_DATE_ONLY_CLOSING_TIME_CORE;
 
 export function parseIsoDate(value: string | undefined): string | null {
-  const trimmed = value?.trim();
-  if (!trimmed || !ISO_DATE_RE.test(trimmed)) return null;
-  const [year, month, day] = trimmed.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  if (
-    date.getUTCFullYear() !== year ||
-    date.getUTCMonth() !== month - 1 ||
-    date.getUTCDate() !== day
-  ) {
-    return null;
-  }
-  return trimmed;
+  return parseIsoDateCore(value);
 }
 
-/** Live on reference day when exact closing date exists and closing date >= reference date. */
+/** Injectable clock for tests (fixed dates). Production uses system time. */
+export type VacancyClock = { now: () => Date };
+
+export function getVacancyClockNow(clock?: VacancyClock): Date {
+  return getVacancyClockNowCore(clock);
+}
+
+export function getApplicationDeadlineMs(
+  applicationEndDate: string | undefined,
+  applicationEndTime: string | undefined,
+): number | null {
+  return getApplicationDeadlineMsCore(applicationEndDate, applicationEndTime);
+}
+
+export function isVacancyApplicationWindowOpen(item: VacancyItem, at: Date): boolean {
+  return isVacancyApplicationWindowOpenCore(item, at);
+}
+
 export function isLiveVacancyByClosingDate(
   applicationEndDate: string | undefined,
-  referenceDate: string = LIVE_LIST_REFERENCE_DATE,
+  referenceDate?: string,
 ): boolean {
-  const end = parseIsoDate(applicationEndDate);
-  const ref = parseIsoDate(referenceDate);
-  if (!end || !ref) return false;
-  return end >= ref;
+  return isLiveVacancyByClosingDateCore(applicationEndDate, referenceDate);
 }
 
 // Vacancy data loaders live in a pure, framework-free core module so their
@@ -194,13 +219,11 @@ export function isHttpsUrl(url: string | undefined): boolean {
 }
 
 export function isJudicialLocalVacancyCategory(category: string | undefined): boolean {
-  const value = (category ?? "").toLowerCase();
-  return value.includes("judiciary local") || value.includes("pla member") || value.includes("pla / contract");
+  return isJudicialLocalVacancyCategoryCore(category);
 }
 
 export function isJudicialVacancyCategory(category: string | undefined): boolean {
-  if (isJudicialLocalVacancyCategory(category)) return false;
-  return (category ?? "").toLowerCase().includes("judicial");
+  return isJudicialVacancyCategoryCore(category);
 }
 
 export function isBankSpecialistVacancyCategory(category: string | undefined): boolean {
@@ -209,101 +232,75 @@ export function isBankSpecialistVacancyCategory(category: string | undefined): b
 
 export type VerifiedJobSector =
   | "all"
+  | "graduate_exams"
   | "railway"
   | "banking"
-  | "bank_specialist"
-  | "insurance"
-  | "defence"
-  | "drdo"
-  | "space_research"
   | "upsc"
   | "state_psc"
-  | "medical_central"
-  | "dsssb"
   | "judicial"
-  | "judiciary_local";
+  | "law_legal"
+  | "defence"
+  | "technical_research"
+  | "medical"
+  | "insurance"
+  | "dsssb"
+  | "apprenticeships"
+  | "specialist_experienced"
+  | "contract_local";
+
+export function isApprenticeshipVacancy(item: VacancyItem): boolean {
+  return isApprenticeshipVacancyCore(item);
+}
+
+export function isLawLegalVacancy(item: VacancyItem): boolean {
+  return isLawLegalVacancyCore(item);
+}
+
+export function isSpecialistExperiencedVacancy(item: VacancyItem): boolean {
+  return isSpecialistExperiencedVacancyCore(item);
+}
+
+export function isContractLocalVacancy(item: VacancyItem): boolean {
+  return isContractLocalVacancyCore(item);
+}
 
 export function getVerifiedVacancySector(
   item: VacancyItem,
 ): Exclude<VerifiedJobSector, "all"> | null {
-  const category = (item.category ?? "").toLowerCase();
-
-  if (isJudicialLocalVacancyCategory(item.category)) return "judiciary_local";
-  if (isJudicialVacancyCategory(item.category)) return "judicial";
-  if (isBankSpecialistVacancyCategory(item.category)) return "bank_specialist";
-  if (category.includes("state psc") || category.includes("/ pcs")) return "state_psc";
-  if (category.includes("medical / central") || category.includes("aiims")) return "medical_central";
-  if (category.includes("railway") || category.includes("rrb")) return "railway";
-  if (category.includes("dsssb") || category.includes("delhi govt")) return "dsssb";
-  if (category.includes("isro") || category.includes("space / research")) return "space_research";
-  if (category.includes("drdo") || category.includes("r&d")) return "drdo";
-  if (category.includes("upsc")) return "upsc";
-  if (category.includes("insurance")) return "insurance";
-  if (category.includes("defence") || category.includes("navy")) return "defence";
-  if (category.includes("banking") || category.includes("ibps")) return "banking";
-
-  return null;
+  return getVerifiedVacancySectorCore(item);
 }
 
 export function filterVerifiedPublicVacanciesBySector(
   items: VacancyItem[],
   sector: VerifiedJobSector,
+  clock?: VacancyClock,
 ): VacancyItem[] {
-  const verified = getVerifiedPublicVacancies(items);
-  if (sector === "all") return verified;
-  return verified.filter((item) => getVerifiedVacancySector(item) === sector);
+  return filterVerifiedPublicVacanciesBySectorCore(items, sector, clock);
 }
 
-export function getVerifiedPublicVacancies(items: VacancyItem[]): VacancyItem[] {
-  const verified = items.filter((item) => {
-    if (!item.active) return false;
-    if (item.status === "verification_pending") return false;
-    if (item.status === "archive" || item.status === "closed") return false;
-    if (item.isPreparationOnly) return false;
-    if (item.sourceType === "cross_check_only") return false;
-    if (item.status !== "active" && item.status !== "closing_soon") return false;
-    if (!parseIsoDate(item.applicationStartDate)) return false;
-    if (!isLiveVacancyByClosingDate(item.applicationEndDate)) return false;
-    if (!isHttpsUrl(item.sourceUrl)) return false;
-    return true;
-  });
+export function getVerifiedPublicVacancies(
+  items: VacancyItem[],
+  clock?: VacancyClock,
+): VacancyItem[] {
+  return getVerifiedPublicVacanciesCore(items, clock);
+}
 
-  const order = [
-    "delhi-hjs-examination-2026",
-    "aiims-cre-5-2026",
-    "indian-navy-agniveer-apprentice-0127-0227-2026",
-    "sbi-po-2026",
-    "ibps-po-mt-xvi-2026",
-    "dsssb-advt-03-2026",
-    "rrb-technician-cen-02-2026",
-    "uppsc-pcs-2026",
-    "indian-navy-ssc-various-entries-jun-2027",
-    "gujarat-hc-legal-assistant-2026",
-    "upsc-advt-07-2026",
-    "isro-istrac-02-2026",
-    "sbi-law-officer-sco-2026",
-    "sbi-bank-medical-officer-sco-2026",
-    "sbi-defence-banking-advisor-sco-2026",
-    "new-india-assurance-apprentice-2026-27",
-    "bob-cic-regular-2026",
-    "bob-cic-contractual-2026",
-    "bob-it-fte-2026",
-    "drdo-deal-apprentice-2026-27",
-    "drdo-dysl-qt-jrf-2026",
-    "ahc-pla-ghazipur-2026",
-    "ahc-pla-baghpat-2026",
-    "ahc-pla-sonbhadra-2026",
-    "ahc-pla-sant-kabir-nagar-2026",
-  ];
+export type PublicVacancySummary = {
+  openListings: number;
+  fullyVerified: number;
+  reviewPending: number;
+  displayed: VacancyItem[];
+};
 
-  return verified.sort((a, b) => {
-    const ai = order.indexOf(a.id);
-    const bi = order.indexOf(b.id);
-    if (ai === -1 && bi === -1) return 0;
-    if (ai === -1) return 1;
-    if (bi === -1) return -1;
-    return ai - bi;
-  });
+export function computePublicVacancySummary(
+  items: VacancyItem[],
+  clock?: VacancyClock,
+): PublicVacancySummary {
+  return computePublicVacancySummaryCore(items, clock);
+}
+
+export function resolveVacancyDataUpdatedIso(payload: VacanciesPayload): string | null {
+  return resolveVacancyDataUpdatedIsoCore(payload);
 }
 
 /**
@@ -343,16 +340,6 @@ export function deriveVacancyVerificationStatus(item: VacancyItem): VacancyVerif
   return isVacancyPubliclyVerified(item) ? "verified" : "pending";
 }
 
-/** Legacy "is this record fit for the public verified list" predicate (single item). */
-export function isVacancyPubliclyVerified(item: VacancyItem): boolean {
-  if (!item.active) return false;
-  if (item.status === "verification_pending") return false;
-  if (item.status === "archive" || item.status === "closed") return false;
-  if (item.isPreparationOnly) return false;
-  if (item.sourceType === "cross_check_only") return false;
-  if (item.status !== "active" && item.status !== "closing_soon") return false;
-  if (!parseIsoDate(item.applicationStartDate)) return false;
-  if (!isLiveVacancyByClosingDate(item.applicationEndDate)) return false;
-  if (!isHttpsUrl(item.sourceUrl)) return false;
-  return true;
+export function isVacancyPubliclyVerified(item: VacancyItem, clock?: VacancyClock): boolean {
+  return isVacancyPubliclyVerifiedCore(item, clock);
 }

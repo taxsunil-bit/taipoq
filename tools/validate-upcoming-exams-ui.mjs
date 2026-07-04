@@ -41,7 +41,7 @@ if (!existsSync(ROUTE_PATH)) {
     },
     { label: "Sector jump scroll chips", re: /function SectorJumpChipBar|scrollIntoView/ },
     { label: "Always-visible grouped sector sections", re: /function SectorJobSection|open-jobs-by-sector/ },
-    { label: "Single-line hidden sector chips", re: /overflow-x-auto.*SectorFilterChipBar|SectorFilterChipBar[\s\S]*overflow-x-auto/ },
+    { label: "Misleading Open verified summary", re: /Open verified:/ },
     { label: "Public preview loader (must load live only)", re: /loadVacanciesPreview/ },
     { label: "Public preview query switch", re: /useVacancyPreviewMode|[?&]preview=1|get\(["']preview["']\)/ },
   ];
@@ -52,20 +52,22 @@ if (!existsSync(ROUTE_PATH)) {
 
   const requiredPatterns = [
     { label: "Open Government Jobs heading", re: /Open Government Jobs/ },
-    { label: "Sector filter chip bar", re: /function SectorFilterChipBar/ },
-    { label: "Sector chips flex wrap", re: /flex flex-wrap gap-/ },
+    { label: "Sector filter bar", re: /function SectorFilterBar/ },
+    { label: "Honest open listings summary", re: /Open listings:/ },
+    { label: "Vacancy data updated label", re: /Vacancy data updated:/ },
     { label: "selectedSector state", re: /selectedSector/ },
     { label: "filteredJobs list", re: /filteredJobs/ },
     { label: "VerifiedVacancyCard list", re: /VerifiedVacancyCard/ },
     { label: "filterVerifiedPublicVacanciesBySector", re: /filterVerifiedPublicVacanciesBySector/ },
+    { label: "computePublicVacancySummary", re: /computePublicVacancySummary/ },
     { label: "loadVacanciesLive (live-only public loader)", re: /loadVacanciesLive/ },
-    { label: "Empty sector message", re: /No verified open jobs in this sector yet/ },
-    { label: "DRDO sector chip", re: /DRDO \/ R&D/ },
-    { label: "DSSSB sector chip", re: /DSSSB \/ Delhi Govt/ },
-    { label: "Judicial Jobs sector chip", re: /Judicial Jobs/ },
-    { label: "Judiciary Local sector chip", re: /Judiciary Local \/ PLA \/ Contract/ },
-    { label: "State PSC sector chip", re: /State PSC \/ PCS/ },
-    { label: "Medical Central sector chip", re: /Medical \/ Central Govt/ },
+    { label: "Empty filter message", re: /No currently open listings match this filter/ },
+    { label: "Judicial Exams chip", re: /Judicial Exams/ },
+    { label: "Apprenticeships chip", re: /Apprenticeships/ },
+    { label: "Law / Legal chip", re: /Law \/ Legal/ },
+    { label: "Contract / Local chip", re: /Contract \/ Local/ },
+    { label: "More filters control", re: /More filters/ },
+    { label: "aria-pressed on filter chips", re: /aria-pressed/ },
   ];
 
   for (const { label, re } of requiredPatterns) {
