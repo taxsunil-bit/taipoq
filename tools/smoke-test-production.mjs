@@ -68,7 +68,10 @@ async function main() {
   });
 
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
-  if (await page.getByText(/Today.s TAIPOQ Mission/i).isVisible({ timeout: 8000 })) pass("Homepage: Daily Mission section");
+  const dailyMissionHeading = page
+    .locator("#main-content")
+    .getByRole("heading", { name: "Today's TAIPOQ Mission", exact: true });
+  if (await dailyMissionHeading.isVisible({ timeout: 8000 })) pass("Homepage: Daily Mission section");
   else fail("Homepage: Daily Mission missing");
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2);
   if (!overflow) pass("Homepage: no horizontal scroll (390px)");
