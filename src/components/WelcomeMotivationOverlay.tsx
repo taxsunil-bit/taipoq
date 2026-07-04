@@ -4,18 +4,13 @@ import { cn } from "@/lib/utils";
 
 const SESSION_KEY = "taipoq_welcome_motivation_seen";
 const WELCOME_IMAGE = "/images/taipoq-welcome-motivation.png";
+const DURATION_SEC = 15;
 const EXIT_MS = 250;
 
 function shouldSkipWelcomeRoute(pathname: string): boolean {
   if (pathname === "/test" || pathname.startsWith("/test/")) return true;
-  if (pathname === "/result") return true;
-  if (pathname === "/tests" || pathname.startsWith("/tests/")) return true;
   if (pathname.includes("/typing-test")) return true;
   if (pathname.includes("/typing-practice/test")) return true;
-  if (pathname.startsWith("/mock-test")) return true;
-  if (pathname.startsWith("/model-paper")) return true;
-  if (pathname.includes("model-test-01")) return true;
-  if (pathname.startsWith("/study-corner") && pathname.includes("quiz-result")) return true;
   return false;
 }
 
@@ -39,20 +34,16 @@ export function WelcomeMotivationOverlay() {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [countdown, setCountdown] = useState(DURATION_SEC);
   const [reducedMotion, setReducedMotion] = useState(false);
   const closeRef = useRef(false);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const close = useCallback(() => {
     if (closeRef.current) return;
     closeRef.current = true;
     markWelcomeSeen();
     setClosing(true);
-    window.setTimeout(() => {
-      setVisible(false);
-      previousFocusRef.current?.focus();
-    }, EXIT_MS);
+    window.setTimeout(() => setVisible(false), EXIT_MS);
   }, []);
 
   useEffect(() => {
@@ -72,8 +63,8 @@ export function WelcomeMotivationOverlay() {
       return () => mq.removeEventListener("change", updateMotion);
     }
 
-    previousFocusRef.current = document.activeElement as HTMLElement | null;
     setVisible(true);
+    setCountdown(DURATION_SEC);
     closeRef.current = false;
 
     return () => mq.removeEventListener("change", updateMotion);
@@ -82,7 +73,13 @@ export function WelcomeMotivationOverlay() {
   useEffect(() => {
     if (!visible || closing) return;
 
-    closeButtonRef.current?.focus();
+    const countdownId = window.setInterval(() => {
+      setCountdown((prev) => Math.max(0, prev - 1));
+    }, 1000);
+
+    const autoCloseId = window.setTimeout(() => {
+      close();
+    }, DURATION_SEC * 1000);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
@@ -93,12 +90,16 @@ export function WelcomeMotivationOverlay() {
     document.body.style.overflow = "hidden";
 
     return () => {
+      window.clearInterval(countdownId);
+      window.clearTimeout(autoCloseId);
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = previousOverflow;
     };
   }, [visible, closing, close]);
 
   if (!mounted || !visible) return null;
+
+  const progressPercent = (countdown / DURATION_SEC) * 100;
 
   return createPortal(
     <div
@@ -109,24 +110,20 @@ export function WelcomeMotivationOverlay() {
       role="dialog"
       aria-modal="true"
       aria-label="TAIPOQ welcome motivation"
-      aria-describedby="taipoq-welcome-desc"
     >
-      <button
-        type="button"
+      <div
         className="absolute inset-0 bg-black/75 backdrop-blur-[3px]"
-        aria-label="Close welcome overlay"
-        onClick={close}
+        aria-hidden="true"
       />
 
       <div className="relative flex w-full max-w-[920px] flex-col items-center">
         <button
-          ref={closeButtonRef}
           type="button"
           onClick={close}
-          className="absolute -top-1 right-0 z-20 min-h-11 rounded-full border border-white/20 bg-black/40 px-4 py-2 text-xs font-semibold text-white/90 transition-colors hover:bg-white/15 sm:text-sm"
-          aria-label="Close welcome message"
+          className="absolute -top-1 right-0 z-20 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-semibold text-white/90 transition-colors hover:bg-white/15 sm:text-sm"
+          aria-label="Skip welcome overlay"
         >
-          Close
+          Skip
         </button>
 
         <div
@@ -145,7 +142,7 @@ export function WelcomeMotivationOverlay() {
             <div className="relative max-h-[82vh] sm:max-h-[88vh]">
               <img
                 src={WELCOME_IMAGE}
-                alt="TAIPOQ motivational welcome for exam aspirants"
+                alt="TAIPOQ motivational welcome"
                 className="mx-auto block h-auto max-h-[82vh] w-full max-w-full object-contain sm:max-h-[88vh]"
                 width={920}
                 height={520}
@@ -154,14 +151,33 @@ export function WelcomeMotivationOverlay() {
             </div>
 
             <div className="border-t border-amber-500/20 bg-slate-950/95 px-4 py-3 sm:px-5 sm:py-4">
-              <p id="taipoq-welcome-desc" className="text-center text-xs text-amber-100/90 sm:text-sm">
-                A motivational welcome message for your practice journey. Close this anytime to continue
-                using TAIPOQ immediately.
+              <p className="text-center text-xs text-amber-100/90 sm:text-sm">
+                Opening TAIPOQ in {countdown} second{countdown === 1 ? "" : "s"}...
               </p>
+              <div
+                className="mt-2 h-0.5 w-full overflow-hidden rounded-full bg-amber-950/80"
+                role="progressbar"
+                aria-valuenow={Math.round(progressPercent)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Welcome overlay progress"
+              >
+                <div
+                  className={cn(
+                    "h-full rounded-full bg-gradient-to-r from-amber-600 to-amber-400",
+                    !reducedMotion && visible && !closing && "taipoq-welcome-progress-bar",
+                  )}
+                  style={
+                    reducedMotion
+                      ? { width: `${progressPercent}%`, transition: "width 1s linear" }
+                      : undefined
+                  }
+                />
+              </div>
               <button
                 type="button"
                 onClick={close}
-                className="mt-3 w-full min-h-11 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 px-4 py-2.5 text-sm font-bold text-slate-950 shadow-md shadow-amber-950/30 transition-all hover:from-amber-500 hover:to-amber-400 sm:py-3"
+                className="mt-3 w-full rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 px-4 py-2.5 text-sm font-bold text-slate-950 shadow-md shadow-amber-950/30 transition-all hover:from-amber-500 hover:to-amber-400 sm:py-3"
               >
                 Continue to TAIPOQ
               </button>

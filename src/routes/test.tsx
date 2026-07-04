@@ -13,19 +13,11 @@ import { englishLessons, hindiLessons } from "@/lib/sample-data";
 import { markDailyMissionTaskComplete } from "@/lib/dailyMission";
 import { getActiveParagraphs, saveResult } from "@/lib/storage";
 
-import { buildSeoHead } from "@/lib/seo";
-
 export const Route = createFileRoute("/test")({
   validateSearch: z.object({
     language: z.enum(["english", "hindi"]).optional(),
   }),
-  head: () =>
-    buildSeoHead({
-      title: "Typing Test — English & Hindi Practice | TAIPOQ",
-      description:
-        "Take a timed English or Hindi typing test. Track WPM, accuracy, mistakes and progress for job exam preparation.",
-      path: "/test",
-    }),
+  head: () => ({ meta: [{ title: "Typing Test — TAIPOQ" }] }),
   component: TestPage,
 });
 
@@ -239,9 +231,8 @@ function Group({ value, onChange, options }: { value: string; onChange: (v: stri
       {options.map((o) => (
         <button
           key={o}
-          type="button"
           onClick={() => onChange(o)}
-          className={`min-h-11 rounded-md border px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:min-h-0 ${
+          className={`min-h-11 rounded-md border px-3 py-2 text-sm transition-colors md:min-h-0 ${
             value === o ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:bg-accent"
           }`}
         >

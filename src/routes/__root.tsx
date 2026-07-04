@@ -10,9 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { StructuredData } from "../components/StructuredData";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { buildSeoHead } from "../lib/seo";
 import { CookieConsentProvider } from "../components/CookieConsent";
 import { ConsentAwareAnalytics } from "../components/ConsentAwareAnalytics";
 import { WelcomeMotivationOverlay } from "../components/WelcomeMotivationOverlay";
@@ -78,36 +76,29 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => {
-    const seo = buildSeoHead({
-      title: "TAIPOQ — English & Hindi Typing Practice for Job Preparation",
-      description:
-        "Practice English and Hindi (KrutiDev/Remington) typing for job and exam preparation. Track WPM, accuracy, and mistakes with daily targets.",
-      path: "/",
-    });
-    return {
-      meta: [
-        { charSet: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "author", content: "TAIPOQ" },
-        ...seo.meta,
-      ],
-      links: [
-        { rel: "stylesheet", href: appCss },
-        { rel: "preconnect", href: "https://fonts.googleapis.com" },
-        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap",
-        },
-        { rel: "icon", href: "/favicon.ico" },
-        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
-        { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
-        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
-        ...seo.links,
-      ],
-    };
-  },
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "TAIPOQ — English & Hindi Typing Practice for Job Preparation" },
+      { name: "description", content: "Practice English and Hindi (KrutiDev/Remington) typing for job and exam preparation. Track WPM, accuracy, and mistakes with daily targets." },
+      { name: "author", content: "TAIPOQ" },
+      { property: "og:title", content: "TAIPOQ — English & Hindi Typing Practice for Job Preparation" },
+      { property: "og:description", content: "Practice English and Hindi typing for job and exam preparation." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" },
+      { rel: "icon", href: "/favicon.ico" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+    ],
+  }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -122,7 +113,6 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <StructuredData />
         {children}
         <Scripts />
       </body>
