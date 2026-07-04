@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 /**
- * Smoke test for welcome motivation overlay.
- * Run: npm run smoke:welcome
+ * Smoke test for welcome motivation overlay (non-blocking behaviour).
  */
-
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -40,6 +38,13 @@ function mustInclude(file, needle, label) {
   else pass(`${path.basename(file)}: ${label ?? needle}`);
 }
 
+function mustNotInclude(file, needle, label) {
+  if (!existsSync(file)) return;
+  const src = readFileSync(file, "utf8");
+  if (src.includes(needle)) fail(`${path.basename(file)}: should not contain ${label ?? needle}`);
+  else pass(`${path.basename(file)}: no ${label ?? needle}`);
+}
+
 console.log("TAIPOQ — Welcome Overlay Smoke Test");
 console.log("=".repeat(48));
 
@@ -47,13 +52,20 @@ mustExist(COMPONENT);
 mustInclude(COMPONENT, "taipoq_welcome_motivation_seen", "sessionStorage key");
 mustInclude(COMPONENT, "sessionStorage", "sessionStorage usage");
 mustInclude(COMPONENT, "/images/taipoq-welcome-motivation.png", "image path");
-mustInclude(COMPONENT, "Opening TAIPOQ in", "countdown text");
+mustNotInclude(COMPONENT, "Opening TAIPOQ in", "forced loading countdown text");
+mustNotInclude(COMPONENT, "AUTO_CLOSE_SEC", "auto-close timer");
+mustNotInclude(COMPONENT, "15000", "15-second auto-close");
+mustInclude(COMPONENT, "motivational welcome", "motivational copy");
 mustInclude(COMPONENT, "Continue to TAIPOQ", "continue CTA");
-mustInclude(COMPONENT, "Skip", "skip button");
+mustInclude(COMPONENT, "Close", "immediate close button");
 mustInclude(COMPONENT, "Escape", "escape key handler");
 mustInclude(COMPONENT, "prefers-reduced-motion", "reduced motion handling");
-mustInclude(COMPONENT, "shouldSkipWelcomeRoute", "typing route skip");
+mustInclude(COMPONENT, "shouldSkipWelcomeRoute", "route skip helper");
+mustInclude(COMPONENT, 'pathname === "/tests"', "tests route skip");
+mustInclude(COMPONENT, "/mock-test", "mock test route skip");
 mustInclude(COMPONENT, "role=\"dialog\"", "dialog role");
+mustInclude(COMPONENT, "aria-modal=\"true\"", "aria-modal");
+mustInclude(COMPONENT, "previousFocusRef", "focus return after close");
 mustInclude(ROOT_ROUTE, "WelcomeMotivationOverlay", "root import");
 mustInclude(ROOT_ROUTE, "<WelcomeMotivationOverlay />", "root mount");
 

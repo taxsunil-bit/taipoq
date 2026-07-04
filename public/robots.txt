@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /admin/
+Disallow: /vacancies-preview
+Disallow: /result
+
+Sitemap: https://www.taipoq.com/sitemap.xml

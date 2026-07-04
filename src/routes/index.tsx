@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { HomeJobUpdatesTeaser } from "@/components/HomeJobUpdatesTeaser";
 import { JobTypingSpeedGuide } from "@/components/JobTypingSpeedGuide";
 import { PageShell } from "@/components/PageShell";
 import { DailyMissionSection } from "@/components/DailyMissionSection";
@@ -14,19 +15,17 @@ import {
   TESTS_HUB_BADGE,
   TESTS_HUB_CARD_HIGHLIGHT,
 } from "@/lib/brand";
+import { buildSeoHead } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "TAIPOQ — English & Hindi Typing Practice for Job Preparation" },
-      {
-        name: "description",
-        content:
-          "Practice daily. Track your progress. Build job-ready English and Hindi typing speed and accuracy.",
-      },
-    ],
-  }),
+  head: () =>
+    buildSeoHead({
+      title: "TAIPOQ – Free Typing Practice, Mock Tests and Job Preparation",
+      description:
+        "Free English and Hindi typing practice, mock tests, study resources and verified government job updates for SSC, Railway and other aspirants.",
+      path: "/",
+    }),
   component: Home,
 });
 
@@ -36,12 +35,14 @@ function Home() {
       <ToughMockChallengePopup />
       <PageShell>
         <div className="space-y-4 md:space-y-6">
-          <HomeMobileHero />
+          <HomeHero />
+          <DailyMissionSection />
           <HomeMobilePrimarySection />
           <div className="hidden md:block">
             <HomeDesktopPracticeSection />
           </div>
-          <DailyMissionSection />
+          <HomeStudyQuickLinks />
+          <HomeJobUpdatesTeaser />
           <HomeMobileBody />
           <HomeDesktop />
         </div>
@@ -50,10 +51,13 @@ function Home() {
   );
 }
 
-function HomeMobileHero() {
+const VISIBLE_H1 =
+  "Free Typing Practice and Exam Preparation for Government-Job Aspirants";
+
+function HomeHero() {
   return (
-    <section className="bento-tile p-5 font-hindi md:hidden">
-      <div className="mb-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+    <section className="bento-tile p-5 font-hindi md:border-0 md:bg-transparent md:p-0" aria-label="TAIPOQ introduction">
+      <div className="mb-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:hidden">
         <img
           src={BRAND_ASSETS.logo3d}
           alt="TAIPOQ"
@@ -64,11 +68,15 @@ function HomeMobileHero() {
           decoding="async"
         />
       </div>
-      <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
-      <p className="mt-2 text-base font-medium leading-snug text-foreground">
-        Govt Job Computer & Typing Preparation
+      <h1 className="font-display text-2xl font-bold leading-snug tracking-tight md:text-4xl">
+        {VISIBLE_H1}
+      </h1>
+      <p className="mt-2 text-base font-medium leading-snug text-foreground md:hidden">TAIPOQ</p>
+      <p className="mt-2 hidden max-w-2xl text-base text-muted-foreground md:block">
+        English and Hindi typing practice, mock tests, study resources and verified job updates for
+        aspirants.
       </p>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:hidden">
         Upcoming Exams · MS Word · Excel · Model Papers · Typing
       </p>
     </section>
@@ -79,16 +87,16 @@ function HomeMobilePrimarySection() {
   return (
     <section className="space-y-3 font-hindi md:hidden" aria-label="Primary actions">
       <Link
-        to={MOBILE_ROUTES.jobAds}
+        to="/english/practice"
         className={cn(MOBILE_BTN, "bg-primary text-primary-foreground shadow-sm")}
       >
-        Exam Updates देखें
+        Start Typing Practice
       </Link>
       <Link
-        to="/study-corner"
-        className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+        to="/daily-mission"
+        className={cn(MOBILE_BTN, "border border-primary/40 bg-primary/10 text-primary")}
       >
-        {STUDY_CORNER_LANDING.homeCard.title}
+        Today&apos;s Mission
       </Link>
       <Link
         to="/tests"
@@ -96,12 +104,24 @@ function HomeMobilePrimarySection() {
       >
         <span className={TESTS_HUB_BADGE}>मुख्य</span>
         <span className="w-full pr-14 text-base font-semibold leading-snug text-white">
-          परीक्षा अभ्यास / Tests
+          Attempt a Mock Test
         </span>
         <span className={cn("w-full text-sm font-normal leading-snug", MAIN_ACTION_SUBTITLE)}>
-          Model Paper, Typing Test, Current Affairs और General Science Test एक जगह
+          Model Paper, Current Affairs, General Science और Typing Test
         </span>
         <span className="mt-1 w-full text-sm font-semibold text-white">सभी Tests देखें →</span>
+      </Link>
+      <Link
+        to={MOBILE_ROUTES.jobAds}
+        className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+      >
+        View Verified Job Updates
+      </Link>
+      <Link
+        to="/study-corner"
+        className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
+      >
+        {STUDY_CORNER_LANDING.homeCard.title}
       </Link>
       <Link
         to="/typing-start-guide"
@@ -121,7 +141,7 @@ function HomeDesktopPracticeSection() {
     >
       <div>
         <h2 id="desktop-practice-heading" className="font-display text-xl font-bold tracking-tight md:text-2xl">
-          मुख्य अभ्यास
+          Main preparation areas
         </h2>
         <p className="mt-1 font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
           Tests, Typing Practice और Library
@@ -362,9 +382,9 @@ function HomeDesktop() {
           </div>
           <div className="relative grid h-full gap-8 md:grid-cols-2 md:grid-rows-[1fr_auto] md:items-center md:gap-x-10 md:gap-y-8">
             <div className="md:col-start-1 md:row-start-1">
-              <h1 className="font-display text-6xl font-bold leading-[0.95] tracking-tighter md:text-7xl">
+              <h2 className="font-display text-6xl font-bold leading-[0.95] tracking-tighter md:text-7xl">
                 TAIPOQ
-              </h1>
+              </h2>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">
                 Master precision and speed. The smart English & Hindi typing tutor designed for students,
                 clerks, advocates, and high-performance typists.
@@ -386,6 +406,18 @@ function HomeDesktop() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2 md:col-start-1 md:row-start-2">
+              <Link
+                to="/english/practice"
+                className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.98] hover:bg-primary/90"
+              >
+                Start Typing Practice
+              </Link>
+              <Link
+                to="/daily-mission"
+                className="inline-flex min-h-11 items-center rounded-full border border-primary/40 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-primary transition-transform active:scale-[0.98]"
+              >
+                Today&apos;s Mission
+              </Link>
               <span className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                 v1.0 · Prototype
               </span>
@@ -551,16 +583,19 @@ function HomeDesktop() {
           <p className="mt-1 text-sm text-muted-foreground">सभी Tests एक जगह</p>
         </Link>
 
-        {/* Daily Practice tile */}
-        <div className="bento-tile flex flex-col justify-between p-6 md:col-span-1">
+        {/* Daily Mission shortcut */}
+        <Link
+          to="/daily-mission"
+          className="bento-tile bento-tile-hover flex flex-col justify-between p-6 md:col-span-1"
+        >
           <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-            Daily Practice
+            Daily Mission
           </span>
           <div className="mt-4">
-            <div className="font-display text-2xl font-bold leading-tight">Practice daily.</div>
-            <p className="mt-2 text-xs text-muted-foreground">Improve speed and accuracy over time.</p>
+            <div className="font-display text-2xl font-bold leading-tight">Today&apos;s tasks</div>
+            <p className="mt-2 text-xs text-muted-foreground">Complete today&apos;s TAIPOQ mission.</p>
           </div>
-        </div>
+        </Link>
 
         {/* What TAIPOQ helps */}
         <div className="bento-tile p-6 md:col-span-2">
@@ -646,22 +681,28 @@ const PRACTICE_CARD_BTN =
 
 const DESKTOP_PRACTICE_ACTIONS = [
   {
-    title: "परीक्षा अभ्यास / Tests",
-    subtitle: "Model Paper, Typing Test, Current Affairs और General Science Test",
-    to: "/tests" as const,
-    highlight: true,
-  },
-  {
     title: "English Typing Practice",
-    subtitle: "English typing अभ्यास",
+    subtitle: "Start your primary typing session",
     to: "/english/practice" as const,
-    highlight: false,
+    highlight: true,
   },
   {
     title: "Hindi Typing Practice",
     subtitle: "KrutiDev / Remington अभ्यास",
     to: "/hindi/practice" as const,
     search: { mode: "Remington" as const },
+    highlight: false,
+  },
+  {
+    title: "परीक्षा अभ्यास / Mock Tests",
+    subtitle: "Model Paper, Current Affairs और General Science Test",
+    to: "/tests" as const,
+    highlight: false,
+  },
+  {
+    title: "Verified Job Updates",
+    subtitle: "Official links और verified job updates",
+    to: "/upcoming-exams" as const,
     highlight: false,
   },
   {
@@ -677,6 +718,45 @@ const DESKTOP_PRACTICE_ACTIONS = [
     highlight: false,
   },
 ] as const;
+
+const STUDY_QUICK_LINKS = [
+  { to: "/study-corner/general-awareness/model-test-01" as const, label: "General Awareness Model Test" },
+  { to: "/study-corner/general-science/model-test-01" as const, label: "General Science Model Test" },
+  { to: "/mock-test/current-affairs-pack-02" as const, label: "Current Affairs Tough Pack 02" },
+  { to: "/study-corner/computer-basics/word-basic-knowledge" as const, label: "Computer Knowledge — MS Word" },
+  { to: "/model-paper/current-affairs-pack-02" as const, label: "Pack 02 Model Paper" },
+] as const;
+
+function HomeStudyQuickLinks() {
+  return (
+    <section
+      className="bento-tile space-y-4 p-5 md:p-6"
+      aria-labelledby="home-study-quick-heading"
+    >
+      <div>
+        <h2 id="home-study-quick-heading" className="font-display text-xl font-bold tracking-tight md:text-2xl">
+          Featured Mock Tests
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Quick access to model papers, subject tests and tough practice packs.
+        </p>
+      </div>
+      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {STUDY_QUICK_LINKS.map((link) => (
+          <li key={link.to}>
+            <Link
+              to={link.to}
+              className="flex min-h-11 items-center justify-between rounded-xl border border-border bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-primary/30 hover:bg-primary/5"
+            >
+              <span>{link.label}</span>
+              <span className="font-mono text-xs text-muted-foreground">→</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
 const MOBILE_ROUTES = {
   jobAds: "/upcoming-exams" as const,

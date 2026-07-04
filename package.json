@@ -30,6 +30,7 @@
     "smoke:pack-02": "node tools/smoke-test-pack-02.mjs",
     "smoke:pack-02-foundation": "node tools/smoke-test-pack-02-foundation.mjs",
     "smoke:welcome": "node tools/smoke-test-welcome-overlay.mjs",
+    "smoke:ux-seo": "node tools/smoke-test-ux-seo.mjs",
     "smoke:daily-mission": "node tools/smoke-test-daily-mission.mjs",
     "smoke:typing-analysis": "node tools/smoke-test-typing-analysis.mjs",
     "smoke:mock-foundation": "node tools/smoke-test-mock-test-foundation.mjs",

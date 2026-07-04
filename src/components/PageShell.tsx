@@ -5,12 +5,19 @@ import { NavBar, Footer } from "./NavBar";
 export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
+      >
+        Skip to main content
+      </a>
       <NavBar />
       <main
         id="main-content"
         role="main"
         aria-label="Main content"
-        className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 pb-24 md:py-8 md:pb-8"
+        tabIndex={-1}
+        className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 pb-24 md:py-8 md:pb-8 outline-none"
       >
         {children}
       </main>
