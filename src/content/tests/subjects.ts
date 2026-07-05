@@ -21,7 +21,7 @@ const SUBJECT_SLUG_MAP: Record<string, string> = {
   Hindi: "hindi",
   English: "english",
   "UP GK": "up-gk",
-  "PYQ Guide": "pyq-practice",
+  "Verified PYQ": "pyq-practice",
   "Model Papers": "model-papers",
 };
 

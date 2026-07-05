@@ -17,6 +17,10 @@ import { canAccessPaper } from "@/lib/tests/testAccess";
 import { createShuffledSession, getAllPapers, getPaperBySlugs, getPaperRouteParams } from "@/lib/tests/testGenerator";
 import {
   isPyqGuidePaper,
+  PYQ_CTET_OFFICIAL_SOURCES,
+  PYQ_CTET_PROVENANCE_LINE,
+  PYQ_CTET_SEO_DESCRIPTION,
+  PYQ_CTET_SEO_TITLE,
   PYQ_GUIDE_CONTENT_LABEL,
 } from "@/lib/tests/pyqGuide";
 import {
@@ -32,6 +36,14 @@ export const Route = createFileRoute("/tests/$subject/$paperId")({
   head: ({ params }) => {
     const paper = getPaperBySlugs(params.subject, params.paperId);
     const subjectTitle = getSubjectTitle(params.subject);
+    if (isPyqGuidePaper(params.subject, params.paperId)) {
+      return {
+        meta: [
+          { title: PYQ_CTET_SEO_TITLE },
+          { name: "description", content: PYQ_CTET_SEO_DESCRIPTION },
+        ],
+      };
+    }
     const pageTitle = paper
       ? `${paper.title} — ${subjectTitle} — TAIPOQ`
       : `${subjectTitle} — TAIPOQ`;
@@ -177,6 +189,9 @@ function PaperTestPage() {
             <TestLevelBadge level={paper.level} className="text-blue-950" />
           </div>
           <p className="text-muted-foreground">{paper.intro}</p>
+          {isPyqGuide ? (
+            <p className="text-sm font-medium text-foreground/90">{PYQ_CTET_PROVENANCE_LINE}</p>
+          ) : null}
           <p className="text-sm text-muted-foreground">
             {paper.questionCount} प्रश्न · {paper.durationMinutes} मिनट · {paper.access}
           </p>
@@ -190,11 +205,32 @@ function PaperTestPage() {
         {unlocked && phase === "intro" ? (
           <section className="rounded-2xl border border-border bg-card p-5 sm:p-6">
             {isPyqGuide ? (
-              <p className="text-sm leading-relaxed text-foreground">
-                These are original guide questions about PYQ identification, official source checking, answer-key
-                verification, and safe practice. They are not copied or officially verified previous-year exam
-                questions.
-              </p>
+              <>
+                <p className="text-sm leading-relaxed text-foreground">
+                  Official-source verified adapted PYQs from CTET January 2021 Paper I, Main Set I,
+                  Child Development and Pedagogy (Questions 1–10). Explanations are prepared for
+                  digital practice and are not official CBSE or CTET publications.
+                </p>
+                <div className="mt-4 space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Official sources
+                  </p>
+                  <ul className="space-y-1.5 text-sm">
+                    {PYQ_CTET_OFFICIAL_SOURCES.map((source) => (
+                      <li key={source.href}>
+                        <a
+                          href={source.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary underline-offset-2 hover:underline"
+                        >
+                          {source.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
             ) : null}
             <p className={cn("text-sm leading-relaxed text-muted-foreground", isPyqGuide && "mt-3")}>
               प्रश्न shuffle होंगे। विकल्प भी shuffle होंगे। Login की आवश्यकता नहीं।

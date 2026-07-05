@@ -14,7 +14,7 @@ export const Route = createFileRoute("/tests/")({
       { title: "TAIPOQ Tests — All practice free" },
       {
         name: "description",
-        content: "Subject tests, model papers and original practice guides — Computer, Maths, Reasoning, Current Affairs and more.",
+        content: "Subject tests, model papers and official-source verified PYQs — Computer, Maths, Reasoning, Current Affairs and more.",
       },
     ],
   }),

@@ -6,7 +6,7 @@ export const TEST_LEVEL_LABELS: Record<TestLevel, string> = {
   moderate: "मध्यम",
   expert: "विशेषज्ञ",
   model: "Model Paper",
-  pyq: "PYQ Guide",
+  pyq: "Verified PYQ",
   final_challenge: "Final Challenge",
 };
 

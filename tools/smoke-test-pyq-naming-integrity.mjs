@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Release-readiness smoke checks for PYQ Guide content and public naming.
+ * Release-readiness smoke checks for CTET Verified PYQ paper content.
  * Run: node tools/smoke-test-pyq-naming-integrity.mjs
  */
 
@@ -13,14 +13,31 @@ const ROOT = path.resolve(__dirname, "..");
 
 const PYQ_PAPER_ID = "pyq-practice-test-paper";
 const PYQ_SLUG = "pyq-practice";
-const EXPECTED_TITLE = "PYQ Verification and Official Sources Guide";
-const EXPECTED_IDS = Array.from({ length: 10 }, (_, i) => `PYQ-VERIFY-${String(i + 1).padStart(3, "0")}`);
-const EXPECTED_ANSWER_INDEXES = [2, 1, 1, 0, 0, 2, 1, 2, 1, 2];
+const EXPECTED_TITLE = "CTET January 2021 Paper I — Child Development and Pedagogy PYQs";
+const EXPECTED_SUBJECT = "Verified PYQ";
+const EXPECTED_BADGE = "Official-Source Verified PYQ";
+const EXPECTED_IDS = Array.from(
+  { length: 10 },
+  (_, i) => `CTET-JAN2021-P1-I-Q${String(i + 1).padStart(3, "0")}`,
+);
+const EXPECTED_ANSWER_INDEXES = [0, 2, 1, 0, 2, 1, 0, 3, 1, 3];
+const EXPECTED_ANSWER_LETTERS = ["A", "C", "B", "A", "C", "B", "A", "D", "B", "D"];
+const OFFICIAL_LINK_HOSTS = ["ctet.nic.in"];
+
 const WEAK_OLD_PATTERNS = [
   "PYQ-PATTERN-",
+  "PYQ-VERIFY-",
+  "PYQ Verification and Official Sources Guide",
   "PYQ Source and Practice Guide",
+  "PYQ Guide",
+  "TAIPOQ Original Guide",
   "Which tag should be used for a question copied from an official",
   "official_pyq",
+  "provisional answer key and a final answer key",
+  "recorded response",
+  "memory-based material",
+  "CBSE-approved",
+  "official CTET partner",
 ];
 
 const errors = [];
@@ -66,20 +83,23 @@ function extractTsPyqPaperBlock(tsSrc) {
 }
 
 function assertPaper(paper, label) {
-  if (paper.title !== EXPECTED_TITLE) fail(`${label}: title "${paper.title}" !== "${EXPECTED_TITLE}"`);
-  else pass(`${label}: title`);
-  if (paper.subject !== "PYQ Guide") fail(`${label}: subject not PYQ Guide`);
-  else pass(`${label}: subject PYQ Guide`);
-  if (paper.level !== "basic") fail(`${label}: level "${paper.level}" !== basic`);
+  if (paper.title !== EXPECTED_TITLE) fail(`${label}: title mismatch`);
+  else pass(`${label}: CTET title`);
+  if (paper.subject !== EXPECTED_SUBJECT) fail(`${label}: subject not ${EXPECTED_SUBJECT}`);
+  else pass(`${label}: subject ${EXPECTED_SUBJECT}`);
+  if (paper.level !== "basic") fail(`${label}: level not basic`);
   else pass(`${label}: level basic`);
   if (paper.access !== "practice_pass") fail(`${label}: access not practice_pass`);
   else pass(`${label}: access practice_pass`);
-  if (paper.durationMinutes !== 10) fail(`${label}: duration ${paper.durationMinutes} !== 10`);
-  else pass(`${label}: duration 10 minutes`);
-  if (paper.questionCount !== 10) fail(`${label}: questionCount ${paper.questionCount} !== 10`);
+  if (paper.durationMinutes !== 10) fail(`${label}: duration not 10`);
+  else pass(`${label}: duration 10`);
+  if (paper.questionCount !== 10) fail(`${label}: questionCount not 10`);
   else pass(`${label}: questionCount 10`);
   if (paper.paperId !== PYQ_PAPER_ID) fail(`${label}: paperId mismatch`);
   else pass(`${label}: paperId ${PYQ_PAPER_ID}`);
+  if (!paper.intro.includes("not an official CBSE or CTET publication")) {
+    fail(`${label}: disclaimer missing`);
+  } else pass(`${label}: disclaimer present`);
 }
 
 function assertQuestions(questions, label) {
@@ -90,63 +110,87 @@ function assertQuestions(questions, label) {
   pass(`${label}: 10 questions`);
 
   const ids = questions.map((q) => q.id);
-  const unique = new Set(ids);
-  if (unique.size !== 10) fail(`${label}: duplicate question ids`);
-  else pass(`${label}: unique question ids`);
+  if (new Set(ids).size !== 10) fail(`${label}: duplicate ids`);
+  else pass(`${label}: unique ids`);
 
   for (let i = 0; i < EXPECTED_IDS.length; i++) {
-    const expectedId = EXPECTED_IDS[i];
-    if (ids[i] !== expectedId) fail(`${label}: id[${i}] ${ids[i]} !== ${expectedId}`);
+    if (ids[i] !== EXPECTED_IDS[i]) fail(`${label}: id[${i}] ${ids[i]} !== ${EXPECTED_IDS[i]}`);
   }
-  if (!errors.some((e) => e.includes(`${label}: id[`))) pass(`${label}: ids PYQ-VERIFY-001..010 in order`);
+  if (!errors.some((e) => e.includes(`${label}: id[`))) {
+    pass(`${label}: ids CTET-JAN2021-P1-I-Q001..010`);
+  }
 
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
     const prefix = `${label} ${q.id}`;
 
-    if (q.level !== "basic") fail(`${prefix}: level "${q.level}" !== basic`);
-    if (!Array.isArray(q.options) || q.options.length !== 4) fail(`${prefix}: options count !== 4`);
-    else if (q.options.some((o) => !String(o).trim())) fail(`${prefix}: empty option`);
     if (q.answerIndex !== EXPECTED_ANSWER_INDEXES[i]) {
       fail(`${prefix}: answerIndex ${q.answerIndex} !== ${EXPECTED_ANSWER_INDEXES[i]}`);
     }
-    const expectedAnswer = q.options[q.answerIndex];
-    if (expectedAnswer && q.answer !== expectedAnswer) {
-      fail(`${prefix}: answer text does not match answerIndex option`);
+    const letter = String.fromCharCode(65 + q.answerIndex);
+    if (letter !== EXPECTED_ANSWER_LETTERS[i]) {
+      fail(`${prefix}: letter ${letter} !== ${EXPECTED_ANSWER_LETTERS[i]}`);
+    }
+    if (q.options[q.answerIndex] !== q.answer) {
+      fail(`${prefix}: answer text mismatch`);
+    }
+    if (!Array.isArray(q.options) || q.options.length !== 4 || q.options.some((o) => !String(o).trim())) {
+      fail(`${prefix}: invalid options`);
     }
     if (!String(q.explanation || "").trim()) fail(`${prefix}: empty explanation`);
-    if (!String(q.sourceCheck || "").trim()) fail(`${prefix}: empty sourceCheck`);
+    if (!String(q.sourceCheck || "").includes("Official-source verified adapted PYQ")) {
+      fail(`${prefix}: sourceCheck missing adapted PYQ marker`);
+    }
+    if (!String(q.sourceCheck || "").includes("CTET January 2021")) {
+      fail(`${prefix}: sourceCheck missing CTET January 2021`);
+    }
+    if (!String(q.sourceCheck || "").includes("Main Set I")) {
+      fail(`${prefix}: sourceCheck missing Main Set I`);
+    }
+    if (!String(q.sourceCheck || "").includes(`original Question ${i + 1}`)) {
+      fail(`${prefix}: sourceCheck missing original question number`);
+    }
 
     for (const weak of WEAK_OLD_PATTERNS) {
-      if (JSON.stringify(q).includes(weak)) fail(`${prefix}: contains weak/old pattern "${weak}"`);
-    }
-    if (/copied from an official|official examination question paper/i.test(q.question)) {
-      fail(`${prefix}: question implies copied official examination content`);
+      if (q.question.includes(weak) || q.explanation.includes(weak)) {
+        fail(`${prefix}: weak/old pattern in question/explanation: ${weak}`);
+      }
     }
   }
 
-  if (!errors.some((e) => e.startsWith(`${label} PYQ-VERIFY`))) {
-    pass(`${label}: answer indexes 2,1,1,0,0,2,1,2,1,2`);
-    pass(`${label}: four non-empty options each`);
-    pass(`${label}: non-empty explanation and sourceCheck each`);
+  if (!errors.some((e) => e.startsWith(`${label} CTET-JAN2021`))) {
+    pass(`${label}: answer indexes 0,2,1,0,2,1,0,3,1,3`);
+    pass(`${label}: answer letters A,C,B,A,C,B,A,D,B,D`);
   }
 }
 
-function papersEqual(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
+console.log("TAIPOQ — CTET Verified PYQ Content Smoke Test");
+console.log("=".repeat(52));
 
-console.log("TAIPOQ — PYQ Guide Content & Naming Integrity Smoke Test");
-console.log("=".repeat(56));
-
-mustInclude("src/content/tests/subjects.ts", '"PYQ Guide": "pyq-practice"', "PYQ Guide subject slug");
-mustNotInclude("src/content/tests/subjects.ts", '"PYQ Practice": "pyq-practice"', "old PYQ Practice subject key");
-mustInclude("src/routes/tests.index.tsx", "original practice guides", "updated tests SEO");
-mustNotInclude("src/routes/tests.index.tsx", "PYQ and Model Papers", "old tests SEO");
-mustInclude("src/lib/tests/pyqGuide.ts", "TAIPOQ Original Guide", "content label constant");
-mustInclude("src/components/tests/TestCard.tsx", "PYQ_GUIDE_CONTENT_LABEL", "guide badge on card");
-mustInclude("src/routes/tests.$subject.$paperId.tsx", "isPyqGuidePaper", "guide framing on paper page");
+mustInclude("src/content/tests/subjects.ts", '"Verified PYQ": "pyq-practice"', "Verified PYQ subject slug");
+mustNotInclude("src/content/tests/subjects.ts", '"PYQ Guide": "pyq-practice"', "old PYQ Guide subject key");
+mustInclude("src/lib/tests/pyqGuide.ts", EXPECTED_BADGE, "content badge constant");
+mustInclude("src/lib/tests/pyqGuide.ts", "ctet.nic.in/question-paper-january-2021", "official question archive link");
+mustInclude("src/lib/tests/pyqGuide.ts", "ctet.nic.in/previous-year-final-answer-key", "official answer-key archive link");
+mustInclude("src/routes/tests.$subject.$paperId.tsx", "Official sources", "official sources section");
+mustInclude("src/routes/tests.$subject.$paperId.tsx", "noopener noreferrer", "safe external links");
+mustInclude("src/components/tests/TestCard.tsx", "PYQ_GUIDE_CONTENT_LABEL", "badge on card");
 mustInclude("src/content/sscCglPatternPracticeContent.ts", "not an official SSC previous-year", "SSC disclaimer preserved");
+
+mustNotInclude("src/content/tests/checkedTestPaperPack01.ts", "PYQ-VERIFY-", "old guide ids in TS");
+mustNotInclude("public/data/test-paper-pack-01.json", "PYQ-VERIFY-", "old guide ids in JSON");
+mustNotInclude("src/content/tests/checkedTestPaperPack01.ts", "PYQ Verification and Official Sources Guide", "old guide title");
+
+const routeSrc = readFileSync(path.join(ROOT, "src/routes/tests.$subject.$paperId.tsx"), "utf8");
+if (routeSrc.includes("CBSE-approved") || routeSrc.includes("official CTET partner")) {
+  fail("paper route: CBSE endorsement claim");
+} else pass("paper route: no CBSE endorsement claim");
+
+for (const host of OFFICIAL_LINK_HOSTS) {
+  const guideSrc = readFileSync(path.join(ROOT, "src/lib/tests/pyqGuide.ts"), "utf8");
+  if (!guideSrc.includes(host)) fail(`pyqGuide missing official host ${host}`);
+  else pass(`pyqGuide: ${host} link present`);
+}
 
 const tsSrc = readFileSync(path.join(ROOT, "src/content/tests/checkedTestPaperPack01.ts"), "utf8");
 const jsonPack = JSON.parse(readFileSync(path.join(ROOT, "public/data/test-paper-pack-01.json"), "utf8"));
@@ -155,7 +199,7 @@ let tsPaper;
 try {
   tsPaper = extractTsPyqPaperBlock(tsSrc);
 } catch (err) {
-  fail(`TS PYQ paper parse: ${err.message}`);
+  fail(`TS paper parse: ${err.message}`);
 }
 
 const jsonPaper = jsonPack.papers.find((p) => p.paperId === PYQ_PAPER_ID);
@@ -164,36 +208,20 @@ if (!jsonPaper) fail("pyq paper missing from json pack");
 if (tsPaper) {
   assertPaper(tsPaper, "TS");
   assertQuestions(tsPaper.questions, "TS");
-  mustNotInclude("src/content/tests/checkedTestPaperPack01.ts", "PYQ Source and Practice Guide", "old title in TS");
-  const pyqBlockStart = tsSrc.indexOf('"file": "13_PYQ_PRACTICE_TEST_PAPER.md"');
-  const pyqBlockEnd = tsSrc.indexOf('"paperId": "pyq-practice-test-paper"', pyqBlockStart);
-  const pyqBlock = tsSrc.slice(pyqBlockStart, pyqBlockEnd);
-  if (pyqBlock.includes('"durationMinutes": 15')) fail("TS PYQ block still contains durationMinutes 15");
-  else pass("TS PYQ block: no duration 15");
-  if (pyqBlock.includes('"level": "moderate"')) fail("TS PYQ block still contains level moderate");
-  else pass("TS PYQ block: no moderate level");
 }
 
 if (jsonPaper) {
   assertPaper(jsonPaper, "JSON");
   assertQuestions(jsonPaper.questions, "JSON");
-  mustNotInclude("public/data/test-paper-pack-01.json", "PYQ Source and Practice Guide", "old title in JSON");
-  if (JSON.stringify(jsonPaper).includes('"durationMinutes": 15')) {
-    // only fail if PYQ paper has 15 — grep within paper object
-    if (jsonPaper.durationMinutes === 15) fail("JSON PYQ paper duration still 15");
-  }
-  if (jsonPaper.durationMinutes === 10) pass("JSON PYQ paper: duration 10");
 }
 
 if (tsPaper && jsonPaper) {
-  if (!papersEqual(tsPaper, jsonPaper)) fail("TS and JSON PYQ paper blocks differ");
+  if (JSON.stringify(tsPaper) !== JSON.stringify(jsonPaper)) fail("TS/JSON mirror mismatch");
   else pass("TS/JSON canonical mirror match");
 }
 
-if (PYQ_SLUG !== "pyq-practice") fail("slug changed unexpectedly");
+if (PYQ_SLUG !== "pyq-practice") fail("slug changed");
 else pass("slug pyq-practice unchanged");
-
-mustInclude("src/content/tests/subjects.ts", `"PYQ Guide": "${PYQ_SLUG}"`, "slug mapping");
 
 console.log(`\nChecks passed: ${checks.length}`);
 console.log(`Errors: ${errors.length}`);

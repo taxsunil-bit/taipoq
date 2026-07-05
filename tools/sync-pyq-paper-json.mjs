@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Sync the PYQ guide paper block from checkedTestPaperPack01.ts into
+ * Sync the Verified PYQ paper block from checkedTestPaperPack01.ts into
  * public/data/test-paper-pack-01.json (single-paper mirror update only).
  *
  * Usage:
@@ -17,7 +17,10 @@ const dryRun = process.argv.includes("--dry-run");
 
 const TS_MARKER = '"file": "13_PYQ_PRACTICE_TEST_PAPER.md"';
 const PAPER_ID = "pyq-practice-test-paper";
-const EXPECTED_TITLE = "PYQ Verification and Official Sources Guide";
+const EXPECTED_TITLE = "CTET January 2021 Paper I — Child Development and Pedagogy PYQs";
+const EXPECTED_SUBJECT = "Verified PYQ";
+const EXPECTED_FIRST_ID = "CTET-JAN2021-P1-I-Q001";
+const EXPECTED_LAST_ID = "CTET-JAN2021-P1-I-Q010";
 
 const tsPath = path.join(root, "src/content/tests/checkedTestPaperPack01.ts");
 const jsonPath = path.join(root, "public/data/test-paper-pack-01.json");
@@ -44,7 +47,18 @@ try {
 
 if (paper.paperId !== PAPER_ID) fail(`Unexpected paperId: ${paper.paperId}`);
 if (paper.title !== EXPECTED_TITLE) fail(`Unexpected title: ${paper.title}`);
+if (paper.subject !== EXPECTED_SUBJECT) fail(`Unexpected subject: ${paper.subject}`);
 if (paper.questions.length !== 10) fail(`Expected 10 questions, got ${paper.questions.length}`);
+
+const ids = paper.questions.map((q) => q.id);
+if (ids[0] !== EXPECTED_FIRST_ID || ids[9] !== EXPECTED_LAST_ID) {
+  fail(`Unexpected question IDs: ${ids[0]} .. ${ids[9]}`);
+}
+
+for (let i = 0; i < 10; i++) {
+  const expected = `CTET-JAN2021-P1-I-Q${String(i + 1).padStart(3, "0")}`;
+  if (ids[i] !== expected) fail(`Question ${i + 1} id ${ids[i]} !== ${expected}`);
+}
 
 const pack = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
 if (!Array.isArray(pack.papers)) fail("JSON pack missing papers array");
