@@ -545,11 +545,13 @@
     "title": "ISRO Official",
     "url": "https://www.isro.gov.in/ISTRACRecruitment4.html",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing verified live data."
+    "verifiedFacts": [
+      "fact:recruitmentPage|value:https://www.isro.gov.in/ISTRACRecruitment4.html|source:isro-istrac-02-2026--website|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing verified live data. Phase B3 verified 2026-07-05. Phase B3 verified 2026-07-05."
   },
   {
     "id": "isro-istrac-02-2026--application",
@@ -559,11 +561,13 @@
     "title": "ISRO ISTRAC Recruitment 2026 — Technical & Scientific Posts — official application portal",
     "url": "https://www.isro.gov.in/ISTRACRecruitment4.html",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:applicationPortal|value:www.isro.gov.in / www.istrac.gov.in|source:isro-istrac-02-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B3 verified 2026-07-05. Phase B3 verified 2026-07-05."
   },
   {
     "id": "sbi-law-officer-sco-2026--website",
@@ -826,5 +830,27 @@
     ],
     "corrigendumChecked": true,
     "notes": "Phase B2 source repair — direct PDF replaces broken /recruitment page. Phase B2 verified 2026-07-05."
+  },
+  {
+    "id": "isro-istrac-02-2026--notification",
+    "vacancyId": "isro-istrac-02-2026",
+    "sourceType": "official-notification",
+    "organisation": "ISRO Telemetry, Tracking and Command Network",
+    "title": "ISTRAC Advertisement 02/2026 — official bilingual PDF",
+    "url": "https://www.isro.gov.in/media_isro/pdf/recruitmentNotice/2026/June/ISTRAC_BILINGUAL_ADVERTISEMENT_02_2026_26062026.pdf",
+    "publicationDate": "2026-06-27",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:ISTRAC:02/2026|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:notificationDate|value:2026-06-27|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:totalVacancies|value:26|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStart|value:2026-06-27T10:00+05:30|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEnd|value:2026-07-20T23:55+05:30|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:postGroupCount|value:6|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:postCodeCount|value:10|source:isro-istrac-02-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B3 strict verification source. Phase B3 verified 2026-07-05. Phase B3 verified 2026-07-05."
   }
 ]

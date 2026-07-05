@@ -18,6 +18,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateMultipostRecord } from "../src/lib/vacancyMultipost.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -392,6 +393,13 @@ function validateRecord(item, index, ctx) {
     errors.push(`${rowLabel}: withdrawn record must not expose applyUrl`);
   }
 
+  validateMultipostRecord(item, {
+    errors,
+    warnings,
+    rowLabel,
+    knownSourceIds: ctx.knownSourceIds,
+  });
+
   // Legacy preview warnings (data-quality, non-blocking)
   if (item.status === "verification_pending") {
     warnings.push(`${rowLabel}: status verification_pending — not ready for public feed`);
@@ -433,7 +441,7 @@ function validateDataset(label, filePath, sourcesByVacancy) {
   const seenSlugs = new Map();
   const seenAdvOrg = new Map();
   const seenNoticeUrls = new Map();
-  const ctx = { errors, warnings, seenIds, label };
+  const ctx = { errors, warnings, seenIds, label, knownSourceIds: sourcesByVacancy?.allSourceIds };
 
   data.items.forEach((item, index) => {
     validateRecord(item, index, ctx);

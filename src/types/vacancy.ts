@@ -55,6 +55,49 @@ export type VacancyRegistrySourceType =
   | "official-press-release"
   | "secondary-cross-check";
 
+/** Category/reservation breakup for a post group (optional). */
+export type VacancyPostGroupCategoryBreakdown = Record<string, number>;
+
+/** Vacancy counts for one post group within a multi-post advertisement. */
+export type VacancyPostGroupVacancies = {
+  total: number;
+  categoryBreakdown?: VacancyPostGroupCategoryBreakdown;
+  /** Official note when vacancies are split across locations (e.g. ISTRAC vs MCF). */
+  locationNote?: string;
+  /** Set only when the official notice genuinely does not specify a count. */
+  notSpecifiedInNotice?: boolean;
+};
+
+/**
+ * Structured post group for multi-post government advertisements (Batch B3).
+ * Optional on VacancyItem — legacy and single-post verified records omit this.
+ */
+export type VacancyPostGroup = {
+  id: string;
+  title: string;
+  postCodes?: string[];
+  vacancies: VacancyPostGroupVacancies;
+  employmentType?: string;
+  qualification: string;
+  disciplines?: string[];
+  ageMinimum?: number;
+  ageMaximum?: number;
+  ageCutoffDate?: string;
+  /** Used when min/max pair is not published separately per group. */
+  ageLimitText?: string;
+  /** Official exemption when age criteria do not apply to this group. */
+  ageNotApplicable?: boolean;
+  fee?: string;
+  payLevel?: string;
+  salary?: string;
+  /** Official exemption when pay/stipend is not published for this group. */
+  payNotApplicable?: boolean;
+  selectionProcess?: string[];
+  applicationMode?: string;
+  sourceIds: string[];
+  verifiedFacts?: string[];
+};
+
 export type VacancyItem = {
   id: string;
   title: string;
@@ -108,6 +151,8 @@ export type VacancyItem = {
   officialNotificationUrl?: string;
   officialApplicationUrl?: string;
   officialWebsiteUrl?: string;
+  /** Structured post-wise facts for multi-post advertisements (optional). */
+  postGroups?: VacancyPostGroup[];
 };
 
 export type VacanciesPayload = {

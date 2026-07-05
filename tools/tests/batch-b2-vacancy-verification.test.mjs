@@ -31,8 +31,8 @@ const B2_VERIFIED = [
   "delhi-hjs-examination-2026",
 ];
 const B1_VERIFIED = ["sbi-po-2026", "new-india-assurance-apprentice-2026-27"];
-const ALL_VERIFIED = [...B1_VERIFIED, ...B2_VERIFIED];
-const SCHEMA_BLOCKED = ["isro-istrac-02-2026"];
+const ALL_VERIFIED = [...B1_VERIFIED, ...B2_VERIFIED, "isro-istrac-02-2026"];
+const FORMERLY_SCHEMA_BLOCKED = ["isro-istrac-02-2026"];
 const PLACEHOLDER_RE =
   /as per official advertisement|view official notice|view official pdf|post-wise; view|see notification|as per cen|details in pdf/i;
 
@@ -65,12 +65,13 @@ test("Gujarat Legal Assistant is contractual and law_legal sector", () => {
   assert.notEqual(getVerifiedVacancySector(item), "judicial");
 });
 
-test("ISRO remains schema-blocked (not verified)", () => {
+test("ISRO is verified with structured post groups (Batch B3)", () => {
   const live = loadLive();
-  for (const id of SCHEMA_BLOCKED) {
+  for (const id of FORMERLY_SCHEMA_BLOCKED) {
     const item = live.items.find((i) => i.id === id);
-    assert.equal(strictPublicationContractPasses(item), false, id);
-    assert.match(item.qualificationShort, /post-wise|view official/i);
+    assert.equal(strictPublicationContractPasses(item), true, id);
+    assert.ok(Array.isArray(item.postGroups) && item.postGroups.length === 6, id);
+    assert.equal(item.totalVacancies, 26);
   }
 });
 
@@ -88,12 +89,12 @@ test("Delhi HJS source repaired to direct PDF and dedicated apply portal", () =>
   assert.ok(!String(item.officialNoticeUrl).includes("/recruitment"));
 });
 
-test("fully verified count equals 6 open strict-contract records", () => {
+test("fully verified count equals 7 open strict-contract records", () => {
   const live = loadLive();
   const summary = computePublicVacancySummary(live.items, AUDIT_CLOCK);
   const strictOnDisplay = summary.displayed.filter((i) => strictPublicationContractPasses(i));
-  assert.equal(summary.fullyVerified, 6);
-  assert.equal(strictOnDisplay.length, 6);
+  assert.equal(summary.fullyVerified, 7);
+  assert.equal(strictOnDisplay.length, 7);
   for (const id of ALL_VERIFIED) {
     assert.ok(strictOnDisplay.some((i) => i.id === id), `missing verified ${id}`);
   }

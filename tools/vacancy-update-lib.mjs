@@ -17,6 +17,7 @@ import {
   isVacancyPublicLegacy,
   strictPublicationContractPasses,
 } from "../src/lib/vacanciesSource.mjs";
+import { collectVacancySourceIds, diffPostGroups } from "../src/lib/vacancyMultipost.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(__dirname, "..");
@@ -299,7 +300,7 @@ export function auditSourceRegistry(vacancies, sources) {
   for (const v of vacancies) {
     if (v?.id) vacancyIds.add(v.id);
     if (v?.slug) slugToId.set(String(v.slug), v.id);
-    for (const sid of v?.sourceIds ?? []) {
+    for (const sid of collectVacancySourceIds(v)) {
       const list = referencedSourceIds.get(sid) ?? [];
       list.push(v.id);
       referencedSourceIds.set(sid, list);
@@ -460,6 +461,7 @@ export function semanticDiff(livePayload, previewPayload, opts = {}) {
   const unchanged = [];
   const trustChanges = [];
   const eligibilityChanges = [];
+  const postGroupChanges = [];
   const identityStrategies = [];
 
   for (const [key, prev] of preview.map) {
@@ -482,6 +484,16 @@ export function semanticDiff(livePayload, previewPayload, opts = {}) {
     const curElig = strictPublicationContractPasses(cur);
     const prevElig = strictPublicationContractPasses(prev);
     if (curElig !== prevElig) eligibilityChanges.push({ id: prev.id, from: curElig, to: prevElig });
+
+    const pgDiff = diffPostGroups(cur, prev);
+    if (
+      pgDiff.added.length ||
+      pgDiff.removed.length ||
+      pgDiff.modified.length ||
+      pgDiff.vacancyCountChanges.length
+    ) {
+      postGroupChanges.push({ id: prev.id, ...pgDiff });
+    }
   }
   for (const [key, cur] of live.map) {
     if (!preview.map.has(key)) removed.push(cur.id);
@@ -496,13 +508,13 @@ export function semanticDiff(livePayload, previewPayload, opts = {}) {
     return t === "VERIFIED_PUBLISHED" || t === "LEGACY_PUBLIC_UNVERIFIED";
   }).length;
 
-  // Source-mapping deltas (by referenced sourceIds).
-  const liveSrc = new Map(liveItems.map((i) => [i.id, new Set(i.sourceIds ?? [])]));
+  // Source-mapping deltas (by referenced sourceIds, including nested post groups).
+  const liveSrc = new Map(liveItems.map((i) => [i.id, collectVacancySourceIds(i)]));
   const sourceMappingsAdded = [];
   const sourceMappingsRemoved = [];
   for (const p of previewItems) {
     const before = liveSrc.get(p.id) ?? new Set();
-    const after = new Set(p.sourceIds ?? []);
+    const after = collectVacancySourceIds(p);
     for (const s of after) if (!before.has(s)) sourceMappingsAdded.push({ id: p.id, sourceId: s });
     for (const s of before) if (!after.has(s)) sourceMappingsRemoved.push({ id: p.id, sourceId: s });
   }
@@ -524,6 +536,7 @@ export function semanticDiff(livePayload, previewPayload, opts = {}) {
     sourceMappingsRemoved,
     trustChanges,
     eligibilityChanges,
+    postGroupChanges,
     publicVisibleBefore: publicBefore,
     publicVisibleAfter: publicAfter,
     publicVisibleDelta: publicAfter - publicBefore,

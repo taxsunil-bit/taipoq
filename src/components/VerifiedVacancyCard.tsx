@@ -16,7 +16,7 @@ import {
 } from "@/lib/vacancies";
 import { markDailyMissionTaskComplete } from "@/lib/dailyMission";
 import { formatDateDDMMYYYY, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
-import type { VacancyItem } from "@/types/vacancy";
+import type { VacancyItem, VacancyPostGroup } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
 
 type VerifiedVacancyCardProps = {
@@ -90,8 +90,53 @@ function handleVerifiedJobReview(source: string) {
   markDailyMissionTaskComplete("jobUpdate", { source });
 }
 
+function formatPostGroupAge(group: VacancyPostGroup): string | undefined {
+  if (group.ageLimitText?.trim()) return displayText(group.ageLimitText);
+  if (group.ageMinimum != null && group.ageMaximum != null) {
+    const cutoff = group.ageCutoffDate ? ` as on ${formatDateDDMMYYYY(group.ageCutoffDate)}` : "";
+    return `${group.ageMinimum}–${group.ageMaximum} years${cutoff}`;
+  }
+  if (group.ageNotApplicable) return "Not applicable per official notice";
+  return undefined;
+}
+
+function formatPostGroupPay(group: VacancyPostGroup): string | undefined {
+  const pay = group.payLevel?.trim() || group.salary?.trim();
+  return pay ? displayText(pay) : group.payNotApplicable ? "Not specified in official notice" : undefined;
+}
+
+function PostGroupCard({ group }: { group: VacancyPostGroup }) {
+  const age = formatPostGroupAge(group);
+  const pay = formatPostGroupPay(group);
+  const selection = group.selectionProcess?.length
+    ? group.selectionProcess.map((s) => displayText(s)).join("; ")
+    : undefined;
+  const codes = group.postCodes?.length ? group.postCodes.join(", ") : undefined;
+  const disciplines = group.disciplines?.length ? group.disciplines.join("; ") : undefined;
+
+  return (
+    <article className="rounded-md border border-border/60 bg-muted/10 p-2.5">
+      <h4 className="text-xs font-semibold leading-snug text-foreground">{group.title}</h4>
+      <div className="mt-1 space-y-0.5">
+        <CompactLine label="Vacancies" value={String(group.vacancies.total)} emphasize />
+        {codes ? <CompactLine label="Post codes" value={codes} /> : null}
+        {disciplines ? <CompactLine label="Discipline / trade" value={disciplines} /> : null}
+        {group.vacancies.locationNote ? (
+          <CompactLine label="Location split" value={displayText(group.vacancies.locationNote)} />
+        ) : null}
+        <CompactLine label="Qualification" value={displayText(group.qualification)} />
+        {age ? <CompactLine label="Age" value={age} /> : null}
+        {pay ? <CompactLine label="Pay" value={pay} /> : null}
+        {group.fee ? <CompactLine label="Fee" value={displayText(group.fee)} /> : null}
+        {selection ? <CompactLine label="Selection" value={selection} /> : null}
+      </div>
+    </article>
+  );
+}
+
 export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const [postWiseOpen, setPostWiseOpen] = useState(false);
 
   if (item.status === "verification_pending" || item.isPreparationOnly) {
     return null;
@@ -119,6 +164,9 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const noticeLine = isMeaningfulVacancyDetailText(item.notificationWindowText)
     ? displayText(item.notificationWindowText)
     : undefined;
+  const postGroups = item.postGroups ?? [];
+  const hasPostGroups = postGroups.length > 0;
+  const postWisePanelId = `post-wise-${item.id}`;
 
   return (
     <li>
@@ -187,8 +235,45 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
             {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
             <CompactLine label="Vacancies" value={displayText(item.vacanciesText)} />
-            <CompactLine label="Eligibility" value={displayText(item.qualificationShort)} />
+            {!hasPostGroups ? (
+              <CompactLine label="Eligibility" value={displayText(item.qualificationShort)} />
+            ) : (
+              <p className="text-xs leading-snug text-muted-foreground">
+                Eligibility varies by post — expand post-wise details below.
+              </p>
+            )}
           </div>
+
+          {hasPostGroups ? (
+            <div className="space-y-2">
+              <button
+                type="button"
+                id={`${postWisePanelId}-trigger`}
+                aria-controls={postWisePanelId}
+                aria-expanded={postWiseOpen}
+                onClick={() => setPostWiseOpen((open) => !open)}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "min-h-11 w-full justify-between px-3 text-xs sm:text-sm",
+                )}
+              >
+                <span>{postWiseOpen ? "Hide post-wise details" : "View post-wise details"}</span>
+                <span aria-hidden="true">{postWiseOpen ? "▲" : "▼"}</span>
+              </button>
+              {postWiseOpen ? (
+                <div
+                  id={postWisePanelId}
+                  role="region"
+                  aria-labelledby={`${postWisePanelId}-trigger`}
+                  className="grid gap-2 sm:grid-cols-2"
+                >
+                  {postGroups.map((group) => (
+                    <PostGroupCard key={group.id} group={group} />
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             {showSource ? (

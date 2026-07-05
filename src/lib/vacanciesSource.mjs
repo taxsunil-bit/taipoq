@@ -12,6 +12,8 @@
  * intentionally no second/parallel loader.
  */
 
+import { multipostStrictContractPasses } from "./vacancyMultipost.mjs";
+
 export const LIVE_DATA_URL = "/data/vacancies.json";
 export const PREVIEW_DATA_URL = "/data/vacancies.preview.json";
 
@@ -136,6 +138,9 @@ export function strictPublicationContractPasses(item) {
   if (!isHttps(item.officialApplicationUrl || item.applyUrl)) return false;
   if (!String(item.lastVerifiedAt ?? "").trim()) return false;
   if (!Array.isArray(item.sourceIds) || item.sourceIds.length === 0) return false;
+  if (Array.isArray(item.postGroups) && item.postGroups.length > 0) {
+    if (!multipostStrictContractPasses(item)) return false;
+  }
   return true;
 }
 
