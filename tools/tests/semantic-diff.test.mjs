@@ -50,6 +50,25 @@ test("19: application-URL collisions are detected after normalization", () => {
   assert.equal(diff.applicationUrlCollisions.length, 1);
 });
 
+test("19b: shared NATS portal is not a collision across different employers", () => {
+  const preview = payload([
+    baseItem({
+      id: "nia",
+      slug: "nia",
+      organisation: "The New India Assurance Co. Ltd.",
+      applyUrl: "https://nats.education.gov.in/",
+    }),
+    baseItem({
+      id: "drdo",
+      slug: "drdo",
+      organisation: "Defence Electronics Applications Laboratory (DEAL), DRDO",
+      applyUrl: "https://nats.education.gov.in",
+    }),
+  ]);
+  const diff = semanticDiff(payload([]), preview);
+  assert.equal(diff.applicationUrlCollisions.length, 0);
+});
+
 test("ambiguous identity is reported with the strategy used", () => {
   const preview = payload([
     { title: "No id no slug", organisation: "Org", status: "active", preparationLinks: [] },

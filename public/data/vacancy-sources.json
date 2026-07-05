@@ -228,11 +228,14 @@
     "title": "Gujarat High Court Legal Assistant 2026 — official application portal",
     "url": "https://hc-ojas.gujarat.gov.in/",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:officialApplicationUrl|value:https://hc-ojas.gujarat.gov.in/|source:gujarat-hc-legal-assistant-2026--application|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:online via HC-OJAS portal|source:gujarat-hc-legal-assistant-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B2 verified 2026-07-05."
   },
   {
     "id": "bob-cic-regular-2026--website",
@@ -366,9 +369,9 @@
     "sourceType": "official-website",
     "organisation": "High Court of Delhi",
     "title": "Delhi High Court Official",
-    "url": "https://delhihighcourt.nic.in/recruitment",
+    "url": "https://delhihighcourt.nic.in/job-openings",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
     "verifiedFacts": [],
     "corrigendumChecked": false,
@@ -380,13 +383,16 @@
     "sourceType": "official-application",
     "organisation": "High Court of Delhi",
     "title": "Delhi Higher Judicial Service Examination 2026 — official application portal",
-    "url": "https://delhihighcourt.nic.in/recruitment",
+    "url": "https://applycareer.co.in/DHC/HighCourt2026DHJSE/",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:officialApplicationUrl|value:https://applycareer.co.in/DHC/HighCourt2026DHJSE/|source:delhi-hjs-examination-2026--application|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:online via applycareer.co.in Delhi High Court portal|source:delhi-hjs-examination-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B2 verified 2026-07-05."
   },
   {
     "id": "aiims-cre-5-2026--website",
@@ -494,11 +500,14 @@
     "title": "RRB Technician CEN 02/2026 — official application portal",
     "url": "https://www.rrbapply.gov.in/",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:officialApplicationUrl|value:https://www.rrbapply.gov.in/|source:rrb-technician-cen-02-2026--application|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:online via rrbapply.gov.in|source:rrb-technician-cen-02-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B2 verified 2026-07-05."
   },
   {
     "id": "dsssb-advt-03-2026--website",
@@ -632,13 +641,24 @@
     "sourceType": "official-notification",
     "organisation": "Defence Electronics Applications Laboratory (DEAL), DRDO",
     "title": "DRDO DEAL Apprenticeship 2026-27 — official notification",
-    "url": "https://drdo.gov.in/drdo/en/offerings/vacancies/deal-dehradun-invite-applications-engagement-apprentices-year-2026-27",
+    "url": "https://drdo.gov.in/drdo/sites/default/files/vacancy/advtDEAL23062026.pdf",
     "publicationDate": null,
-    "checkedAt": "2026-06-30",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing officialNoticeUrl."
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:DEAL/HRD/Apprenticeship/2026-27|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:employmentType|value:apprenticeship training (not regular permanent employment)|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:vacancyCount|value:77 (19 Graduate + 8 Diploma + 50 ITI)|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:applicationStartDate|value:2026-06-23|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndDate|value:2026-07-23|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:qualification|value:Graduate/Diploma/ITI in specified ECE and related trades with 60% marks; pass year 2022-2026|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:ageLimit|value:Minimum 18 years; maximum per Apprentices Act 1961 and NATS/NAPS|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:payOrStipend|value:Rs 12300 per month|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:NATS 2.0 portal; DEAL ID NUKDDC000015|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:selectionProcess|value:Merit-based; joining intimation by email|source:drdo-deal-apprentice-2026-27--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing officialNoticeUrl. Phase B2 verified 2026-07-05."
   },
   {
     "id": "drdo-dysl-qt-jrf-2026--website",
@@ -709,5 +729,102 @@
     "verifiedFacts": [],
     "corrigendumChecked": false,
     "notes": "Auto-registered from existing officialNoticeUrl."
+  },
+  {
+    "id": "rrb-technician-cen-02-2026--notification",
+    "vacancyId": "rrb-technician-cen-02-2026",
+    "sourceType": "official-notification",
+    "organisation": "Railway Recruitment Boards",
+    "title": "RRB Technician CEN 02/2026 — official notification PDF",
+    "url": "https://www.rrbranchi.gov.in/upload/files/pdf/09_07_06pm04776926682e2fd15200721eacbac1c3.pdf",
+    "publicationDate": "2026-05-23",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:CEN 02/2026|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:vacancyCount|value:6557 (323 Grade-I Signal + 6234 Grade-III)|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStartDate|value:2026-06-30|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndDate|value:2026-07-29|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndTime|value:23:59 IST|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageLimit|value:Grade-I Signal 18-33; Grade-III 18-30 as on 01.07.2026|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageCutoffDate|value:2026-07-01|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:qualification|value:Grade-I Signal: B.Sc/Diploma/Degree in specified streams; Grade-III: Matriculation + ITI or Act Apprenticeship in post trade|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationFee|value:Rs 500 (Rs 400 refund after CBT); Rs 250 for reserved categories (Rs 250 refund after CBT)|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:employmentType|value:regular railway technician recruitment|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:selectionProcess|value:CBT, Document Verification, Medical Examination|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05",
+      "fact:payOrStipend|value:Level 5 (Grade-I Signal); Level 2 (Grade-III) per 7th CPC in CEN|source:rrb-technician-cen-02-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B2 strict verification from official CEN 02/2026 PDF. Phase B2 verified 2026-07-05."
+  },
+  {
+    "id": "gujarat-hc-legal-assistant-2026--notification",
+    "vacancyId": "gujarat-hc-legal-assistant-2026",
+    "sourceType": "official-notification",
+    "organisation": "High Court of Gujarat",
+    "title": "Gujarat High Court Legal Assistant 2026 — detailed advertisement PDF",
+    "url": "https://gujarathighcourt.nic.in/hccms/sites/default/files/Recruitment_files/999_999_2026_6_29_645.pdf",
+    "publicationDate": "2026-06-29",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:RC/B/1320/2026 (LA)|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:employmentType|value:contractual legal assistant (not judicial service examination)|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:vacancyCount|value:65|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStartDate|value:2026-07-01|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndDate|value:2026-07-20|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndTime|value:23:59 IST|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageLimit|value:Not more than 26 years as on 20.07.2026|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageCutoffDate|value:2026-07-20|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:qualification|value:LL.B. minimum 55%; final-year law students may apply subject to 55% before appointment; computer and Gujarati required|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationFee|value:Rs 500 plus bank charges via SBI e-Pay|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:payOrStipend|value:Rs 60000 per month fixed remuneration; initial 11 months extendable up to 11 months|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05",
+      "fact:selectionProcess|value:Written test 09.08.2026; viva-voce Aug/Sep 2026|source:gujarat-hc-legal-assistant-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B2 strict verification from RC/B/1320/2026 (LA) detailed PDF. Phase B2 verified 2026-07-05."
+  },
+  {
+    "id": "drdo-deal-apprentice-2026-27--application",
+    "vacancyId": "drdo-deal-apprentice-2026-27",
+    "sourceType": "official-application",
+    "organisation": "Defence Electronics Applications Laboratory (DEAL), DRDO",
+    "title": "DRDO DEAL Apprenticeship 2026-27 — NATS 2.0 application portal",
+    "url": "https://nats.education.gov.in/",
+    "publicationDate": "2026-06-23",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:officialApplicationUrl|value:https://nats.education.gov.in/|source:drdo-deal-apprentice-2026-27--application|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:online via NATS 2.0 for DEAL ID NUKDDC000015|source:drdo-deal-apprentice-2026-27--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Official NATS 2.0 portal for DEAL ID NUKDDC000015 per advertisement PDF. Phase B2 verified 2026-07-05."
+  },
+  {
+    "id": "delhi-hjs-examination-2026--notification",
+    "vacancyId": "delhi-hjs-examination-2026",
+    "sourceType": "official-notification",
+    "organisation": "High Court of Delhi",
+    "title": "Delhi Higher Judicial Service Examination 2026 — official advertisement PDF",
+    "url": "https://delhihighcourt.nic.in/files/2026-07/adv-eng_dhjs-2026.pdf",
+    "publicationDate": "2026-07-01",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:Delhi Higher Judicial Service Examination 2026|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:employmentType|value:direct recruitment to Delhi Higher Judicial Service|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:vacancyCount|value:27 (24 existing + 3 anticipated)|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStartDate|value:2026-07-01|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndDate|value:2026-07-15|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndTime|value:17:30 IST|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageLimit|value:35 to 45 years on last date of application|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageCutoffDate|value:2026-07-15|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:qualification|value:Advocate: 7+ years practice; Judicial Officer route: 7 years combined per advt|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationFee|value:Rs 2000 General; Rs 500 SC/ST/PwBD (40%+ benchmark)|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05",
+      "fact:selectionProcess|value:Preliminary (objective), Mains (written), Viva-voce|source:delhi-hjs-examination-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B2 source repair — direct PDF replaces broken /recruitment page. Phase B2 verified 2026-07-05."
   }
 ]

@@ -257,17 +257,17 @@ if (!updatedIso || formatDDMMYYYY(updatedIso) !== "05/07/2026") {
   pass("Dataset update date from lastUpdated metadata");
 }
 
-if (summary.fullyVerified !== 2) {
-  fail(`Expected 2 fully verified open records after partial B1 release, got ${summary.fullyVerified}`);
+if (summary.fullyVerified !== 6) {
+  fail(`Expected 6 fully verified open records after Batch B2 release, got ${summary.fullyVerified}`);
 } else {
-  pass("Fully verified count matches partial B1 release (2 records)");
+  pass("Fully verified count matches Batch B2 release (6 records: 2 from B1 + 4 from B2)");
 }
 
 const legacyOnDisplay = summary.displayed.length - summary.fullyVerified;
-if (legacyOnDisplay !== summary.displayed.length - 2) {
-  fail(`Expected ${summary.displayed.length - 2} review-pending cards on display, got ${legacyOnDisplay}`);
+if (legacyOnDisplay !== summary.displayed.length - 6) {
+  fail(`Expected ${summary.displayed.length - 6} review-pending cards on display, got ${legacyOnDisplay}`);
 } else {
-  pass("Review-pending on display count consistent with partial verification");
+  pass("Review-pending on display count consistent with Batch B2 verification");
 }
 
 const sectorCounts = {};

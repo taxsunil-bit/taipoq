@@ -434,6 +434,19 @@ function collisions(items, field, normalize = (v) => String(v ?? "").trim()) {
   return found;
 }
 
+/** Official national portals that multiple unrelated employers may legitimately share. */
+const SHARED_APPLICATION_PORTAL_URLS = new Set([normalizeUrl("https://nats.education.gov.in/")]);
+
+function applicationUrlCollisionsFor(items) {
+  const byId = new Map((items ?? []).map((i) => [i.id, i]));
+  return collisions(items, "applyUrl", (v) => normalizeUrl(v)).filter((c) => {
+    const norm = normalizeUrl(c.value);
+    if (!SHARED_APPLICATION_PORTAL_URLS.has(norm)) return true;
+    const orgs = c.ids.map((id) => String(byId.get(id)?.organisation ?? "").trim().toLowerCase());
+    return new Set(orgs).size < orgs.length;
+  });
+}
+
 export function semanticDiff(livePayload, previewPayload, opts = {}) {
   const base = classifyChanges(livePayload, previewPayload);
   const liveItems = livePayload?.items ?? [];
@@ -506,7 +519,7 @@ export function semanticDiff(livePayload, previewPayload, opts = {}) {
       "advertisementNumber",
       (v) => String(v ?? "").trim().toLowerCase(),
     ),
-    applicationUrlCollisions: collisions(previewItems, "applyUrl", (v) => normalizeUrl(v)),
+    applicationUrlCollisions: applicationUrlCollisionsFor(previewItems),
     sourceMappingsAdded,
     sourceMappingsRemoved,
     trustChanges,

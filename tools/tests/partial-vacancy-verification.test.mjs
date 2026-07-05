@@ -21,7 +21,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..", "..");
 
 const STRICT_READY_IDS = ["sbi-po-2026", "new-india-assurance-apprentice-2026-27"];
-const REVIEW_PENDING_SAMPLE = ["rrb-technician-cen-02-2026", "isro-istrac-02-2026"];
+const REVIEW_PENDING_SAMPLE = ["isro-istrac-02-2026", "dsssb-advt-03-2026"];
 const AUDIT_CLOCK = { now: () => new Date("2026-07-05T04:00:00.000Z") };
 
 const PLACEHOLDER_RE = /as per official advertisement|view official notice|details in pdf|post-wise; view official/i;
@@ -95,8 +95,8 @@ test("8: verified count equals strict-contract-passing open records on display",
   const live = loadLive();
   const summary = computePublicVacancySummary(live.items, AUDIT_CLOCK);
   const strictOnDisplay = summary.displayed.filter((i) => strictPublicationContractPasses(i));
+  assert.equal(summary.fullyVerified, 6);
   assert.equal(summary.fullyVerified, strictOnDisplay.length);
-  assert.equal(summary.fullyVerified, STRICT_READY_IDS.length);
 });
 
 test("10-11: apprenticeship record is identifiable; SBI is regular recruitment", () => {
