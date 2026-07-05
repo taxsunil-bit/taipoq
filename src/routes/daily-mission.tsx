@@ -1,12 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { DailyMissionTaskAction } from "@/components/DailyMissionSection";
+import { MissionProgressSteps } from "@/components/MissionProgressSteps";
 import { PageHeader, PageShell } from "@/components/PageShell";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { useDailyMission } from "@/hooks/useDailyMission";
-import { DAILY_MISSION_TASKS, getDailyMissionTaskConfig } from "@/lib/dailyMission";
+import {
+  DAILY_MISSION_TASKS,
+  formatTaskResultSummary,
+  getDailyMissionPrimaryCtaRoute,
+} from "@/lib/dailyMission";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/daily-mission")({
@@ -16,76 +21,137 @@ export const Route = createFileRoute("/daily-mission")({
       {
         name: "description",
         content:
-          "Complete four daily tasks: typing practice, Current Affairs, mini mock test, and a verified job update.",
+          "Complete daily preparation: typing practice, current affairs, mini mock test, and optional verified job updates.",
       },
     ],
   }),
   component: DailyMissionPage,
 });
 
+function DailyMissionContinueButton({
+  label,
+  state,
+}: {
+  label: string;
+  state: ReturnType<typeof useDailyMission>["state"];
+}) {
+  const route = getDailyMissionPrimaryCtaRoute(state);
+  const btnClass = cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto");
+
+  if (route.kind === "daily-mission") {
+    return (
+      <span className={cn(btnClass, "pointer-events-none opacity-90")} aria-current="page">
+        {label}
+      </span>
+    );
+  }
+
+  if (route.kind === "test-paper") {
+    return (
+      <Link
+        to="/tests/$subject/$paperId"
+        params={{ subject: route.subject, paperId: route.paperId }}
+        className={btnClass}
+      >
+        {label}
+        <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+      </Link>
+    );
+  }
+
+  return (
+    <Link to={route.href} className={btnClass}>
+      {label}
+      <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+    </Link>
+  );
+}
+
 function DailyMissionPage() {
-  const { state, completedCount, total, progressPercent, primaryCtaLabel, allComplete, nextTaskId } =
-    useDailyMission();
+  const {
+    state,
+    coreCompletedCount,
+    coreTotal,
+    progressPercent,
+    primaryCtaLabel,
+    fullMissionComplete,
+    dailyGoalAchieved,
+    statusHeadline,
+    coreProgressLabel,
+    jobUpdateChecked,
+    nextTaskId,
+  } = useDailyMission();
+
+  const coreTasks = DAILY_MISSION_TASKS.filter((t) => !t.optional);
+  const optionalTasks = DAILY_MISSION_TASKS.filter((t) => t.optional);
 
   return (
     <PageShell>
-      <div className="mx-auto max-w-3xl space-y-6 font-hindi">
+      <div className="mx-auto max-w-3xl space-y-6">
         <PageHeader
           title="Today's TAIPOQ Mission"
-          subtitle="चार छोटे कार्य — प्रत्येक real action के बाद complete होगा।"
+          subtitle="Complete focused preparation activities and keep your daily progress on track."
         />
 
-        <div className="space-y-2 rounded-xl border border-border/70 bg-muted/10 p-4">
+        <div className="space-y-3 rounded-xl border border-border/70 bg-muted/10 p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-medium">
-              {completedCount} of {total} completed
-            </p>
-            {allComplete ? (
-              <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
-                Mission Completed
-              </Badge>
-            ) : null}
+            <p className="text-sm font-medium">{coreProgressLabel}</p>
+            <div className="flex flex-wrap gap-2">
+              {dailyGoalAchieved ? (
+                <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
+                  Daily Goal achieved
+                </Badge>
+              ) : null}
+              {fullMissionComplete ? (
+                <Badge variant="outline" className="border-primary/40 bg-primary/10 text-primary">
+                  Full Mission completed
+                </Badge>
+              ) : null}
+            </div>
           </div>
-          <Progress
-            value={progressPercent}
-            aria-valuenow={progressPercent}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label={`Daily mission progress: ${completedCount} of ${total} tasks completed`}
-            className="motion-reduce:transition-none"
-          />
+          <p className="text-sm text-muted-foreground" aria-live="polite">
+            {statusHeadline}
+          </p>
+          <MissionProgressSteps state={state} nextTaskId={nextTaskId} />
+          <p className="text-xs text-muted-foreground" aria-hidden="true">
+            Progress: {progressPercent}% of core preparation ({coreCompletedCount}/{coreTotal})
+          </p>
           <p className="text-xs text-muted-foreground">
-            Progress refreshes automatically on the next local calendar date.
+            A new mission is available each day.
           </p>
         </div>
 
         <div className="grid gap-4">
-          {DAILY_MISSION_TASKS.map((task) => {
+          {coreTasks.map((task) => {
             const done = state.tasks[task.id].completed;
+            const summary = formatTaskResultSummary(task.id, state);
             return (
               <Card
                 key={task.id}
                 className={cn(
                   "border-border/70 shadow-sm",
-                  done && "border-emerald-500/30 bg-emerald-500/5",
+                  done && "border-primary/30 bg-primary/5",
                 )}
               >
                 <CardContent className="space-y-3 p-4">
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div className="space-y-1">
                       <h2 className="text-base font-semibold text-foreground">{task.title}</h2>
-                      <p className="text-sm text-muted-foreground">{task.purpose}</p>
+                      <p className="text-sm text-muted-foreground">{task.description}</p>
                       <p className="text-xs text-muted-foreground">{task.effort}</p>
+                      {summary ? (
+                        <p className="text-xs font-medium text-foreground">Result: {summary}</p>
+                      ) : null}
                     </div>
                     <Badge
                       variant="outline"
                       className={cn(
                         done
-                          ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                          ? "border-primary/40 bg-primary/10 text-primary"
                           : "text-muted-foreground",
                       )}
                     >
-                      {done ? "Completed" : "Not Started"}
+                      {done ? "Completed" : "Not started"}
                     </Badge>
                   </div>
                   <DailyMissionTaskAction taskId={task.id} completed={done} />
@@ -95,62 +161,59 @@ function DailyMissionPage() {
           })}
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {!allComplete && nextTaskId ? (
-            <DailyMissionContinueButton taskId={nextTaskId} label={primaryCtaLabel} />
+        <div className="space-y-3">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Optional opportunity check
+          </p>
+          {optionalTasks.map((task) => {
+            const done = state.tasks[task.id].completed;
+            return (
+              <Card key={task.id} className="border-dashed border-border/80 shadow-sm">
+                <CardContent className="space-y-3 p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div className="space-y-1">
+                      <h2 className="text-base font-semibold text-foreground">{task.title}</h2>
+                      <p className="text-sm text-muted-foreground">{task.description}</p>
+                      <p className="text-xs text-muted-foreground">{task.effort}</p>
+                    </div>
+                    <Badge variant="outline" className={done ? "text-primary" : "text-muted-foreground"}>
+                      {done ? "Checked" : "Not checked"}
+                    </Badge>
+                  </div>
+                  <DailyMissionTaskAction taskId={task.id} completed={done} />
+                </CardContent>
+              </Card>
+            );
+          })}
+          {!jobUpdateChecked ? (
+            <p className="text-xs text-muted-foreground">
+              Open an official vacancy notice or source link on the verified jobs page to mark this check complete.
+            </p>
           ) : null}
-          {allComplete ? (
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          {!fullMissionComplete && nextTaskId ? (
+            <DailyMissionContinueButton label={primaryCtaLabel} state={state} />
+          ) : null}
+          {fullMissionComplete ? (
             <>
-              <span className={cn(buttonVariants({ size: "lg" }), "pointer-events-none opacity-80")}>
-                Mission Completed
-              </span>
-              <Link
-                to="/test"
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
-              >
+              <Link to="/test" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-auto")}>
                 Continue Typing Practice
               </Link>
-              <Link
-                to="/tests"
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
-              >
+              <Link to="/tests" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-auto")}>
                 More Mock Tests
               </Link>
             </>
           ) : null}
+          <Link
+            to="/"
+            className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "w-full sm:w-auto")}
+          >
+            Back to Home
+          </Link>
         </div>
       </div>
     </PageShell>
-  );
-}
-
-function DailyMissionContinueButton({
-  taskId,
-  label,
-}: {
-  taskId: NonNullable<ReturnType<typeof useDailyMission>["nextTaskId"]>;
-  label: string;
-}) {
-  const config = getDailyMissionTaskConfig(taskId);
-
-  if (config.linkParams) {
-    return (
-      <Link
-        to="/tests/$subject/$paperId"
-        params={{
-          subject: config.linkParams.subject,
-          paperId: config.linkParams.paperId,
-        }}
-        className={cn(buttonVariants({ size: "lg" }))}
-      >
-        {label}
-      </Link>
-    );
-  }
-
-  return (
-    <Link to={config.href} className={cn(buttonVariants({ size: "lg" }))}>
-      {label}
-    </Link>
   );
 }

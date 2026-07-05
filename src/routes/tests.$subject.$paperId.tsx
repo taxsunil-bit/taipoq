@@ -117,9 +117,23 @@ function PaperTestPage() {
       answers,
     });
     if (isDailyMissionCurrentAffairsPaper(subject, paper.paperId)) {
-      markDailyMissionTaskComplete("currentAffairs", { source: "tests-hub-current-affairs" });
+      markDailyMissionTaskComplete("currentAffairs", {
+        source: "tests-hub-current-affairs",
+        result: {
+          score: scored.score,
+          total: scored.total,
+          percentage: scored.percentage,
+        },
+      });
     } else if (isDailyMissionMiniMockPaper(subject, paper.paperId)) {
-      markDailyMissionTaskComplete("miniMock", { source: "tests-hub-model-paper-01" });
+      markDailyMissionTaskComplete("miniMock", {
+        source: "tests-hub-model-paper-01",
+        result: {
+          score: scored.score,
+          total: scored.total,
+          percentage: scored.percentage,
+        },
+      });
     }
     setPhase("result");
   }

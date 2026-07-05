@@ -4,14 +4,24 @@ export type DailyMissionTaskId =
   | "miniMock"
   | "jobUpdate";
 
+export type DailyMissionTaskResult = {
+  netWpm?: number;
+  accuracy?: number;
+  elapsedSec?: number;
+  score?: number;
+  total?: number;
+  percentage?: number;
+};
+
 export type DailyMissionTaskState = {
   completed: boolean;
   completedAt?: string;
   source?: string;
+  result?: DailyMissionTaskResult;
 };
 
 export type DailyMissionState = {
-  version: 1;
+  version: 2;
   date: string;
   tasks: Record<DailyMissionTaskId, DailyMissionTaskState>;
 };
@@ -19,35 +29,44 @@ export type DailyMissionState = {
 export const DAILY_MISSION_STORAGE_KEY = "taipoq.dailyMission.v1";
 export const DAILY_MISSION_UPDATED_EVENT = "taipoq:daily-mission-updated";
 
-export const DAILY_MISSION_TASK_ORDER: DailyMissionTaskId[] = [
+/** Core preparation sequence — verified jobs are optional and excluded from this order. */
+export const DAILY_MISSION_CORE_TASK_ORDER: DailyMissionTaskId[] = [
   "typing",
   "currentAffairs",
   "miniMock",
-  "jobUpdate",
+];
+
+export const DAILY_MISSION_OPTIONAL_TASK_IDS: DailyMissionTaskId[] = ["jobUpdate"];
+
+/** All tasks for detail-page listing (core first, optional last). */
+export const DAILY_MISSION_TASK_ORDER: DailyMissionTaskId[] = [
+  ...DAILY_MISSION_CORE_TASK_ORDER,
+  ...DAILY_MISSION_OPTIONAL_TASK_IDS,
 ];
 
 export type DailyMissionTaskConfig = {
   id: DailyMissionTaskId;
   title: string;
-  purpose: string;
+  description: string;
   effort: string;
   href: string;
   linkTo?: string;
   linkParams?: Record<string, string>;
+  optional?: boolean;
 };
 
 export const DAILY_MISSION_TASKS: DailyMissionTaskConfig[] = [
   {
     id: "typing",
     title: "Typing Practice",
-    purpose: "Timed typing test — speed और accuracy जाँचें",
-    effort: "≈ 10 minutes",
+    description: "Complete one typing practice session.",
+    effort: "About 10 minutes",
     href: "/test",
   },
   {
     id: "currentAffairs",
     title: "Current Affairs",
-    purpose: "10-question Current Affairs test submit करें",
+    description: "Answer today's current-affairs questions.",
     effort: "10 questions",
     href: "/tests/$subject/$paperId",
     linkTo: "/tests/$subject/$paperId",
@@ -56,18 +75,19 @@ export const DAILY_MISSION_TASKS: DailyMissionTaskConfig[] = [
   {
     id: "miniMock",
     title: "Mini Mock Test",
-    purpose: "Short mixed model paper — submit के बाद result देखें",
-    effort: "10 questions · ≈ 15 minutes",
+    description: "Complete a short practice test.",
+    effort: "10 questions · about 15 minutes",
     href: "/tests/$subject/$paperId",
     linkTo: "/tests/$subject/$paperId",
     linkParams: { subject: "model-papers", paperId: "model-paper-01" },
   },
   {
     id: "jobUpdate",
-    title: "Verified Job Update",
-    purpose: "एक verified open vacancy का official source देखें",
-    effort: "≈ 5 minutes",
+    title: "Verified Job Updates",
+    description: "Review the latest verified opportunities.",
+    effort: "About 5 minutes",
     href: "/upcoming-exams",
+    optional: true,
   },
 ];
 
@@ -99,7 +119,7 @@ export function getTodayDateKey(date = new Date()): string {
 
 export function createEmptyDailyMissionState(date = getTodayDateKey()): DailyMissionState {
   return {
-    version: 1,
+    version: 2,
     date,
     tasks: {
       typing: { completed: false },
@@ -119,13 +139,42 @@ function isTaskId(value: unknown): value is DailyMissionTaskId {
   );
 }
 
+function normalizeTaskEntry(entry: unknown): DailyMissionTaskState {
+  if (!entry || typeof entry !== "object") {
+    return { completed: false };
+  }
+  const row = entry as DailyMissionTaskState & { result?: DailyMissionTaskResult };
+  const result =
+    row.result && typeof row.result === "object"
+      ? {
+          netWpm: typeof row.result.netWpm === "number" ? row.result.netWpm : undefined,
+          accuracy: typeof row.result.accuracy === "number" ? row.result.accuracy : undefined,
+          elapsedSec: typeof row.result.elapsedSec === "number" ? row.result.elapsedSec : undefined,
+          score: typeof row.result.score === "number" ? row.result.score : undefined,
+          total: typeof row.result.total === "number" ? row.result.total : undefined,
+          percentage: typeof row.result.percentage === "number" ? row.result.percentage : undefined,
+        }
+      : undefined;
+
+  return {
+    completed: row.completed === true,
+    completedAt: typeof row.completedAt === "string" ? row.completedAt : undefined,
+    source: typeof row.source === "string" ? row.source : undefined,
+    result: result && Object.values(result).some((v) => v !== undefined) ? result : undefined,
+  };
+}
+
 export function validateDailyMissionState(raw: unknown, today = getTodayDateKey()): DailyMissionState {
   if (!raw || typeof raw !== "object") {
     return createEmptyDailyMissionState(today);
   }
 
-  const obj = raw as Partial<DailyMissionState>;
-  if (obj.version !== 1 || typeof obj.date !== "string" || obj.date !== today) {
+  const obj = raw as { version?: number; date?: string; tasks?: Record<string, unknown> };
+  const version = obj.version;
+  if (version !== 1 && version !== 2) {
+    return createEmptyDailyMissionState(today);
+  }
+  if (typeof obj.date !== "string" || obj.date !== today) {
     return createEmptyDailyMissionState(today);
   }
 
@@ -136,15 +185,11 @@ export function validateDailyMissionState(raw: unknown, today = getTodayDateKey(
   }
 
   for (const id of DAILY_MISSION_TASK_ORDER) {
-    const entry = (tasks as Record<string, unknown>)[id];
-    if (!entry || typeof entry !== "object") continue;
-    const row = entry as DailyMissionTaskState;
-    if (row.completed === true) {
-      base.tasks[id] = {
-        completed: true,
-        completedAt: typeof row.completedAt === "string" ? row.completedAt : undefined,
-        source: typeof row.source === "string" ? row.source : undefined,
-      };
+    const entry = tasks[id];
+    if (!entry) continue;
+    const normalized = normalizeTaskEntry(entry);
+    if (normalized.completed) {
+      base.tasks[id] = normalized;
     }
   }
 
@@ -181,7 +226,7 @@ export function dispatchDailyMissionUpdated(): void {
 
 export function markDailyMissionTaskComplete(
   taskId: DailyMissionTaskId,
-  meta?: { source?: string },
+  meta?: { source?: string; result?: DailyMissionTaskResult },
 ): DailyMissionState {
   if (!isTaskId(taskId)) {
     return readDailyMissionState();
@@ -199,6 +244,7 @@ export function markDailyMissionTaskComplete(
     completed: true,
     completedAt: new Date().toISOString(),
     source: meta?.source,
+    result: meta?.result,
   };
 
   writeDailyMissionState(state);
@@ -206,25 +252,104 @@ export function markDailyMissionTaskComplete(
   return state;
 }
 
-export function getDailyMissionCompletedCount(state = readDailyMissionState()): number {
-  return DAILY_MISSION_TASK_ORDER.filter((id) => state.tasks[id].completed).length;
+export function getCoreMissionCompletedCount(state = readDailyMissionState()): number {
+  return DAILY_MISSION_CORE_TASK_ORDER.filter((id) => state.tasks[id].completed).length;
 }
 
+/** @deprecated Use getCoreMissionCompletedCount — core tasks only. */
+export function getDailyMissionCompletedCount(state = readDailyMissionState()): number {
+  return getCoreMissionCompletedCount(state);
+}
+
+export function isDailyGoalAchieved(state = readDailyMissionState()): boolean {
+  return getCoreMissionCompletedCount(state) >= 1;
+}
+
+export function isFullMissionAchieved(state = readDailyMissionState()): boolean {
+  return getCoreMissionCompletedCount(state) >= DAILY_MISSION_CORE_TASK_ORDER.length;
+}
+
+export function isOptionalJobUpdateChecked(state = readDailyMissionState()): boolean {
+  return state.tasks.jobUpdate.completed === true;
+}
+
+export function getNextIncompleteCoreTask(
+  state = readDailyMissionState(),
+): DailyMissionTaskId | null {
+  return DAILY_MISSION_CORE_TASK_ORDER.find((id) => !state.tasks[id].completed) ?? null;
+}
+
+/** @deprecated Use getNextIncompleteCoreTask — optional job update is never in the guided sequence. */
 export function getNextIncompleteDailyMissionTask(
   state = readDailyMissionState(),
 ): DailyMissionTaskId | null {
-  return DAILY_MISSION_TASK_ORDER.find((id) => !state.tasks[id].completed) ?? null;
+  return getNextIncompleteCoreTask(state);
 }
 
+export function getCoreMissionProgressPercent(state = readDailyMissionState()): number {
+  return Math.round(
+    (getCoreMissionCompletedCount(state) / DAILY_MISSION_CORE_TASK_ORDER.length) * 100,
+  );
+}
+
+/** @deprecated Use getCoreMissionProgressPercent. */
 export function getDailyMissionProgressPercent(state = readDailyMissionState()): number {
-  return Math.round((getDailyMissionCompletedCount(state) / DAILY_MISSION_TASK_ORDER.length) * 100);
+  return getCoreMissionProgressPercent(state);
+}
+
+export function getCoreProgressLabel(state = readDailyMissionState()): string {
+  const n = getCoreMissionCompletedCount(state);
+  return `${n} of ${DAILY_MISSION_CORE_TASK_ORDER.length} preparation tasks completed`;
+}
+
+export function getMissionStatusHeadline(state = readDailyMissionState()): string {
+  const core = getCoreMissionCompletedCount(state);
+  if (core === 0) return "Start your first activity";
+  if (isFullMissionAchieved(state)) return "Full mission completed";
+  if (core === 1) return "Daily goal achieved";
+  return getCoreProgressLabel(state);
 }
 
 export function getDailyMissionPrimaryCtaLabel(state = readDailyMissionState()): string {
-  const completed = getDailyMissionCompletedCount(state);
-  if (completed === 0) return "Start Today's Mission";
-  if (completed >= DAILY_MISSION_TASK_ORDER.length) return "Mission Completed";
-  return "Continue Today's Mission";
+  if (isFullMissionAchieved(state)) return "View Today's Results";
+
+  const next = getNextIncompleteCoreTask(state);
+  switch (next) {
+    case "typing":
+      return getCoreMissionCompletedCount(state) === 0
+        ? "Start with Typing Practice"
+        : "Continue with Typing Practice";
+    case "currentAffairs":
+      return "Continue with Current Affairs";
+    case "miniMock":
+      return "Continue with Mini Mock Test";
+    default:
+      return "View Today's Results";
+  }
+}
+
+export function getDailyMissionPrimaryCtaRoute(
+  state = readDailyMissionState(),
+): { kind: "daily-mission" } | { kind: "path"; href: string } | { kind: "test-paper"; subject: string; paperId: string } {
+  if (isFullMissionAchieved(state)) {
+    return { kind: "daily-mission" };
+  }
+
+  const next = getNextIncompleteCoreTask(state);
+  if (!next) {
+    return { kind: "daily-mission" };
+  }
+
+  const config = getDailyMissionTaskConfig(next);
+  if (config.linkParams) {
+    return {
+      kind: "test-paper",
+      subject: config.linkParams.subject,
+      paperId: config.linkParams.paperId,
+    };
+  }
+
+  return { kind: "path", href: config.href };
 }
 
 export function getDailyMissionTaskConfig(taskId: DailyMissionTaskId): DailyMissionTaskConfig {
@@ -233,6 +358,49 @@ export function getDailyMissionTaskConfig(taskId: DailyMissionTaskId): DailyMiss
     return DAILY_MISSION_TASKS[0];
   }
   return task;
+}
+
+export function formatTaskResultSummary(
+  taskId: DailyMissionTaskId,
+  state = readDailyMissionState(),
+): string | null {
+  const task = state.tasks[taskId];
+  if (!task.completed) return null;
+
+  const r = task.result;
+  if (!r) return "Completed";
+
+  switch (taskId) {
+    case "typing":
+      if (r.netWpm != null && r.accuracy != null) {
+        return `${Math.round(r.netWpm)} WPM · ${Math.round(r.accuracy)}% accuracy`;
+      }
+      break;
+    case "currentAffairs":
+    case "miniMock":
+      if (r.score != null && r.total != null) {
+        const base = `${r.score}/${r.total}`;
+        if (r.percentage != null) {
+          return `${base} (${Math.round(r.percentage)}%)`;
+        }
+        return base;
+      }
+      break;
+    case "jobUpdate":
+      return "Reviewed";
+    default:
+      break;
+  }
+
+  return "Completed";
+}
+
+export function getTodayMissionSummaryLines(state = readDailyMissionState()): string[] {
+  return DAILY_MISSION_CORE_TASK_ORDER.map((id) => {
+    const config = getDailyMissionTaskConfig(id);
+    const summary = formatTaskResultSummary(id, state);
+    return summary ? `${config.title}: ${summary}` : `${config.title}: Not completed`;
+  });
 }
 
 export function isDailyMissionCurrentAffairsPaper(subject: string, paperId: string): boolean {

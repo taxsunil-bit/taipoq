@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  DAILY_MISSION_CORE_TASK_ORDER,
+  DAILY_MISSION_STORAGE_KEY,
   DAILY_MISSION_UPDATED_EVENT,
-  getDailyMissionCompletedCount,
+  getCoreMissionCompletedCount,
+  getCoreProgressLabel,
   getDailyMissionPrimaryCtaLabel,
-  getDailyMissionProgressPercent,
-  getNextIncompleteDailyMissionTask,
+  getCoreMissionProgressPercent,
+  getMissionStatusHeadline,
+  getNextIncompleteCoreTask,
+  isDailyGoalAchieved,
+  isFullMissionAchieved,
+  isOptionalJobUpdateChecked,
   readDailyMissionState,
   type DailyMissionState,
 } from "@/lib/dailyMission";
@@ -19,25 +26,46 @@ export function useDailyMission() {
   useEffect(() => {
     refresh();
     const onUpdate = () => refresh();
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === DAILY_MISSION_STORAGE_KEY) refresh();
+    };
     window.addEventListener(DAILY_MISSION_UPDATED_EVENT, onUpdate);
-    return () => window.removeEventListener(DAILY_MISSION_UPDATED_EVENT, onUpdate);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener(DAILY_MISSION_UPDATED_EVENT, onUpdate);
+      window.removeEventListener("storage", onStorage);
+    };
   }, [refresh]);
 
-  const completedCount = getDailyMissionCompletedCount(state);
-  const total = 4;
-  const nextTaskId = getNextIncompleteDailyMissionTask(state);
-  const progressPercent = getDailyMissionProgressPercent(state);
+  const coreCompletedCount = getCoreMissionCompletedCount(state);
+  const coreTotal = DAILY_MISSION_CORE_TASK_ORDER.length;
+  const nextTaskId = getNextIncompleteCoreTask(state);
+  const progressPercent = getCoreMissionProgressPercent(state);
   const primaryCtaLabel = getDailyMissionPrimaryCtaLabel(state);
-  const allComplete = completedCount >= total;
+  const fullMissionComplete = isFullMissionAchieved(state);
+  const dailyGoalAchieved = isDailyGoalAchieved(state);
+  const statusHeadline = getMissionStatusHeadline(state);
+  const coreProgressLabel = getCoreProgressLabel(state);
+  const jobUpdateChecked = isOptionalJobUpdateChecked(state);
 
   return {
     state,
-    completedCount,
-    total,
+    coreCompletedCount,
+    /** @deprecated Prefer coreCompletedCount */
+    completedCount: coreCompletedCount,
+    coreTotal,
+    /** @deprecated Prefer coreTotal */
+    total: coreTotal,
     nextTaskId,
     progressPercent,
     primaryCtaLabel,
-    allComplete,
+    fullMissionComplete,
+    /** @deprecated Prefer fullMissionComplete */
+    allComplete: fullMissionComplete,
+    dailyGoalAchieved,
+    statusHeadline,
+    coreProgressLabel,
+    jobUpdateChecked,
     refresh,
   };
 }

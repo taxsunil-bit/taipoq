@@ -97,7 +97,14 @@ function TestPage() {
       targetWpm,
       targetLabel,
     });
-    markDailyMissionTaskComplete("typing", { source: "typing-test" });
+    markDailyMissionTaskComplete("typing", {
+      source: "typing-test",
+      result: {
+        netWpm: r.netWpm,
+        accuracy: r.accuracy,
+        elapsedSec: r.elapsedSec,
+      },
+    });
     navigate({ to: "/result" });
   }
 

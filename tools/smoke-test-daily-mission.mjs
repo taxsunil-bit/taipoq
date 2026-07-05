@@ -54,6 +54,12 @@ mustInclude("src/lib/dailyMission.ts", "markDailyMissionTaskComplete", "mark hel
 mustInclude("src/lib/dailyMission.ts", "taipoq:daily-mission-updated", "update event");
 mustInclude("src/routes/index.tsx", "DailyMissionSection", "homepage section");
 mustInclude("src/components/DailyMissionSection.tsx", "TAIPOQ Mission", "homepage heading");
+mustInclude("src/lib/dailyMission.ts", "DAILY_MISSION_CORE_TASK_ORDER", "core task order");
+mustInclude("src/lib/dailyMission.ts", "isDailyGoalAchieved", "daily goal helper");
+mustInclude("src/lib/dailyMission.ts", "Start with Typing Practice", "guided CTA copy");
+mustInclude("src/components/DailyMissionSection.tsx", "Next activity", "guided homepage panel");
+mustInclude("src/components/MissionProgressSteps.tsx", "Core preparation progress", "segmented progress");
+mustInclude("src/components/DailyMissionSection.tsx", "Optional opportunity check", "optional job section");
 mustInclude("src/routes/test.tsx", 'markDailyMissionTaskComplete("typing"', "typing hook");
 mustInclude(
   "src/routes/tests.$subject.$paperId.tsx",
