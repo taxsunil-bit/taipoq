@@ -14,4 +14,4 @@ export function isPyqGuidePaper(subjectSlug: string, paperId: string): boolean {
 }
 
 export const PYQ_GUIDE_SUBJECT_INTRO =
-  "Learn how to identify previous-year questions, check sources safely, classify items, and practise with the right structure. This section does not provide copied or officially verified previous-year exam papers.";
+  "Learn how to identify previous-year questions, check official sources, understand provisional and final answer keys, and practise with the right structure. This section does not provide copied or officially verified previous-year exam papers.";

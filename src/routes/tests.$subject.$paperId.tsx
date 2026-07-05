@@ -191,8 +191,9 @@ function PaperTestPage() {
           <section className="rounded-2xl border border-border bg-card p-5 sm:p-6">
             {isPyqGuide ? (
               <p className="text-sm leading-relaxed text-foreground">
-                These are original guide questions about PYQ identification, source checking, tagging, and safe
-                practice. They are not copied or officially verified previous-year exam questions.
+                These are original guide questions about PYQ identification, official source checking, answer-key
+                verification, and safe practice. They are not copied or officially verified previous-year exam
+                questions.
               </p>
             ) : null}
             <p className={cn("text-sm leading-relaxed text-muted-foreground", isPyqGuide && "mt-3")}>

@@ -2702,248 +2702,221 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
     },
     {
       "file": "13_PYQ_PRACTICE_TEST_PAPER.md",
-      "title": "PYQ Source and Practice Guide",
+      "title": "PYQ Verification and Official Sources Guide",
       "subject": "PYQ Guide",
-      "level": "moderate",
+      "level": "basic",
       "access": "practice_pass",
-      "durationMinutes": 15,
+      "durationMinutes": 10,
       "questionCount": 10,
-      "intro": "This original TAIPOQ guide explains PYQ tagging, source verification, question classification, and safe practice structure. It does not contain copied or officially verified previous-year questions.",
+      "intro": "This original TAIPOQ guide helps aspirants identify authentic previous-year question papers, official answer keys, provisional keys, final keys, recorded responses, and memory-based material. It does not reproduce or claim to contain officially verified previous-year examination questions.",
       "questions": [
         {
-          "id": "PYQ-PATTERN-001",
+          "id": "PYQ-VERIFY-001",
           "subject": "PYQ Guide",
-          "chapter": "SSC Pattern",
-          "level": "moderate",
-          "language": "bilingual",
-          "question": "निम्न में से कौन-सा विषय SSC Tier-I के common sections से सबसे अधिक जुड़ा है?",
-          "options": [
-            "General Intelligence and Reasoning",
-            "Child Pedagogy only",
-            "Medical Surgery",
-            "Civil Drafting"
-          ],
-          "answerIndex": 0,
-          "answer": "General Intelligence and Reasoning",
-          "explanation": "SSC Tier-I pattern में General Intelligence/Reasoning common section है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "SSC",
-            "pattern"
-          ],
-          "reviewed": true,
-          "createdBy": "taipoq"
-        },
-        {
-          "id": "PYQ-PATTERN-002",
-          "subject": "PYQ Guide",
-          "chapter": "Railway Pattern",
-          "level": "moderate",
-          "language": "bilingual",
-          "question": "Railway NTPC pattern में निम्न में से कौन-सा core subject commonly पूछा जाता है?",
-          "options": [
-            "Mathematics",
-            "Advanced Medical Science",
-            "Only Drawing",
-            "Only Sanskrit Literature"
-          ],
-          "answerIndex": 0,
-          "answer": "Mathematics",
-          "explanation": "Railway NTPC में Mathematics common core section है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "Railway",
-            "pattern"
-          ],
-          "reviewed": true,
-          "createdBy": "taipoq"
-        },
-        {
-          "id": "PYQ-PATTERN-003",
-          "subject": "PYQ Guide",
-          "chapter": "CTET Pattern",
-          "level": "moderate",
+          "chapter": "Official Sources",
+          "level": "basic",
           "language": "en",
-          "question": "CTET paper में Child Development and Pedagogy किससे जुड़ा है?",
+          "question": "You find the same question paper on four different websites. Which source provides the strongest evidence that it is an official previous-year paper?",
           "options": [
-            "Teaching aptitude and learning process",
-            "Banking balance sheet",
-            "Typing speed",
-            "Computer hardware only"
+            "A coaching institute blog",
+            "A social-media post",
+            "The conducting examination body's official website",
+            "A discussion forum"
           ],
-          "answerIndex": 0,
-          "answer": "Teaching aptitude and learning process",
-          "explanation": "CTET में Child Development and Pedagogy teaching-learning process से related section है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "CTET",
-            "pattern"
-          ],
+          "answerIndex": 2,
+          "answer": "The conducting examination body's official website",
+          "explanation": "The conducting examination body's own website is the primary source for establishing that a paper was officially published. Coaching websites and forums may be useful for discussion, but they are secondary sources.",
+          "sourceCheck": "Direct official-source practice: UPSC and CTET commonly maintain previous-year question-paper archives on their official websites where available. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["official-source", "verification"],
           "reviewed": true,
           "createdBy": "taipoq"
         },
         {
-          "id": "PYQ-PATTERN-004",
+          "id": "PYQ-VERIFY-002",
           "subject": "PYQ Guide",
-          "chapter": "Computer Pattern",
-          "level": "moderate",
-          "language": "bilingual",
-          "question": "Computer Operator pattern में MS Word का practical question किस प्रकार का हो सकता है?",
-          "options": [
-            "Shortcut/menu based",
-            "Only chemical formula",
-            "Only river system",
-            "Only crop pattern"
-          ],
-          "answerIndex": 0,
-          "answer": "Shortcut/menu based",
-          "explanation": "Computer skill exams में Word shortcut/menu/practical task questions उपयोगी होते हैं।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "Computer",
-            "pattern"
-          ],
-          "reviewed": true,
-          "createdBy": "taipoq"
-        },
-        {
-          "id": "PYQ-PATTERN-005",
-          "subject": "PYQ Guide",
-          "chapter": "GA Pattern",
-          "level": "moderate",
+          "chapter": "Final Answer Key",
+          "level": "basic",
           "language": "en",
-          "question": "PYQ tagging में 'Indian Polity' किस master subject के अंदर आएगा?",
+          "question": "An official examination website provides both a question paper and a final answer key. Which document should ordinarily be used to verify the officially accepted answers?",
           "options": [
-            "General Awareness",
-            "Typing Skill",
-            "Excel",
-            "English Grammar only"
+            "A candidate's handwritten notes",
+            "The final answer key",
+            "A coaching institute's solution",
+            "The most popular answer in an online poll"
           ],
-          "answerIndex": 0,
-          "answer": "General Awareness",
-          "explanation": "Indian Polity General Awareness/General Studies का topic है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "GA",
-            "pattern"
-          ],
+          "answerIndex": 1,
+          "answer": "The final answer key",
+          "explanation": "Where a final answer key is published under the authority's process, it represents the answers accepted after completion of the applicable review. Unofficial solutions cannot override it.",
+          "sourceCheck": "Direct official-source practice: CTET commonly publishes previous-year final answer keys separately from previous-year question papers where available. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["answer-key", "verification"],
           "reviewed": true,
           "createdBy": "taipoq"
         },
         {
-          "id": "PYQ-PATTERN-006",
+          "id": "PYQ-VERIFY-003",
           "subject": "PYQ Guide",
-          "chapter": "Math Pattern",
-          "level": "moderate",
+          "chapter": "Provisional vs Final Key",
+          "level": "basic",
           "language": "en",
-          "question": "यदि PYQ में 'Profit and Loss' topic है, तो उसे किस subject में tag करेंगे?",
+          "question": "What is the principal difference between a provisional answer key and a final answer key?",
           "options": [
-            "Maths",
-            "Hindi",
-            "Typing",
-            "Current Affairs"
+            "A provisional key is always prepared by candidates",
+            "A provisional key may remain open to challenges, while a final key follows the authority's review process",
+            "A final key contains only the examination date",
+            "There is no difference"
           ],
-          "answerIndex": 0,
-          "answer": "Maths",
-          "explanation": "Profit and Loss Quantitative Aptitude/Maths topic है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "Maths",
-            "tagging"
-          ],
+          "answerIndex": 1,
+          "answer": "A provisional key may remain open to challenges, while a final key follows the authority's review process",
+          "explanation": "A provisional answer key is published before finalisation and may be open to objections or challenges during a specified period. The authority reviews challenges under its published process before finalising the key.",
+          "sourceCheck": "Direct official-source practice: NTA answer-key notices commonly publish provisional keys for challenge and state that the key finalised after expert review becomes final. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["provisional-key", "final-key"],
           "reviewed": true,
           "createdBy": "taipoq"
         },
         {
-          "id": "PYQ-PATTERN-007",
+          "id": "PYQ-VERIFY-004",
           "subject": "PYQ Guide",
-          "chapter": "Reasoning Pattern",
-          "level": "moderate",
+          "chapter": "Answer-Key Challenge",
+          "level": "basic",
           "language": "en",
-          "question": "'Coding-Decoding' किस subject का chapter है?",
+          "question": "An answer-key challenge window closes on a date and time specified in the official notice. What is the safest action for a candidate who wishes to challenge an answer?",
           "options": [
-            "Reasoning",
-            "General Science",
-            "UP GK",
-            "Excel"
+            "Submit the challenge through the prescribed official process before the deadline",
+            "Post the objection on social media after the deadline",
+            "Send the objection to an unrelated coaching institute",
+            "Wait until the next examination cycle"
           ],
           "answerIndex": 0,
-          "answer": "Reasoning",
-          "explanation": "Coding-Decoding reasoning का common chapter है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "Reasoning",
-            "tagging"
-          ],
+          "answer": "Submit the challenge through the prescribed official process before the deadline",
+          "explanation": "A challenge should be submitted through the method and within the period stated in the official notice. Informal posts do not constitute a valid challenge under the authority's published process.",
+          "sourceCheck": "Direct official-source practice: NTA notices commonly prescribe an online challenge process with a specified closing date and time. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["challenge", "NTA"],
           "reviewed": true,
           "createdBy": "taipoq"
         },
         {
-          "id": "PYQ-PATTERN-008",
+          "id": "PYQ-VERIFY-005",
           "subject": "PYQ Guide",
-          "chapter": "Source Type",
-          "level": "moderate",
+          "chapter": "Recorded Response",
+          "level": "basic",
           "language": "en",
-          "question": "यदि question official exam paper से लिया गया है, तो sourceType क्या होना चाहिए?",
+          "question": "What does a \"recorded response\" ordinarily show in a computer-based examination answer-key process?",
           "options": [
-            "official_pyq",
-            "taipoq_guess",
-            "coaching_copy",
-            "unknown"
+            "The response recorded for the candidate during the examination",
+            "The candidate's final rank",
+            "The next examination date",
+            "The coaching institute's recommended answer"
           ],
           "answerIndex": 0,
-          "answer": "official_pyq",
-          "explanation": "Official paper based question को official_pyq sourceType देना चाहिए।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "metadata"
-          ],
+          "answer": "The response recorded for the candidate during the examination",
+          "explanation": "A recorded response is the answer captured by the examination system for the candidate. It can be compared with the relevant answer key under the authority's published process, but it is not itself the official correct answer.",
+          "sourceCheck": "Direct official-source practice: NTA notices commonly display question papers together with recorded responses and provisional answer keys where applicable. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["recorded-response", "CBT"],
           "reviewed": true,
           "createdBy": "taipoq"
         },
         {
-          "id": "PYQ-PATTERN-009",
+          "id": "PYQ-VERIFY-006",
           "subject": "PYQ Guide",
-          "chapter": "Safety",
-          "level": "moderate",
+          "chapter": "Unverified Material",
+          "level": "basic",
           "language": "en",
-          "question": "Third-party solved PDF से explanation copy करना क्यों नहीं चाहिए?",
+          "question": "A coaching website describes a question as a PYQ, but no official paper, official archive, or official answer-key record can be located. How should that question be represented?",
           "options": [
-            "Copyright/trust risk",
-            "Because it improves originality",
-            "Because it is mandatory",
-            "Because it makes answer always correct"
+            "Officially verified PYQ",
+            "Final-answer-key question",
+            "Unverified or memory-based material",
+            "Government-certified question"
           ],
-          "answerIndex": 0,
-          "answer": "Copyright/trust risk",
-          "explanation": "TAIPOQ explanations original होने चाहिए; copied explanations legal और trust risk ला सकते हैं।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "safety"
-          ],
+          "answerIndex": 2,
+          "answer": "Unverified or memory-based material",
+          "explanation": "A question should not be described as officially verified merely because a third party calls it a PYQ. Where official provenance is unavailable, it should be clearly labelled as unverified or memory-based.",
+          "sourceCheck": "TAIPOQ source-integrity principle: distinguish official examination archives from third-party recollections. Not copied from any examination paper.",
+          "tags": ["memory-based", "integrity"],
           "reviewed": true,
           "createdBy": "taipoq"
         },
         {
-          "id": "PYQ-PATTERN-010",
+          "id": "PYQ-VERIFY-007",
           "subject": "PYQ Guide",
-          "chapter": "Test Mode",
-          "level": "moderate",
+          "chapter": "Provenance Metadata",
+          "level": "basic",
           "language": "en",
-          "question": "PYQ को TAIPOQ में सबसे उपयोगी कैसे बनाया जा सकता है?",
+          "question": "Which group of details most effectively identifies the source of an official previous-year question?",
           "options": [
-            "Tagged question-bank + test mode",
-            "Only image gallery",
-            "Only PDF dump",
-            "Only video thumbnail"
+            "Subject name only",
+            "Examination body, examination name, year, session or shift, paper or set, and official source",
+            "Coaching institute name and advertisement date",
+            "Number of times the question was shared online"
           ],
-          "answerIndex": 0,
-          "answer": "Tagged question-bank + test mode",
-          "explanation": "PYQ को subject/chapter/year/shift tags के साथ test mode में देना best है।",
-          "sourceCheck": "PYQ-pattern original item; not copied from any paper.",
-          "tags": [
-            "product"
+          "answerIndex": 1,
+          "answer": "Examination body, examination name, year, session or shift, paper or set, and official source",
+          "explanation": "Detailed provenance helps distinguish one official paper from another and enables independent verification. A subject name alone is insufficient because many examinations contain similar subjects.",
+          "sourceCheck": "Direct official-source practice: official archives commonly organise papers by examination, year, paper, session, or related identifiers where available. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["provenance", "metadata"],
+          "reviewed": true,
+          "createdBy": "taipoq"
+        },
+        {
+          "id": "PYQ-VERIFY-008",
+          "subject": "PYQ Guide",
+          "chapter": "Paper Without Final Key",
+          "level": "basic",
+          "language": "en",
+          "question": "An official question paper is available, but no official final answer key can be found. What should a responsible platform do?",
+          "options": [
+            "Invent an official answer",
+            "Copy the first answer found on a blog",
+            "Clearly distinguish the official question source from the independently prepared answer or explanation",
+            "State that every available answer is officially verified"
           ],
+          "answerIndex": 2,
+          "answer": "Clearly distinguish the official question source from the independently prepared answer or explanation",
+          "explanation": "The official status of a question paper does not automatically make a third-party answer official. The platform should disclose the source of the question and separately state how the answer was prepared or verified.",
+          "sourceCheck": "TAIPOQ source-integrity principle: question papers and final answer keys are often published separately; absence of a final key does not justify inventing an official answer. Not copied from any examination paper.",
+          "tags": ["answer-key", "transparency"],
+          "reviewed": true,
+          "createdBy": "taipoq"
+        },
+        {
+          "id": "PYQ-VERIFY-009",
+          "subject": "PYQ Guide",
+          "chapter": "Revised Answer Key",
+          "level": "basic",
+          "language": "en",
+          "question": "An examination authority later publishes a revised or final answer that differs from an earlier provisional key. Which answer should a PYQ platform display as the authority's accepted answer?",
+          "options": [
+            "The earlier provisional answer permanently",
+            "The revised or final official answer, with the change recorded",
+            "The answer preferred by most candidates",
+            "Both answers as equally final"
+          ],
+          "answerIndex": 1,
+          "answer": "The revised or final official answer, with the change recorded",
+          "explanation": "The latest applicable final or revised official key should control the displayed official answer. Maintaining a record of the change protects transparency and prevents silent alteration.",
+          "sourceCheck": "Direct official-source practice: official answer-key procedures commonly distinguish provisional keys from keys finalised after review of challenges. TAIPOQ original guide item; not copied from any examination paper.",
+          "tags": ["revised-key", "final-key"],
+          "reviewed": true,
+          "createdBy": "taipoq"
+        },
+        {
+          "id": "PYQ-VERIFY-010",
+          "subject": "PYQ Guide",
+          "chapter": "Reliable PYQ Practice",
+          "level": "basic",
+          "language": "en",
+          "question": "Which presentation gives an aspirant the most reliable PYQ practice experience?",
+          "options": [
+            "A question with no examination identity or source",
+            "A question labelled \"PYQ\" solely because it appeared on social media",
+            "A question accompanied by clear examination details, source status, answer-key status, and explanation provenance",
+            "A question accompanied only by a promotional image"
+          ],
+          "answerIndex": 2,
+          "answer": "A question accompanied by clear examination details, source status, answer-key status, and explanation provenance",
+          "explanation": "Reliable PYQ practice requires transparent provenance. Candidates should be able to determine where the question came from, whether the paper is official, whether the answer is based on a final official key where available, and whether the explanation was independently prepared.",
+          "sourceCheck": "TAIPOQ source-integrity principle: supported by the common practice of examination bodies publishing papers, responses, provisional keys, and final keys separately where available. Not copied from any examination paper.",
+          "tags": ["practice", "provenance"],
           "reviewed": true,
           "createdBy": "taipoq"
         }
