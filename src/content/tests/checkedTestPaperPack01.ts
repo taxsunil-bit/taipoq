@@ -2702,17 +2702,17 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
     },
     {
       "file": "13_PYQ_PRACTICE_TEST_PAPER.md",
-      "title": "PYQ Practice Guide Test 01",
-      "subject": "PYQ Practice",
+      "title": "PYQ Source and Practice Guide",
+      "subject": "PYQ Guide",
       "level": "moderate",
       "access": "practice_pass",
       "durationMinutes": 15,
       "questionCount": 10,
-      "intro": "Original guide test for PYQ tagging, source safety, and practice structure. Not copied from any PYQ.",
+      "intro": "This original TAIPOQ guide explains PYQ tagging, source verification, question classification, and safe practice structure. It does not contain copied or officially verified previous-year questions.",
       "questions": [
         {
           "id": "PYQ-PATTERN-001",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "SSC Pattern",
           "level": "moderate",
           "language": "bilingual",
@@ -2736,7 +2736,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-002",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Railway Pattern",
           "level": "moderate",
           "language": "bilingual",
@@ -2760,7 +2760,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-003",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "CTET Pattern",
           "level": "moderate",
           "language": "en",
@@ -2784,7 +2784,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-004",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Computer Pattern",
           "level": "moderate",
           "language": "bilingual",
@@ -2808,7 +2808,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-005",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "GA Pattern",
           "level": "moderate",
           "language": "en",
@@ -2832,7 +2832,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-006",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Math Pattern",
           "level": "moderate",
           "language": "en",
@@ -2856,7 +2856,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-007",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Reasoning Pattern",
           "level": "moderate",
           "language": "en",
@@ -2880,7 +2880,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-008",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Source Type",
           "level": "moderate",
           "language": "en",
@@ -2903,7 +2903,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-009",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Safety",
           "level": "moderate",
           "language": "en",
@@ -2926,7 +2926,7 @@ export const CHECKED_TEST_PAPER_PACK_01: TestPaperPack = {
         },
         {
           "id": "PYQ-PATTERN-010",
-          "subject": "PYQ Practice",
+          "subject": "PYQ Guide",
           "chapter": "Test Mode",
           "level": "moderate",
           "language": "en",

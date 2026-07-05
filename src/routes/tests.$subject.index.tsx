@@ -4,6 +4,7 @@ import { PageShell } from "@/components/PageShell";
 import { getSubjectBySlug, getSubjectTitle } from "@/content/tests/subjects";
 import { canAccessPaper } from "@/lib/tests/testAccess";
 import { getPapersForSubject } from "@/lib/tests/testGenerator";
+import { isPyqGuideSubjectSlug, PYQ_GUIDE_SUBJECT_INTRO } from "@/lib/tests/pyqGuide";
 
 export const Route = createFileRoute("/tests/$subject/")({
   head: ({ params }) => ({
@@ -25,6 +26,7 @@ function SubjectTestsPage() {
   });
 
   const isCA = meta.hasCurrentAffairs;
+  const isPyqGuide = isPyqGuideSubjectSlug(subject);
 
   return (
     <PageShell>
@@ -37,6 +39,11 @@ function SubjectTestsPage() {
           <p className="text-muted-foreground">
             {meta.freeCount} free · {meta.paperCount} paper{meta.paperCount === 1 ? "" : "s"}
           </p>
+          {isPyqGuide ? (
+            <p className="rounded-xl border border-amber-500/30 bg-amber-950/20 px-3 py-2 text-sm leading-relaxed text-amber-100/90">
+              {PYQ_GUIDE_SUBJECT_INTRO}
+            </p>
+          ) : null}
           {isCA ? (
             <p className="rounded-xl border border-amber-500/30 bg-amber-950/20 px-3 py-2 text-sm text-amber-100/90">
               Current Affairs questions are date-stamped. Refresh before long-term use.

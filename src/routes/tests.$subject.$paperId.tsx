@@ -16,17 +16,27 @@ import {
 import { canAccessPaper } from "@/lib/tests/testAccess";
 import { createShuffledSession, getAllPapers, getPaperBySlugs, getPaperRouteParams } from "@/lib/tests/testGenerator";
 import {
+  isPyqGuidePaper,
+  PYQ_GUIDE_CONTENT_LABEL,
+} from "@/lib/tests/pyqGuide";
+import {
   isDailyMissionCurrentAffairsPaper,
   isDailyMissionMiniMockPaper,
   markDailyMissionTaskComplete,
 } from "@/lib/dailyMission";
 import { getTestAttempt, saveTestAttempt } from "@/lib/tests/testStorage";
 import type { TestAttemptAnswers } from "@/lib/tests/testTypes";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/tests/$subject/$paperId")({
-  head: ({ params }) => ({
-    meta: [{ title: `${params.paperId} — ${getSubjectTitle(params.subject)} — TAIPOQ` }],
-  }),
+  head: ({ params }) => {
+    const paper = getPaperBySlugs(params.subject, params.paperId);
+    const subjectTitle = getSubjectTitle(params.subject);
+    const pageTitle = paper
+      ? `${paper.title} — ${subjectTitle} — TAIPOQ`
+      : `${subjectTitle} — TAIPOQ`;
+    return { meta: [{ title: pageTitle }] };
+  },
   component: PaperTestPage,
 });
 
@@ -144,6 +154,7 @@ function PaperTestPage() {
 
   const allAnswered = questions.every((q) => answers[q.id] !== undefined);
   const isCA = paper.subject === "Current Affairs";
+  const isPyqGuide = isPyqGuidePaper(subject, paperId);
 
   return (
     <PageShell>
@@ -158,6 +169,11 @@ function PaperTestPage() {
           </Link>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-2xl font-bold sm:text-3xl">{paper.title}</h1>
+            {isPyqGuide ? (
+              <span className="inline-flex rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
+                {PYQ_GUIDE_CONTENT_LABEL}
+              </span>
+            ) : null}
             <TestLevelBadge level={paper.level} className="text-blue-950" />
           </div>
           <p className="text-muted-foreground">{paper.intro}</p>
@@ -173,7 +189,13 @@ function PaperTestPage() {
 
         {unlocked && phase === "intro" ? (
           <section className="rounded-2xl border border-border bg-card p-5 sm:p-6">
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            {isPyqGuide ? (
+              <p className="text-sm leading-relaxed text-foreground">
+                These are original guide questions about PYQ identification, source checking, tagging, and safe
+                practice. They are not copied or officially verified previous-year exam questions.
+              </p>
+            ) : null}
+            <p className={cn("text-sm leading-relaxed text-muted-foreground", isPyqGuide && "mt-3")}>
               प्रश्न shuffle होंगे। विकल्प भी shuffle होंगे। Login की आवश्यकता नहीं।
             </p>
             {lastAttempt ? (
