@@ -251,10 +251,23 @@ if (routeSrc.includes("Open verified:")) fail("Misleading Open verified summary 
 else pass("No misleading Open verified summary");
 
 const updatedIso = resolveVacancyDataUpdatedIso(data);
-if (!updatedIso || formatDDMMYYYY(updatedIso) !== "01/07/2026") {
-  fail(`Expected dataset update date 01/07/2026 from metadata, got ${updatedIso}`);
+if (!updatedIso || formatDDMMYYYY(updatedIso) !== "05/07/2026") {
+  fail(`Expected dataset update date 05/07/2026 from metadata, got ${updatedIso}`);
 } else {
   pass("Dataset update date from lastUpdated metadata");
+}
+
+if (summary.fullyVerified !== 2) {
+  fail(`Expected 2 fully verified open records after partial B1 release, got ${summary.fullyVerified}`);
+} else {
+  pass("Fully verified count matches partial B1 release (2 records)");
+}
+
+const legacyOnDisplay = summary.displayed.length - summary.fullyVerified;
+if (legacyOnDisplay !== summary.displayed.length - 2) {
+  fail(`Expected ${summary.displayed.length - 2} review-pending cards on display, got ${legacyOnDisplay}`);
+} else {
+  pass("Review-pending on display count consistent with partial verification");
 }
 
 const sectorCounts = {};

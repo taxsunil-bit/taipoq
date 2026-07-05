@@ -77,11 +77,20 @@
     "title": "SBI Probationary Officer (PO) 2026-27 — official notification",
     "url": "https://bank.sbi/documents/77530/57941334/23062026_SBI+_+Detailed+Advt.+PO+26-27_09+-+Hindi.pdf/0f0ff4e1-2ef6-1e3f-719f-bb95ec1a2e13?t=1782216346313",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing officialNoticeUrl."
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:CRPD/PO/2026-27/09|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:totalVacancies|value:1500|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStartDate|value:2026-06-18|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndDate|value:2026-07-08|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageLimit|value:21-30 years as on 01.04.2026 (DOB 02.04.1996 to 01.04.2005)|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationFee|value:Rs 750 for General/OBC/EWS; nil for SC/ST/PwBD|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:employmentType|value:regular probationary officer recruitment|source:sbi-po-2026--notification|verifiedAt:2026-07-05",
+      "fact:selectionProcess|value:Phase I Preliminary; Phase II Main; Phase III Psychometric, Group Exercise and Interview|source:sbi-po-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing officialNoticeUrl. Phase B1 strict verification 2026-07-05; no corrigendum found."
   },
   {
     "id": "sbi-po-2026--application",
@@ -91,11 +100,14 @@
     "title": "SBI Probationary Officer (PO) 2026-27 — official application portal",
     "url": "https://ibpsreg.ibps.in/sbipojun26/",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:officialApplicationUrl|value:https://ibpsreg.ibps.in/sbipojun26/|source:sbi-po-2026--application|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:online via IBPS registration portal|source:sbi-po-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B1 strict verification 2026-07-05; no corrigendum found."
   },
   {
     "id": "new-india-assurance-apprentice-2026-27--website",
@@ -119,11 +131,21 @@
     "title": "New India Assurance Apprentice FY 2026-27 — official notification",
     "url": "https://www.newindia.co.in/assets/docs/engagement-of-apprentices/Apprentice%20Advertisement%202026-27.pdf",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing officialNoticeUrl."
+    "verifiedFacts": [
+      "fact:totalVacancies|value:550|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:applicationStartDate|value:2026-06-23|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:applicationEndDate|value:2026-07-06|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:examDate|value:2026-07-12|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:ageLimit|value:21-30 years as on 01.06.2026 (DOB 02.06.1996 to 01.06.2005)|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:applicationFee|value:Gen/EWS/OBC Male Rs 944; Female Rs 708; SC/ST/PwBD Rs 236 (incl. GST)|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:stipend|value:Rs 12300 per month|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:employmentType|value:apprenticeship under Apprentices Act 1961|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05",
+      "fact:qualification|value:Graduation with passing certificate dated 01.01.2022 to 01.06.2026 inclusive; NATS profile 100% complete|source:new-india-assurance-apprentice-2026-27--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing officialNoticeUrl. Phase B1 strict verification 2026-07-05; no corrigendum found."
   },
   {
     "id": "new-india-assurance-apprentice-2026-27--application",
@@ -133,11 +155,14 @@
     "title": "New India Assurance Apprentice FY 2026-27 — official application portal",
     "url": "https://nats.education.gov.in/",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:officialApplicationUrl|value:https://nats.education.gov.in/|source:new-india-assurance-apprentice-2026-27--application|verifiedAt:2026-07-05",
+      "fact:applicationMode|value:NATS registration first; then BFSI SSC on beep.bfsissc.com for exam fee and application|source:new-india-assurance-apprentice-2026-27--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B1 strict verification 2026-07-05; no corrigendum found."
   },
   {
     "id": "upsc-advt-07-2026--website",

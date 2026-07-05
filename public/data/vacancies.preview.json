@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-01",
+  "lastUpdated": "2026-07-05",
   "source": "Verified open government job advertisements (reference date 2026-07-01; 25 live verified)",
   "items": [
     {
@@ -90,14 +90,27 @@
       "sourceType": "official_pdf",
       "sourceUrl": "https://bank.sbi/web/careers/current-openings",
       "sourceLabel": "SBI Careers",
-      "sourceCheckedDate": "2026-06-29",
-      "trustNote": "Official PDF QA completed on 2026-06-29 from SBI detailed advertisement CRPD/PO/2026-27/09. Apply only via official IBPS registration link.",
+      "sourceCheckedDate": "2026-07-05",
+      "trustNote": "Strict verification completed 2026-07-05 from SBI detailed advertisement CRPD/PO/2026-27/09 (official PDF). No corrigendum located. Apply only via official IBPS registration portal.",
       "preparationLinks": [
         "/study-corner/general-awareness",
         "/study-corner/computer-basics",
         "/tests"
       ],
-      "active": true
+      "active": true,
+      "lifecycleStatus": "published",
+      "verificationStatus": "verified",
+      "lastVerifiedAt": "2026-07-05",
+      "sourceIds": [
+        "sbi-po-2026--notification",
+        "sbi-po-2026--application",
+        "sbi-po-2026--website"
+      ],
+      "advertisementNumber": "CRPD/PO/2026-27/09",
+      "notificationDate": "2026-06-23",
+      "totalVacancies": 1500,
+      "officialNotificationUrl": "https://bank.sbi/documents/77530/57941334/23062026_SBI+_+Detailed+Advt.+PO+26-27_09+-+Hindi.pdf/0f0ff4e1-2ef6-1e3f-719f-bb95ec1a2e13?t=1782216346313",
+      "officialApplicationUrl": "https://ibpsreg.ibps.in/sbipojun26/"
     },
     {
       "id": "new-india-assurance-apprentice-2026-27",
@@ -117,20 +130,33 @@
       "feeShort": "Gen/EWS/OBC Male Rs 944; Female Rs 708; SC/ST/PwBD Rs 236 (incl. GST per advt)",
       "selectionProcessShort": "Online written test (BFSI SSC) + Regional Language Test at document verification; merit state/category-wise",
       "notificationWindowText": "Online registration 23.06.2026 to 06.07.2026 via NATS portal; then BFSI SSC application and fee on beep.bfsissc.com per official advertisement.",
-      "examWindowText": "Online examination 12.07.2026 as per official advertisement. Stipend Rs 12,300/month for 12-month apprenticeship.",
+      "examWindowText": "Online examination 12.07.2026 (BFSI SSC). Stipend Rs 12,300/month for 12-month apprenticeship.",
       "officialNoticeUrl": "https://www.newindia.co.in/assets/docs/engagement-of-apprentices/Apprentice%20Advertisement%202026-27.pdf",
       "applyUrl": "https://nats.education.gov.in/",
       "sourceType": "official_pdf",
       "sourceUrl": "https://www.newindia.co.in/engagement-of-apprentices",
       "sourceLabel": "New India Assurance Official",
-      "sourceCheckedDate": "2026-06-29",
-      "trustNote": "Official PDF QA completed on 2026-06-29 from Apprentice Advertisement 2026-27.pdf. Apprenticeship engagement — not a regular job. Apply via NATS first, then complete BFSI SSC registration and fee payment.",
+      "sourceCheckedDate": "2026-07-05",
+      "trustNote": "Strict verification completed 2026-07-05 from official Apprentice Advertisement 2026-27 PDF. Apprenticeship engagement — not a regular job. Register on NATS first, then complete BFSI SSC application and fee on beep.bfsissc.com per advertisement.",
       "preparationLinks": [
         "/study-corner/general-awareness",
         "/study-corner/computer-basics",
         "/tests"
       ],
-      "active": true
+      "active": true,
+      "lifecycleStatus": "published",
+      "verificationStatus": "verified",
+      "lastVerifiedAt": "2026-07-05",
+      "sourceIds": [
+        "new-india-assurance-apprentice-2026-27--notification",
+        "new-india-assurance-apprentice-2026-27--application",
+        "new-india-assurance-apprentice-2026-27--website"
+      ],
+      "advertisementNumber": "Apprentice Advertisement 2026-27",
+      "notificationDate": "2026-06-23",
+      "totalVacancies": 550,
+      "officialNotificationUrl": "https://www.newindia.co.in/assets/docs/engagement-of-apprentices/Apprentice%20Advertisement%202026-27.pdf",
+      "officialApplicationUrl": "https://nats.education.gov.in/"
     },
     {
       "id": "upsc-advt-07-2026",
