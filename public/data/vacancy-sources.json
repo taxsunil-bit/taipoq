@@ -7,11 +7,14 @@
     "title": "Indian Navy Official",
     "url": "https://www.joinindiannavy.gov.in/",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing verified live data."
+    "verifiedFacts": [
+      "fact:applicationEndExtended|value:2026-07-05T17:00+05:30|source:indian-navy-agniveer-apprentice-0127-0227-2026--website|verifiedAt:2026-07-05",
+      "fact:extensionNotice|value:Official homepage banner 05 Jul 2026|source:indian-navy-agniveer-apprentice-0127-0227-2026--website|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing verified live data. Phase B4 verified 2026-07-05."
   },
   {
     "id": "indian-navy-agniveer-apprentice-0127-0227-2026--notification",
@@ -21,11 +24,17 @@
     "title": "Indian Navy Agniveer Apprentice 01/27 & 02/27 — official notification",
     "url": "https://www.joinindiannavy.gov.in/files/Advt_Agniveer_Apprentice_01_27_English.pdf",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing officialNoticeUrl."
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:Agniveer (Apprentice) 01/2027 and 02/2027 Batch|source:indian-navy-agniveer-apprentice-0127-0227-2026--notification|verifiedAt:2026-07-05",
+      "fact:notificationDate|value:2026-06-05|source:indian-navy-agniveer-apprentice-0127-0227-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStart|value:2026-06-05T10:00+05:30|source:indian-navy-agniveer-apprentice-0127-0227-2026--notification|verifiedAt:2026-07-05",
+      "fact:originalApplicationEnd|value:2026-06-29T17:00+05:30|source:indian-navy-agniveer-apprentice-0127-0227-2026--notification|verifiedAt:2026-07-05",
+      "fact:vacancies|value:not_announced|source:indian-navy-agniveer-apprentice-0127-0227-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Original PDF dates superseded by official website extension verified 2026-07-05."
   },
   {
     "id": "indian-navy-agniveer-apprentice-0127-0227-2026--application",
@@ -33,13 +42,15 @@
     "sourceType": "official-application",
     "organisation": "Indian Navy",
     "title": "Indian Navy Agniveer Apprentice 01/27 & 02/27 — official application portal",
-    "url": "https://www.joinindiannavy.gov.in/",
+    "url": "https://agniveer.navydmpr.in/avgapp/login",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:applicationPortal|value:agniveer.navydmpr.in/avgapp/login|source:indian-navy-agniveer-apprentice-0127-0227-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B4 verified 2026-07-05."
   },
   {
     "id": "indian-navy-ssc-various-entries-jun-2027--website",
@@ -49,10 +60,10 @@
     "title": "Indian Navy Official",
     "url": "https://www.joinindiannavy.gov.in/",
     "publicationDate": null,
-    "checkedAt": "2026-06-29",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
     "verifiedFacts": [],
-    "corrigendumChecked": false,
+    "corrigendumChecked": true,
     "notes": "Auto-registered from existing verified live data."
   },
   {
@@ -430,10 +441,10 @@
     "title": "IBPS Official",
     "url": "https://www.ibps.in/",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
     "verifiedFacts": [],
-    "corrigendumChecked": false,
+    "corrigendumChecked": true,
     "notes": "Auto-registered from existing verified live data."
   },
   {
@@ -442,13 +453,15 @@
     "sourceType": "official-application",
     "organisation": "Institute of Banking Personnel Selection",
     "title": "IBPS PO/MT-XVI 2026 — official application portal",
-    "url": "https://ibpsreg.ibps.in/",
+    "url": "https://ibpsreg.ibps.in/crppoxvijun26/",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:applicationPortal|value:ibpsreg.ibps.in/crppoxvijun26/|source:ibps-po-mt-xvi-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B4 verified 2026-07-05."
   },
   {
     "id": "uppsc-pcs-2026--website",
@@ -458,10 +471,10 @@
     "title": "UPPSC Official",
     "url": "https://uppsc.up.nic.in/",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
     "verifiedFacts": [],
-    "corrigendumChecked": false,
+    "corrigendumChecked": true,
     "notes": "Auto-registered from existing verified live data."
   },
   {
@@ -470,13 +483,16 @@
     "sourceType": "official-application",
     "organisation": "Uttar Pradesh Public Service Commission",
     "title": "UPPSC PCS 2026 — official application portal",
-    "url": "https://onlineuppsc.up.nic.in/",
+    "url": "https://uppsc.up.nic.in/CandidatePages/Notifications.aspx",
     "publicationDate": null,
-    "checkedAt": "2026-07-01",
+    "checkedAt": "2026-07-05",
     "verificationStatus": "verified",
-    "verifiedFacts": [],
-    "corrigendumChecked": false,
-    "notes": "Auto-registered from existing applyUrl."
+    "verifiedFacts": [
+      "fact:applicationPortal|value:uppsc.up.nic.in/CandidatePages/Notifications.aspx|source:uppsc-pcs-2026--application|verifiedAt:2026-07-05",
+      "fact:otrPortal|value:otr.pariksha.nic.in|source:uppsc-pcs-2026--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Auto-registered from existing applyUrl. Phase B4 verified 2026-07-05."
   },
   {
     "id": "rrb-technician-cen-02-2026--website",
@@ -852,5 +868,103 @@
     ],
     "corrigendumChecked": true,
     "notes": "Phase B3 strict verification source. Phase B3 verified 2026-07-05. Phase B3 verified 2026-07-05."
+  },
+  {
+    "id": "ibps-po-mt-xvi-2026--notification",
+    "vacancyId": "ibps-po-mt-xvi-2026",
+    "sourceType": "official-notification",
+    "organisation": "Institute of Banking Personnel Selection",
+    "title": "IBPS CRP PO/MT-XVI — official detailed notification PDF",
+    "url": "https://www.ibps.in/wp-content/uploads/Detailed-Notification_CRP-PO-XVI_Final_V1_30.06.2026.pdf",
+    "publicationDate": "2026-06-30",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:CRP PO/MT-XVI|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05",
+      "fact:notificationDate|value:2026-06-30|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05",
+      "fact:totalVacancies|value:6715|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05",
+      "fact:vacancyNote|value:indicative_provisional|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStart|value:2026-07-01|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEnd|value:2026-07-21|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05",
+      "fact:ageCutoff|value:2026-07-01|source:ibps-po-mt-xvi-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B4 verified 2026-07-05."
+  },
+  {
+    "id": "uppsc-pcs-2026--notification",
+    "vacancyId": "uppsc-pcs-2026",
+    "sourceType": "official-notification",
+    "organisation": "Uttar Pradesh Public Service Commission",
+    "title": "UPPSC PCS 2026 Advt A-1/E-1/2026 — official English PDF",
+    "url": "https://uppsc.up.nic.in/OuterPages/View_Enclosure.aspx?ID=114&flag=E&FID=929",
+    "publicationDate": "2026-06-25",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:advertisementNumber|value:A-1/E-1/2026|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:notificationDate|value:2026-06-25|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:totalVacancies|value:500|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:vacancyNote|value:provisional_may_change|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationStart|value:2026-06-25|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:applicationEnd|value:2026-07-27|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:correctionEnd|value:2026-08-03|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05",
+      "fact:otrRequired|value:true|source:uppsc-pcs-2026--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B4 verified 2026-07-05."
+  },
+  {
+    "id": "indian-navy-ssc-various-entries-jun-2027--notification",
+    "vacancyId": "indian-navy-ssc-various-entries-jun-2027",
+    "sourceType": "official-notification",
+    "organisation": "Indian Navy",
+    "title": "Indian Navy SSC Various Entries Jun 2027 — official notification PDF",
+    "url": "https://www.joinindiannavy.gov.in/files/SSC_Notification_for_ADV_Jun_27.pdf",
+    "publicationDate": "2026-06-25",
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:course|value:Jun 2027 (AT 27)|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+      "fact:totalVacancies|value:275|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+      "fact:vacancyNote|value:tentative|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+      "fact:applicationStart|value:2026-06-25|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+      "fact:applicationEnd|value:2026-07-27|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+      "fact:postGroupCount|value:12|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B4 verified 2026-07-05."
+  },
+  {
+    "id": "indian-navy-ssc-various-entries-jun-2027--application",
+    "vacancyId": "indian-navy-ssc-various-entries-jun-2027",
+    "sourceType": "official-application",
+    "organisation": "Indian Navy",
+    "title": "Indian Navy officer application login",
+    "url": "https://www.joinindiannavy.gov.in/en/account/login",
+    "publicationDate": null,
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:applicationPortal|value:joinindiannavy.gov.in/en/account/login|source:indian-navy-ssc-various-entries-jun-2027--application|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B4 verified 2026-07-05."
+  },
+  {
+    "id": "indian-navy-ssc-various-entries-jun-2027--event",
+    "vacancyId": "indian-navy-ssc-various-entries-jun-2027",
+    "sourceType": "official-website",
+    "organisation": "Indian Navy",
+    "title": "SSC Jun 2027 application window event page",
+    "url": "https://www.joinindiannavy.gov.in/en/event/online-application-window-for-ssc-various-entries-for-jun-27-course-is-live-from-25-jun-26-to-27-jul.html",
+    "publicationDate": null,
+    "checkedAt": "2026-07-05",
+    "verificationStatus": "verified",
+    "verifiedFacts": [
+      "fact:applicationWindow|value:2026-06-25 to 2026-07-27|source:indian-navy-ssc-various-entries-jun-2027--event|verifiedAt:2026-07-05"
+    ],
+    "corrigendumChecked": true,
+    "notes": "Phase B4 verified 2026-07-05."
   }
 ]

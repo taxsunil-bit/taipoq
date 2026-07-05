@@ -64,7 +64,7 @@ test("B3: public summary fully verified count includes ISRO", () => {
   const { items } = loadJson("vacancies.preview.json");
   const summary = computePublicVacancySummary(items, { now: () => new Date("2026-07-05T06:30:00.000Z") });
   const strictOnDisplay = summary.displayed.filter((i) => strictPublicationContractPasses(i));
-  assert.equal(summary.fullyVerified, 7);
+  assert.equal(summary.fullyVerified, 11);
   assert.equal(summary.fullyVerified, strictOnDisplay.length);
 });
 

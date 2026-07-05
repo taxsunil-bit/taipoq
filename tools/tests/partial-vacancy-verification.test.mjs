@@ -95,7 +95,7 @@ test("8: verified count equals strict-contract-passing open records on display",
   const live = loadLive();
   const summary = computePublicVacancySummary(live.items, AUDIT_CLOCK);
   const strictOnDisplay = summary.displayed.filter((i) => strictPublicationContractPasses(i));
-  assert.equal(summary.fullyVerified, 7);
+  assert.equal(summary.fullyVerified, 11);
   assert.equal(summary.fullyVerified, strictOnDisplay.length);
 });
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": "2026.07.05.3",
-  "lastUpdated": "2026-07-05T06:13:44+05:30",
+  "contentVersion": "2026.07.05.4",
+  "lastUpdated": "2026-07-05T06:37:16+05:30",
   "vacancies": {
     "liveSource": "/data/vacancies.json",
     "previewSource": "/data/vacancies.preview.json",

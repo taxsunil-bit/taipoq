@@ -4,7 +4,7 @@
   "items": [
     {
       "id": "indian-navy-agniveer-apprentice-0127-0227-2026",
-      "title": "Indian Navy Agniveer Apprentice 01/27 & 02/27",
+      "title": "Indian Navy Agniveer (Apprentice) 01/27 & 02/27",
       "organisation": "Indian Navy",
       "category": "Defence / Navy / Agniveer",
       "status": "closing_soon",
@@ -14,30 +14,44 @@
       "isPreparationOnly": false,
       "applicationStartDate": "2026-06-05",
       "applicationEndDate": "2026-07-05",
-      "vacanciesText": "Not announced",
-      "qualificationShort": "Matriculation 50% aggregate + 3-yr AICTE polytechnic diploma 50% (Engineering or Electrical streams per advt)",
-      "ageLimitShort": "01/27: DOB 01 Dec 2004–31 May 2009; 02/27: 01 May 2005–31 Oct 2009; unmarried male only",
+      "vacanciesText": "Not announced in official advertisement",
+      "qualificationShort": "Matriculation 50% aggregate + 3-yr AICTE-recognised polytechnic diploma 50% aggregate (Engineering or Electrical streams per advt)",
+      "ageLimitShort": "01/27 batch: DOB 01 Dec 2004–31 May 2009; 02/27 batch: DOB 01 May 2005–31 Oct 2009; unmarried male only",
       "feeShort": "Stage I INET: Rs 550 + 18% GST (online); no separate Stage II fee",
       "selectionProcessShort": "Stage I: INET 2/2026 (online); Stage II: PFT, written exam, recruitment medical; state-wise merit",
-      "notificationWindowText": "Application window extended till 1700 hrs on 05 Jul 26 as per official Indian Navy website.",
-      "examWindowText": "Stage I INET Aug 26; results end Aug/early Sep 26. Stage II 01/27 Oct 26, 02/27 Mar 27. Training Dec 26 / May 27. Tentative per advt.",
+      "notificationWindowText": "Online registration 05/06/2026 10:00 to 05/07/2026 17:00 IST (extended from 29/06/2026 per official Indian Navy website on 05/07/2026)",
+      "examWindowText": "Stage I INET Aug 2026; results end Aug/early Sep 2026. Stage II: 01/27 batch Oct 2026, 02/27 batch Mar 2027. Training Dec 2026 / May 2027 per advt.",
       "officialNoticeUrl": "https://www.joinindiannavy.gov.in/files/Advt_Agniveer_Apprentice_01_27_English.pdf",
-      "applyUrl": "https://www.joinindiannavy.gov.in/",
-      "sourceType": "official",
+      "applyUrl": "https://agniveer.navydmpr.in/avgapp/login",
+      "sourceType": "official_pdf",
       "sourceUrl": "https://www.joinindiannavy.gov.in/",
       "sourceLabel": "Indian Navy Official",
-      "sourceCheckedDate": "2026-06-29",
-      "trustNote": "Official PDF QA completed on 2026-06-29. Trade-wise vacancy count not declared in advt. Publish to live page only after final manual review.",
+      "sourceCheckedDate": "2026-07-05",
+      "trustNote": "Strict verification completed 2026-07-05 from official Agniveer (Apprentice) PDF and Indian Navy website extension notice (1700 hrs on 05 Jul 26). Trade-wise vacancy count not declared. Apply only via AVR (Apprentice) INET 2/26 portal.",
       "preparationLinks": [
         "/study-corner/general-awareness",
         "/test",
         "/typing-start-guide"
       ],
-      "active": true
+      "active": true,
+      "lifecycleStatus": "published",
+      "verificationStatus": "verified",
+      "lastVerifiedAt": "2026-07-05",
+      "sourceIds": [
+        "indian-navy-agniveer-apprentice-0127-0227-2026--notification",
+        "indian-navy-agniveer-apprentice-0127-0227-2026--application",
+        "indian-navy-agniveer-apprentice-0127-0227-2026--website"
+      ],
+      "advertisementNumber": "Agniveer (Apprentice) 01/2027 and 02/2027 Batch",
+      "notificationDate": "2026-06-05",
+      "employmentType": "apprenticeship",
+      "applicationEndTime": "17:00",
+      "officialNotificationUrl": "https://www.joinindiannavy.gov.in/files/Advt_Agniveer_Apprentice_01_27_English.pdf",
+      "officialApplicationUrl": "https://agniveer.navydmpr.in/avgapp/login"
     },
     {
       "id": "indian-navy-ssc-various-entries-jun-2027",
-      "title": "Indian Navy SSC Various Entries — Jun 2027 Course",
+      "title": "Indian Navy SSC Various Entries — Jun 2027 (AT 27) Course",
       "organisation": "Indian Navy",
       "category": "Defence / Navy / Officer Entry",
       "status": "active",
@@ -47,24 +61,306 @@
       "isPreparationOnly": false,
       "applicationStartDate": "2026-06-25",
       "applicationEndDate": "2026-07-27",
-      "vacanciesText": "View official advertisement",
-      "qualificationShort": "Entry-wise; View official advertisement",
-      "ageLimitShort": "View official advertisement",
-      "feeShort": "View official advertisement",
-      "selectionProcessShort": "View official advertisement",
-      "notificationWindowText": "Application window live from 25/06/2026 to 27/07/2026 as per Indian Navy homepage.",
-      "examWindowText": "View official advertisement",
-      "officialNoticeUrl": "https://www.joinindiannavy.gov.in/",
-      "sourceType": "official",
+      "vacanciesText": "275 tentative SSC vacancies across 12 entry groups — see post-wise details",
+      "qualificationShort": "Entry-wise BE/BTech or higher qualifications with minimum marks — see structured post-wise details",
+      "ageLimitShort": "Entry-wise date-of-birth bands for unmarried men and women — see post-wise details",
+      "feeShort": "As per Indian Navy officer entry norms (see official notification)",
+      "selectionProcessShort": "SSB shortlisting and interview, medical standards, merit at Indian Naval Academy Ezhimala",
+      "notificationWindowText": "Online applications 25/06/2026 to 27/07/2026 via joinindiannavy.gov.in officer registration per official SSC Jun 2027 notification",
+      "examWindowText": "SSB dates to be allotted; course commencing Jun 2027 at INA Ezhimala per advt",
+      "officialNoticeUrl": "https://www.joinindiannavy.gov.in/files/SSC_Notification_for_ADV_Jun_27.pdf",
+      "sourceType": "official_pdf",
       "sourceUrl": "https://www.joinindiannavy.gov.in/",
       "sourceLabel": "Indian Navy Official",
-      "sourceCheckedDate": "2026-06-29",
-      "trustNote": "Homepage dates verified on 2026-06-29. PDF QA pending — no Apply button until entry-wise official advertisement is confirmed.",
+      "sourceCheckedDate": "2026-07-05",
+      "trustNote": "Strict verification completed 2026-07-05 from official SSC Jun 2027 PDF (275 tentative vacancies across 12 entries). Vacancies may change per training slots. Apply via officer login on joinindiannavy.gov.in.",
       "preparationLinks": [
         "/study-corner/general-awareness",
         "/test"
       ],
-      "active": true
+      "active": true,
+      "lifecycleStatus": "published",
+      "verificationStatus": "verified",
+      "lastVerifiedAt": "2026-07-05",
+      "sourceIds": [
+        "indian-navy-ssc-various-entries-jun-2027--notification",
+        "indian-navy-ssc-various-entries-jun-2027--application",
+        "indian-navy-ssc-various-entries-jun-2027--website",
+        "indian-navy-ssc-various-entries-jun-2027--event"
+      ],
+      "advertisementNumber": "SSC Various Entries — Jun 2027 (AT 27) Course",
+      "notificationDate": "2026-06-25",
+      "employmentType": "regular",
+      "totalVacancies": 275,
+      "officialNotificationUrl": "https://www.joinindiannavy.gov.in/files/SSC_Notification_for_ADV_Jun_27.pdf",
+      "officialApplicationUrl": "https://www.joinindiannavy.gov.in/en/account/login",
+      "applyUrl": "https://www.joinindiannavy.gov.in/en/account/login",
+      "postGroups": [
+        {
+          "id": "executive-gs-hydro",
+          "title": "Executive Branch {GS(X)/ Hydro Cadre}",
+          "vacancies": {
+            "total": 90,
+            "locationNote": "Including 10 Hydro; max 10 GS(X) + 2 Hydro for women"
+          },
+          "qualification": "BE/B.Tech in any discipline with minimum 60% marks",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination",
+            "Merit at INA Ezhimala"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:executive-gs-hydro|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:90|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "pilot",
+          "title": "Pilot",
+          "vacancies": {
+            "total": 25,
+            "locationNote": "Maximum 3 vacancies for women"
+          },
+          "qualification": "BE/B.Tech in any discipline with minimum 60% marks; 60% aggregate in Class X and XII; minimum 60% in English in Class X or XII",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2003 to 01 Jul 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination",
+            "CPL holders may apply per Para 1.6"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:pilot|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:25|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "naval-air-operations-observer",
+          "title": "Naval Air Operations Officer (Observers)",
+          "vacancies": {
+            "total": 18,
+            "locationNote": "Maximum 3 vacancies for women"
+          },
+          "qualification": "BE/B.Tech in any discipline with minimum 60% marks (per official entry table)",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2003 to 01 Jul 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:naval-air-operations-observer|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:18|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "atc",
+          "title": "Air Traffic Controller (ATC)",
+          "vacancies": {
+            "total": 15
+          },
+          "qualification": "BE/B.Tech in any discipline with minimum 60% marks (per official entry table)",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jul 2006 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:atc|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:15|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "logistics",
+          "title": "Logistics",
+          "vacancies": {
+            "total": 10,
+            "locationNote": "Maximum 2 vacancies for women"
+          },
+          "qualification": "BE/B.Tech First Class OR MBA First Class OR B.Sc/B.Com/B.Sc.(IT) First Class with PG Diploma in Finance/Logistics/Supply Chain/Material Management OR MCA/M.Sc(IT) First Class",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:logistics|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:10|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "naic",
+          "title": "Naval Armament Inspectorate Cadre (NAIC)",
+          "vacancies": {
+            "total": 14
+          },
+          "qualification": "BE/B.Tech minimum 60% in listed engineering streams OR Post Graduate degree in Electronics/Physics; 60% aggregate in Class X and XII; minimum 60% in English in Class X or XII",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:naic|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:14|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "education",
+          "title": "Education Branch",
+          "vacancies": {
+            "total": 13,
+            "locationNote": "5 (MSc/MA paths) + 8 (BE/BTech/ME/M.Tech paths) per official entry table"
+          },
+          "qualification": "MSc/MA minimum 60% in Maths/Operational Research/Physics/Meteorology/Oceanography/Atmospheric Sciences OR MA History 55% OR BE/BTech 60% in Mechanical/Production/Electrical/ECE/EIE OR ME/M.Tech 60% in listed specialisations; minimum 60% in Class X/XII and English per note",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jul 2006 for most paths; ME/M.Tech Meteorology/Oceanography path: 02 Jul 2000 to 01 Jul 2006; unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:education|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:13|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "engineering-gs",
+          "title": "Engineering Branch {General Service (GS)}",
+          "vacancies": {
+            "total": 24,
+            "locationNote": "Maximum 4 vacancies for women"
+          },
+          "qualification": "BE/B.Tech minimum 60% in listed marine/aero/metallurgy/instrumentation/mechanical streams",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination",
+            "Submarine Tech Engineering volunteers per Para 1.3"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:engineering-gs|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:24|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "submarine-tech-engineering",
+          "title": "Submarine Tech Engineering",
+          "vacancies": {
+            "total": 8
+          },
+          "qualification": "Same as Engineering Branch {General Service (GS)} — Ser 8",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men only",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination",
+            "Submarine medicals after INA"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:submarine-tech-engineering|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:8|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "electrical-gs",
+          "title": "Electrical Branch {General Service (GS)}",
+          "vacancies": {
+            "total": 32,
+            "locationNote": "Maximum 5 vacancies for women"
+          },
+          "qualification": "BE/B.Tech minimum 60% in listed electrical/electronics/instrumentation/telecom streams",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:electrical-gs|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:32|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "submarine-tech-electrical",
+          "title": "Submarine Tech Electrical",
+          "vacancies": {
+            "total": 8
+          },
+          "qualification": "Same as Electrical Branch {General Service (GS)} — Ser 10",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men only",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination",
+            "Submarine medicals after INA"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:submarine-tech-electrical|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:8|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        },
+        {
+          "id": "naval-constructor",
+          "title": "Naval Constructor",
+          "vacancies": {
+            "total": 18
+          },
+          "qualification": "BE/B.Tech minimum 60% in Mechanical/Metallurgy/Civil/Marine/Ship Building/Aeronautical/Naval Architecture/Ocean Engineering and related streams per official table",
+          "payLevel": "Sub Lieutenant initial gross salary from Rs 1,20,000/month (approx.) plus allowances per official SSC officer notification",
+          "ageLimitText": "Born 02 Jul 2002 to 01 Jan 2008 (both dates inclusive); unmarried men and women",
+          "selectionProcess": [
+            "SSB interview",
+            "Medical examination"
+          ],
+          "sourceIds": [
+            "indian-navy-ssc-various-entries-jun-2027--notification"
+          ],
+          "verifiedFacts": [
+            "fact:postGroup|value:naval-constructor|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05",
+            "fact:vacancies|value:18|source:indian-navy-ssc-various-entries-jun-2027--notification|verifiedAt:2026-07-05"
+          ]
+        }
+      ]
     },
     {
       "id": "sbi-po-2026",
@@ -480,26 +776,40 @@
       "isPreparationOnly": false,
       "applicationStartDate": "2026-07-01",
       "applicationEndDate": "2026-07-21",
-      "vacanciesText": "6715 posts",
-      "qualificationShort": "Graduation; detailed eligibility as per official IBPS notification",
-      "ageLimitShort": "As per official IBPS notification",
-      "feeShort": "As per official IBPS notification",
-      "selectionProcessShort": "Preliminary Examination, Main Examination, Interview; schedule as per official IBPS notification",
-      "notificationWindowText": "IBPS CRP PO/MT-XVI applications are open for Probationary Officer / Management Trainee recruitment in participating public sector banks. Verify bank-wise vacancies, age, fee, reservation, and eligibility from the official notification before applying.",
-      "examWindowText": "Prelims / Mains / Interview schedule as per official IBPS notification",
-      "officialNoticeUrl": "https://www.ibps.in/",
-      "applyUrl": "https://ibpsreg.ibps.in/",
+      "vacanciesText": "6715 indicative Probationary Officer/Management Trainee vacancies (2027-28; provisional per Annexure I)",
+      "qualificationShort": "Graduation (any discipline) from a university recognised by Govt. of India as on 21/07/2026; final-year allowed if degree completed and results declared by 21/07/2026",
+      "ageLimitShort": "20–30 years as on 01/07/2026 (DOB 02/07/1996 to 01/07/2006 inclusive; relaxations per notification)",
+      "feeShort": "Rs 850 (inclusive of GST) for General/OBC/EWS; Rs 175 for SC/ST/PwBD",
+      "selectionProcessShort": "Online Preliminary Examination, Online Main Examination, Personality Test/Interview; provisional allotment Jan 2027",
+      "notificationWindowText": "Online registration and fee payment 01/07/2026 to 21/07/2026 (both dates inclusive) via ibpsreg.ibps.in/crppoxvijun26/ per CRP PO/MT-XVI notification",
+      "examWindowText": "Prelims Aug 2026; Mains Oct 2026; Interview Nov/Dec 2026; provisional allotment Jan 2027 (tentative per official schedule)",
+      "officialNoticeUrl": "https://www.ibps.in/wp-content/uploads/Detailed-Notification_CRP-PO-XVI_Final_V1_30.06.2026.pdf",
+      "applyUrl": "https://ibpsreg.ibps.in/crppoxvijun26/",
       "sourceType": "official_pdf",
       "sourceUrl": "https://www.ibps.in/",
       "sourceLabel": "IBPS Official",
-      "sourceCheckedDate": "2026-07-01",
-      "trustNote": "CRP PO/MT-XVI 2026 — 6715 posts per official IBPS notification. Application window 01/07/2026 to 21/07/2026. Separate from calendar-only IBPS preview entries.",
+      "sourceCheckedDate": "2026-07-05",
+      "trustNote": "Strict verification completed 2026-07-05 from official IBPS CRP PO/MT-XVI detailed notification PDF (6715 indicative vacancies). Bank-wise/category allocation in Annexure I. No corrigendum located.",
       "preparationLinks": [
         "/study-corner/general-awareness",
         "/study-corner/computer-basics",
         "/tests"
       ],
-      "active": true
+      "active": true,
+      "lifecycleStatus": "published",
+      "verificationStatus": "verified",
+      "lastVerifiedAt": "2026-07-05",
+      "sourceIds": [
+        "ibps-po-mt-xvi-2026--notification",
+        "ibps-po-mt-xvi-2026--application",
+        "ibps-po-mt-xvi-2026--website"
+      ],
+      "advertisementNumber": "CRP PO/MT-XVI",
+      "notificationDate": "2026-06-30",
+      "employmentType": "regular",
+      "totalVacancies": 6715,
+      "officialNotificationUrl": "https://www.ibps.in/wp-content/uploads/Detailed-Notification_CRP-PO-XVI_Final_V1_30.06.2026.pdf",
+      "officialApplicationUrl": "https://ibpsreg.ibps.in/crppoxvijun26/"
     },
     {
       "id": "uppsc-pcs-2026",
@@ -514,25 +824,39 @@
       "applicationStartDate": "2026-06-25",
       "applicationEndDate": "2026-07-27",
       "correctionEndDate": "2026-08-03",
-      "vacanciesText": "Around 500 posts; verify exact number from official notification",
-      "qualificationShort": "Graduation; post-wise eligibility as per official notification",
-      "ageLimitShort": "As per official UPPSC notification",
-      "feeShort": "As per official UPPSC notification",
-      "selectionProcessShort": "Preliminary Examination, Main Examination, Interview; as per official UPPSC notification",
-      "notificationWindowText": "UPPSC Combined State / Upper Subordinate Services Examination 2026 applications are open. Verify exact posts, eligibility, age, fee, reservation, and examination rules from the official UPPSC notification.",
-      "examWindowText": "Prelims / Mains / Interview as per official UPPSC notification",
-      "officialNoticeUrl": "https://uppsc.up.nic.in/",
-      "applyUrl": "https://onlineuppsc.up.nic.in/",
-      "sourceType": "official",
+      "vacanciesText": "About 500 Group A and B posts (provisional — may increase or decrease per official advertisement)",
+      "qualificationShort": "Graduation for most posts; post-wise special qualifications for select posts (e.g. Computer Engineering degree, MSc/MA paths) per official notification",
+      "ageLimitShort": "21–40 years as on 01/07/2026 for most posts (DOB not earlier than 02/07/1986 and not later than 01/07/2005); post-wise variations per advt",
+      "feeShort": "General/EWS Rs 125; OBC Rs 65 (Rs 40 exam + Rs 25 online); SC/ST Rs 25 online processing; PwBD exempt from exam fee + Rs 25 online",
+      "selectionProcessShort": "Preliminary Examination, Main (Written) Examination, Interview; post-wise variations per official notification",
+      "notificationWindowText": "OTR mandatory via otr.pariksha.nic.in; online application 25/06/2026 to 27/07/2026; correction/fee reconciliation till 03/08/2026 per Advt A-1/E-1/2026",
+      "examWindowText": "Prelims/Mains dates to be notified via UPPSC e-Admit Card",
+      "officialNoticeUrl": "https://uppsc.up.nic.in/OuterPages/View_Enclosure.aspx?ID=114&flag=E&FID=929",
+      "applyUrl": "https://uppsc.up.nic.in/CandidatePages/Notifications.aspx",
+      "sourceType": "official_pdf",
       "sourceUrl": "https://uppsc.up.nic.in/",
       "sourceLabel": "UPPSC Official",
-      "sourceCheckedDate": "2026-07-01",
-      "trustNote": "UPPSC PCS 2026 — Combined State / Upper Subordinate Services. Application 25/06/2026 to 27/07/2026; correction/modification end 03/08/2026 per official UPPSC notification. Not UPSC.",
+      "sourceCheckedDate": "2026-07-05",
+      "trustNote": "Strict verification completed 2026-07-05 from official UPPSC Advt A-1/E-1/2026 English PDF (~500 provisional vacancies). OTR required before application. No corrigendum located.",
       "preparationLinks": [
         "/study-corner/general-awareness",
         "/tests"
       ],
-      "active": true
+      "active": true,
+      "lifecycleStatus": "published",
+      "verificationStatus": "verified",
+      "lastVerifiedAt": "2026-07-05",
+      "sourceIds": [
+        "uppsc-pcs-2026--notification",
+        "uppsc-pcs-2026--application",
+        "uppsc-pcs-2026--website"
+      ],
+      "advertisementNumber": "A-1/E-1/2026",
+      "notificationDate": "2026-06-25",
+      "employmentType": "regular",
+      "totalVacancies": 500,
+      "officialNotificationUrl": "https://uppsc.up.nic.in/OuterPages/View_Enclosure.aspx?ID=114&flag=E&FID=929",
+      "officialApplicationUrl": "https://uppsc.up.nic.in/CandidatePages/Notifications.aspx"
     },
     {
       "id": "rrb-technician-cen-02-2026",

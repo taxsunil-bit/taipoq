@@ -257,10 +257,10 @@ if (!updatedIso || formatDDMMYYYY(updatedIso) !== "05/07/2026") {
   pass("Dataset update date from lastUpdated metadata");
 }
 
-if (summary.fullyVerified !== 7) {
-  fail(`Expected 7 fully verified open records after Batch B3 release, got ${summary.fullyVerified}`);
+if (summary.fullyVerified !== 11) {
+  fail(`Expected 11 fully verified open records after Batch B4 release, got ${summary.fullyVerified}`);
 } else {
-  pass("Fully verified count matches Batch B3 release (7 records)");
+  pass("Fully verified count matches Batch B4 release (11 records)");
 }
 
 const legacyOnDisplay = summary.displayed.length - summary.fullyVerified;

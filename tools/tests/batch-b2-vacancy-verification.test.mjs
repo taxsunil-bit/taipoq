@@ -89,12 +89,12 @@ test("Delhi HJS source repaired to direct PDF and dedicated apply portal", () =>
   assert.ok(!String(item.officialNoticeUrl).includes("/recruitment"));
 });
 
-test("fully verified count equals 7 open strict-contract records", () => {
+test("fully verified count equals 11 open strict-contract records", () => {
   const live = loadLive();
   const summary = computePublicVacancySummary(live.items, AUDIT_CLOCK);
   const strictOnDisplay = summary.displayed.filter((i) => strictPublicationContractPasses(i));
-  assert.equal(summary.fullyVerified, 7);
-  assert.equal(strictOnDisplay.length, 7);
+  assert.equal(summary.fullyVerified, 11);
+  assert.equal(strictOnDisplay.length, 11);
   for (const id of ALL_VERIFIED) {
     assert.ok(strictOnDisplay.some((i) => i.id === id), `missing verified ${id}`);
   }
