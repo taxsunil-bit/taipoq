@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import { lockBodyScroll } from "@/lib/body-scroll-lock";
+import { lockBodyScroll, reconcileBodyScrollLock } from "@/lib/body-scroll-lock";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -37,6 +37,12 @@ export function CookiePreferencesModal({
       unlockScroll();
     };
   }, [open, onClose]);
+
+  useEffect(() => {
+    if (!open) {
+      reconcileBodyScrollLock();
+    }
+  }, [open]);
 
   if (!open) return null;
 

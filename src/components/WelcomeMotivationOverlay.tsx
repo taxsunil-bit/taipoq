@@ -1,6 +1,7 @@
+import { useRouterState } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { lockBodyScroll } from "@/lib/body-scroll-lock";
+import { lockBodyScroll, reconcileBodyScrollLock } from "@/lib/body-scroll-lock";
 import { cn } from "@/lib/utils";
 
 const SESSION_KEY = "taipoq_welcome_motivation_seen";
@@ -38,6 +39,8 @@ export function WelcomeMotivationOverlay() {
   const [countdown, setCountdown] = useState(DURATION_SEC);
   const [reducedMotion, setReducedMotion] = useState(false);
   const closeRef = useRef(false);
+  const previousPathRef = useRef<string | null>(null);
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   const close = useCallback(() => {
     if (closeRef.current) return;
@@ -59,8 +62,8 @@ export function WelcomeMotivationOverlay() {
     updateMotion();
     mq.addEventListener("change", updateMotion);
 
-    const pathname = window.location.pathname;
-    if (shouldSkipWelcomeRoute(pathname) || hasSeenWelcome()) {
+    const currentPath = window.location.pathname;
+    if (currentPath !== "/" || shouldSkipWelcomeRoute(currentPath) || hasSeenWelcome()) {
       return () => mq.removeEventListener("change", updateMotion);
     }
 
@@ -70,6 +73,20 @@ export function WelcomeMotivationOverlay() {
 
     return () => mq.removeEventListener("change", updateMotion);
   }, [mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (previousPathRef.current !== null && previousPathRef.current !== pathname && visible) {
+      close();
+    }
+    previousPathRef.current = pathname;
+  }, [pathname, mounted, visible, close]);
+
+  useEffect(() => {
+    if (!visible && !closing) {
+      reconcileBodyScrollLock();
+    }
+  }, [visible, closing]);
 
   useEffect(() => {
     if (!visible || closing) return;
@@ -96,6 +113,12 @@ export function WelcomeMotivationOverlay() {
       unlockScroll();
     };
   }, [visible, closing, close]);
+
+  useEffect(() => {
+    return () => {
+      reconcileBodyScrollLock();
+    };
+  }, []);
 
   if (!mounted || !visible) return null;
 

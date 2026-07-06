@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { BodyScrollLockRouteSync } from "../components/BodyScrollLockRouteSync";
 import { CookieConsentProvider } from "../components/CookieConsent";
 import { ConsentAwareAnalytics } from "../components/ConsentAwareAnalytics";
 import { WelcomeMotivationOverlay } from "../components/WelcomeMotivationOverlay";
@@ -127,6 +128,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <CookieConsentProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <BodyScrollLockRouteSync />
         <Outlet />
         <WelcomeMotivationOverlay />
         <ConsentAwareAnalytics />

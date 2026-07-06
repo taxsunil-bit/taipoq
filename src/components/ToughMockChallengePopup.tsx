@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { lockBodyScroll } from "@/lib/body-scroll-lock";
+import { lockBodyScroll, reconcileBodyScrollLock } from "@/lib/body-scroll-lock";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "taipoq_tough_mock_popup_dismissed_at";
@@ -69,6 +69,15 @@ export function ToughMockChallengePopup() {
       window.removeEventListener("keydown", onKey);
     };
   }, [open, close]);
+
+  useEffect(() => {
+    if (!open) {
+      reconcileBodyScrollLock();
+    }
+    return () => {
+      reconcileBodyScrollLock();
+    };
+  }, [open]);
 
   if (!mounted || !isDesktop || !open) return null;
 

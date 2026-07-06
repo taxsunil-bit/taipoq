@@ -10,13 +10,21 @@ test("body-scroll-lock module exists and is used by overlays", () => {
   const lockSrc = readFileSync(path.join(ROOT, "src", "lib", "body-scroll-lock.ts"), "utf8");
   assert.match(lockSrc, /lockCount/);
   assert.match(lockSrc, /lockBodyScroll/);
+  assert.match(lockSrc, /reconcileBodyScrollLock/);
+  assert.match(lockSrc, /forceReleaseAllBodyScrollLocks/);
 
   for (const file of [
     "src/components/WelcomeMotivationOverlay.tsx",
     "src/components/ToughMockChallengePopup.tsx",
     "src/components/CookiePreferencesModal.tsx",
+    "src/components/BodyScrollLockRouteSync.tsx",
+    "src/routes/__root.tsx",
   ]) {
     const src = readFileSync(path.join(ROOT, file), "utf8");
+    if (file.includes("BodyScrollLockRouteSync") || file.includes("__root")) {
+      assert.match(src, /BodyScrollLockRouteSync|reconcileBodyScrollLock/);
+      continue;
+    }
     assert.match(src, /lockBodyScroll/, `${file} must use lockBodyScroll`);
     assert.doesNotMatch(src, /document\.body\.style\.overflow\s*=\s*previousOverflow/);
   }
