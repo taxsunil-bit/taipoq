@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import { cn } from "@/lib/utils";
 
 const SESSION_KEY = "taipoq_welcome_motivation_seen";
@@ -86,14 +87,13 @@ export function WelcomeMotivationOverlay() {
     };
     window.addEventListener("keydown", onKey);
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const unlockScroll = lockBodyScroll();
 
     return () => {
       window.clearInterval(countdownId);
       window.clearTimeout(autoCloseId);
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = previousOverflow;
+      unlockScroll();
     };
   }, [visible, closing, close]);
 

@@ -36,7 +36,8 @@
     "validate:ga-gs-foundation": "npx tsx tools/validate-ga-gs-foundation.ts",
     "smoke:ga-gs-foundation": "node tools/smoke-test-ga-gs-foundation.mjs",
     "smoke:production": "node tools/smoke-test-production.mjs",
-    "smoke:browser-release": "node tools/smoke-test-browser-release.mjs"
+    "smoke:browser-release": "node tools/smoke-test-browser-release.mjs",
+    "smoke:homepage-scroll": "node tools/smoke-test-homepage-scroll.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
