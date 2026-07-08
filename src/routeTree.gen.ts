@@ -54,6 +54,8 @@ import { Route as StudyCornerComputerBasicsRouteImport } from './routes/study-co
 import { Route as ModelPaperCurrentAffairsPack02RouteImport } from './routes/model-paper.current-affairs-pack-02'
 import { Route as MockTestCurrentAffairsPack02RouteImport } from './routes/mock-test.current-affairs-pack-02'
 import { Route as MathSpeedLabSquareEnding5RouteImport } from './routes/math-speed-lab.square-ending-5'
+import { Route as MathSpeedLabNearbase100RouteImport } from './routes/math-speed-lab.nearbase-100'
+import { Route as MathSpeedLabComplements10nRouteImport } from './routes/math-speed-lab.complements-10n'
 import { Route as HindiPracticeRouteImport } from './routes/hindi.practice'
 import { Route as HindiLessonsRouteImport } from './routes/hindi.lessons'
 import { Route as EnglishPracticeRouteImport } from './routes/english.practice'
@@ -64,6 +66,8 @@ import { Route as StudyCornerGeneralScienceIndexRouteImport } from './routes/stu
 import { Route as StudyCornerGeneralAwarenessIndexRouteImport } from './routes/study-corner.general-awareness.index'
 import { Route as StudyCornerComputerBasicsIndexRouteImport } from './routes/study-corner.computer-basics.index'
 import { Route as MathSpeedLabSquareEnding5IndexRouteImport } from './routes/math-speed-lab.square-ending-5.index'
+import { Route as MathSpeedLabNearbase100IndexRouteImport } from './routes/math-speed-lab.nearbase-100.index'
+import { Route as MathSpeedLabComplements10nIndexRouteImport } from './routes/math-speed-lab.complements-10n.index'
 import { Route as TestsSubjectPaperIdRouteImport } from './routes/tests.$subject.$paperId'
 import { Route as StudyCornerGeneralScienceModelTest01RouteImport } from './routes/study-corner.general-science.model-test-01'
 import { Route as StudyCornerGeneralScienceChapter4RouteImport } from './routes/study-corner.general-science.chapter-4'
@@ -85,9 +89,13 @@ import { Route as StudyCornerComputerBasicsChapter3RouteImport } from './routes/
 import { Route as StudyCornerComputerBasicsChapter2RouteImport } from './routes/study-corner.computer-basics.chapter-2'
 import { Route as StudyCornerComputerBasicsChapter1RouteImport } from './routes/study-corner.computer-basics.chapter-1'
 import { Route as MathSpeedLabSquareEnding5PracticeRouteImport } from './routes/math-speed-lab.square-ending-5.practice'
+import { Route as MathSpeedLabNearbase100PracticeRouteImport } from './routes/math-speed-lab.nearbase-100.practice'
+import { Route as MathSpeedLabComplements10nPracticeRouteImport } from './routes/math-speed-lab.complements-10n.practice'
 import { Route as CurrentAffairsPaperPaperIdRouteImport } from './routes/current-affairs.paper.$paperId'
 import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-paragraph.$id'
 import { Route as MathSpeedLabSquareEnding5PracticeDirectRouteImport } from './routes/math-speed-lab.square-ending-5.practice.direct'
+import { Route as MathSpeedLabNearbase100PracticeDirectRouteImport } from './routes/math-speed-lab.nearbase-100.practice.direct'
+import { Route as MathSpeedLabComplements10nPracticeDirectRouteImport } from './routes/math-speed-lab.complements-10n.practice.direct'
 
 const WordLearningRoute = WordLearningRouteImport.update({
   id: '/word-learning',
@@ -321,6 +329,17 @@ const MathSpeedLabSquareEnding5Route =
     path: '/square-ending-5',
     getParentRoute: () => MathSpeedLabRoute,
   } as any)
+const MathSpeedLabNearbase100Route = MathSpeedLabNearbase100RouteImport.update({
+  id: '/nearbase-100',
+  path: '/nearbase-100',
+  getParentRoute: () => MathSpeedLabRoute,
+} as any)
+const MathSpeedLabComplements10nRoute =
+  MathSpeedLabComplements10nRouteImport.update({
+    id: '/complements-10n',
+    path: '/complements-10n',
+    getParentRoute: () => MathSpeedLabRoute,
+  } as any)
 const HindiPracticeRoute = HindiPracticeRouteImport.update({
   id: '/practice',
   path: '/practice',
@@ -374,6 +393,18 @@ const MathSpeedLabSquareEnding5IndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => MathSpeedLabSquareEnding5Route,
+  } as any)
+const MathSpeedLabNearbase100IndexRoute =
+  MathSpeedLabNearbase100IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => MathSpeedLabNearbase100Route,
+  } as any)
+const MathSpeedLabComplements10nIndexRoute =
+  MathSpeedLabComplements10nIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => MathSpeedLabComplements10nRoute,
   } as any)
 const TestsSubjectPaperIdRoute = TestsSubjectPaperIdRouteImport.update({
   id: '/$paperId',
@@ -500,6 +531,18 @@ const MathSpeedLabSquareEnding5PracticeRoute =
     path: '/practice',
     getParentRoute: () => MathSpeedLabSquareEnding5Route,
   } as any)
+const MathSpeedLabNearbase100PracticeRoute =
+  MathSpeedLabNearbase100PracticeRouteImport.update({
+    id: '/practice',
+    path: '/practice',
+    getParentRoute: () => MathSpeedLabNearbase100Route,
+  } as any)
+const MathSpeedLabComplements10nPracticeRoute =
+  MathSpeedLabComplements10nPracticeRouteImport.update({
+    id: '/practice',
+    path: '/practice',
+    getParentRoute: () => MathSpeedLabComplements10nRoute,
+  } as any)
 const CurrentAffairsPaperPaperIdRoute =
   CurrentAffairsPaperPaperIdRouteImport.update({
     id: '/paper/$paperId',
@@ -516,6 +559,18 @@ const MathSpeedLabSquareEnding5PracticeDirectRoute =
     id: '/direct',
     path: '/direct',
     getParentRoute: () => MathSpeedLabSquareEnding5PracticeRoute,
+  } as any)
+const MathSpeedLabNearbase100PracticeDirectRoute =
+  MathSpeedLabNearbase100PracticeDirectRouteImport.update({
+    id: '/direct',
+    path: '/direct',
+    getParentRoute: () => MathSpeedLabNearbase100PracticeRoute,
+  } as any)
+const MathSpeedLabComplements10nPracticeDirectRoute =
+  MathSpeedLabComplements10nPracticeDirectRouteImport.update({
+    id: '/direct',
+    path: '/direct',
+    getParentRoute: () => MathSpeedLabComplements10nPracticeRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -552,6 +607,8 @@ export interface FileRoutesByFullPath {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/math-speed-lab/complements-10n': typeof MathSpeedLabComplements10nRouteWithChildren
+  '/math-speed-lab/nearbase-100': typeof MathSpeedLabNearbase100RouteWithChildren
   '/math-speed-lab/square-ending-5': typeof MathSpeedLabSquareEnding5RouteWithChildren
   '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
   '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
@@ -571,6 +628,8 @@ export interface FileRoutesByFullPath {
   '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
+  '/math-speed-lab/complements-10n/practice': typeof MathSpeedLabComplements10nPracticeRouteWithChildren
+  '/math-speed-lab/nearbase-100/practice': typeof MathSpeedLabNearbase100PracticeRouteWithChildren
   '/math-speed-lab/square-ending-5/practice': typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
@@ -592,11 +651,15 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
+  '/math-speed-lab/complements-10n/': typeof MathSpeedLabComplements10nIndexRoute
+  '/math-speed-lab/nearbase-100/': typeof MathSpeedLabNearbase100IndexRoute
   '/math-speed-lab/square-ending-5/': typeof MathSpeedLabSquareEnding5IndexRoute
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
   '/tests/$subject/': typeof TestsSubjectIndexRoute
+  '/math-speed-lab/complements-10n/practice/direct': typeof MathSpeedLabComplements10nPracticeDirectRoute
+  '/math-speed-lab/nearbase-100/practice/direct': typeof MathSpeedLabNearbase100PracticeDirectRoute
   '/math-speed-lab/square-ending-5/practice/direct': typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
 export interface FileRoutesByTo {
@@ -639,6 +702,8 @@ export interface FileRoutesByTo {
   '/tests': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
+  '/math-speed-lab/complements-10n/practice': typeof MathSpeedLabComplements10nPracticeRouteWithChildren
+  '/math-speed-lab/nearbase-100/practice': typeof MathSpeedLabNearbase100PracticeRouteWithChildren
   '/math-speed-lab/square-ending-5/practice': typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
@@ -660,11 +725,15 @@ export interface FileRoutesByTo {
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
+  '/math-speed-lab/complements-10n': typeof MathSpeedLabComplements10nIndexRoute
+  '/math-speed-lab/nearbase-100': typeof MathSpeedLabNearbase100IndexRoute
   '/math-speed-lab/square-ending-5': typeof MathSpeedLabSquareEnding5IndexRoute
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science': typeof StudyCornerGeneralScienceIndexRoute
   '/tests/$subject': typeof TestsSubjectIndexRoute
+  '/math-speed-lab/complements-10n/practice/direct': typeof MathSpeedLabComplements10nPracticeDirectRoute
+  '/math-speed-lab/nearbase-100/practice/direct': typeof MathSpeedLabNearbase100PracticeDirectRoute
   '/math-speed-lab/square-ending-5/practice/direct': typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
 export interface FileRoutesById {
@@ -702,6 +771,8 @@ export interface FileRoutesById {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/math-speed-lab/complements-10n': typeof MathSpeedLabComplements10nRouteWithChildren
+  '/math-speed-lab/nearbase-100': typeof MathSpeedLabNearbase100RouteWithChildren
   '/math-speed-lab/square-ending-5': typeof MathSpeedLabSquareEnding5RouteWithChildren
   '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
   '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
@@ -721,6 +792,8 @@ export interface FileRoutesById {
   '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
+  '/math-speed-lab/complements-10n/practice': typeof MathSpeedLabComplements10nPracticeRouteWithChildren
+  '/math-speed-lab/nearbase-100/practice': typeof MathSpeedLabNearbase100PracticeRouteWithChildren
   '/math-speed-lab/square-ending-5/practice': typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
@@ -742,11 +815,15 @@ export interface FileRoutesById {
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
+  '/math-speed-lab/complements-10n/': typeof MathSpeedLabComplements10nIndexRoute
+  '/math-speed-lab/nearbase-100/': typeof MathSpeedLabNearbase100IndexRoute
   '/math-speed-lab/square-ending-5/': typeof MathSpeedLabSquareEnding5IndexRoute
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
   '/tests/$subject/': typeof TestsSubjectIndexRoute
+  '/math-speed-lab/complements-10n/practice/direct': typeof MathSpeedLabComplements10nPracticeDirectRoute
+  '/math-speed-lab/nearbase-100/practice/direct': typeof MathSpeedLabNearbase100PracticeDirectRoute
   '/math-speed-lab/square-ending-5/practice/direct': typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
 export interface FileRouteTypes {
@@ -785,6 +862,8 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/math-speed-lab/complements-10n'
+    | '/math-speed-lab/nearbase-100'
     | '/math-speed-lab/square-ending-5'
     | '/mock-test/current-affairs-pack-02'
     | '/model-paper/current-affairs-pack-02'
@@ -804,6 +883,8 @@ export interface FileRouteTypes {
     | '/tests/'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
+    | '/math-speed-lab/complements-10n/practice'
+    | '/math-speed-lab/nearbase-100/practice'
     | '/math-speed-lab/square-ending-5/practice'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
@@ -825,11 +906,15 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
     | '/tests/$subject/$paperId'
+    | '/math-speed-lab/complements-10n/'
+    | '/math-speed-lab/nearbase-100/'
     | '/math-speed-lab/square-ending-5/'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
     | '/study-corner/general-science/'
     | '/tests/$subject/'
+    | '/math-speed-lab/complements-10n/practice/direct'
+    | '/math-speed-lab/nearbase-100/practice/direct'
     | '/math-speed-lab/square-ending-5/practice/direct'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -872,6 +957,8 @@ export interface FileRouteTypes {
     | '/tests'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
+    | '/math-speed-lab/complements-10n/practice'
+    | '/math-speed-lab/nearbase-100/practice'
     | '/math-speed-lab/square-ending-5/practice'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
@@ -893,11 +980,15 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
     | '/tests/$subject/$paperId'
+    | '/math-speed-lab/complements-10n'
+    | '/math-speed-lab/nearbase-100'
     | '/math-speed-lab/square-ending-5'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
     | '/tests/$subject'
+    | '/math-speed-lab/complements-10n/practice/direct'
+    | '/math-speed-lab/nearbase-100/practice/direct'
     | '/math-speed-lab/square-ending-5/practice/direct'
   id:
     | '__root__'
@@ -934,6 +1025,8 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/math-speed-lab/complements-10n'
+    | '/math-speed-lab/nearbase-100'
     | '/math-speed-lab/square-ending-5'
     | '/mock-test/current-affairs-pack-02'
     | '/model-paper/current-affairs-pack-02'
@@ -953,6 +1046,8 @@ export interface FileRouteTypes {
     | '/tests/'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
+    | '/math-speed-lab/complements-10n/practice'
+    | '/math-speed-lab/nearbase-100/practice'
     | '/math-speed-lab/square-ending-5/practice'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
@@ -974,11 +1069,15 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
     | '/tests/$subject/$paperId'
+    | '/math-speed-lab/complements-10n/'
+    | '/math-speed-lab/nearbase-100/'
     | '/math-speed-lab/square-ending-5/'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
     | '/study-corner/general-science/'
     | '/tests/$subject/'
+    | '/math-speed-lab/complements-10n/practice/direct'
+    | '/math-speed-lab/nearbase-100/practice/direct'
     | '/math-speed-lab/square-ending-5/practice/direct'
   fileRoutesById: FileRoutesById
 }
@@ -1330,6 +1429,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MathSpeedLabSquareEnding5RouteImport
       parentRoute: typeof MathSpeedLabRoute
     }
+    '/math-speed-lab/nearbase-100': {
+      id: '/math-speed-lab/nearbase-100'
+      path: '/nearbase-100'
+      fullPath: '/math-speed-lab/nearbase-100'
+      preLoaderRoute: typeof MathSpeedLabNearbase100RouteImport
+      parentRoute: typeof MathSpeedLabRoute
+    }
+    '/math-speed-lab/complements-10n': {
+      id: '/math-speed-lab/complements-10n'
+      path: '/complements-10n'
+      fullPath: '/math-speed-lab/complements-10n'
+      preLoaderRoute: typeof MathSpeedLabComplements10nRouteImport
+      parentRoute: typeof MathSpeedLabRoute
+    }
     '/hindi/practice': {
       id: '/hindi/practice'
       path: '/practice'
@@ -1399,6 +1512,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/math-speed-lab/square-ending-5/'
       preLoaderRoute: typeof MathSpeedLabSquareEnding5IndexRouteImport
       parentRoute: typeof MathSpeedLabSquareEnding5Route
+    }
+    '/math-speed-lab/nearbase-100/': {
+      id: '/math-speed-lab/nearbase-100/'
+      path: '/'
+      fullPath: '/math-speed-lab/nearbase-100/'
+      preLoaderRoute: typeof MathSpeedLabNearbase100IndexRouteImport
+      parentRoute: typeof MathSpeedLabNearbase100Route
+    }
+    '/math-speed-lab/complements-10n/': {
+      id: '/math-speed-lab/complements-10n/'
+      path: '/'
+      fullPath: '/math-speed-lab/complements-10n/'
+      preLoaderRoute: typeof MathSpeedLabComplements10nIndexRouteImport
+      parentRoute: typeof MathSpeedLabComplements10nRoute
     }
     '/tests/$subject/$paperId': {
       id: '/tests/$subject/$paperId'
@@ -1547,6 +1674,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MathSpeedLabSquareEnding5PracticeRouteImport
       parentRoute: typeof MathSpeedLabSquareEnding5Route
     }
+    '/math-speed-lab/nearbase-100/practice': {
+      id: '/math-speed-lab/nearbase-100/practice'
+      path: '/practice'
+      fullPath: '/math-speed-lab/nearbase-100/practice'
+      preLoaderRoute: typeof MathSpeedLabNearbase100PracticeRouteImport
+      parentRoute: typeof MathSpeedLabNearbase100Route
+    }
+    '/math-speed-lab/complements-10n/practice': {
+      id: '/math-speed-lab/complements-10n/practice'
+      path: '/practice'
+      fullPath: '/math-speed-lab/complements-10n/practice'
+      preLoaderRoute: typeof MathSpeedLabComplements10nPracticeRouteImport
+      parentRoute: typeof MathSpeedLabComplements10nRoute
+    }
     '/current-affairs/paper/$paperId': {
       id: '/current-affairs/paper/$paperId'
       path: '/paper/$paperId'
@@ -1567,6 +1708,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/math-speed-lab/square-ending-5/practice/direct'
       preLoaderRoute: typeof MathSpeedLabSquareEnding5PracticeDirectRouteImport
       parentRoute: typeof MathSpeedLabSquareEnding5PracticeRoute
+    }
+    '/math-speed-lab/nearbase-100/practice/direct': {
+      id: '/math-speed-lab/nearbase-100/practice/direct'
+      path: '/direct'
+      fullPath: '/math-speed-lab/nearbase-100/practice/direct'
+      preLoaderRoute: typeof MathSpeedLabNearbase100PracticeDirectRouteImport
+      parentRoute: typeof MathSpeedLabNearbase100PracticeRoute
+    }
+    '/math-speed-lab/complements-10n/practice/direct': {
+      id: '/math-speed-lab/complements-10n/practice/direct'
+      path: '/direct'
+      fullPath: '/math-speed-lab/complements-10n/practice/direct'
+      preLoaderRoute: typeof MathSpeedLabComplements10nPracticeDirectRouteImport
+      parentRoute: typeof MathSpeedLabComplements10nPracticeRoute
     }
   }
 }
@@ -1628,6 +1783,70 @@ const HindiRouteChildren: HindiRouteChildren = {
 
 const HindiRouteWithChildren = HindiRoute._addFileChildren(HindiRouteChildren)
 
+interface MathSpeedLabComplements10nPracticeRouteChildren {
+  MathSpeedLabComplements10nPracticeDirectRoute: typeof MathSpeedLabComplements10nPracticeDirectRoute
+}
+
+const MathSpeedLabComplements10nPracticeRouteChildren: MathSpeedLabComplements10nPracticeRouteChildren =
+  {
+    MathSpeedLabComplements10nPracticeDirectRoute:
+      MathSpeedLabComplements10nPracticeDirectRoute,
+  }
+
+const MathSpeedLabComplements10nPracticeRouteWithChildren =
+  MathSpeedLabComplements10nPracticeRoute._addFileChildren(
+    MathSpeedLabComplements10nPracticeRouteChildren,
+  )
+
+interface MathSpeedLabComplements10nRouteChildren {
+  MathSpeedLabComplements10nPracticeRoute: typeof MathSpeedLabComplements10nPracticeRouteWithChildren
+  MathSpeedLabComplements10nIndexRoute: typeof MathSpeedLabComplements10nIndexRoute
+}
+
+const MathSpeedLabComplements10nRouteChildren: MathSpeedLabComplements10nRouteChildren =
+  {
+    MathSpeedLabComplements10nPracticeRoute:
+      MathSpeedLabComplements10nPracticeRouteWithChildren,
+    MathSpeedLabComplements10nIndexRoute: MathSpeedLabComplements10nIndexRoute,
+  }
+
+const MathSpeedLabComplements10nRouteWithChildren =
+  MathSpeedLabComplements10nRoute._addFileChildren(
+    MathSpeedLabComplements10nRouteChildren,
+  )
+
+interface MathSpeedLabNearbase100PracticeRouteChildren {
+  MathSpeedLabNearbase100PracticeDirectRoute: typeof MathSpeedLabNearbase100PracticeDirectRoute
+}
+
+const MathSpeedLabNearbase100PracticeRouteChildren: MathSpeedLabNearbase100PracticeRouteChildren =
+  {
+    MathSpeedLabNearbase100PracticeDirectRoute:
+      MathSpeedLabNearbase100PracticeDirectRoute,
+  }
+
+const MathSpeedLabNearbase100PracticeRouteWithChildren =
+  MathSpeedLabNearbase100PracticeRoute._addFileChildren(
+    MathSpeedLabNearbase100PracticeRouteChildren,
+  )
+
+interface MathSpeedLabNearbase100RouteChildren {
+  MathSpeedLabNearbase100PracticeRoute: typeof MathSpeedLabNearbase100PracticeRouteWithChildren
+  MathSpeedLabNearbase100IndexRoute: typeof MathSpeedLabNearbase100IndexRoute
+}
+
+const MathSpeedLabNearbase100RouteChildren: MathSpeedLabNearbase100RouteChildren =
+  {
+    MathSpeedLabNearbase100PracticeRoute:
+      MathSpeedLabNearbase100PracticeRouteWithChildren,
+    MathSpeedLabNearbase100IndexRoute: MathSpeedLabNearbase100IndexRoute,
+  }
+
+const MathSpeedLabNearbase100RouteWithChildren =
+  MathSpeedLabNearbase100Route._addFileChildren(
+    MathSpeedLabNearbase100RouteChildren,
+  )
+
 interface MathSpeedLabSquareEnding5PracticeRouteChildren {
   MathSpeedLabSquareEnding5PracticeDirectRoute: typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
@@ -1661,11 +1880,15 @@ const MathSpeedLabSquareEnding5RouteWithChildren =
   )
 
 interface MathSpeedLabRouteChildren {
+  MathSpeedLabComplements10nRoute: typeof MathSpeedLabComplements10nRouteWithChildren
+  MathSpeedLabNearbase100Route: typeof MathSpeedLabNearbase100RouteWithChildren
   MathSpeedLabSquareEnding5Route: typeof MathSpeedLabSquareEnding5RouteWithChildren
   MathSpeedLabIndexRoute: typeof MathSpeedLabIndexRoute
 }
 
 const MathSpeedLabRouteChildren: MathSpeedLabRouteChildren = {
+  MathSpeedLabComplements10nRoute: MathSpeedLabComplements10nRouteWithChildren,
+  MathSpeedLabNearbase100Route: MathSpeedLabNearbase100RouteWithChildren,
   MathSpeedLabSquareEnding5Route: MathSpeedLabSquareEnding5RouteWithChildren,
   MathSpeedLabIndexRoute: MathSpeedLabIndexRoute,
 }

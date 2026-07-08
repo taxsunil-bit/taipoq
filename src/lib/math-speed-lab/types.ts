@@ -1,10 +1,15 @@
-/** Math Speed Lab canary types (T01). Extensible for T02/T03 later. */
+/** Math Speed Lab types — T01/T02/T03 pilot (direct practice). */
 
 export const MSL_MODULE_ID = "math-speed-lab" as const;
 export const MSL_STORAGE_KEY = "taipoq.mathSpeedLab.v1" as const;
-export const MSL_CONTENT_VERSION = "1.0.0-canary-t01" as const;
+export const MSL_CONTENT_VERSION = "1.1.0-canary-t01-t02-t03" as const;
 
-export type MslTechniqueId = "MSL-T01-SQUARE-ENDING-5";
+export type MslTechniqueId =
+  | "MSL-T01-SQUARE-ENDING-5"
+  | "MSL-T02-COMPLEMENTS-10N"
+  | "MSL-T03-NEARBASE-100";
+
+export type MslTechniqueSlug = "square-ending-5" | "complements-10n" | "nearbase-100";
 
 export type MslProgressState =
   | "not_started"
@@ -47,10 +52,12 @@ export type MslCommonError = {
 
 export type MslTechniqueMeta = {
   techniqueId: MslTechniqueId;
-  slug: "square-ending-5";
-  order: 1;
+  slug: MslTechniqueSlug;
+  order: 1 | 2 | 3;
   titleEn: string;
   titleHi: string;
+  shortDescription: string;
+  learnerLevel: string;
   attribution: string;
   recognitionSignal: string;
   whenToUse: string[];
@@ -63,21 +70,35 @@ export type MslTechniqueMeta = {
   commonErrors: MslCommonError[];
   guidedExamples: MslGuidedExample[];
   invalidExamples: MslInvalidExample[];
-  allowedOperands: readonly number[];
   masteryDirectPercent: number;
   reviewRequiredBelowPercent: number;
+  /** T01 locked canary operand list (optional for other techniques). */
+  allowedOperands?: readonly number[];
 };
 
+/** Shared scored numeric item — technique-specific fields are optional. */
 export type MslDirectQuestion = {
   questionId: string;
   techniqueId: MslTechniqueId;
   questionKind: "DIR";
-  operand: number;
   prompt: string;
   correctAnswer: number;
   explanation: string;
   rapidMethodSteps: string[];
   ordinaryVerification: string;
+  /** T01 square operand */
+  operand?: number;
+  /** T02 */
+  base?: 100 | 1000;
+  /** T03 */
+  leftOperand?: number;
+  rightOperand?: number;
+  deficit1?: number;
+  deficit2?: number;
+  leftRaw?: number;
+  rightRaw?: number;
+  carry?: number;
+  rightBlock?: string;
 };
 
 export type MslAttemptRecord = {
@@ -115,10 +136,13 @@ export type MslProgressStoreV1 = {
   version: 1;
   moduleId: typeof MSL_MODULE_ID;
   moduleContentVersion: string;
-  techniques: {
-    "MSL-T01-SQUARE-ENDING-5"?: MslTechniqueProgress;
-  };
+  techniques: Partial<Record<MslTechniqueId, MslTechniqueProgress>>;
   recentAttempts: MslAttemptRecord[];
-  /** In-progress direct set (survives reload; cleared on finish/restart). */
+  /**
+   * Technique-scoped in-progress direct sets.
+   * Legacy single `activeDirectSession` is migrated on read.
+   */
+  activeDirectSessions?: Partial<Record<MslTechniqueId, MslActiveDirectSession>>;
+  /** @deprecated migrated into activeDirectSessions */
   activeDirectSession?: MslActiveDirectSession | null;
 };

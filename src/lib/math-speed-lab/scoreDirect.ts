@@ -37,7 +37,7 @@ export function scoreDirectSet(
  * - review_required: was mastered and later accuracy < 70%
  * - proficient: set complete but below 90%
  */
-export function deriveT01StateAfterDirectSet(args: {
+export function deriveStateAfterDirectSet(args: {
   previousState: MslProgressState;
   previouslyMastered: boolean;
   accuracyPercent: number;
@@ -58,3 +58,6 @@ export function deriveT01StateAfterDirectSet(args: {
   }
   return "proficient";
 }
+
+/** @deprecated Prefer deriveStateAfterDirectSet */
+export const deriveT01StateAfterDirectSet = deriveStateAfterDirectSet;

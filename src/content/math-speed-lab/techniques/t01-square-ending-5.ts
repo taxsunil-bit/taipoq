@@ -18,6 +18,9 @@ export const T01_TECHNIQUE: MslTechniqueMeta = {
   order: 1,
   titleEn: "Squares Ending in 5",
   titleHi: "5 पर समाप्त संख्याओं का वर्ग",
+  shortDescription:
+    "Exact squares of two-digit numbers ending in 5, with ordinary multiplication checks.",
+  learnerLevel: "Beginner (foundational rapid arithmetic)",
   attribution: T01_ATTRIBUTION,
   recognitionSignal:
     "The number is a positive two-digit integer that ends in 5 (15, 25, 35, 45, 55, 65, 75, 85, or 95 in this lab).",

@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/PageShell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
-import { MSL_MODULE } from "@/content/math-speed-lab/module";
-import { T01_TECHNIQUE } from "@/content/math-speed-lab/techniques/t01-square-ending-5";
-import { getT01Progress } from "@/lib/math-speed-lab";
-import type { MslTechniqueProgress } from "@/lib/math-speed-lab/types";
+import { MSL_MODULE, MSL_PILOT_TECHNIQUES } from "@/content/math-speed-lab";
+import { getTechniqueProgress } from "@/lib/math-speed-lab";
+import type { MslTechniqueId, MslTechniqueProgress } from "@/lib/math-speed-lab/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/math-speed-lab/")({
@@ -16,7 +15,7 @@ export const Route = createFileRoute("/math-speed-lab/")({
       {
         name: "description",
         content:
-          "Canary module landing for Math Speed Lab Technique 1 only. Direct URL access. No examination-body endorsement.",
+          "Canary module landing for Math Speed Lab Techniques T01–T03 (direct practice). Direct URL access. No examination-body endorsement.",
       },
       { name: "robots", content: "noindex, nofollow" },
     ],
@@ -24,11 +23,28 @@ export const Route = createFileRoute("/math-speed-lab/")({
   component: MathSpeedLabIndex,
 });
 
+const LESSON_PATH: Record<
+  MslTechniqueId,
+  | "/math-speed-lab/square-ending-5"
+  | "/math-speed-lab/complements-10n"
+  | "/math-speed-lab/nearbase-100"
+> = {
+  "MSL-T01-SQUARE-ENDING-5": "/math-speed-lab/square-ending-5",
+  "MSL-T02-COMPLEMENTS-10N": "/math-speed-lab/complements-10n",
+  "MSL-T03-NEARBASE-100": "/math-speed-lab/nearbase-100",
+};
+
 function MathSpeedLabIndex() {
-  const [progress, setProgress] = useState<MslTechniqueProgress | null>(null);
+  const [progressMap, setProgressMap] = useState<
+    Partial<Record<MslTechniqueId, MslTechniqueProgress>>
+  >({});
 
   useEffect(() => {
-    setProgress(getT01Progress());
+    const next: Partial<Record<MslTechniqueId, MslTechniqueProgress>> = {};
+    for (const tech of MSL_PILOT_TECHNIQUES) {
+      next[tech.techniqueId] = getTechniqueProgress(tech.techniqueId);
+    }
+    setProgressMap(next);
   }, []);
 
   return (
@@ -38,7 +54,7 @@ function MathSpeedLabIndex() {
           Canary / Pilot
         </span>
         <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted-foreground">
-          Technique 1 of 3 planned — T01 only shipped
+          Local pilot — T01, T02, T03 direct practice
         </span>
       </div>
 
@@ -65,38 +81,54 @@ function MathSpeedLabIndex() {
         <p className="whitespace-pre-line">{MSL_MODULE.disclaimer}</p>
       </section>
 
-      <Card className="border-border bg-card/80">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold leading-snug">{T01_TECHNIQUE.titleEn}</CardTitle>
-          <CardDescription className="text-base text-foreground/80">
-            {T01_TECHNIQUE.titleHi}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Current progress:{" "}
-            <span className="font-semibold text-foreground">
-              {progress?.state ?? "not_started"}
-            </span>
-            {progress?.directScorePercent != null
-              ? ` · direct ${progress.directScorePercent}%`
-              : ""}
-          </p>
-          <Link
-            to="/math-speed-lab/square-ending-5"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "min-h-11 inline-flex w-full touch-manipulation justify-center sm:w-auto",
-            )}
-          >
-            Open T01 lesson
-          </Link>
-        </CardContent>
-      </Card>
+      <section className="space-y-4" aria-labelledby="msl-techniques-heading">
+        <h2 id="msl-techniques-heading" className="text-lg font-bold">
+          Pilot techniques
+        </h2>
+        {MSL_PILOT_TECHNIQUES.map((tech) => {
+          const progress = progressMap[tech.techniqueId];
+          return (
+            <Card key={tech.techniqueId} className="border-border bg-card/80">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold leading-snug">{tech.titleEn}</CardTitle>
+                <CardDescription className="text-base text-foreground/80">
+                  {tech.titleHi}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">{tech.shortDescription}</p>
+                <p className="text-sm text-muted-foreground">
+                  Learner level:{" "}
+                  <span className="font-semibold text-foreground">{tech.learnerLevel}</span>
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Progress:{" "}
+                  <span className="font-semibold text-foreground">
+                    {progress?.state ?? "not_started"}
+                  </span>
+                  {progress?.directScorePercent != null
+                    ? ` · direct ${progress.directScorePercent}%`
+                    : ""}
+                </p>
+                <Link
+                  to={LESSON_PATH[tech.techniqueId]}
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "min-h-11 inline-flex w-full touch-manipulation justify-center sm:w-auto",
+                  )}
+                >
+                  Open lesson
+                </Link>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </section>
 
       <p className="text-xs text-muted-foreground">
-        This canary does not include Techniques T02 or T03. Reachable by direct URL only — not
-        listed in site navigation.
+        Local pilot canary for direct lessons and direct practice only. Recognition, mixed, exam,
+        error-identification, and revision sets are not included yet. Reachable by direct URL only —
+        not listed in site navigation. This is not a full public release.
       </p>
     </div>
   );

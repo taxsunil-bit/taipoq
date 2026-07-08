@@ -9,7 +9,7 @@ export const MSL_MODULE: MslModuleMeta = {
   titleEn: "Math Speed Lab",
   titleHi: "गणना गति प्रयोगशाला",
   description:
-    "Learn exact rapid-arithmetic methods with clear conditions, ordinary-method checks, and algebraic reasons. This page is an engineering canary for Technique 1 only.",
+    "Learn exact rapid-arithmetic methods with clear conditions, ordinary-method checks, and algebraic reasons. Local pilot canary for Techniques T01–T03 (direct practice). Reachable by direct URL only.",
   disclaimer: MSL_MODULE_DISCLAIMER,
   version: MSL_CONTENT_VERSION,
   status: "canary",

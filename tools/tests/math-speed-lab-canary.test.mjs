@@ -20,10 +20,71 @@ const KNOWN = {
   95: 9025,
 };
 
+const T02_SPECS = [
+  [100, 23, 77],
+  [100, 37, 63],
+  [100, 46, 54],
+  [100, 64, 36],
+  [100, 75, 25],
+  [100, 90, 10],
+  [1000, 128, 872],
+  [1000, 246, 754],
+  [1000, 357, 643],
+  [1000, 430, 570],
+  [1000, 608, 392],
+  [1000, 999, 1],
+];
+
+const T03_SPECS = [
+  [99, 98, 9702],
+  [98, 97, 9506],
+  [97, 96, 9312],
+  [96, 94, 9024],
+  [95, 93, 8835],
+  [94, 92, 8648],
+  [93, 91, 8463],
+  [92, 90, 8280],
+  [99, 90, 8910],
+  [95, 95, 9025],
+  [91, 91, 8281],
+  [90, 90, 8100],
+];
+
 function t01Rapid(n) {
   assert.equal(n % 10, 5);
   const a = Math.floor(n / 10);
   return 100 * a * (a + 1) + 25;
+}
+
+function t02Complement(base, n) {
+  if (![100, 1000].includes(base) || !Number.isInteger(n) || n < 1 || n >= base) {
+    throw new Error("invalid T02");
+  }
+  return base - n;
+}
+
+function t03NearBase(n, m) {
+  if (!Number.isInteger(n) || !Number.isInteger(m) || n < 90 || n > 99 || m < 90 || m > 99) {
+    throw new Error("invalid T03");
+  }
+  const deficit1 = 100 - n;
+  const deficit2 = 100 - m;
+  const leftRaw = n - deficit2;
+  const rightRaw = deficit1 * deficit2;
+  const carry = Math.floor(rightRaw / 100);
+  const right = rightRaw % 100;
+  const leftFinal = leftRaw + carry;
+  const rightBlock = String(right).padStart(2, "0");
+  return {
+    deficit1,
+    deficit2,
+    leftRaw,
+    rightRaw,
+    carry,
+    leftFinal,
+    rightBlock,
+    product: leftFinal * 100 + right,
+  };
 }
 
 /** Mirrors src/lib/math-speed-lab/normalizeAnswer.ts rules for node:test. */
@@ -65,20 +126,29 @@ function parseMslStoreJson(raw) {
   const empty = {
     version: 1,
     moduleId: "math-speed-lab",
-    moduleContentVersion: "1.0.0-canary-t01",
+    moduleContentVersion: "1.1.0-canary-t01-t02-t03",
     techniques: {},
     recentAttempts: [],
+    activeDirectSessions: {},
   };
   if (!raw) return empty;
   try {
     const parsed = JSON.parse(raw);
     if (parsed.version !== 1 || parsed.moduleId !== "math-speed-lab") return empty;
+    const sessions = { ...(parsed.activeDirectSessions ?? {}) };
+    if (
+      parsed.activeDirectSession?.techniqueId &&
+      !sessions[parsed.activeDirectSession.techniqueId]
+    ) {
+      sessions[parsed.activeDirectSession.techniqueId] = parsed.activeDirectSession;
+    }
     return {
       version: 1,
       moduleId: "math-speed-lab",
       moduleContentVersion: parsed.moduleContentVersion ?? empty.moduleContentVersion,
       techniques: parsed.techniques ?? {},
       recentAttempts: Array.isArray(parsed.recentAttempts) ? parsed.recentAttempts : [],
+      activeDirectSessions: sessions,
     };
   } catch {
     return empty;
@@ -255,7 +325,6 @@ test("normalize rejects Unicode digits, long unsafe integers, pasted junk", () =
     "0xE1",
     "225\n",
   ]) {
-    // newlines after trim may still fail digit check if embedded; trim only outer
     const r = normalizeExactPositiveInteger(raw);
     if (raw === "225\n") {
       assert.equal(r.ok, true);
@@ -291,6 +360,9 @@ test("activeDirectSession helpers exist for mid-practice reload", () => {
   assert.match(storageSrc, /saveT01ActiveDirectSession/);
   assert.match(storageSrc, /getT01ActiveDirectSession/);
   assert.match(storageSrc, /activeDirectSession/);
+  assert.match(storageSrc, /activeDirectSessions/);
+  assert.match(storageSrc, /saveActiveDirectSession/);
+  assert.match(storageSrc, /resetDirectPracticeScores/);
 });
 
 test("subject back-links no longer use invalidated trailing-slash-only typing path", () => {
@@ -309,10 +381,358 @@ test("subject back-links no longer use invalidated trailing-slash-only typing pa
 
 test("practice runner restores session and marks reveal as not first-pass correct", () => {
   const runner = readFileSync(
+    path.join(ROOT, "src", "components", "math-speed-lab", "MslDirectPracticeRunner.tsx"),
+    "utf8",
+  );
+  assert.match(runner, /getActiveDirectSession/);
+  assert.match(runner, /saveActiveDirectSession/);
+  assert.match(runner, /Reveal is never scored as first-pass correct/);
+});
+
+// --- T02 ---
+
+test("T02 complements: all twelve answers and identity", () => {
+  for (const [base, n, ans] of T02_SPECS) {
+    assert.equal(t02Complement(base, n), ans);
+    assert.equal(n + ans, base);
+  }
+});
+
+test("T02 zero-ending operands validate algebraically", () => {
+  assert.equal(t02Complement(100, 90), 10);
+  assert.equal(90 + 10, 100);
+  assert.equal(t02Complement(1000, 430), 570);
+  assert.equal(430 + 570, 1000);
+  assert.equal(t02Complement(1000, 500), 500);
+  assert.equal(t02Complement(100, 10), 90);
+  assert.equal(t02Complement(1000, 900), 100);
+});
+
+test("T02 rapid steps avoid misleading digit-10 on zero-containing operands", () => {
+  const t02Src = readFileSync(
+    path.join(ROOT, "src", "lib", "math-speed-lab", "formulas", "t02.ts"),
+    "utf8",
+  );
+  assert.match(t02Src, /hasZeroDigit/);
+  assert.match(t02Src, /algebraic source of truth/);
+  assert.doesNotMatch(t02Src, /Final digit 0: subtract from 10 → 10/);
+  const qSrc = readFileSync(
+    path.join(ROOT, "src", "content", "math-speed-lab", "questions", "t02-direct.ts"),
+    "utf8",
+  );
+  assert.match(qSrc, /operand: 90/);
+  assert.match(qSrc, /operand: 430/);
+  assert.match(qSrc, /algebraic verification/);
+});
+
+test("T02 boundary operands 1 and base-1 accepted; base and 0 rejected", () => {
+  assert.equal(t02Complement(100, 1), 99);
+  assert.equal(t02Complement(100, 99), 1);
+  assert.equal(t02Complement(1000, 1), 999);
+  assert.equal(t02Complement(1000, 999), 1);
+  assert.throws(() => t02Complement(100, 0));
+  assert.throws(() => t02Complement(100, 100));
+  assert.throws(() => t02Complement(1000, 1000));
+});
+
+test("T02 rejects invalid base/operand", () => {
+  for (const [base, n] of [
+    [100, 125],
+    [50, 37],
+    [1000, 0],
+    [10000, 12],
+    [100, 100],
+    [100, 1.5],
+  ]) {
+    assert.throws(() => t02Complement(base, n));
+  }
+});
+
+test("T02 twelve unique DIR IDs and no duplicate pairs", () => {
+  const src = readFileSync(
+    path.join(ROOT, "src", "content", "math-speed-lab", "questions", "t02-direct.ts"),
+    "utf8",
+  );
+  for (let i = 1; i <= 12; i++) {
+    assert.match(src, new RegExp(`MSL-T02-DIR-${String(i).padStart(3, "0")}`));
+  }
+  const pairs = new Set();
+  for (const [base, n] of T02_SPECS) {
+    const key = `${base}:${n}`;
+    assert.equal(pairs.has(key), false);
+    pairs.add(key);
+    assert.match(src, new RegExp(`operand: ${n}`));
+    assert.match(src, new RegExp(`base: ${base}`));
+  }
+});
+
+test("T02 scoring: 11/12 masters; 10/12 stays proficient", () => {
+  const ids = Array.from({ length: 12 }, (_, i) => `MSL-T02-DIR-${String(i + 1).padStart(3, "0")}`);
+  const eleven = Object.fromEntries(ids.map((id, i) => [id, i !== 11]));
+  const scored = scoreDirectSet(ids, eleven);
+  assert.equal(scored.firstPassCorrect, 11);
+  assert.equal(scored.accuracyPercent, 92);
+  assert.equal(deriveState({ previouslyMastered: false, accuracyPercent: 92 }), "mastered");
+  const ten = Object.fromEntries(ids.map((id, i) => [id, i < 10]));
+  assert.equal(scoreDirectSet(ids, ten).accuracyPercent, 83);
+  assert.equal(deriveState({ previouslyMastered: false, accuracyPercent: 83 }), "proficient");
+});
+
+// --- T03 ---
+
+test("T03 products: all twelve and carry/pad cases", () => {
+  for (const [n, m, ans] of T03_SPECS) {
+    const b = t03NearBase(n, m);
+    assert.equal(b.product, ans);
+    assert.equal(b.product, n * m);
+    assert.equal(b.rightBlock.length, 2);
+  }
+  const pad = t03NearBase(98, 97);
+  assert.equal(pad.rightBlock, "06");
+  assert.equal(pad.carry, 0);
+  const carry = t03NearBase(90, 90);
+  assert.equal(carry.rightRaw, 100);
+  assert.equal(carry.carry, 1);
+  assert.equal(carry.rightBlock, "00");
+  assert.equal(carry.product, 8100);
+  assert.equal(t03NearBase(99, 99).product, 9801);
+});
+
+test("T03 rejects unsupported operands", () => {
+  for (const [n, m] of [
+    [89, 99],
+    [100, 99],
+    [103, 97],
+    [90, 100],
+    [90.5, 91],
+    [-91, 92],
+  ]) {
+    assert.throws(() => t03NearBase(n, m));
+  }
+});
+
+test("T03 twelve unique DIR IDs and unique ordered pairs", () => {
+  const src = readFileSync(
+    path.join(ROOT, "src", "content", "math-speed-lab", "questions", "t03-direct.ts"),
+    "utf8",
+  );
+  for (let i = 1; i <= 12; i++) {
+    assert.match(src, new RegExp(`MSL-T03-DIR-${String(i).padStart(3, "0")}`));
+  }
+  const pairs = new Set();
+  for (const [n, m] of T03_SPECS) {
+    const key = `${n}x${m}`;
+    assert.equal(pairs.has(key), false);
+    pairs.add(key);
+  }
+});
+
+test("T03 scoring boundaries", () => {
+  const ids = Array.from({ length: 12 }, (_, i) => `MSL-T03-DIR-${String(i + 1).padStart(3, "0")}`);
+  assert.equal(
+    deriveState({
+      previouslyMastered: false,
+      accuracyPercent: scoreDirectSet(ids, Object.fromEntries(ids.map((id) => [id, true])))
+        .accuracyPercent,
+    }),
+    "mastered",
+  );
+  const eleven = Object.fromEntries(ids.map((id, i) => [id, i !== 11]));
+  assert.equal(scoreDirectSet(ids, eleven).accuracyPercent, 92);
+  const ten = Object.fromEntries(ids.map((id, i) => [id, i < 10]));
+  assert.equal(scoreDirectSet(ids, ten).accuracyPercent, 83);
+  assert.equal(
+    deriveState({ previouslyMastered: true, accuracyPercent: Math.round((8 / 12) * 100) }),
+    "review_required",
+  );
+  assert.equal(
+    deriveState({ previouslyMastered: true, accuracyPercent: Math.round((9 / 12) * 100) }),
+    "proficient",
+  );
+});
+
+test("T03 right blocks and product are not unsafe string-concat bugs", () => {
+  for (const [n, m, rb, product] of [
+    [98, 97, "06", 9506],
+    [99, 98, "02", 9702],
+    [99, 99, "01", 9801],
+    [95, 93, "35", 8835],
+    [90, 90, "00", 8100],
+  ]) {
+    const b = t03NearBase(n, m);
+    assert.equal(b.rightBlock, rb);
+    assert.equal(b.product, product);
+    assert.equal(b.product, n * m);
+    const concatTrap = Number(String(b.leftFinal) + b.rightBlock);
+    assert.equal(concatTrap, b.product);
+  }
+});
+
+test("three simultaneous technique sessions parse independently", () => {
+  const store = parseMslStoreJson(
+    JSON.stringify({
+      version: 1,
+      moduleId: "math-speed-lab",
+      techniques: {
+        "MSL-T01-SQUARE-ENDING-5": { techniqueId: "MSL-T01-SQUARE-ENDING-5", state: "mastered" },
+        "MSL-T02-COMPLEMENTS-10N": { techniqueId: "MSL-T02-COMPLEMENTS-10N", state: "practising" },
+        "MSL-T03-NEARBASE-100": { techniqueId: "MSL-T03-NEARBASE-100", state: "learning" },
+      },
+      recentAttempts: [],
+      activeDirectSessions: {
+        "MSL-T01-SQUARE-ENDING-5": {
+          techniqueId: "MSL-T01-SQUARE-ENDING-5",
+          questionIndex: 1,
+          firstPassResults: { "MSL-T01-DIR-001": true },
+          updatedAt: "2026-07-08T00:00:00.000Z",
+        },
+        "MSL-T02-COMPLEMENTS-10N": {
+          techniqueId: "MSL-T02-COMPLEMENTS-10N",
+          questionIndex: 4,
+          firstPassResults: { "MSL-T02-DIR-001": true, "MSL-T02-DIR-002": false },
+          updatedAt: "2026-07-08T00:00:01.000Z",
+        },
+        "MSL-T03-NEARBASE-100": {
+          techniqueId: "MSL-T03-NEARBASE-100",
+          questionIndex: 0,
+          firstPassResults: {},
+          updatedAt: "2026-07-08T00:00:02.000Z",
+        },
+      },
+    }),
+  );
+  assert.equal(store.techniques["MSL-T01-SQUARE-ENDING-5"].state, "mastered");
+  assert.equal(store.activeDirectSessions["MSL-T02-COMPLEMENTS-10N"].questionIndex, 4);
+  assert.equal(store.activeDirectSessions["MSL-T03-NEARBASE-100"].questionIndex, 0);
+  assert.equal(
+    store.activeDirectSessions["MSL-T02-COMPLEMENTS-10N"].firstPassResults["MSL-T02-DIR-002"],
+    false,
+  );
+});
+
+test("corrupt session entry does not wipe unrelated technique progress", () => {
+  const store = parseMslStoreJson(
+    JSON.stringify({
+      version: 1,
+      moduleId: "math-speed-lab",
+      techniques: {
+        "MSL-T01-SQUARE-ENDING-5": { techniqueId: "MSL-T01-SQUARE-ENDING-5", state: "mastered" },
+        "MSL-T02-COMPLEMENTS-10N": { techniqueId: "MSL-T02-COMPLEMENTS-10N", state: "proficient" },
+      },
+      recentAttempts: [],
+      activeDirectSessions: {
+        "MSL-T03-NEARBASE-100": "not-an-object",
+      },
+    }),
+  );
+  assert.equal(store.techniques["MSL-T01-SQUARE-ENDING-5"].state, "mastered");
+  assert.equal(store.techniques["MSL-T02-COMPLEMENTS-10N"].state, "proficient");
+});
+
+// --- Shared engine / isolation ---
+
+test("T02 and T03 routes exist", () => {
+  for (const rel of [
+    "src/routes/math-speed-lab.complements-10n.tsx",
+    "src/routes/math-speed-lab.complements-10n.index.tsx",
+    "src/routes/math-speed-lab.complements-10n.practice.tsx",
+    "src/routes/math-speed-lab.complements-10n.practice.direct.tsx",
+    "src/routes/math-speed-lab.nearbase-100.tsx",
+    "src/routes/math-speed-lab.nearbase-100.index.tsx",
+    "src/routes/math-speed-lab.nearbase-100.practice.tsx",
+    "src/routes/math-speed-lab.nearbase-100.practice.direct.tsx",
+  ]) {
+    assert.equal(existsSync(path.join(ROOT, rel)), true, rel);
+  }
+});
+
+test("landing shows three pilot techniques", () => {
+  const landing = readFileSync(
+    path.join(ROOT, "src", "routes", "math-speed-lab.index.tsx"),
+    "utf8",
+  );
+  assert.match(landing, /MSL_PILOT_TECHNIQUES/);
+  assert.match(landing, /Canary \/ Pilot/);
+  assert.doesNotMatch(landing, /T04|T05|T10/);
+});
+
+test("shared lesson and practice runners exist", () => {
+  assert.equal(
+    existsSync(path.join(ROOT, "src/components/math-speed-lab/MslLessonView.tsx")),
+    true,
+  );
+  assert.equal(
+    existsSync(path.join(ROOT, "src/components/math-speed-lab/MslDirectPracticeRunner.tsx")),
+    true,
+  );
+  const storage = readFileSync(
+    path.join(ROOT, "src/lib/math-speed-lab/progressStorage.ts"),
+    "utf8",
+  );
+  assert.match(storage, /getTechniqueProgress/);
+  assert.match(storage, /completeDirectSet/);
+  assert.match(storage, /MSL-T02-COMPLEMENTS-10N/);
+  assert.match(storage, /MSL-T03-NEARBASE-100/);
+});
+
+test("technique-scoped session migration from legacy singular session", () => {
+  const store = parseMslStoreJson(
+    JSON.stringify({
+      version: 1,
+      moduleId: "math-speed-lab",
+      techniques: {
+        "MSL-T01-SQUARE-ENDING-5": { techniqueId: "MSL-T01-SQUARE-ENDING-5", state: "mastered" },
+      },
+      recentAttempts: [],
+      activeDirectSession: {
+        techniqueId: "MSL-T01-SQUARE-ENDING-5",
+        questionIndex: 2,
+        firstPassResults: { "MSL-T01-DIR-001": true },
+        updatedAt: "2026-07-08T00:00:00.000Z",
+      },
+    }),
+  );
+  assert.equal(store.techniques["MSL-T01-SQUARE-ENDING-5"].state, "mastered");
+  assert.equal(store.activeDirectSessions["MSL-T01-SQUARE-ENDING-5"].questionIndex, 2);
+});
+
+test("reset isolation is technique-scoped in API", () => {
+  const storage = readFileSync(
+    path.join(ROOT, "src/lib/math-speed-lab/progressStorage.ts"),
+    "utf8",
+  );
+  assert.match(storage, /delete sessions\[techniqueId\]/);
+  assert.match(storage, /Restart one technique/);
+});
+
+test("shared runner keeps technique-specific T03 block display only for T03", () => {
+  const runner = readFileSync(
+    path.join(ROOT, "src", "components", "math-speed-lab", "MslDirectPracticeRunner.tsx"),
+    "utf8",
+  );
+  assert.match(runner, /MSL-T03-NEARBASE-100/);
+  assert.match(runner, /sr-only/);
+  assert.match(runner, /Right block digits are/);
+});
+
+test("T01 wrappers delegate to shared lesson and practice runners", () => {
+  const lesson = readFileSync(
+    path.join(ROOT, "src", "components", "math-speed-lab", "MslT01LessonView.tsx"),
+    "utf8",
+  );
+  const practice = readFileSync(
     path.join(ROOT, "src", "components", "math-speed-lab", "MslT01DirectPracticeRunner.tsx"),
     "utf8",
   );
-  assert.match(runner, /getT01ActiveDirectSession/);
-  assert.match(runner, /saveT01ActiveDirectSession/);
-  assert.match(runner, /Reveal is never scored as first-pass correct/);
+  assert.match(lesson, /MslLessonView/);
+  assert.match(practice, /MslDirectPracticeRunner/);
+});
+
+test("homepage does not promote Math Speed Lab", () => {
+  for (const rel of ["src/routes/index.tsx", "src/routes/home.tsx"]) {
+    const p = path.join(ROOT, rel);
+    if (!existsSync(p)) continue;
+    const src = readFileSync(p, "utf8");
+    assert.doesNotMatch(src, /math-speed-lab|Math Speed Lab/);
+  }
 });

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/math-speed-lab")({
       {
         name: "description",
         content:
-          "Math Speed Lab engineering canary — Technique 1 (squares ending in 5). Exact arithmetic practice for competitive maths. Not an official examination product.",
+          "Math Speed Lab engineering canary — Techniques T01–T03 (direct practice). Exact arithmetic practice for competitive maths. Not an official examination product.",
       },
       { name: "robots", content: "noindex, nofollow" },
     ],
