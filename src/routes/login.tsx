@@ -1,52 +1,126 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useId, useState } from "react";
 import { PageShell, PageHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getUser, saveUser } from "@/lib/storage";
+import { clearUser, getUser, sanitizeStoredUser, saveUser } from "@/lib/storage";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Login — TAIPOQ" }] }),
-  component: Login,
+  head: () => ({
+    meta: [
+      { title: "Local Profile — TAIPOQ" },
+      {
+        name: "description",
+        content:
+          "Set a display name for this browser. Your name and progress stay on this device — no online account or password is required.",
+      },
+    ],
+  }),
+  component: LocalProfilePage,
 });
 
-function Login() {
-  const navigate = useNavigate();
-  const [mode, setMode] = useState<"login" | "register">("login");
+function LocalProfilePage() {
+  const nameFieldId = useId();
+  const statusId = useId();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
+  const [nameError, setNameError] = useState("");
 
   useEffect(() => {
-    const u = getUser();
-    if (u) { setName(u.name); setEmail(u.email ?? ""); }
+    sanitizeStoredUser();
+    const user = getUser();
+    if (user?.name) setName(user.name);
   }, []);
 
-  function submit(e: React.FormEvent) {
+  function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    saveUser({ name: name.trim() || "Student", email: email.trim() || undefined });
-    navigate({ to: "/progress" });
+    const trimmed = name.trim();
+    if (!trimmed) {
+      setNameError("Enter a display name.");
+      setStatus("");
+      return;
+    }
+    setNameError("");
+    const existing = getUser();
+    saveUser({
+      name: trimmed,
+      email: existing?.email,
+    });
+    setStatus("Profile saved in this browser.");
+  }
+
+  function handleClear() {
+    if (
+      !window.confirm(
+        "Clear your local display name from this browser? Your typing test results and other saved progress will not be deleted.",
+      )
+    ) {
+      return;
+    }
+    clearUser();
+    setName("");
+    setNameError("");
+    setStatus("Local display name cleared.");
   }
 
   return (
     <PageShell>
-      <PageHeader title={mode === "login" ? "Login" : "Register"} subtitle="Prototype only — name is stored locally." />
+      <PageHeader
+        title="Local Profile"
+        subtitle="Your name and progress are stored in this browser. No online account or password is required."
+      />
       <Card className="mx-auto max-w-md">
-        <CardContent className="p-6">
-          <div role="note" className="mb-4 rounded-md border border-amber-500/60 bg-amber-500/15 p-3 text-xs font-medium text-amber-100 dark:text-amber-100">
-            This is a <b>local demo login</b>. Your name is saved only in this browser. Password login is not active yet.
-          </div>
-          <div className="mb-4 flex rounded-md border p-1 text-sm">
-            <button type="button" onClick={() => setMode("login")} className={`flex-1 rounded px-3 py-1.5 ${mode === "login" ? "bg-primary text-primary-foreground" : ""}`}>Login</button>
-            <button type="button" onClick={() => setMode("register")} className={`flex-1 rounded px-3 py-1.5 ${mode === "register" ? "bg-primary text-primary-foreground" : ""}`}>Register</button>
-          </div>
-          <form className="space-y-4" onSubmit={submit}>
-            <div className="space-y-1.5"><Label>Name</Label><Input value={name} onChange={e => setName(e.target.value)} placeholder="Your full name" required /></div>
-            <div className="space-y-1.5"><Label>Email</Label><Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></div>
-            <div className="space-y-1.5"><Label>Password</Label><Input type="password" placeholder="••••••••" /></div>
-            <Button className="w-full" type="submit">{mode === "login" ? "Login" : "Register"}</Button>
+        <CardContent className="space-y-4 p-6">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            TAIPOQ is under continuous development. Some learning features may change as the
+            platform is improved.
+          </p>
+          <form className="space-y-4" onSubmit={handleSave} noValidate>
+            <div className="space-y-1.5">
+              <Label htmlFor={nameFieldId}>Display name</Label>
+              <Input
+                id={nameFieldId}
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (nameError) setNameError("");
+                }}
+                placeholder="Your name for certificates and progress"
+                autoComplete="name"
+                aria-invalid={nameError ? true : undefined}
+                aria-describedby={nameError ? `${nameFieldId}-error` : undefined}
+                required
+              />
+              {nameError ? (
+                <p id={`${nameFieldId}-error`} className="text-sm text-destructive" role="alert">
+                  {nameError}
+                </p>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button className="min-h-11 flex-1" type="submit">
+                Save profile
+              </Button>
+              <Button
+                className="min-h-11 flex-1"
+                type="button"
+                variant="outline"
+                onClick={handleClear}
+              >
+                Clear display name
+              </Button>
+            </div>
           </form>
+          <p
+            id={statusId}
+            className="text-sm text-muted-foreground"
+            role="status"
+            aria-live="polite"
+          >
+            {status}
+          </p>
         </CardContent>
       </Card>
     </PageShell>

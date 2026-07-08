@@ -16,16 +16,13 @@ import {
 } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
+const HOME_TITLE = "TAIPOQ — Government Job Updates, Mock Tests, PYQ and Computer Practice";
+const HOME_DESCRIPTION =
+  "Verified government job updates, mock tests, PYQ practice, current affairs, computer knowledge, and English–Hindi typing preparation for Indian competitive examinations.";
+
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "TAIPOQ — English & Hindi Typing Practice for Job Preparation" },
-      {
-        name: "description",
-        content:
-          "Practice daily. Track your progress. Build job-ready English and Hindi typing speed and accuracy.",
-      },
-    ],
+    meta: [{ title: HOME_TITLE }, { name: "description", content: HOME_DESCRIPTION }],
   }),
   component: Home,
 });
@@ -36,41 +33,57 @@ function Home() {
       <ToughMockChallengePopup />
       <PageShell>
         <div className="space-y-4 md:space-y-6">
-          <HomeMobileHero />
+          <HomeHero />
           <HomeMobilePrimarySection />
           <div className="hidden md:block">
             <HomeDesktopPracticeSection />
           </div>
           <DailyMissionSection />
           <HomeMobileBody />
-          <HomeDesktop />
+          <HomeDesktopFooter />
         </div>
       </PageShell>
     </>
   );
 }
 
-function HomeMobileHero() {
+function HomeHero() {
   return (
-    <section className="bento-tile p-5 font-hindi md:hidden">
-      <div className="mb-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-        <img
-          src={BRAND_ASSETS.logo3d}
-          alt="TAIPOQ"
-          width={280}
-          height={200}
-          className="mx-auto h-auto max-h-[160px] w-full max-w-[260px] object-contain"
-          loading="eager"
-          decoding="async"
-        />
+    <section
+      className="bento-tile p-5 font-hindi md:p-8 lg:p-10"
+      aria-labelledby="home-hero-heading"
+    >
+      <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center md:gap-8">
+        <div>
+          <h1
+            id="home-hero-heading"
+            className="font-display text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl"
+          >
+            TAIPOQ
+          </h1>
+          <p className="mt-2 text-base font-medium leading-snug text-foreground md:mt-3 md:text-xl">
+            Govt Job Computer & Typing Preparation
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-base">
+            Upcoming Exams · MS Word · Excel · Model Papers · Typing · PYQ · Current Affairs
+          </p>
+          <p className="mt-3 hidden text-sm leading-relaxed text-muted-foreground md:block">
+            TAIPOQ is under continuous development. Some learning features may change as the
+            platform is improved.
+          </p>
+        </div>
+        <div className="mx-auto w-full max-w-[260px] rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:max-w-[320px] md:rounded-3xl md:p-4 lg:max-w-[360px]">
+          <img
+            src={BRAND_ASSETS.logo3d}
+            alt="TAIPOQ"
+            width={320}
+            height={320}
+            className="mx-auto h-auto max-h-[160px] w-full object-contain md:max-h-none md:max-w-[280px]"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
       </div>
-      <h1 className="font-display text-3xl font-bold tracking-tight">TAIPOQ</h1>
-      <p className="mt-2 text-base font-medium leading-snug text-foreground">
-        Govt Job Computer & Typing Preparation
-      </p>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        Upcoming Exams · MS Word · Excel · Model Papers · Typing
-      </p>
     </section>
   );
 }
@@ -92,7 +105,12 @@ function HomeMobilePrimarySection() {
       </Link>
       <Link
         to="/tests"
-        className={cn(MOBILE_CARD_BTN, MAIN_ACTION_CARD, TESTS_HUB_CARD_HIGHLIGHT, "relative gap-1")}
+        className={cn(
+          MOBILE_CARD_BTN,
+          MAIN_ACTION_CARD,
+          TESTS_HUB_CARD_HIGHLIGHT,
+          "relative gap-1",
+        )}
       >
         <span className={TESTS_HUB_BADGE}>मुख्य</span>
         <span className="w-full pr-14 text-base font-semibold leading-snug text-white">
@@ -115,12 +133,12 @@ function HomeMobilePrimarySection() {
 
 function HomeDesktopPracticeSection() {
   return (
-    <section
-      className="bento-tile space-y-4 p-5 md:p-6"
-      aria-labelledby="desktop-practice-heading"
-    >
+    <section className="bento-tile space-y-4 p-5 md:p-6" aria-labelledby="desktop-practice-heading">
       <div>
-        <h2 id="desktop-practice-heading" className="font-display text-xl font-bold tracking-tight md:text-2xl">
+        <h2
+          id="desktop-practice-heading"
+          className="font-display text-xl font-bold tracking-tight md:text-2xl"
+        >
           मुख्य अभ्यास
         </h2>
         <p className="mt-1 font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -197,7 +215,9 @@ function HomeMobileBody() {
           <span className="w-full text-base font-semibold leading-snug">
             Current Affairs / समसामयिक प्रश्नपत्र
           </span>
-          <span className="w-full text-sm font-normal opacity-90">SSC · Railway · PET · Police</span>
+          <span className="w-full text-sm font-normal opacity-90">
+            SSC · Railway · PET · Police
+          </span>
         </Link>
         <Link
           to={MOBILE_ROUTES.sscCglPractice}
@@ -232,7 +252,10 @@ function HomeMobileBody() {
       </section>
 
       {/* How to use TAIPOQ — job & study first */}
-      <section className="bento-tile space-y-3 p-5 font-hindi" aria-labelledby="mobile-onboarding-heading">
+      <section
+        className="bento-tile space-y-3 p-5 font-hindi"
+        aria-labelledby="mobile-onboarding-heading"
+      >
         <h2 id="mobile-onboarding-heading" className="text-lg font-bold text-foreground">
           TAIPOQ कैसे उपयोग करें?
         </h2>
@@ -249,14 +272,21 @@ function HomeMobileBody() {
                       {item.step}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-base font-semibold leading-snug text-foreground">{item.title}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.subtext}</p>
+                      <p className="text-base font-semibold leading-snug text-foreground">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        {item.subtext}
+                      </p>
                       <div className="mt-3 grid grid-cols-2 gap-2">
                         {item.choices.map((choice) => (
                           <Link
                             key={choice.to}
                             to={choice.to}
-                            className={cn(MOBILE_BTN, "px-3 text-sm bg-primary text-primary-foreground")}
+                            className={cn(
+                              MOBILE_BTN,
+                              "px-3 text-sm bg-primary text-primary-foreground",
+                            )}
                           >
                             {choice.label}
                           </Link>
@@ -295,7 +325,10 @@ function HomeMobileBody() {
       </section>
 
       {/* Typing Practice — secondary on mobile */}
-      <section className="bento-tile space-y-4 p-5 font-hindi" aria-labelledby="mobile-typing-heading">
+      <section
+        className="bento-tile space-y-4 p-5 font-hindi"
+        aria-labelledby="mobile-typing-heading"
+      >
         <div>
           <h2 id="mobile-typing-heading" className="text-lg font-bold text-foreground">
             Typing Practice
@@ -351,287 +384,52 @@ function HomeMobileBody() {
   );
 }
 
-function HomeDesktop() {
+function HomeDesktopFooter() {
   return (
-    <>
-      <div className="hidden auto-rows-fr grid-cols-1 gap-4 md:grid md:grid-cols-4 md:grid-rows-3">
-        {/* Hero — 2x2 */}
-        <section className="bento-tile bento-tile-hover group relative overflow-hidden p-8 md:col-span-2 md:row-span-2 md:p-10">
-          <div className="pointer-events-none absolute -right-6 -top-10 select-none font-display text-[14rem] font-bold leading-none text-foreground/[0.04] transition-opacity group-hover:text-foreground/[0.08]">
-            T
-          </div>
-          <div className="relative grid h-full gap-8 md:grid-cols-2 md:grid-rows-[1fr_auto] md:items-center md:gap-x-10 md:gap-y-8">
-            <div className="md:col-start-1 md:row-start-1">
-              <h1 className="font-display text-6xl font-bold leading-[0.95] tracking-tighter md:text-7xl">
-                TAIPOQ
-              </h1>
-              <p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Master precision and speed. The smart English & Hindi typing tutor designed for students,
-                clerks, advocates, and high-performance typists.
-              </p>
-            </div>
-
-            <div className="mx-auto w-full max-w-[360px] md:col-start-2 md:row-start-1 md:row-span-2 md:max-w-[420px] md:self-center lg:max-w-[460px]">
-              <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
-                <img
-                  src={BRAND_ASSETS.logo3d}
-                  alt="TAIPOQ"
-                  width={320}
-                  height={320}
-                  className="mx-auto h-auto w-full max-w-[320px] object-contain"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 md:col-start-1 md:row-start-2">
-              <span className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                v1.0 · Prototype
-              </span>
-              <Link
-                to="/progress"
-                className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
-              >
-                View Progress
-              </Link>
-              <Link
-                to="/typing-start-guide"
-                className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-primary underline-offset-2 hover:underline"
-              >
-                First time? Learn finger placement
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* English Path — wide */}
-        <Link
-          to="/english"
-          className="bento-tile group relative flex flex-col justify-between overflow-hidden p-8 transition-all hover:ring-4 hover:ring-primary/15 md:col-span-2"
-          style={{ background: "linear-gradient(135deg, oklch(0.5 0.18 260), oklch(0.38 0.16 265))" }}
-        >
-          <div className="flex items-start justify-between">
-            <div>
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-white/90 backdrop-blur">
-                EN · QWERTY
-              </div>
-              <h2 className="font-display text-3xl font-bold tracking-tight text-white">English Typing</h2>
-            </div>
-            <div className="rounded-lg bg-white/20 p-2 backdrop-blur-sm transition-transform group-hover:translate-x-1">
-              <Arrow />
-            </div>
-          </div>
-          <div>
-            <p className="mb-6 text-white/80">
-              Standard QWERTY mastery from basics to professional speed.
-            </p>
-            <div className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 font-semibold text-[oklch(0.4_0.16_265)] transition-transform active:scale-95">
-              Start Session
-            </div>
-          </div>
-        </Link>
-
-        {/* Hindi Path — wide */}
-        <Link
-          to="/hindi"
-          className="bento-tile group relative flex flex-col justify-between overflow-hidden p-8 transition-all hover:ring-4 hover:ring-amber-500/15 md:col-span-2"
-          style={{ background: "linear-gradient(135deg, oklch(0.65 0.16 60), oklch(0.5 0.16 45))" }}
-        >
-          <div className="flex items-start justify-between">
-            <div>
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-white/90 backdrop-blur">
-                HI · UNICODE
-              </div>
-              <h2 className="font-display text-3xl font-bold tracking-tight text-white">
-                Hindi Typing <span className="font-hindi">हिन्दी</span>
-              </h2>
-            </div>
-            <div className="rounded-lg bg-white/20 p-2 backdrop-blur-sm transition-transform group-hover:translate-x-1">
-              <Arrow />
-            </div>
-          </div>
-          <div>
-            <p className="mb-6 text-white/85">
-              KrutiDev / Remington Hindi typing now. Unicode and Phonetic modes coming soon.
-            </p>
-            <div className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 font-hindi font-semibold text-[oklch(0.4_0.16_45)] transition-transform active:scale-95">
-              आरम्भ करें
-            </div>
-          </div>
-        </Link>
-
-        {/* Word Learning */}
-        <Link
-          to="/word-learning"
-          className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
-        >
-          <div>
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              Word Learning
-            </div>
-            <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              शब्द अभ्यास / Word Learning
-            </h2>
-            <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
-              English typing और Hindi typing के लिए उपयोगी शब्दों का अभ्यास।
-            </p>
-          </div>
-          <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 font-hindi text-base font-semibold text-amber-700 transition-transform active:scale-95 dark:text-amber-300 sm:w-auto">
-            अभ्यास आरम्भ करें
-          </div>
-        </Link>
-
-        {/* Library */}
-        <Link
-          to="/study-corner"
-          className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
-        >
-          <div>
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              {STUDY_CORNER_LANDING.homeCard.title}
-            </div>
-            <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              {STUDY_CORNER_LANDING.homeCard.title}
-            </h2>
-            <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
-              {STUDY_CORNER_LANDING.homeCard.subtitle}
-            </p>
-            <p className="mt-2 max-w-md font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
-              {STUDY_CORNER_LANDING.homeCard.helper}
-            </p>
-          </div>
-          <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-primary px-5 py-3 font-hindi text-base font-semibold text-primary-foreground transition-transform active:scale-95 sm:w-auto">
-            {STUDY_CORNER_LANDING.homeCard.button}
-          </div>
-        </Link>
-
-        {/* Upcoming Exams & Job Updates */}
+    <div className="hidden space-y-6 md:block">
+      <JobTypingSpeedGuide variant="compact" />
+      <section
+        className="grid grid-cols-2 gap-3 sm:grid-cols-4"
+        aria-label="Progress and resources"
+      >
         <Link
           to="/upcoming-exams"
-          className="bento-tile bento-tile-hover group relative flex flex-col justify-between overflow-hidden p-6 md:col-span-2 md:p-8"
+          className="bento-tile bento-tile-hover flex min-h-11 items-center justify-between px-5 py-4 text-sm"
         >
-          <div>
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              Upcoming Exams & Job Updates
-            </div>
-            <h2 className="font-hindi text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              Upcoming Exams & Job Updates
-            </h2>
-            <p className="mt-3 max-w-md font-hindi text-base leading-relaxed text-muted-foreground md:text-lg">
-              Official links, exam updates और verified job updates एक स्थान पर.
-            </p>
-          </div>
-          <div className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-primary/30 bg-primary/10 px-5 py-3 font-hindi text-base font-semibold text-primary transition-transform active:scale-95 sm:w-auto">
-            Exam Updates देखें
-          </div>
-        </Link>
-
-        {/* Tests hub tile */}
-        <Link
-          to="/tests"
-          className="bento-tile bento-tile-hover group flex flex-col items-center justify-center p-6 text-center md:col-span-1"
-        >
-          <div className="mb-4 rounded-full bg-emerald-500/10 p-4 transition-colors group-hover:bg-emerald-500/20">
-            <svg
-              className="h-7 w-7 text-emerald-700 dark:text-emerald-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-              />
-            </svg>
-          </div>
-          <h3 className="font-hindi font-bold">परीक्षा अभ्यास / Tests</h3>
-          <p className="mt-1 text-sm text-muted-foreground">सभी Tests एक जगह</p>
-        </Link>
-
-        {/* Daily Practice tile */}
-        <div className="bento-tile flex flex-col justify-between p-6 md:col-span-1">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-            Daily Practice
+          <span className="font-medium">Upcoming Exams</span>
+          <span className="font-mono text-xs text-muted-foreground" aria-hidden="true">
+            →
           </span>
-          <div className="mt-4">
-            <div className="font-display text-2xl font-bold leading-tight">Practice daily.</div>
-            <p className="mt-2 text-xs text-muted-foreground">Improve speed and accuracy over time.</p>
-          </div>
-        </div>
-
-        {/* What TAIPOQ helps */}
-        <div className="bento-tile p-6 md:col-span-2">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              What TAIPOQ helps you do
-            </span>
-            <Link
-              to="/typing-start-guide"
-              className="font-mono text-[10px] uppercase tracking-widest text-primary hover:underline"
-            >
-              Start Guide →
-            </Link>
-          </div>
-          <ul className="grid gap-3 sm:grid-cols-2">
-            <li className="rounded-md border bg-card/40 p-3 text-sm">
-              <b>Track your progress</b> — every test is saved locally.
-            </li>
-            <li className="rounded-md border bg-card/40 p-3 text-sm">
-              <b>Improve speed and accuracy</b> with timed practice.
-            </li>
-            <li className="rounded-md border bg-card/40 p-3 text-sm">
-              <b>Build job-ready typing skill</b> for RRB, SSC, DSSSB.
-            </li>
-            <li className="rounded-md border bg-card/40 p-3 text-sm">
-              <b>Learn finger placement</b> before you race the clock.
-            </li>
-          </ul>
-        </div>
-
-        {/* Feature micro-tiles */}
-        <div className="grid grid-cols-2 gap-4 md:col-span-2">
-          {FEATURES.map((f) => (
-            <div
-              key={f.label}
-              className="bento-tile flex items-center gap-3 p-4 transition-colors hover:bg-surface-hover"
-            >
-              <div className={`grid h-9 w-9 place-items-center rounded-lg ${f.bg} ${f.fg} text-lg`}>
-                {f.icon}
-              </div>
-              <div className="text-sm font-semibold">{f.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="hidden md:block">
-        <JobTypingSpeedGuide variant="compact" />
-
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
-          {SECONDARY.map((s) => (
-            <Link
-              key={s.to}
-              to={s.to}
-              className="bento-tile bento-tile-hover flex items-center justify-between px-5 py-4 text-sm"
-            >
-              <span className="font-medium">{s.label}</span>
-              <span className="font-mono text-xs text-muted-foreground">→</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Arrow() {
-  return (
-    <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-    </svg>
+        </Link>
+        <Link
+          to="/progress"
+          className="bento-tile bento-tile-hover flex min-h-11 items-center justify-between px-5 py-4 text-sm"
+        >
+          <span className="font-medium">My Progress</span>
+          <span className="font-mono text-xs text-muted-foreground" aria-hidden="true">
+            →
+          </span>
+        </Link>
+        <Link
+          to="/certificate"
+          className="bento-tile bento-tile-hover flex min-h-11 items-center justify-between px-5 py-4 text-sm"
+        >
+          <span className="font-medium">Certificate</span>
+          <span className="font-mono text-xs text-muted-foreground" aria-hidden="true">
+            →
+          </span>
+        </Link>
+        <Link
+          to="/typing-start-guide"
+          className="bento-tile bento-tile-hover flex min-h-11 items-center justify-between px-5 py-4 text-sm"
+        >
+          <span className="font-medium">Typing Guide</span>
+          <span className="font-mono text-xs text-muted-foreground" aria-hidden="true">
+            →
+          </span>
+        </Link>
+      </section>
+    </div>
   );
 }
 
@@ -645,6 +443,12 @@ const PRACTICE_CARD_BTN =
   "relative flex min-h-[52px] w-full flex-col items-start justify-center gap-0.5 overflow-hidden rounded-xl px-4 py-3.5 text-left transition-all duration-200 active:scale-[0.98]";
 
 const DESKTOP_PRACTICE_ACTIONS = [
+  {
+    title: "Upcoming Exams & Job Updates",
+    subtitle: "Official links, exam updates और verified job updates",
+    to: "/upcoming-exams" as const,
+    highlight: false,
+  },
   {
     title: "परीक्षा अभ्यास / Tests",
     subtitle: "Model Paper, Typing Test, Current Affairs और General Science Test",
@@ -715,22 +519,4 @@ const ONBOARDING_STEPS = [
     subtext: "Computer keyboard पर वास्तविक typing test दें।",
     to: "/tests" as const,
   },
-] as const;
-
-const FEATURES = [
-  { label: "Real-time WPM", icon: "⚡", bg: "bg-primary/10", fg: "text-primary" },
-  { label: "Certificates", icon: "◆", bg: "bg-fuchsia-500/10", fg: "text-fuchsia-400" },
-  { label: "Unicode Core", icon: "अ", bg: "bg-amber-500/10", fg: "text-amber-400 font-hindi" },
-  { label: "Progress History", icon: "↗", bg: "bg-success/10", fg: "text-success" },
-] as const;
-
-const SECONDARY = [
-  { to: "/tests" as const, label: "परीक्षा अभ्यास / Tests" },
-  { to: "/upcoming-exams" as const, label: "आगामी परीक्षाएँ" },
-  { to: "/word-learning" as const, label: "शब्द अभ्यास / Word Learning" },
-  { to: "/study-corner" as const, label: "पुस्तकालय / Library" },
-  { to: "/english/lessons" as const, label: "English Lessons" },
-  { to: "/hindi/lessons" as const, label: "Hindi Lessons" },
-  { to: "/progress" as const, label: "My Progress" },
-  { to: "/certificate" as const, label: "Certificate" },
 ] as const;

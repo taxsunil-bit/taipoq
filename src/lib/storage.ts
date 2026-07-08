@@ -1,4 +1,4 @@
-// localStorage utilities for TAIPOQ prototype (SSR-safe).
+// localStorage utilities for TAIPOQ (SSR-safe).
 
 import type { MistakeRow } from "./typing-utils";
 import type { AnalysisLang } from "./typingAnalysis";
@@ -57,7 +57,11 @@ const KEY_LATEST = "taipoq:last-result";
 
 function ls(): Storage | null {
   if (typeof window === "undefined") return null;
-  try { return window.localStorage; } catch { return null; }
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
 }
 
 function read<T>(key: string, fallback: T): T {
@@ -74,12 +78,18 @@ function read<T>(key: string, fallback: T): T {
 function write<T>(key: string, value: T) {
   const s = ls();
   if (!s) return;
-  try { s.setItem(key, JSON.stringify(value)); } catch { /* quota */ }
+  try {
+    s.setItem(key, JSON.stringify(value));
+  } catch {
+    /* quota */
+  }
 }
 
 // ---------- Results ----------
 
-export function saveResult(r: Omit<SavedResult, "id" | "date"> & Partial<Pick<SavedResult, "id" | "date">>): SavedResult {
+export function saveResult(
+  r: Omit<SavedResult, "id" | "date"> & Partial<Pick<SavedResult, "id" | "date">>,
+): SavedResult {
   const all = getResults();
   const full: SavedResult = {
     id: r.id ?? "R-" + Math.random().toString(36).slice(2, 9).toUpperCase(),
@@ -114,7 +124,9 @@ export function getParagraphs(): SavedParagraph[] {
   return read<SavedParagraph[]>(KEY_PARAS, []);
 }
 
-export function saveParagraph(p: Omit<SavedParagraph, "id" | "createdAt"> & Partial<Pick<SavedParagraph, "id" | "createdAt">>): SavedParagraph {
+export function saveParagraph(
+  p: Omit<SavedParagraph, "id" | "createdAt"> & Partial<Pick<SavedParagraph, "id" | "createdAt">>,
+): SavedParagraph {
   const all = getParagraphs();
   const full: SavedParagraph = {
     id: p.id ?? "P-" + Math.random().toString(36).slice(2, 9).toUpperCase(),
@@ -132,7 +144,10 @@ export function updateParagraph(id: string, patch: Partial<SavedParagraph>) {
 }
 
 export function deleteParagraph(id: string) {
-  write(KEY_PARAS, getParagraphs().filter((p) => p.id !== id));
+  write(
+    KEY_PARAS,
+    getParagraphs().filter((p) => p.id !== id),
+  );
 }
 
 export function getActiveParagraphs(lang?: Language): SavedParagraph[] {
@@ -141,5 +156,34 @@ export function getActiveParagraphs(lang?: Language): SavedParagraph[] {
 
 // ---------- User ----------
 
-export function saveUser(u: SavedUser) { write(KEY_USER, u); }
-export function getUser(): SavedUser | null { return read<SavedUser | null>(KEY_USER, null); }
+export function saveUser(u: SavedUser) {
+  write(KEY_USER, { name: u.name.trim(), ...(u.email ? { email: u.email.trim() } : {}) });
+}
+
+export function getUser(): SavedUser | null {
+  const raw = read<unknown>(KEY_USER, null);
+  if (!raw || typeof raw !== "object") return null;
+  const record = raw as Record<string, unknown>;
+  if (typeof record.name !== "string") return null;
+  const name = record.name.trim();
+  if (!name) return null;
+  const email = typeof record.email === "string" ? record.email.trim() : undefined;
+  return email ? { name, email } : { name };
+}
+
+/** Drop legacy extra keys (e.g. password) from taipoq:user without changing parsed values. */
+export function sanitizeStoredUser(): void {
+  const user = getUser();
+  if (!user) return;
+  saveUser(user);
+}
+
+export function clearUser() {
+  const s = ls();
+  if (!s) return;
+  try {
+    s.removeItem(KEY_USER);
+  } catch {
+    /* ignore */
+  }
+}
