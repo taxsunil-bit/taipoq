@@ -25,6 +25,8 @@
     "typecheck:baseline": "node tools/typecheck-baseline.mjs",
     "validate:upcoming-exams-ui": "node tools/validate-upcoming-exams-ui.mjs",
     "validate:tests": "node tools/validate-test-paper-pack.mjs",
+    "validate:math-speed-lab": "node tools/validate-math-speed-lab.mjs",
+    "test:math-speed-lab": "node --test tools/tests/math-speed-lab-canary.test.mjs",
     "validate:pack-02": "node tools/validate-test-paper-pack-02.mjs",
     "validate:pack-02-foundation": "npx tsx tools/validate-pack-02-foundation.ts",
     "smoke:pack-02": "node tools/smoke-test-pack-02.mjs",

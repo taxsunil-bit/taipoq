@@ -82,7 +82,7 @@ function PaperNotFound({ subject, paperId }: { subject: string; paperId: string 
             ))}
           </ul>
         ) : null}
-        <Link to="/tests/$subject/" params={{ subject }} className="text-primary hover:underline">
+        <Link to="/tests/$subject" params={{ subject }} className="text-primary hover:underline">
           ← Back to subject
         </Link>
       </div>
@@ -173,7 +173,7 @@ function PaperTestPage() {
       <div className="mx-auto max-w-3xl space-y-6 font-hindi">
         <header className="space-y-2">
           <Link
-            to="/tests/$subject/"
+            to="/tests/$subject"
             params={{ subject }}
             className="text-sm text-muted-foreground hover:text-foreground"
           >
@@ -298,7 +298,7 @@ function PaperTestPage() {
                 पुनः प्रयास
               </Button>
               <Button asChild variant="outline" className="min-h-11">
-                <Link to="/tests/$subject/" params={{ subject }}>
+                <Link to="/tests/$subject" params={{ subject }}>
                   Subject tests
                 </Link>
               </Button>

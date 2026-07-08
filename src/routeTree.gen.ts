@@ -24,6 +24,7 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ModelPaperTestRouteImport } from './routes/model-paper-test'
 import { Route as ModelPaperRouteImport } from './routes/model-paper'
 import { Route as MockTestRouteImport } from './routes/mock-test'
+import { Route as MathSpeedLabRouteImport } from './routes/math-speed-lab'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HindiRouteImport } from './routes/hindi'
 import { Route as EnglishRouteImport } from './routes/english'
@@ -39,6 +40,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TestsIndexRouteImport } from './routes/tests.index'
 import { Route as StudyCornerIndexRouteImport } from './routes/study-corner.index'
 import { Route as ModelPaperIndexRouteImport } from './routes/model-paper.index'
+import { Route as MathSpeedLabIndexRouteImport } from './routes/math-speed-lab.index'
 import { Route as HindiIndexRouteImport } from './routes/hindi.index'
 import { Route as EnglishIndexRouteImport } from './routes/english.index'
 import { Route as CurrentAffairsIndexRouteImport } from './routes/current-affairs.index'
@@ -51,6 +53,7 @@ import { Route as StudyCornerGeneralAwarenessRouteImport } from './routes/study-
 import { Route as StudyCornerComputerBasicsRouteImport } from './routes/study-corner.computer-basics'
 import { Route as ModelPaperCurrentAffairsPack02RouteImport } from './routes/model-paper.current-affairs-pack-02'
 import { Route as MockTestCurrentAffairsPack02RouteImport } from './routes/mock-test.current-affairs-pack-02'
+import { Route as MathSpeedLabSquareEnding5RouteImport } from './routes/math-speed-lab.square-ending-5'
 import { Route as HindiPracticeRouteImport } from './routes/hindi.practice'
 import { Route as HindiLessonsRouteImport } from './routes/hindi.lessons'
 import { Route as EnglishPracticeRouteImport } from './routes/english.practice'
@@ -60,6 +63,7 @@ import { Route as TestsSubjectIndexRouteImport } from './routes/tests.$subject.i
 import { Route as StudyCornerGeneralScienceIndexRouteImport } from './routes/study-corner.general-science.index'
 import { Route as StudyCornerGeneralAwarenessIndexRouteImport } from './routes/study-corner.general-awareness.index'
 import { Route as StudyCornerComputerBasicsIndexRouteImport } from './routes/study-corner.computer-basics.index'
+import { Route as MathSpeedLabSquareEnding5IndexRouteImport } from './routes/math-speed-lab.square-ending-5.index'
 import { Route as TestsSubjectPaperIdRouteImport } from './routes/tests.$subject.$paperId'
 import { Route as StudyCornerGeneralScienceModelTest01RouteImport } from './routes/study-corner.general-science.model-test-01'
 import { Route as StudyCornerGeneralScienceChapter4RouteImport } from './routes/study-corner.general-science.chapter-4'
@@ -80,8 +84,10 @@ import { Route as StudyCornerComputerBasicsChapter4RouteImport } from './routes/
 import { Route as StudyCornerComputerBasicsChapter3RouteImport } from './routes/study-corner.computer-basics.chapter-3'
 import { Route as StudyCornerComputerBasicsChapter2RouteImport } from './routes/study-corner.computer-basics.chapter-2'
 import { Route as StudyCornerComputerBasicsChapter1RouteImport } from './routes/study-corner.computer-basics.chapter-1'
+import { Route as MathSpeedLabSquareEnding5PracticeRouteImport } from './routes/math-speed-lab.square-ending-5.practice'
 import { Route as CurrentAffairsPaperPaperIdRouteImport } from './routes/current-affairs.paper.$paperId'
 import { Route as AdminEditParagraphIdRouteImport } from './routes/admin.edit-paragraph.$id'
+import { Route as MathSpeedLabSquareEnding5PracticeDirectRouteImport } from './routes/math-speed-lab.square-ending-5.practice.direct'
 
 const WordLearningRoute = WordLearningRouteImport.update({
   id: '/word-learning',
@@ -156,6 +162,11 @@ const ModelPaperRoute = ModelPaperRouteImport.update({
 const MockTestRoute = MockTestRouteImport.update({
   id: '/mock-test',
   path: '/mock-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MathSpeedLabRoute = MathSpeedLabRouteImport.update({
+  id: '/math-speed-lab',
+  path: '/math-speed-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -233,6 +244,11 @@ const ModelPaperIndexRoute = ModelPaperIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ModelPaperRoute,
 } as any)
+const MathSpeedLabIndexRoute = MathSpeedLabIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MathSpeedLabRoute,
+} as any)
 const HindiIndexRoute = HindiIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -299,6 +315,12 @@ const MockTestCurrentAffairsPack02Route =
     path: '/current-affairs-pack-02',
     getParentRoute: () => MockTestRoute,
   } as any)
+const MathSpeedLabSquareEnding5Route =
+  MathSpeedLabSquareEnding5RouteImport.update({
+    id: '/square-ending-5',
+    path: '/square-ending-5',
+    getParentRoute: () => MathSpeedLabRoute,
+  } as any)
 const HindiPracticeRoute = HindiPracticeRouteImport.update({
   id: '/practice',
   path: '/practice',
@@ -346,6 +368,12 @@ const StudyCornerComputerBasicsIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => StudyCornerComputerBasicsRoute,
+  } as any)
+const MathSpeedLabSquareEnding5IndexRoute =
+  MathSpeedLabSquareEnding5IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => MathSpeedLabSquareEnding5Route,
   } as any)
 const TestsSubjectPaperIdRoute = TestsSubjectPaperIdRouteImport.update({
   id: '/$paperId',
@@ -466,6 +494,12 @@ const StudyCornerComputerBasicsChapter1Route =
     path: '/chapter-1',
     getParentRoute: () => StudyCornerComputerBasicsRoute,
   } as any)
+const MathSpeedLabSquareEnding5PracticeRoute =
+  MathSpeedLabSquareEnding5PracticeRouteImport.update({
+    id: '/practice',
+    path: '/practice',
+    getParentRoute: () => MathSpeedLabSquareEnding5Route,
+  } as any)
 const CurrentAffairsPaperPaperIdRoute =
   CurrentAffairsPaperPaperIdRouteImport.update({
     id: '/paper/$paperId',
@@ -477,6 +511,12 @@ const AdminEditParagraphIdRoute = AdminEditParagraphIdRouteImport.update({
   path: '/edit-paragraph/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const MathSpeedLabSquareEnding5PracticeDirectRoute =
+  MathSpeedLabSquareEnding5PracticeDirectRouteImport.update({
+    id: '/direct',
+    path: '/direct',
+    getParentRoute: () => MathSpeedLabSquareEnding5PracticeRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -491,6 +531,7 @@ export interface FileRoutesByFullPath {
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
+  '/math-speed-lab': typeof MathSpeedLabRouteWithChildren
   '/mock-test': typeof MockTestRouteWithChildren
   '/model-paper': typeof ModelPaperRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
@@ -511,6 +552,7 @@ export interface FileRoutesByFullPath {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/math-speed-lab/square-ending-5': typeof MathSpeedLabSquareEnding5RouteWithChildren
   '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
   '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsRouteWithChildren
@@ -523,11 +565,13 @@ export interface FileRoutesByFullPath {
   '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
+  '/math-speed-lab/': typeof MathSpeedLabIndexRoute
   '/model-paper/': typeof ModelPaperIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
   '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
+  '/math-speed-lab/square-ending-5/practice': typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
   '/study-corner/computer-basics/chapter-3': typeof StudyCornerComputerBasicsChapter3Route
@@ -548,10 +592,12 @@ export interface FileRoutesByFullPath {
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
+  '/math-speed-lab/square-ending-5/': typeof MathSpeedLabSquareEnding5IndexRoute
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
   '/tests/$subject/': typeof TestsSubjectIndexRoute
+  '/math-speed-lab/square-ending-5/practice/direct': typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -587,11 +633,13 @@ export interface FileRoutesByTo {
   '/current-affairs': typeof CurrentAffairsIndexRoute
   '/english': typeof EnglishIndexRoute
   '/hindi': typeof HindiIndexRoute
+  '/math-speed-lab': typeof MathSpeedLabIndexRoute
   '/model-paper': typeof ModelPaperIndexRoute
   '/study-corner': typeof StudyCornerIndexRoute
   '/tests': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
+  '/math-speed-lab/square-ending-5/practice': typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
   '/study-corner/computer-basics/chapter-3': typeof StudyCornerComputerBasicsChapter3Route
@@ -612,10 +660,12 @@ export interface FileRoutesByTo {
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
+  '/math-speed-lab/square-ending-5': typeof MathSpeedLabSquareEnding5IndexRoute
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science': typeof StudyCornerGeneralScienceIndexRoute
   '/tests/$subject': typeof TestsSubjectIndexRoute
+  '/math-speed-lab/square-ending-5/practice/direct': typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -631,6 +681,7 @@ export interface FileRoutesById {
   '/english': typeof EnglishRouteWithChildren
   '/hindi': typeof HindiRouteWithChildren
   '/login': typeof LoginRoute
+  '/math-speed-lab': typeof MathSpeedLabRouteWithChildren
   '/mock-test': typeof MockTestRouteWithChildren
   '/model-paper': typeof ModelPaperRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
@@ -651,6 +702,7 @@ export interface FileRoutesById {
   '/english/practice': typeof EnglishPracticeRoute
   '/hindi/lessons': typeof HindiLessonsRoute
   '/hindi/practice': typeof HindiPracticeRoute
+  '/math-speed-lab/square-ending-5': typeof MathSpeedLabSquareEnding5RouteWithChildren
   '/mock-test/current-affairs-pack-02': typeof MockTestCurrentAffairsPack02Route
   '/model-paper/current-affairs-pack-02': typeof ModelPaperCurrentAffairsPack02Route
   '/study-corner/computer-basics': typeof StudyCornerComputerBasicsRouteWithChildren
@@ -663,11 +715,13 @@ export interface FileRoutesById {
   '/current-affairs/': typeof CurrentAffairsIndexRoute
   '/english/': typeof EnglishIndexRoute
   '/hindi/': typeof HindiIndexRoute
+  '/math-speed-lab/': typeof MathSpeedLabIndexRoute
   '/model-paper/': typeof ModelPaperIndexRoute
   '/study-corner/': typeof StudyCornerIndexRoute
   '/tests/': typeof TestsIndexRoute
   '/admin/edit-paragraph/$id': typeof AdminEditParagraphIdRoute
   '/current-affairs/paper/$paperId': typeof CurrentAffairsPaperPaperIdRoute
+  '/math-speed-lab/square-ending-5/practice': typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
   '/study-corner/computer-basics/chapter-1': typeof StudyCornerComputerBasicsChapter1Route
   '/study-corner/computer-basics/chapter-2': typeof StudyCornerComputerBasicsChapter2Route
   '/study-corner/computer-basics/chapter-3': typeof StudyCornerComputerBasicsChapter3Route
@@ -688,10 +742,12 @@ export interface FileRoutesById {
   '/study-corner/general-science/chapter-4': typeof StudyCornerGeneralScienceChapter4Route
   '/study-corner/general-science/model-test-01': typeof StudyCornerGeneralScienceModelTest01Route
   '/tests/$subject/$paperId': typeof TestsSubjectPaperIdRoute
+  '/math-speed-lab/square-ending-5/': typeof MathSpeedLabSquareEnding5IndexRoute
   '/study-corner/computer-basics/': typeof StudyCornerComputerBasicsIndexRoute
   '/study-corner/general-awareness/': typeof StudyCornerGeneralAwarenessIndexRoute
   '/study-corner/general-science/': typeof StudyCornerGeneralScienceIndexRoute
   '/tests/$subject/': typeof TestsSubjectIndexRoute
+  '/math-speed-lab/square-ending-5/practice/direct': typeof MathSpeedLabSquareEnding5PracticeDirectRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -708,6 +764,7 @@ export interface FileRouteTypes {
     | '/english'
     | '/hindi'
     | '/login'
+    | '/math-speed-lab'
     | '/mock-test'
     | '/model-paper'
     | '/model-paper-test'
@@ -728,6 +785,7 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/math-speed-lab/square-ending-5'
     | '/mock-test/current-affairs-pack-02'
     | '/model-paper/current-affairs-pack-02'
     | '/study-corner/computer-basics'
@@ -740,11 +798,13 @@ export interface FileRouteTypes {
     | '/current-affairs/'
     | '/english/'
     | '/hindi/'
+    | '/math-speed-lab/'
     | '/model-paper/'
     | '/study-corner/'
     | '/tests/'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
+    | '/math-speed-lab/square-ending-5/practice'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
     | '/study-corner/computer-basics/chapter-3'
@@ -765,10 +825,12 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
     | '/tests/$subject/$paperId'
+    | '/math-speed-lab/square-ending-5/'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
     | '/study-corner/general-science/'
     | '/tests/$subject/'
+    | '/math-speed-lab/square-ending-5/practice/direct'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -804,11 +866,13 @@ export interface FileRouteTypes {
     | '/current-affairs'
     | '/english'
     | '/hindi'
+    | '/math-speed-lab'
     | '/model-paper'
     | '/study-corner'
     | '/tests'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
+    | '/math-speed-lab/square-ending-5/practice'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
     | '/study-corner/computer-basics/chapter-3'
@@ -829,10 +893,12 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
     | '/tests/$subject/$paperId'
+    | '/math-speed-lab/square-ending-5'
     | '/study-corner/computer-basics'
     | '/study-corner/general-awareness'
     | '/study-corner/general-science'
     | '/tests/$subject'
+    | '/math-speed-lab/square-ending-5/practice/direct'
   id:
     | '__root__'
     | '/'
@@ -847,6 +913,7 @@ export interface FileRouteTypes {
     | '/english'
     | '/hindi'
     | '/login'
+    | '/math-speed-lab'
     | '/mock-test'
     | '/model-paper'
     | '/model-paper-test'
@@ -867,6 +934,7 @@ export interface FileRouteTypes {
     | '/english/practice'
     | '/hindi/lessons'
     | '/hindi/practice'
+    | '/math-speed-lab/square-ending-5'
     | '/mock-test/current-affairs-pack-02'
     | '/model-paper/current-affairs-pack-02'
     | '/study-corner/computer-basics'
@@ -879,11 +947,13 @@ export interface FileRouteTypes {
     | '/current-affairs/'
     | '/english/'
     | '/hindi/'
+    | '/math-speed-lab/'
     | '/model-paper/'
     | '/study-corner/'
     | '/tests/'
     | '/admin/edit-paragraph/$id'
     | '/current-affairs/paper/$paperId'
+    | '/math-speed-lab/square-ending-5/practice'
     | '/study-corner/computer-basics/chapter-1'
     | '/study-corner/computer-basics/chapter-2'
     | '/study-corner/computer-basics/chapter-3'
@@ -904,10 +974,12 @@ export interface FileRouteTypes {
     | '/study-corner/general-science/chapter-4'
     | '/study-corner/general-science/model-test-01'
     | '/tests/$subject/$paperId'
+    | '/math-speed-lab/square-ending-5/'
     | '/study-corner/computer-basics/'
     | '/study-corner/general-awareness/'
     | '/study-corner/general-science/'
     | '/tests/$subject/'
+    | '/math-speed-lab/square-ending-5/practice/direct'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -923,6 +995,7 @@ export interface RootRouteChildren {
   EnglishRoute: typeof EnglishRouteWithChildren
   HindiRoute: typeof HindiRouteWithChildren
   LoginRoute: typeof LoginRoute
+  MathSpeedLabRoute: typeof MathSpeedLabRouteWithChildren
   MockTestRoute: typeof MockTestRouteWithChildren
   ModelPaperRoute: typeof ModelPaperRouteWithChildren
   ModelPaperTestRoute: typeof ModelPaperTestRoute
@@ -1047,6 +1120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MockTestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/math-speed-lab': {
+      id: '/math-speed-lab'
+      path: '/math-speed-lab'
+      fullPath: '/math-speed-lab'
+      preLoaderRoute: typeof MathSpeedLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -1152,6 +1232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModelPaperIndexRouteImport
       parentRoute: typeof ModelPaperRoute
     }
+    '/math-speed-lab/': {
+      id: '/math-speed-lab/'
+      path: '/'
+      fullPath: '/math-speed-lab/'
+      preLoaderRoute: typeof MathSpeedLabIndexRouteImport
+      parentRoute: typeof MathSpeedLabRoute
+    }
     '/hindi/': {
       id: '/hindi/'
       path: '/'
@@ -1236,6 +1323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MockTestCurrentAffairsPack02RouteImport
       parentRoute: typeof MockTestRoute
     }
+    '/math-speed-lab/square-ending-5': {
+      id: '/math-speed-lab/square-ending-5'
+      path: '/square-ending-5'
+      fullPath: '/math-speed-lab/square-ending-5'
+      preLoaderRoute: typeof MathSpeedLabSquareEnding5RouteImport
+      parentRoute: typeof MathSpeedLabRoute
+    }
     '/hindi/practice': {
       id: '/hindi/practice'
       path: '/practice'
@@ -1298,6 +1392,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/study-corner/computer-basics/'
       preLoaderRoute: typeof StudyCornerComputerBasicsIndexRouteImport
       parentRoute: typeof StudyCornerComputerBasicsRoute
+    }
+    '/math-speed-lab/square-ending-5/': {
+      id: '/math-speed-lab/square-ending-5/'
+      path: '/'
+      fullPath: '/math-speed-lab/square-ending-5/'
+      preLoaderRoute: typeof MathSpeedLabSquareEnding5IndexRouteImport
+      parentRoute: typeof MathSpeedLabSquareEnding5Route
     }
     '/tests/$subject/$paperId': {
       id: '/tests/$subject/$paperId'
@@ -1439,6 +1540,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudyCornerComputerBasicsChapter1RouteImport
       parentRoute: typeof StudyCornerComputerBasicsRoute
     }
+    '/math-speed-lab/square-ending-5/practice': {
+      id: '/math-speed-lab/square-ending-5/practice'
+      path: '/practice'
+      fullPath: '/math-speed-lab/square-ending-5/practice'
+      preLoaderRoute: typeof MathSpeedLabSquareEnding5PracticeRouteImport
+      parentRoute: typeof MathSpeedLabSquareEnding5Route
+    }
     '/current-affairs/paper/$paperId': {
       id: '/current-affairs/paper/$paperId'
       path: '/paper/$paperId'
@@ -1452,6 +1560,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/edit-paragraph/$id'
       preLoaderRoute: typeof AdminEditParagraphIdRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/math-speed-lab/square-ending-5/practice/direct': {
+      id: '/math-speed-lab/square-ending-5/practice/direct'
+      path: '/direct'
+      fullPath: '/math-speed-lab/square-ending-5/practice/direct'
+      preLoaderRoute: typeof MathSpeedLabSquareEnding5PracticeDirectRouteImport
+      parentRoute: typeof MathSpeedLabSquareEnding5PracticeRoute
     }
   }
 }
@@ -1512,6 +1627,52 @@ const HindiRouteChildren: HindiRouteChildren = {
 }
 
 const HindiRouteWithChildren = HindiRoute._addFileChildren(HindiRouteChildren)
+
+interface MathSpeedLabSquareEnding5PracticeRouteChildren {
+  MathSpeedLabSquareEnding5PracticeDirectRoute: typeof MathSpeedLabSquareEnding5PracticeDirectRoute
+}
+
+const MathSpeedLabSquareEnding5PracticeRouteChildren: MathSpeedLabSquareEnding5PracticeRouteChildren =
+  {
+    MathSpeedLabSquareEnding5PracticeDirectRoute:
+      MathSpeedLabSquareEnding5PracticeDirectRoute,
+  }
+
+const MathSpeedLabSquareEnding5PracticeRouteWithChildren =
+  MathSpeedLabSquareEnding5PracticeRoute._addFileChildren(
+    MathSpeedLabSquareEnding5PracticeRouteChildren,
+  )
+
+interface MathSpeedLabSquareEnding5RouteChildren {
+  MathSpeedLabSquareEnding5PracticeRoute: typeof MathSpeedLabSquareEnding5PracticeRouteWithChildren
+  MathSpeedLabSquareEnding5IndexRoute: typeof MathSpeedLabSquareEnding5IndexRoute
+}
+
+const MathSpeedLabSquareEnding5RouteChildren: MathSpeedLabSquareEnding5RouteChildren =
+  {
+    MathSpeedLabSquareEnding5PracticeRoute:
+      MathSpeedLabSquareEnding5PracticeRouteWithChildren,
+    MathSpeedLabSquareEnding5IndexRoute: MathSpeedLabSquareEnding5IndexRoute,
+  }
+
+const MathSpeedLabSquareEnding5RouteWithChildren =
+  MathSpeedLabSquareEnding5Route._addFileChildren(
+    MathSpeedLabSquareEnding5RouteChildren,
+  )
+
+interface MathSpeedLabRouteChildren {
+  MathSpeedLabSquareEnding5Route: typeof MathSpeedLabSquareEnding5RouteWithChildren
+  MathSpeedLabIndexRoute: typeof MathSpeedLabIndexRoute
+}
+
+const MathSpeedLabRouteChildren: MathSpeedLabRouteChildren = {
+  MathSpeedLabSquareEnding5Route: MathSpeedLabSquareEnding5RouteWithChildren,
+  MathSpeedLabIndexRoute: MathSpeedLabIndexRoute,
+}
+
+const MathSpeedLabRouteWithChildren = MathSpeedLabRoute._addFileChildren(
+  MathSpeedLabRouteChildren,
+)
 
 interface MockTestRouteChildren {
   MockTestCurrentAffairsPack02Route: typeof MockTestCurrentAffairsPack02Route
@@ -1701,6 +1862,7 @@ const rootRouteChildren: RootRouteChildren = {
   EnglishRoute: EnglishRouteWithChildren,
   HindiRoute: HindiRouteWithChildren,
   LoginRoute: LoginRoute,
+  MathSpeedLabRoute: MathSpeedLabRouteWithChildren,
   MockTestRoute: MockTestRouteWithChildren,
   ModelPaperRoute: ModelPaperRouteWithChildren,
   ModelPaperTestRoute: ModelPaperTestRoute,
