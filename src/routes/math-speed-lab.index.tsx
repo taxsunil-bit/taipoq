@@ -15,7 +15,7 @@ export const Route = createFileRoute("/math-speed-lab/")({
       {
         name: "description",
         content:
-          "Canary module landing for Math Speed Lab Techniques T01–T03 (direct practice). Direct URL access. No examination-body endorsement.",
+          "Canary module landing for Math Speed Lab Techniques T01–T03 (direct practice). Linked from the homepage practice grid. No examination-body endorsement.",
       },
       { name: "robots", content: "noindex, nofollow" },
     ],
@@ -127,8 +127,8 @@ function MathSpeedLabIndex() {
 
       <p className="text-xs text-muted-foreground">
         Local pilot canary for direct lessons and direct practice only. Recognition, mixed, exam,
-        error-identification, and revision sets are not included yet. Reachable by direct URL only —
-        not listed in site navigation. This is not a full public release.
+        error-identification, and revision sets are not included yet. Reachable from the homepage
+        practice grid — still a pilot module, not a full public release.
       </p>
     </div>
   );

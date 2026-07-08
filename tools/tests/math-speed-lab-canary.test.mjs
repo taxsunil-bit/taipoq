@@ -728,11 +728,12 @@ test("T01 wrappers delegate to shared lesson and practice runners", () => {
   assert.match(practice, /MslDirectPracticeRunner/);
 });
 
-test("homepage does not promote Math Speed Lab", () => {
-  for (const rel of ["src/routes/index.tsx", "src/routes/home.tsx"]) {
-    const p = path.join(ROOT, rel);
-    if (!existsSync(p)) continue;
-    const src = readFileSync(p, "utf8");
-    assert.doesNotMatch(src, /math-speed-lab|Math Speed Lab/);
-  }
+test("homepage includes Math Speed Lab in primary practice grid only", () => {
+  const home = readFileSync(path.join(ROOT, "src/routes/index.tsx"), "utf8");
+  assert.equal((home.match(/title: "Math Speed Lab"/g) ?? []).length, 1);
+  assert.equal((home.match(/to: "\/math-speed-lab"/g) ?? []).length, 1);
+  assert.doesNotMatch(
+    readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8"),
+    /math-speed-lab|Math Speed Lab/,
+  );
 });

@@ -35,9 +35,7 @@ function Home() {
         <div className="space-y-4 md:space-y-6">
           <HomeHero />
           <HomeMobilePrimarySection />
-          <div className="hidden md:block">
-            <HomeDesktopPracticeSection />
-          </div>
+          <HomeDesktopPracticeSection />
           <DailyMissionSection />
           <HomeMobileBody />
           <HomeDesktopFooter />
@@ -104,24 +102,6 @@ function HomeMobilePrimarySection() {
         {STUDY_CORNER_LANDING.homeCard.title}
       </Link>
       <Link
-        to="/tests"
-        className={cn(
-          MOBILE_CARD_BTN,
-          MAIN_ACTION_CARD,
-          TESTS_HUB_CARD_HIGHLIGHT,
-          "relative gap-1",
-        )}
-      >
-        <span className={TESTS_HUB_BADGE}>मुख्य</span>
-        <span className="w-full pr-14 text-base font-semibold leading-snug text-white">
-          परीक्षा अभ्यास / Tests
-        </span>
-        <span className={cn("w-full text-sm font-normal leading-snug", MAIN_ACTION_SUBTITLE)}>
-          Model Paper, Typing Test, Current Affairs और General Science Test एक जगह
-        </span>
-        <span className="mt-1 w-full text-sm font-semibold text-white">सभी Tests देखें →</span>
-      </Link>
-      <Link
         to="/typing-start-guide"
         className={cn(MOBILE_BTN, "border border-border bg-surface text-foreground")}
       >
@@ -142,7 +122,7 @@ function HomeDesktopPracticeSection() {
           मुख्य अभ्यास
         </h2>
         <p className="mt-1 font-hindi text-sm leading-relaxed text-muted-foreground md:text-base">
-          Tests, Typing Practice और Library
+          Tests, Math Speed Lab, Typing Practice और Library
         </p>
       </div>
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -159,20 +139,44 @@ function HomeDesktopPracticeSection() {
 type PracticeAction = (typeof DESKTOP_PRACTICE_ACTIONS)[number];
 
 function PracticeActionCard({ action }: { action: PracticeAction }) {
+  const hasCornerBadge = action.highlight || ("badge" in action && action.badge);
+  const accessibleName = [
+    action.title,
+    "hindiTitle" in action ? action.hindiTitle : undefined,
+    action.subtitle,
+    "supportingLabel" in action ? action.supportingLabel : undefined,
+    "cta" in action ? action.cta : undefined,
+  ]
+    .filter(Boolean)
+    .join(". ");
+
   const content = (
     <>
       {action.highlight ? <span className={TESTS_HUB_BADGE}>मुख्य</span> : null}
+      {"badge" in action && action.badge && !action.highlight ? (
+        <span className={TESTS_HUB_BADGE}>{action.badge}</span>
+      ) : null}
       <span
-        className={cn(
-          "text-base font-semibold leading-snug text-white",
-          action.highlight && "pr-14",
-        )}
+        className={cn("text-base font-semibold leading-snug text-white", hasCornerBadge && "pr-14")}
       >
         {action.title}
       </span>
+      {"hindiTitle" in action && action.hindiTitle ? (
+        <span className={cn("text-sm font-medium leading-snug", MAIN_ACTION_SUBTITLE)}>
+          {action.hindiTitle}
+        </span>
+      ) : null}
       <span className={cn("text-sm font-normal leading-snug", MAIN_ACTION_SUBTITLE)}>
         {action.subtitle}
       </span>
+      {"supportingLabel" in action && action.supportingLabel ? (
+        <span className={cn("text-xs font-medium leading-snug", MAIN_ACTION_SUBTITLE)}>
+          {action.supportingLabel}
+        </span>
+      ) : null}
+      {"cta" in action && action.cta ? (
+        <span className="mt-1 text-sm font-semibold text-white">{action.cta}</span>
+      ) : null}
       {action.highlight ? (
         <span className="mt-1 text-sm font-semibold text-white">सभी Tests देखें →</span>
       ) : null}
@@ -187,14 +191,14 @@ function PracticeActionCard({ action }: { action: PracticeAction }) {
 
   if ("search" in action && action.search) {
     return (
-      <Link to={action.to} search={action.search} className={className}>
+      <Link to={action.to} search={action.search} className={className} aria-label={accessibleName}>
         {content}
       </Link>
     );
   }
 
   return (
-    <Link to={action.to} className={className}>
+    <Link to={action.to} className={className} aria-label={accessibleName}>
       {content}
     </Link>
   );
@@ -444,16 +448,20 @@ const PRACTICE_CARD_BTN =
 
 const DESKTOP_PRACTICE_ACTIONS = [
   {
-    title: "Upcoming Exams & Job Updates",
-    subtitle: "Official links, exam updates और verified job updates",
-    to: "/upcoming-exams" as const,
-    highlight: false,
-  },
-  {
     title: "परीक्षा अभ्यास / Tests",
     subtitle: "Model Paper, Typing Test, Current Affairs और General Science Test",
     to: "/tests" as const,
     highlight: true,
+  },
+  {
+    title: "Math Speed Lab",
+    hindiTitle: "तीव्र गणना अभ्यास",
+    subtitle: "वर्ग, पूरक और निकट-आधार गुणा की सरल तकनीकों से गणना गति बढ़ाएँ।",
+    supportingLabel: "3 Techniques · Lesson + Direct Practice",
+    cta: "गणना अभ्यास आरम्भ करें",
+    badge: "Pilot",
+    to: "/math-speed-lab" as const,
+    highlight: false,
   },
   {
     title: "English Typing Practice",

@@ -168,12 +168,11 @@ if (!idxSrc.includes("MSL_PILOT_TECHNIQUES")) fail("index: MSL_PILOT_TECHNIQUES 
 if (!landing.includes("MSL_PILOT_TECHNIQUES")) fail("landing: must render three technique cards");
 if (!landing.includes("Canary / Pilot")) fail("landing: must retain canary wording");
 if (
+  !landing.includes("homepage practice grid") &&
   !landing.includes("direct URL") &&
-  !landing.includes("Direct URL") &&
-  !landing.includes("direct URL only")
+  !landing.includes("Direct URL")
 ) {
-  // landing says "direct URL only"
-  if (!landing.includes("direct URL only")) fail("landing: must note direct-URL access");
+  fail("landing: must note homepage practice grid or direct-URL access");
 }
 
 // T01
@@ -342,19 +341,6 @@ const dm = readRel("src", "lib", "dailyMission.ts");
 if (/math-speed-lab|Math Speed Lab/.test(nav)) fail("NavBar must not link Math Speed Lab");
 if (/math-speed-lab/.test(bottom)) fail("MobileBottomNav must not link Math Speed Lab");
 if (/math-speed-lab|MSL-T0/.test(dm)) fail("dailyMission must not integrate Math Speed Lab");
-
-const homepageCandidates = [
-  ["src", "routes", "index.tsx"],
-  ["src", "routes", "home.tsx"],
-];
-for (const parts of homepageCandidates) {
-  if (existsRel(...parts)) {
-    const home = readRel(...parts);
-    if (/math-speed-lab|Math Speed Lab/.test(home)) {
-      fail(`${parts.join("/")} must not promote Math Speed Lab`);
-    }
-  }
-}
 
 console.log(`T01 DIR IDs: ${new Set(t01Ids).size}`);
 console.log(`T02 DIR IDs: ${new Set(t02Ids).size}`);
