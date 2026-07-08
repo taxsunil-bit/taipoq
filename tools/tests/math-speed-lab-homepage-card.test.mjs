@@ -121,6 +121,12 @@ test("Math Speed Lab routes remain in registry", () => {
   );
 });
 
+test("MSL module landing copy has no false direct-URL-only wording", () => {
+  const mod = readFileSync(path.join(ROOT, "src/content/math-speed-lab/module.ts"), "utf8");
+  assert.doesNotMatch(mod, /direct URL only/i);
+  assert.match(mod, /Pilot learning module with lessons and direct practice for calculation speed/);
+});
+
 test("navbar does not add Math Speed Lab to site navigation", () => {
   assert.doesNotMatch(NAV, /math-speed-lab|Math Speed Lab/);
 });
