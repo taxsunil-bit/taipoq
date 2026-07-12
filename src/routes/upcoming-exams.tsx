@@ -122,10 +122,10 @@ function UpcomingExamsPage() {
           subtitle="Open application windows with official source links. Verification and closing status are shown separately."
         />
 
-        <Card className="border-amber-400/40 bg-amber-500/15">
-          <CardContent className="space-y-1 p-2.5 text-[11px] leading-relaxed sm:p-3 sm:text-xs">
-            <p className="font-semibold text-amber-50">Important disclaimer</p>
-            <p className="text-amber-100/90">
+        <Card className="border-[#FCD34D] bg-[#FFFBEB]">
+          <CardContent className="space-y-1 p-2 text-[11px] leading-snug sm:p-3 sm:text-xs sm:leading-relaxed">
+            <p className="font-semibold text-[#92400E]">Important disclaimer</p>
+            <p className="text-[#78350F]">
               TAIPOQ checks each listing against official sources before publication. Recruitment
               authorities may later amend dates, eligibility or other conditions. Always confirm the
               latest notice on the official website before applying.
@@ -137,13 +137,16 @@ function UpcomingExamsPage() {
           className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm"
           aria-live="polite"
         >
-          <Badge variant="outline" className="px-2 py-0.5 font-normal">
+          <Badge
+            variant="outline"
+            className="border-[#BFDBFE] bg-[#EFF6FF] px-2 py-0.5 font-semibold text-[#1D4ED8]"
+          >
             Open listings: {summary.openListings}
           </Badge>
           {showFullyVerifiedCount ? (
             <Badge
               variant="outline"
-              className="border-emerald-400/40 bg-emerald-500/10 px-2 py-0.5 font-normal text-emerald-200"
+              className="border-[#86EFAC] bg-[#F0FDF4] px-2 py-0.5 font-semibold text-[#15803D]"
             >
               Fully verified: {summary.fullyVerified}
             </Badge>
@@ -151,14 +154,14 @@ function UpcomingExamsPage() {
           {summary.reviewPending > 0 ? (
             <Badge
               variant="outline"
-              className="border-amber-400/40 bg-amber-500/10 px-2 py-0.5 font-normal text-amber-100"
+              className="border-[#FCD34D] bg-[#FFFBEB] px-2 py-0.5 font-semibold text-[#B45309]"
             >
               {showFullyVerifiedCount ? "Review pending" : "Verification in progress"}:{" "}
               {summary.reviewPending}
             </Badge>
           ) : null}
           {dataUpdatedLabel ? (
-            <span className="text-muted-foreground">Vacancy data updated: {dataUpdatedLabel}</span>
+            <span className="text-[#64748B]">Vacancy data updated: {dataUpdatedLabel}</span>
           ) : null}
         </div>
 
@@ -185,7 +188,7 @@ function UpcomingExamsPage() {
             </div>
 
             {filteredJobs.length > 0 ? (
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-3 pb-2">
                 {filteredJobs.map((item) => (
                   <VerifiedVacancyCard key={item.id} item={item} />
                 ))}

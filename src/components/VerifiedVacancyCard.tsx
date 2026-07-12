@@ -16,15 +16,37 @@ import {
 } from "@/lib/vacancies";
 import { markDailyMissionTaskComplete } from "@/lib/dailyMission";
 import { formatDateDDMMYYYY, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
-import type { VacancyItem, VacancyPostGroup } from "@/types/vacancy";
+import type { VacancyItem, VacancyPostGroup, VacancyStatus } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
 
 type VerifiedVacancyCardProps = {
   item: VacancyItem;
 };
 
-const compactBtn =
-  "h-9 min-h-10 px-2.5 text-xs sm:h-9 sm:min-h-9 sm:px-3 sm:text-sm whitespace-nowrap";
+const touchBtn = "min-h-11 px-3 text-sm whitespace-nowrap";
+
+/** Calm Focus readable status styles — light surfaces, WCAG-friendly contrast. */
+const BADGE_VERIFIED =
+  "border-[#86EFAC] bg-[#F0FDF4] px-1.5 py-0.5 text-[11px] font-semibold text-[#15803D]";
+const BADGE_PENDING =
+  "border-[#CBD5E1] bg-[#F8FAFC] px-1.5 py-0.5 text-[11px] font-semibold text-[#334155]";
+const BADGE_JUDICIAL =
+  "border-[#FCD34D] bg-[#FFFBEB] px-1.5 py-0.5 text-[11px] font-semibold text-[#B45309]";
+const APPLY_WINDOW =
+  "rounded-md border border-[#86EFAC] bg-[#F0FDF4] px-2.5 py-1.5 text-xs font-semibold leading-snug text-[#166534]";
+
+function statusBadgeClass(status: VacancyStatus): string {
+  switch (status) {
+    case "closing_soon":
+      return "border-[#FCD34D] bg-[#FFFBEB] px-1.5 py-0.5 text-[11px] font-semibold text-[#B45309]";
+    case "closed":
+    case "archive":
+      return "border-[#FCA5A5] bg-[#FEF2F2] px-1.5 py-0.5 text-[11px] font-semibold text-[#B91C1C]";
+    case "active":
+    default:
+      return "border-[#BFDBFE] bg-[#EFF6FF] px-1.5 py-0.5 text-[11px] font-semibold text-[#1D4ED8]";
+  }
+}
 
 function displayText(value: string | undefined): string {
   return normalizeVacancyDisplayText(value);
@@ -40,9 +62,9 @@ function CompactLine({
   emphasize?: boolean;
 }) {
   return (
-    <p className="text-xs leading-snug">
-      <span className="text-muted-foreground">{label}: </span>
-      <span className={emphasize ? "font-semibold text-foreground" : "text-foreground"}>{value}</span>
+    <p className="text-xs leading-snug sm:text-sm">
+      <span className="text-[#64748B]">{label}: </span>
+      <span className={emphasize ? "font-semibold text-[#0F172A]" : "text-[#0F172A]"}>{value}</span>
     </p>
   );
 }
@@ -57,7 +79,7 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
         href={prepare.to}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn, className)}
+        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), touchBtn, className)}
       >
         {label}
       </a>
@@ -69,7 +91,7 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
       <Link
         to="/test"
         search={prepare.search}
-        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn, className)}
+        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), touchBtn, className)}
       >
         {label}
       </Link>
@@ -79,7 +101,7 @@ function PreparationLinkButton({ href, className }: { href: string; className?: 
   return (
     <Link
       to={prepare.to}
-      className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn, className)}
+      className={cn(buttonVariants({ variant: "secondary", size: "sm" }), touchBtn, className)}
     >
       {label}
     </Link>
@@ -102,7 +124,11 @@ function formatPostGroupAge(group: VacancyPostGroup): string | undefined {
 
 function formatPostGroupPay(group: VacancyPostGroup): string | undefined {
   const pay = group.payLevel?.trim() || group.salary?.trim();
-  return pay ? displayText(pay) : group.payNotApplicable ? "Not specified in official notice" : undefined;
+  return pay
+    ? displayText(pay)
+    : group.payNotApplicable
+      ? "Not specified in official notice"
+      : undefined;
 }
 
 function PostGroupCard({ group }: { group: VacancyPostGroup }) {
@@ -115,8 +141,8 @@ function PostGroupCard({ group }: { group: VacancyPostGroup }) {
   const disciplines = group.disciplines?.length ? group.disciplines.join("; ") : undefined;
 
   return (
-    <article className="rounded-md border border-border/60 bg-muted/10 p-2.5">
-      <h4 className="text-xs font-semibold leading-snug text-foreground">{group.title}</h4>
+    <article className="rounded-md border border-[#E2E8F0] bg-[#F8FAFC] p-2.5">
+      <h4 className="text-xs font-semibold leading-snug text-[#0F172A]">{group.title}</h4>
       <div className="mt-1 space-y-0.5">
         <CompactLine label="Vacancies" value={String(group.vacancies.total)} emphasize />
         {codes ? <CompactLine label="Post codes" value={codes} /> : null}
@@ -167,85 +193,124 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const postGroups = item.postGroups ?? [];
   const hasPostGroups = postGroups.length > 0;
   const postWisePanelId = `post-wise-${item.id}`;
+  const detailsId = `vacancy-details-${item.id}`;
 
   return (
     <li>
-      <Card className="border-emerald-500/20 bg-card/80 shadow-sm">
-        <CardContent className="space-y-2 p-3">
+      <Card className="border-[#E2E8F0] bg-white shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
+        <CardContent className="space-y-2.5 p-3 sm:p-4">
           <div className="flex flex-wrap items-center gap-1.5">
             {isFullyVerified ? (
-              <Badge
-                variant="outline"
-                className="border-emerald-400/40 bg-emerald-500/15 px-1.5 py-0 text-[11px] font-medium text-emerald-300"
-              >
+              <Badge variant="outline" className={BADGE_VERIFIED}>
                 Verified Open Job
               </Badge>
             ) : (
               <Badge
                 variant="outline"
                 title="Preserved public listing. Confirm details on the official website before applying."
-                className="border-slate-400/40 bg-slate-500/15 px-1.5 py-0 text-[11px] font-medium text-slate-200"
+                className={BADGE_PENDING}
               >
                 Open listing — verification review pending
               </Badge>
             )}
             {isJudiciaryLocal ? (
-              <>
-                <Badge
-                  variant="outline"
-                  className="border-amber-400/40 bg-amber-500/15 px-1.5 py-0 text-[11px] font-medium text-amber-200"
-                >
-                  PLA / Local Notice
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="border-amber-400/30 bg-amber-500/10 px-1.5 py-0 text-[10px] font-medium text-amber-100/90"
-                >
-                  Judiciary Local / PLA
-                </Badge>
-              </>
+              <Badge variant="outline" className={BADGE_JUDICIAL}>
+                Judiciary Local / PLA
+              </Badge>
             ) : null}
-            <Badge
-              variant="outline"
-              className="border-border/80 bg-muted/25 px-1.5 py-0 text-[11px] font-medium text-foreground"
-            >
+            <Badge variant="outline" className={statusBadgeClass(item.status)}>
               {statusPill}
             </Badge>
           </div>
 
           <div className="space-y-0.5">
-            <h3 className="text-sm font-semibold leading-snug text-foreground">{item.title}</h3>
-            <p className="text-[11px] text-muted-foreground">
+            <h3 className="text-base font-semibold leading-snug text-[#0F172A] sm:text-lg">
+              {item.title}
+            </h3>
+            <p className="text-xs text-[#64748B] sm:text-sm">
               {item.organisation}
               {item.category ? ` · ${item.category}` : ""}
             </p>
           </div>
 
-          {applyWindowStrip ? (
-            <p className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-xs leading-snug">
-              <span className="font-semibold text-emerald-100">{applyWindowStrip}</span>
-            </p>
-          ) : null}
+          {applyWindowStrip ? <p className={APPLY_WINDOW}>{applyWindowStrip}</p> : null}
 
-          <div className="space-y-0.5">
-            <CompactLine label="Application Start" value={applicationStart} emphasize />
+          {/* Mobile actions early — before dense meta — so CTAs clear the bottom-nav fold */}
+          <div className="space-y-1.5 pt-0.5 md:hidden">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setExpanded((open) => !open)}
+                className={cn(buttonVariants({ variant: "default", size: "sm" }), touchBtn)}
+                aria-expanded={expanded}
+                aria-controls={detailsId}
+              >
+                {expanded ? "Hide Details" : "Show Details"}
+              </button>
+              {showNotice && item.officialNoticeUrl ? (
+                <a
+                  href={item.officialNoticeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleVerifiedJobReview("vacancy-official-notice")}
+                  className={cn(buttonVariants({ variant: "outline", size: "sm" }), touchBtn)}
+                >
+                  Official Notice
+                </a>
+              ) : null}
+            </div>
+            {showSource ? (
+              <a
+                href={item.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => handleVerifiedJobReview("vacancy-official-source")}
+                className="inline-flex min-h-11 items-center text-sm font-medium text-[#1D4ED8] underline-offset-4 hover:underline"
+              >
+                Official Source
+              </a>
+            ) : null}
+          </div>
+
+          <div className="space-y-1">
             {applicationEnd ? (
               <CompactLine label="Application End" value={applicationEnd} emphasize />
             ) : null}
-            {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
-            {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
-            <CompactLine label="Vacancies" value={displayText(item.vacanciesText)} />
+            <p className="text-xs leading-snug sm:text-sm">
+              <span className="text-[#64748B]">Vacancies: </span>
+              <span className="line-clamp-1 font-semibold text-[#0F172A] md:line-clamp-none">
+                {displayText(item.vacanciesText)}
+              </span>
+            </p>
             {!hasPostGroups ? (
-              <CompactLine label="Eligibility" value={displayText(item.qualificationShort)} />
+              <p className="text-xs leading-snug sm:text-sm md:hidden">
+                <span className="text-[#64748B]">Eligibility: </span>
+                <span className="line-clamp-1 text-[#0F172A]">
+                  {displayText(item.qualificationShort)}
+                </span>
+              </p>
             ) : (
-              <p className="text-xs leading-snug text-muted-foreground">
-                Eligibility varies by post — expand post-wise details below.
+              <p className="text-xs leading-snug text-[#64748B] md:hidden">
+                Eligibility: varies by post — use Show Details
               </p>
             )}
           </div>
 
+          <div className={cn("space-y-1", !expanded && "hidden md:block")}>
+            <CompactLine label="Application Start" value={applicationStart} emphasize />
+            {!hasPostGroups ? (
+              <CompactLine label="Eligibility" value={displayText(item.qualificationShort)} />
+            ) : (
+              <p className="text-xs leading-snug text-[#64748B]">
+                Eligibility varies by post — expand post-wise details below.
+              </p>
+            )}
+            {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
+            {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
+          </div>
+
           {hasPostGroups ? (
-            <div className="space-y-2">
+            <div className={cn("space-y-2", !expanded && "hidden md:block")}>
               <button
                 type="button"
                 id={`${postWisePanelId}-trigger`}
@@ -275,46 +340,94 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
             </div>
           ) : null}
 
-          <div className="flex flex-wrap gap-1.5 pt-0.5">
-            {showSource ? (
-              <a
-                href={item.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => handleVerifiedJobReview("vacancy-official-source")}
-                className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
-              >
-                Official Source
-              </a>
-            ) : null}
-
-            {primaryPrepLink ? <PreparationLinkButton href={primaryPrepLink} /> : null}
-
+          {/* Desktop / tablet: fuller action row */}
+          <div className="hidden flex-wrap gap-2 pt-0.5 md:flex">
             <button
               type="button"
               onClick={() => setExpanded((open) => !open)}
-              className={cn(buttonVariants({ variant: "secondary", size: "sm" }), compactBtn)}
+              className={cn(buttonVariants({ variant: "default", size: "sm" }), touchBtn)}
               aria-expanded={expanded}
+              aria-controls={detailsId}
             >
               {expanded ? "Hide Details" : "Show Details"}
             </button>
-
             {showNotice && item.officialNoticeUrl ? (
               <a
                 href={item.officialNoticeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => handleVerifiedJobReview("vacancy-official-notice")}
-                className={cn(buttonVariants({ variant: "ghost", size: "sm" }), compactBtn)}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), touchBtn)}
               >
                 Official Notice
               </a>
             ) : null}
+            {showSource ? (
+              <a
+                href={item.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => handleVerifiedJobReview("vacancy-official-source")}
+                className={cn(buttonVariants({ variant: "ghost", size: "sm" }), touchBtn)}
+              >
+                Official Source
+              </a>
+            ) : null}
+            {primaryPrepLink ? <PreparationLinkButton href={primaryPrepLink} /> : null}
           </div>
 
           {expanded ? (
-            <div className="space-y-2 border-t border-border/50 pt-2">
-              <div className="space-y-0.5">
+            <div
+              id={detailsId}
+              className="space-y-2 border-t border-[#E2E8F0] pt-2"
+              role="region"
+              aria-label={`Additional details for ${item.title}`}
+            >
+              <div className="space-y-1 md:hidden">
+                <CompactLine label="Application Start" value={applicationStart} emphasize />
+                {!hasPostGroups ? (
+                  <CompactLine label="Eligibility" value={displayText(item.qualificationShort)} />
+                ) : (
+                  <p className="text-xs leading-snug text-[#64748B]">
+                    Eligibility varies by post — expand post-wise details below.
+                  </p>
+                )}
+                {noticeLine ? <CompactLine label="Notice" value={noticeLine} /> : null}
+                {examLine ? <CompactLine label="Exam / Selection" value={examLine} /> : null}
+              </div>
+              {hasPostGroups ? (
+                <div className="space-y-2 md:hidden">
+                  <button
+                    type="button"
+                    id={`${postWisePanelId}-mobile-trigger`}
+                    aria-controls={`${postWisePanelId}-mobile`}
+                    aria-expanded={postWiseOpen}
+                    onClick={() => setPostWiseOpen((open) => !open)}
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "sm" }),
+                      "min-h-11 w-full justify-between px-3 text-xs",
+                    )}
+                  >
+                    <span>
+                      {postWiseOpen ? "Hide post-wise details" : "View post-wise details"}
+                    </span>
+                    <span aria-hidden="true">{postWiseOpen ? "▲" : "▼"}</span>
+                  </button>
+                  {postWiseOpen ? (
+                    <div
+                      id={`${postWisePanelId}-mobile`}
+                      role="region"
+                      aria-labelledby={`${postWisePanelId}-mobile-trigger`}
+                      className="grid gap-2"
+                    >
+                      {postGroups.map((group) => (
+                        <PostGroupCard key={group.id} group={group} />
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+              <div className="space-y-1">
                 {item.correctionStartDate && item.correctionEndDate ? (
                   <CompactLine
                     label="Correction Window"
@@ -331,40 +444,44 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
                 ) : null}
                 <CompactLine label="Age Limit" value={displayText(item.ageLimitShort)} />
                 <CompactLine label="Fee" value={displayText(item.feeShort)} />
-                <CompactLine label="Selection Process" value={displayText(item.selectionProcessShort)} />
-                <CompactLine label="Exam / Selection Date" value={displayText(item.examWindowText)} />
+                <CompactLine
+                  label="Selection Process"
+                  value={displayText(item.selectionProcessShort)}
+                />
+                <CompactLine
+                  label="Exam / Selection Date"
+                  value={displayText(item.examWindowText)}
+                />
               </div>
 
-              <p className="rounded border border-border/50 bg-muted/15 p-2 text-[11px] leading-relaxed text-muted-foreground">
-                <span className="font-medium text-foreground">Trust note: </span>
+              <p className="rounded border border-[#E2E8F0] bg-[#F8FAFC] p-2 text-[11px] leading-relaxed text-[#475569]">
+                <span className="font-medium text-[#0F172A]">Trust note: </span>
                 {displayText(item.trustNote)}
               </p>
 
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {showNotice && item.officialNoticeUrl ? (
                   <a
                     href={item.officialNoticeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => handleVerifiedJobReview("vacancy-official-notice")}
-                    className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
+                    className={cn(buttonVariants({ variant: "outline", size: "sm" }), touchBtn)}
                   >
                     Official Notice
                   </a>
                 ) : null}
-
                 {showSource ? (
                   <a
                     href={item.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => handleVerifiedJobReview("vacancy-official-source")}
-                    className={cn(buttonVariants({ variant: "outline", size: "sm" }), compactBtn)}
+                    className={cn(buttonVariants({ variant: "outline", size: "sm" }), touchBtn)}
                   >
                     Official Source
                   </a>
                 ) : null}
-
                 {item.preparationLinks.map((href) => (
                   <PreparationLinkButton key={href} href={href} />
                 ))}

@@ -10,7 +10,7 @@ export function PageShell({ children }: { children: ReactNode }) {
         id="main-content"
         role="main"
         aria-label="Main content"
-        className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 pb-24 md:py-8 md:pb-8"
+        className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))] md:py-8 md:pb-8"
       >
         {children}
       </main>
@@ -30,15 +30,15 @@ export function PageHeader({
   accent?: "english" | "hindi" | "neutral";
 }) {
   const accentClass =
-    accent === "english"
-      ? "text-english"
-      : accent === "hindi"
-        ? "text-hindi"
-        : "text-foreground";
+    accent === "english" ? "text-english" : accent === "hindi" ? "text-hindi" : "text-foreground";
   return (
-    <div className="mb-8">
-      <h1 className={`text-3xl font-bold tracking-tight md:text-4xl ${accentClass}`}>{title}</h1>
-      {subtitle && <p className="mt-2 text-muted-foreground">{subtitle}</p>}
+    <div className="mb-4 md:mb-8">
+      <h1 className={`text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl ${accentClass}`}>
+        {title}
+      </h1>
+      {subtitle && (
+        <p className="mt-1.5 text-sm text-muted-foreground md:mt-2 md:text-base">{subtitle}</p>
+      )}
     </div>
   );
 }

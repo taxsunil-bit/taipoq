@@ -167,7 +167,7 @@ export function NavBar() {
         </div>
 
         <details className="relative lg:hidden">
-          <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-lg border border-[#E2E8F0] bg-white px-4 py-2 text-sm font-medium text-[#0F172A]">
+          <summary className="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center rounded-lg border border-[#E2E8F0] bg-white px-3 py-2 text-sm font-medium text-[#0F172A]">
             Menu
           </summary>
           <div className="absolute right-0 z-50 mt-2 flex w-56 flex-col rounded-[14px] border border-[#E2E8F0] bg-white p-2 shadow-[0_8px_22px_rgba(15,23,42,0.09)]">
@@ -214,7 +214,7 @@ export function NavBar() {
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-[#E2E8F0] bg-white pb-20 text-[#0F172A] md:pb-8">
+    <footer className="mt-16 border-t border-[#E2E8F0] bg-white pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))] text-[#0F172A] md:pb-8">
       <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 text-sm md:px-6">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.2fr)_repeat(3,minmax(0,1fr))]">
           <div className="space-y-2">
