@@ -728,10 +728,10 @@ test("T01 wrappers delegate to shared lesson and practice runners", () => {
   assert.match(practice, /MslDirectPracticeRunner/);
 });
 
-test("homepage includes Math Speed Lab in primary practice grid only", () => {
+test("homepage includes Math Speed Lab in preparation tools", () => {
   const home = readFileSync(path.join(ROOT, "src/routes/index.tsx"), "utf8");
-  assert.equal((home.match(/title: "Math Speed Lab"/g) ?? []).length, 1);
-  assert.equal((home.match(/to: "\/math-speed-lab"/g) ?? []).length, 1);
+  assert.equal((home.match(/title="Math Speed Lab"/g) ?? []).length, 1);
+  assert.match(home, /to="\/math-speed-lab"/);
   assert.doesNotMatch(
     readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8"),
     /math-speed-lab|Math Speed Lab/,

@@ -40,80 +40,143 @@
   --color-hindi-foreground: var(--hindi-foreground);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
-  --font-sans: "Space Grotesk", "DM Sans", system-ui, sans-serif;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --font-hindi: "Noto Sans Devanagari", "Mangal", system-ui, sans-serif;
+  --font-hindi: "Noto Sans Devanagari", "Hind", "Mukta", "Mangal", system-ui, sans-serif;
+  /* Calm Focus product accents */
+  --color-tq-tests: var(--tq-tests);
+  --color-tq-pyqs: var(--tq-pyqs);
+  --color-tq-msl: var(--tq-msl);
+  --color-tq-mission: var(--tq-mission);
+  --color-tq-jobs: var(--tq-jobs);
+  --color-tq-progress: var(--tq-progress);
 }
 
 :root {
-  --radius: 0.75rem;
-  /* Neo-bento dark palette (zinc-based) */
-  --background: oklch(0.14 0.005 285);     /* near-black #0a0a0b */
-  --foreground: oklch(0.97 0.003 285);
-  --card: oklch(0.18 0.005 285 / 0.6);     /* zinc-900/50 */
-  --card-foreground: oklch(0.97 0.003 285);
-  --popover: oklch(0.18 0.005 285);
-  --popover-foreground: oklch(0.97 0.003 285);
-  --primary: oklch(0.55 0.18 260);          /* blue */
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.22 0.006 285);
-  --secondary-foreground: oklch(0.97 0.003 285);
-  --muted: oklch(0.22 0.006 285);
-  --muted-foreground: oklch(0.62 0.006 285);
-  --accent: oklch(0.25 0.006 285);
-  --accent-foreground: oklch(0.97 0.003 285);
-  --destructive: oklch(0.65 0.22 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --success: oklch(0.7 0.16 150);
-  --success-foreground: oklch(0.14 0.005 285);
-  --border: oklch(0.28 0.006 285);          /* zinc-800 */
-  --input: oklch(0.28 0.006 285);
-  --ring: oklch(0.55 0.18 260);
-  --surface: oklch(0.18 0.005 285 / 0.6);
-  --surface-hover: oklch(0.22 0.006 285);
-  --english: oklch(0.6 0.18 260);
-  --english-foreground: oklch(0.99 0 0);
-  --hindi: oklch(0.72 0.16 60);             /* amber */
-  --hindi-foreground: oklch(0.14 0.005 285);
-  --ink: oklch(0.97 0.003 285);
-  --ink-soft: oklch(0.62 0.006 285);
+  --radius: 0.875rem; /* ~14px Calm Focus cards */
+  /* Calm Focus light palette */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --secondary: #eff6ff;
+  --secondary-foreground: #1e40af;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --accent: #eff6ff;
+  --accent-foreground: #0f172a;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1d4ed8;
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
+  --english: #2563eb;
+  --english-foreground: #ffffff;
+  --hindi: #d97706;
+  --hindi-foreground: #ffffff;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  /* Product accents */
+  --tq-tests: #2563eb;
+  --tq-pyqs: #4f46e5;
+  --tq-msl: #0f766e;
+  --tq-mission: #d97706;
+  --tq-jobs: #15803d;
+  --tq-progress: #7c3aed;
+  --tq-pale-tests: #eff6ff;
+  --tq-pale-pyqs: #eef2ff;
+  --tq-pale-msl: #f0fdfa;
+  --tq-pale-mission: #fffbeb;
+  --tq-pale-jobs: #f0fdf4;
+  --tq-pale-progress: #f5f3ff;
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html, body { background-color: var(--color-background); }
+  * {
+    border-color: var(--color-border);
+  }
+  html,
+  body {
+    background-color: var(--color-background);
+  }
   body {
     color: var(--color-foreground);
     font-family: var(--font-body);
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4, .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
-  .font-hindi { font-family: var(--font-hindi); }
-  .font-mono { font-family: var(--font-mono); }
-  .font-kruti { font-family: "Kruti Dev 010", "KrutiDev010", "Kruti Dev", "Kruti Dev 011", serif; }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .font-hindi {
+    font-family: var(--font-hindi);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .font-kruti {
+    font-family: "Kruti Dev 010", "KrutiDev010", "Kruti Dev", "Kruti Dev 011", serif;
+  }
 }
 
 @utility bento-tile {
   background: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-3xl);
-  transition: border-color 200ms ease, transform 200ms ease, background 200ms ease;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  transition:
+    border-color 200ms ease,
+    transform 200ms ease,
+    background 200ms ease,
+    box-shadow 200ms ease;
 }
 @utility bento-tile-hover {
-  &:hover { border-color: oklch(0.4 0.006 285); }
+  &:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.09);
+    transform: translateY(-1px);
+  }
+}
+
+@utility tq-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
 }
 
 @keyframes caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
-.caret-blink { animation: caret-blink 1s steps(1) infinite; }
+.caret-blink {
+  animation: caret-blink 1s steps(1) infinite;
+}
 
 @keyframes official-source-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.06);
   }
   50% {
@@ -124,11 +187,12 @@
 }
 
 @keyframes tests-hub-glow {
-  0%, 100% {
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.20);
+  0%,
+  100% {
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
   }
   50% {
-    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.30);
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.3);
   }
 }
 
@@ -150,8 +214,12 @@
 }
 
 @keyframes tough-popup-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes tough-popup-scale-in {
@@ -166,7 +234,8 @@
 }
 
 @keyframes tough-popup-heading-glow {
-  0%, 100% {
+  0%,
+  100% {
     text-shadow: 0 0 0 transparent;
   }
   50% {
@@ -175,8 +244,13 @@
 }
 
 @keyframes tough-popup-badge-shine {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.82; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
+  }
 }
 
 .tough-popup-overlay {
@@ -208,8 +282,12 @@
 }
 
 @keyframes taipoqWelcomeBackdropIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes taipoqWelcomeCardIn {
@@ -224,7 +302,8 @@
 }
 
 @keyframes taipoqWelcomeGlowPulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       0 0 0 1px color-mix(in oklch, oklch(0.75 0.14 75) 25%, transparent),
       0 0 48px color-mix(in oklch, oklch(0.72 0.14 75) 18%, transparent);
@@ -237,13 +316,21 @@
 }
 
 @keyframes taipoqWelcomeProgress {
-  from { width: 100%; }
-  to { width: 0%; }
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
 }
 
 @keyframes taipoqWelcomeExit {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .taipoq-welcome-backdrop-in {

@@ -1,23 +1,30 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
+/** Blueprint: exactly five permanent mobile items. */
 const NAV_ITEMS = [
   { to: "/", label: "Home", match: (path: string) => path === "/" },
   {
-    to: "/english",
-    label: "Practice",
-    match: (path: string) =>
-      path.startsWith("/english") ||
-      path.startsWith("/hindi") ||
-      path.startsWith("/word-learning") ||
-      path === "/test",
+    to: "/tests",
+    label: "Tests",
+    match: (path: string) => path.startsWith("/tests") || path === "/test",
   },
   {
-    to: "/study-corner",
-    label: "Library",
-    match: (path: string) => path.startsWith("/study-corner"),
+    to: "/daily-mission",
+    label: "Mission",
+    emphasize: true,
+    match: (path: string) => path.startsWith("/daily-mission"),
   },
-  { to: "/progress", label: "Progress", match: (path: string) => path.startsWith("/progress") },
+  {
+    to: "/upcoming-exams",
+    label: "Jobs",
+    match: (path: string) => path.startsWith("/upcoming-exams"),
+  },
+  {
+    to: "/login",
+    label: "Profile",
+    match: (path: string) => path.startsWith("/login") || path.startsWith("/progress"),
+  },
 ] as const;
 
 function NavIcon({ name }: { name: (typeof NAV_ITEMS)[number]["label"] }) {
@@ -25,26 +32,87 @@ function NavIcon({ name }: { name: (typeof NAV_ITEMS)[number]["label"] }) {
   switch (name) {
     case "Home":
       return (
-        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10" />
+        <svg
+          className={className}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.75"
+            d="M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10"
+          />
         </svg>
       );
-    case "Practice":
+    case "Tests":
       return (
-        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M12 6v12m6-6H6" />
+        <svg
+          className={className}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.75"
+            d="M9 5h6M9 9h6M9 13h4M5 3h14a1 1 0 011 1v16l-4-2-4 2-4-2-4 2V4a1 1 0 011-1z"
+          />
         </svg>
       );
-    case "Library":
+    case "Mission":
       return (
-        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M4 19V5a1 1 0 011-1h5l2 2h7a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1z" />
+        <svg
+          className={className}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.75"
+            d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
         </svg>
       );
-    case "Progress":
+    case "Jobs":
       return (
-        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M3 17l4-4 4 4 8-10 4 4" />
+        <svg
+          className={className}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.75"
+            d="M4 7h16v12H4V7zm4-3h8v3H8V4z"
+          />
+        </svg>
+      );
+    case "Profile":
+      return (
+        <svg
+          className={className}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.75"
+            d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 9a7 7 0 0114 0"
+          />
         </svg>
       );
   }
@@ -56,23 +124,32 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Mobile navigation"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-background/95 backdrop-blur-xl md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-[#E2E8F0] bg-white/95 backdrop-blur-xl md:hidden"
       style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
     >
-      <ul className="mx-auto grid max-w-lg grid-cols-4">
+      <ul className="mx-auto grid max-w-lg grid-cols-5">
         {NAV_ITEMS.map((item) => {
           const active = item.match(pathname);
+          const emphasize = "emphasize" in item && item.emphasize;
           return (
             <li key={item.to}>
               <Link
                 to={item.to}
                 className={cn(
                   "flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 py-2 text-[11px] font-medium transition-colors",
-                  active ? "text-primary" : "text-muted-foreground",
+                  emphasize && !active && "text-[#D97706]",
+                  active ? (emphasize ? "text-[#D97706]" : "text-[#1D4ED8]") : "text-[#475569]",
                 )}
                 aria-current={active ? "page" : undefined}
               >
-                <NavIcon name={item.label} />
+                <span
+                  className={cn(
+                    emphasize &&
+                      "flex h-8 w-8 items-center justify-center rounded-full bg-[#FFFBEB] ring-1 ring-[#FCD34D]/60",
+                  )}
+                >
+                  <NavIcon name={item.label} />
+                </span>
                 <span>{item.label}</span>
               </Link>
             </li>

@@ -18,54 +18,57 @@ const NAV = readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8");
 const BOTTOM = readFileSync(path.join(ROOT, "src/components/MobileBottomNav.tsx"), "utf8");
 const DM = readFileSync(path.join(ROOT, "src/components/DailyMissionSection.tsx"), "utf8");
 
-function practiceActionsBlock() {
-  const start = HOME.indexOf("const DESKTOP_PRACTICE_ACTIONS");
-  const end = HOME.indexOf("] as const;", start);
+function preparationToolsBlock() {
+  const start = HOME.indexOf("function PreparationTools");
+  const end = HOME.indexOf("function ChooseYourExam");
   return HOME.slice(start, end);
 }
 
 function mathSpeedLabCardBlock() {
-  const block = practiceActionsBlock();
-  const start = block.indexOf('title: "Math Speed Lab"');
-  const next = block.indexOf('title: "English Typing Practice"', start);
-  return block.slice(start, next);
+  const block = preparationToolsBlock();
+  const start = block.indexOf('title="Math Speed Lab"');
+  const next = block.indexOf('title="Daily Mission"', start);
+  return block.slice(start, next > -1 ? next : undefined);
 }
 
-test("homepage contains exactly one Math Speed Lab practice card entry", () => {
-  const mslCardTitles = (HOME.match(/title: "Math Speed Lab"/g) ?? []).length;
-  assert.equal(mslCardTitles, 1);
-  const mslRoutes = (HOME.match(/to: "\/math-speed-lab"/g) ?? []).length;
-  assert.equal(mslRoutes, 1);
+test("homepage contains exactly one Math Speed Lab preparation-tool card", () => {
+  const titles = HOME.match(/title="Math Speed Lab"/g) ?? [];
+  assert.equal(titles.length, 1);
 });
 
 test("Math Speed Lab card links to /math-speed-lab", () => {
-  assert.match(HOME, /to: "\/math-speed-lab" as const/);
+  const block = mathSpeedLabCardBlock();
+  assert.match(block, /to="\/math-speed-lab"/);
 });
 
-test("primary practice card order: Tests, Math Speed Lab, English, Hindi, Library, Word Learning", () => {
-  const block = practiceActionsBlock();
-  const testsIdx = block.indexOf('title: "परीक्षा अभ्यास / Tests"');
-  const mslIdx = block.indexOf('title: "Math Speed Lab"');
-  const engIdx = block.indexOf('title: "English Typing Practice"');
-  const hinIdx = block.indexOf('title: "Hindi Typing Practice"');
-  const libIdx = block.indexOf("STUDY_CORNER_LANDING.homeCard.title");
-  const wordIdx = block.indexOf('title: "शब्द अभ्यास / Word Learning"');
-  assert.ok(
-    testsIdx > -1 && mslIdx > -1 && engIdx > -1 && hinIdx > -1 && libIdx > -1 && wordIdx > -1,
-  );
-  assert.ok(testsIdx < mslIdx);
+test("primary preparation tools order: Tests, PYQs, Math Speed Lab, Daily Mission", () => {
+  const block = preparationToolsBlock();
+  const testsIdx = block.indexOf('title="Mock Tests"');
+  const pyqIdx = block.indexOf('title="Verified PYQs"');
+  const mslIdx = block.indexOf('title="Math Speed Lab"');
+  const missionIdx = block.indexOf('title="Daily Mission"');
+  assert.ok(testsIdx > -1 && pyqIdx > -1 && mslIdx > -1 && missionIdx > -1);
+  assert.ok(testsIdx < pyqIdx);
+  assert.ok(pyqIdx < mslIdx);
+  assert.ok(mslIdx < missionIdx);
+});
+
+test("Math Speed Lab appears after Tests and before English Typing links", () => {
+  const mslIdx = HOME.indexOf('title="Math Speed Lab"');
+  const engIdx = HOME.indexOf("English Typing Practice");
+  const hinIdx = HOME.indexOf("Hindi Typing Practice");
+  assert.ok(mslIdx > -1 && engIdx > -1 && hinIdx > -1);
   assert.ok(mslIdx < engIdx);
   assert.ok(engIdx < hinIdx);
-  assert.ok(hinIdx < libIdx);
-  assert.ok(libIdx < wordIdx);
 });
 
 test("Math Speed Lab card copy and Pilot badge", () => {
-  assert.match(HOME, /hindiTitle: "तीव्र गणना अभ्यास"/);
-  assert.match(HOME, /वर्ग, पूरक और निकट-आधार गुणा की सरल तकनीकों से गणना गति बढ़ाएँ।/);
-  assert.match(HOME, /supportingLabel: "3 Techniques · Lesson \+ Direct Practice"/);
-  assert.match(HOME, /cta: "गणना अभ्यास आरम्भ करें"/);
-  assert.match(HOME, /badge: "Pilot"/);
+  const msl = mathSpeedLabCardBlock();
+  assert.match(msl, /hindiTitle="तीव्र गणना अभ्यास"/);
+  assert.match(msl, /वर्ग, पूरक और निकट-आधार गुणा की सरल तकनीकों से गणना गति बढ़ाएँ।/);
+  assert.match(msl, /supportingLabel="3 Techniques · Lesson \+ Direct Practice"/);
+  assert.match(msl, /cta="गणना अभ्यास आरम्भ करें"/);
+  assert.match(msl, /badge="Pilot"/);
 });
 
 test("homepage does not use forbidden promotional claims on Math Speed Lab card", () => {
@@ -108,9 +111,9 @@ test("existing homepage module links remain", () => {
   }
 });
 
-test("practice grid is visible on mobile and desktop", () => {
-  assert.doesNotMatch(HOME, /hidden md:block[\s\S]*HomeDesktopPracticeSection/);
-  assert.match(HOME, /<HomeDesktopPracticeSection \/>/);
+test("preparation tools section is present on homepage", () => {
+  assert.match(HOME, /function PreparationTools/);
+  assert.match(HOME, /<PreparationTools \/>/);
 });
 
 test("Math Speed Lab routes remain in registry", () => {
@@ -121,12 +124,12 @@ test("Math Speed Lab routes remain in registry", () => {
   );
 });
 
+test("navbar does not add Math Speed Lab to site navigation", () => {
+  assert.doesNotMatch(NAV, /math-speed-lab|Math Speed Lab/);
+});
+
 test("MSL module landing copy has no false direct-URL-only wording", () => {
   const mod = readFileSync(path.join(ROOT, "src/content/math-speed-lab/module.ts"), "utf8");
   assert.doesNotMatch(mod, /direct URL only/i);
   assert.match(mod, /Pilot learning module with lessons and direct practice for calculation speed/);
-});
-
-test("navbar does not add Math Speed Lab to site navigation", () => {
-  assert.doesNotMatch(NAV, /math-speed-lab|Math Speed Lab/);
 });
