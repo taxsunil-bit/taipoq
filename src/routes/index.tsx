@@ -6,10 +6,11 @@ import { ProductToolCard } from "@/components/ProductToolCard";
 import { ToughMockChallengePopup } from "@/components/ToughMockChallengePopup";
 import { VerifiedVacancyCard } from "@/components/VerifiedVacancyCard";
 import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
-import { BRAND_ASSETS } from "@/lib/brand";
+import { BRAND_ASSETS, SITE_CANONICAL_URL, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/brand";
 import { getResults, getUser } from "@/lib/storage";
 import { PYQ_GUIDE_PAPER_ID, PYQ_GUIDE_SUBJECT_SLUG } from "@/lib/tests/pyqGuide";
 import { getVerifiedPublicVacancies, loadVacanciesLive } from "@/lib/vacancies";
+import { getPublishedVacanciesSnapshot } from "@/lib/vacanciesPublishedSnapshot";
 import type { VacancyItem } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
 
@@ -18,13 +19,20 @@ const PYQ_ROUTE = {
   params: { subject: PYQ_GUIDE_SUBJECT_SLUG, paperId: PYQ_GUIDE_PAPER_ID },
 };
 
-const HOME_TITLE = "TAIPOQ — Government Job Updates, Mock Tests, PYQ and Computer Practice";
-const HOME_DESCRIPTION =
-  "Verified government job updates, mock tests, PYQ practice, current affairs, computer knowledge, and English–Hindi typing preparation for Indian competitive examinations.";
-
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [{ title: HOME_TITLE }, { name: "description", content: HOME_DESCRIPTION }],
+    meta: [
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_CANONICAL_URL },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+    ],
+    links: [{ rel: "canonical", href: SITE_CANONICAL_URL }],
   }),
   component: Home,
 });
@@ -74,9 +82,6 @@ function HomeHero() {
           <p className="mt-3 max-w-xl text-base leading-relaxed text-[#475569] md:text-lg">
             Verified vacancies, PYQs, tests, daily practice and calculation-speed learning for
             government-exam preparation.
-          </p>
-          <p className="mt-2 text-sm font-medium text-[#0F172A]">
-            Govt Job Computer & Typing Preparation
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
@@ -174,7 +179,7 @@ function ContinuePreparation() {
   );
 }
 
-/** Four primary product cards — Math Speed Lab retained with Pilot badge and homepage-card copy. */
+/** Four primary product cards — Math Speed Lab retained with Early Access badge. */
 function PreparationTools() {
   return (
     <section aria-labelledby="prep-tools-heading" className="space-y-4">
@@ -217,7 +222,7 @@ function PreparationTools() {
             description="वर्ग, पूरक और निकट-आधार गुणा की सरल तकनीकों से गणना गति बढ़ाएँ।"
             supportingLabel="3 Techniques · Lesson + Direct Practice"
             cta="गणना अभ्यास आरम्भ करें"
-            badge="Pilot"
+            badge="Early Access"
             to="/math-speed-lab"
             accent="msl"
           />
@@ -326,7 +331,7 @@ function SuggestedNextSteps() {
             cta="Open Lab"
             to="/math-speed-lab"
             accent="msl"
-            badge="Pilot"
+            badge="Early Access"
           />
         </li>
       </ul>
@@ -335,8 +340,11 @@ function SuggestedNextSteps() {
 }
 
 function LatestVerifiedVacancies() {
-  const [items, setItems] = useState<VacancyItem[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const snapshot = getPublishedVacanciesSnapshot();
+  const [items, setItems] = useState<VacancyItem[]>(() =>
+    getVerifiedPublicVacancies(snapshot.items).slice(0, 3),
+  );
+  const [loaded, setLoaded] = useState(true);
 
   useEffect(() => {
     let cancelled = false;

@@ -4,7 +4,7 @@ import { MslT01LessonView } from "@/components/math-speed-lab/MslT01LessonView";
 export const Route = createFileRoute("/math-speed-lab/square-ending-5/")({
   head: () => ({
     meta: [
-      { title: "Squares Ending in 5 — Math Speed Lab Canary | TAIPOQ" },
+      { title: "Squares Ending in 5 — Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:

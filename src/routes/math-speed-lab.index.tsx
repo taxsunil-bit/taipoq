@@ -4,20 +4,19 @@ import { PageHeader } from "@/components/PageShell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { MSL_MODULE, MSL_PILOT_TECHNIQUES } from "@/content/math-speed-lab";
-import { getTechniqueProgress } from "@/lib/math-speed-lab";
+import { formatMslProgressLabel, getTechniqueProgress } from "@/lib/math-speed-lab";
 import type { MslTechniqueId, MslTechniqueProgress } from "@/lib/math-speed-lab/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/math-speed-lab/")({
   head: () => ({
     meta: [
-      { title: "Math Speed Lab Canary | TAIPOQ" },
+      { title: "Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:
-          "Canary module landing for Math Speed Lab Techniques T01–T03 (direct practice). Linked from the homepage practice grid. No examination-body endorsement.",
+          "Learn reliable calculation techniques through clear lessons, worked examples and direct practice on TAIPOQ Math Speed Lab.",
       },
-      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: MathSpeedLabIndex,
@@ -51,10 +50,7 @@ function MathSpeedLabIndex() {
     <div className="mx-auto max-w-3xl space-y-6 font-hindi">
       <div className="flex flex-wrap gap-2">
         <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
-          Canary / Pilot
-        </span>
-        <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted-foreground">
-          Local pilot — T01, T02, T03 direct practice
+          Early Access
         </span>
       </div>
 
@@ -83,7 +79,7 @@ function MathSpeedLabIndex() {
 
       <section className="space-y-4" aria-labelledby="msl-techniques-heading">
         <h2 id="msl-techniques-heading" className="text-lg font-bold">
-          Pilot techniques
+          Techniques
         </h2>
         {MSL_PILOT_TECHNIQUES.map((tech) => {
           const progress = progressMap[tech.techniqueId];
@@ -104,7 +100,7 @@ function MathSpeedLabIndex() {
                 <p className="text-sm text-muted-foreground">
                   Progress:{" "}
                   <span className="font-semibold text-foreground">
-                    {progress?.state ?? "not_started"}
+                    {formatMslProgressLabel(progress?.state)}
                   </span>
                   {progress?.directScorePercent != null
                     ? ` · direct ${progress.directScorePercent}%`
@@ -126,9 +122,8 @@ function MathSpeedLabIndex() {
       </section>
 
       <p className="text-xs text-muted-foreground">
-        Local pilot canary for direct lessons and direct practice only. Recognition, mixed, exam,
-        error-identification, and revision sets are not included yet. Reachable from the homepage
-        practice grid — still a pilot module, not a full public release.
+        Direct lessons and direct practice are available now. More practice modes may be added as
+        Math Speed Lab grows.
       </p>
     </div>
   );

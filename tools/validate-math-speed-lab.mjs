@@ -166,13 +166,12 @@ for (const [src, id, slug, en, hi] of techniqueChecks) {
 
 if (!idxSrc.includes("MSL_PILOT_TECHNIQUES")) fail("index: MSL_PILOT_TECHNIQUES missing");
 if (!landing.includes("MSL_PILOT_TECHNIQUES")) fail("landing: must render three technique cards");
-if (!landing.includes("Canary / Pilot")) fail("landing: must retain canary wording");
-if (
-  !landing.includes("homepage practice grid") &&
-  !landing.includes("direct URL") &&
-  !landing.includes("Direct URL")
-) {
-  fail("landing: must note homepage practice grid or direct-URL access");
+if (!landing.includes("Early Access")) fail("landing: must show Early Access badge");
+if (landing.includes("Canary / Pilot") || landing.includes("Local pilot")) {
+  fail("landing: must not show engineering canary/pilot wording");
+}
+if (!landing.includes("Techniques") && !landing.includes("Open lesson")) {
+  fail("landing: must expose technique lessons");
 }
 
 // T01
@@ -338,7 +337,10 @@ if (existsSync(subjectsPath)) {
 const nav = readRel("src", "components", "NavBar.tsx");
 const bottom = readRel("src", "components", "MobileBottomNav.tsx");
 const dm = readRel("src", "lib", "dailyMission.ts");
-if (/math-speed-lab|Math Speed Lab/.test(nav)) fail("NavBar must not link Math Speed Lab");
+const primaryNav = nav.slice(nav.indexOf("const primaryLinks"), nav.indexOf("const utilityLinks"));
+if (/math-speed-lab|Math Speed Lab/.test(primaryNav)) {
+  fail("NavBar primary links must not include Math Speed Lab");
+}
 if (/math-speed-lab/.test(bottom)) fail("MobileBottomNav must not link Math Speed Lab");
 if (/math-speed-lab|MSL-T0/.test(dm)) fail("dailyMission must not integrate Math Speed Lab");
 

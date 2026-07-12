@@ -86,17 +86,17 @@ export function DailyMissionSection() {
   const jobTask = DAILY_MISSION_TASKS.find((t) => t.id === "jobUpdate")!;
 
   return (
-    <section
-      className="bento-tile space-y-4 p-4 sm:p-5"
-      aria-labelledby="daily-mission-heading"
-    >
+    <section className="bento-tile space-y-4 p-4 sm:p-5" aria-labelledby="daily-mission-heading">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
-          <h2 id="daily-mission-heading" className="font-display text-xl font-bold tracking-tight sm:text-2xl">
+          <h2
+            id="daily-mission-heading"
+            className="font-display text-xl font-bold tracking-tight sm:text-2xl"
+          >
             Today&apos;s TAIPOQ Mission
           </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Complete focused preparation activities and keep your daily progress on track.
+            Daily Goal: 3 preparation activities. Optional: review one verified job update.
           </p>
         </div>
         <p
@@ -116,7 +116,9 @@ export function DailyMissionSection() {
 
       {!fullMissionComplete && nextConfig && nextTaskId ? (
         <div className="rounded-xl border border-primary/25 bg-primary/5 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">Next activity</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
+            Next activity
+          </p>
           <div className="mt-2 flex items-start gap-3">
             <div className="rounded-lg bg-primary/10 p-2 text-primary" aria-hidden="true">
               <NextIcon className="h-5 w-5" />
@@ -134,7 +136,10 @@ export function DailyMissionSection() {
       ) : (
         <div className="space-y-3 rounded-xl border border-primary/25 bg-primary/5 p-4">
           <p className="font-semibold text-foreground">Today&apos;s progress</p>
-          <ul className="space-y-1 text-sm text-muted-foreground" aria-label="Today's mission results">
+          <ul
+            className="space-y-1 text-sm text-muted-foreground"
+            aria-label="Today's mission results"
+          >
             {DAILY_MISSION_CORE_TASK_ORDER.map((id) => {
               const config = getDailyMissionTaskConfig(id);
               const summary = formatTaskResultSummary(id, state);
@@ -152,15 +157,14 @@ export function DailyMissionSection() {
 
       {upNext.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Up next</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Up next
+          </p>
           <ul className="space-y-1.5" aria-label="Upcoming mission tasks">
             {upNext.map((id) => {
               const config = getDailyMissionTaskConfig(id);
               return (
-                <li
-                  key={id}
-                  className="flex items-center gap-2 text-sm text-muted-foreground"
-                >
+                <li key={id} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <span className="text-muted-foreground/80" aria-hidden="true">
                     ○
                   </span>
@@ -183,9 +187,7 @@ export function DailyMissionSection() {
           <span
             className={cn(
               "rounded-full px-2 py-0.5 text-[11px] font-medium",
-              jobUpdateChecked
-                ? "bg-primary/10 text-primary"
-                : "bg-muted text-muted-foreground",
+              jobUpdateChecked ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground",
             )}
           >
             {jobUpdateChecked ? "Checked" : "Not checked"}

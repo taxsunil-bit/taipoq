@@ -37,7 +37,9 @@ function SubjectTestsPage() {
           </Link>
           <h1 className="font-display text-2xl font-bold sm:text-3xl">{meta.title}</h1>
           <p className="text-muted-foreground">
-            {meta.freeCount} free · {meta.paperCount} paper{meta.paperCount === 1 ? "" : "s"}
+            {meta.freeCount === 0
+              ? `${meta.paperCount} paper${meta.paperCount === 1 ? "" : "s"} available`
+              : `${meta.freeCount} free paper${meta.freeCount === 1 ? "" : "s"} · ${meta.paperCount} total`}
           </p>
           {isPyqGuide ? (
             <p className="rounded-xl border border-amber-500/30 bg-amber-950/20 px-3 py-2 text-sm leading-relaxed text-amber-100/90">

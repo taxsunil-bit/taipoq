@@ -19,12 +19,13 @@ export function SubjectTestGrid({ subjects, className }: SubjectTestGridProps) {
           >
             <span className="text-base font-semibold leading-snug">{subject.title}</span>
             <span className="mt-1 text-sm text-blue-100">
-              {subject.freeCount} free · {subject.paperCount} paper
-              {subject.paperCount === 1 ? "" : "s"}
+              {subject.freeCount === 0
+                ? `${subject.paperCount} paper${subject.paperCount === 1 ? "" : "s"} available`
+                : `${subject.freeCount} free paper${subject.freeCount === 1 ? "" : "s"} · ${subject.paperCount} total`}
             </span>
             {subject.hasCurrentAffairs ? (
               <span className="mt-1 text-[11px] text-amber-100/90">
-                Date-stamped CA — refresh note
+                Date-stamped archive — refresh before long-term use
               </span>
             ) : null}
           </Link>

@@ -15,7 +15,17 @@ export const BRAND_ASSETS = {
 
 export const NAVBAR_MARK_SIZE = { mobile: 36, desktop: 40 } as const;
 
-export const BRAND_TAGLINE = "Govt Job Computer & Typing Preparation";
+/** Public product identity — government-exam preparation (not typing-first). */
+export const BRAND_TAGLINE =
+  "Government exam preparation with verified jobs, PYQs and guided practice";
+
+export const SITE_TITLE =
+  "TAIPOQ — Government Exam Preparation, Verified Jobs, PYQs and Mock Tests";
+
+export const SITE_DESCRIPTION =
+  "Prepare for government exams with verified job updates, PYQs, mock tests, Daily Mission and Math Speed Lab on TAIPOQ.";
+
+export const SITE_CANONICAL_URL = "https://www.taipoq.com/";
 
 /** Shared primary practice card — Calm Focus solid blue (legacy gradient retained for Tests hub). */
 export const MAIN_ACTION_CARD =

@@ -4,7 +4,7 @@ import { MslT03LessonView } from "@/components/math-speed-lab/MslT03LessonView";
 export const Route = createFileRoute("/math-speed-lab/nearbase-100/")({
   head: () => ({
     meta: [
-      { title: "Near-Base Multiplication (Base 100) — Math Speed Lab Canary | TAIPOQ" },
+      { title: "Near-Base Multiplication (Base 100) — Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:

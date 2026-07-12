@@ -5,16 +5,22 @@ import { CurrentAffairsToughPack02Card } from "@/components/current-affairs-pack
 import { PageShell } from "@/components/PageShell";
 import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
 import { PACK_PREPARED_DATE, TEST_SUBJECTS } from "@/content/tests/subjects";
-import { getAllPapers } from "@/lib/tests/testGenerator";
+import {
+  PYQ_GUIDE_CONTENT_LABEL,
+  PYQ_GUIDE_PAPER_ID,
+  PYQ_GUIDE_SUBJECT_SLUG,
+} from "@/lib/tests/pyqGuide";
+import { getAllPapers, getPaperBySlugs } from "@/lib/tests/testGenerator";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/tests/")({
   head: () => ({
     meta: [
-      { title: "TAIPOQ Tests — All practice free" },
+      { title: "TAIPOQ Tests — Mock Tests, PYQs and Practice Papers" },
       {
         name: "description",
-        content: "Subject tests, model papers and official-source verified PYQs — Computer, Maths, Reasoning, Current Affairs and more.",
+        content:
+          "Subject tests, model papers and official-source verified PYQs — Computer, Maths, Reasoning, Current Affairs and more.",
       },
     ],
   }),
@@ -22,10 +28,18 @@ export const Route = createFileRoute("/tests/")({
 });
 
 const LEGACY_TESTS = [
-  { title: "Typing Speed Test", subtitle: "समय आधारित typing speed जाँच", to: "/test" as const },
-  { title: "Model Paper Test", subtitle: "पूर्ण प्रश्नपत्र अभ्यास", to: "/model-paper-test" as const },
-  { title: "Current Affairs Hub", subtitle: "समसामयिक अभ्यास", to: "/current-affairs" as const },
-  { title: "General Science Test", subtitle: "विज्ञान model test", to: "/study-corner/general-science/model-test-01" as const },
+  { title: "Typing Speed Test", subtitle: "Timed typing speed check", to: "/test" as const },
+  { title: "Model Paper Test", subtitle: "Full paper practice", to: "/model-paper-test" as const },
+  {
+    title: "Current Affairs Hub",
+    subtitle: "Current affairs practice",
+    to: "/current-affairs" as const,
+  },
+  {
+    title: "General Science Test",
+    subtitle: "Science model test",
+    to: "/study-corner/general-science/model-test-01" as const,
+  },
 ] as const;
 
 const LEGACY_BTN =
@@ -36,23 +50,45 @@ const SSC_CGL_PRACTICE_CARD =
 
 function TestsLandingPage() {
   const allPapers = getAllPapers();
+  const verifiedPyq = getPaperBySlugs(PYQ_GUIDE_SUBJECT_SLUG, PYQ_GUIDE_PAPER_ID);
+  const subjectsWithoutPyq = TEST_SUBJECTS.filter((s) => s.slug !== PYQ_GUIDE_SUBJECT_SLUG);
+  const orderedPapers = [
+    ...allPapers.filter((p) => p.subject === "Verified PYQ" || p.paperId === PYQ_GUIDE_PAPER_ID),
+    ...allPapers.filter((p) => p.subject !== "Verified PYQ" && p.paperId !== PYQ_GUIDE_PAPER_ID),
+  ];
 
   return (
     <PageShell>
       <div className="mx-auto max-w-5xl space-y-8 overflow-x-hidden font-hindi">
         <header className="space-y-2">
-          <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">TAIPOQ Tests</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+            TAIPOQ Tests
+          </h1>
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-            सभी tests अभी निःशुल्क — Basic practice unlimited और free.
+            Mock tests, verified PYQs and original practice papers — free to start.
           </p>
-          <p className="text-xs text-muted-foreground">Pack prepared: {PACK_PREPARED_DATE}</p>
+          <p className="text-xs text-muted-foreground">Content pack date: {PACK_PREPARED_DATE}</p>
         </header>
+
+        {verifiedPyq ? (
+          <section aria-labelledby="verified-pyq-heading" className="space-y-3">
+            <div>
+              <h2 id="verified-pyq-heading" className="text-lg font-bold">
+                Official-Source Verified PYQ
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {PYQ_GUIDE_CONTENT_LABEL} — CTET January 2021 Paper I practice.
+              </p>
+            </div>
+            <TestCard paper={verifiedPyq} subjectSlug={PYQ_GUIDE_SUBJECT_SLUG} />
+          </section>
+        ) : null}
 
         <CurrentAffairsToughPack02Card />
 
         <section aria-labelledby="basic-subjects-heading" className="space-y-3">
           <h2 id="basic-subjects-heading" className="text-lg font-bold">
-            विषय चुनें — All subjects open
+            Choose a subject
           </h2>
           <Link to={SSC_CGL_PATTERN_PRACTICE_HREF} className={cn(SSC_CGL_PRACTICE_CARD)}>
             <span className="text-base font-semibold leading-snug">SSC CGL Pattern Practice</span>
@@ -60,11 +96,11 @@ function TestsLandingPage() {
               100 starter questions — Maths, Reasoning, English, General Awareness
             </span>
             <span className="mt-1 text-[11px] text-amber-100/90">
-              TAIPOQ original illustrative practice
+              TAIPOQ original illustrative practice — not a verified PYQ
             </span>
             <span className="mt-2 text-sm font-semibold text-white">Open Practice →</span>
           </Link>
-          <SubjectTestGrid subjects={TEST_SUBJECTS} />
+          <SubjectTestGrid subjects={subjectsWithoutPyq} />
         </section>
 
         <section aria-labelledby="all-papers-heading" className="space-y-3">
@@ -72,7 +108,7 @@ function TestsLandingPage() {
             All Test Papers — Free Practice
           </h2>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {allPapers.map((paper) => (
+            {orderedPapers.map((paper) => (
               <li key={paper.paperId + paper.subject}>
                 <TestCard paper={paper} />
               </li>
@@ -82,7 +118,7 @@ function TestsLandingPage() {
 
         <section aria-labelledby="legacy-tests-heading" className="space-y-3">
           <h2 id="legacy-tests-heading" className="text-lg font-bold">
-            Typing & Other TAIPOQ Tests
+            Typing and other practice
           </h2>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {LEGACY_TESTS.map((item) => (

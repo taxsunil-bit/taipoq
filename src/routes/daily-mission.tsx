@@ -90,15 +90,23 @@ function DailyMissionPage() {
       <div className="mx-auto max-w-3xl space-y-6">
         <PageHeader
           title="Today's TAIPOQ Mission"
-          subtitle="Complete focused preparation activities and keep your daily progress on track."
+          subtitle="Daily Goal: 3 preparation activities. Optional: review one verified job update."
         />
 
         <div className="space-y-3 rounded-xl border border-border/70 bg-muted/10 p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-medium">{coreProgressLabel}</p>
+            <div className="space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Daily Goal: 3 preparation activities
+              </p>
+              <p className="text-sm font-medium">{coreProgressLabel}</p>
+            </div>
             <div className="flex flex-wrap gap-2">
               {dailyGoalAchieved ? (
-                <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
+                <Badge
+                  variant="outline"
+                  className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                >
                   Daily Goal achieved
                 </Badge>
               ) : null}
@@ -116,9 +124,7 @@ function DailyMissionPage() {
           <p className="text-xs text-muted-foreground" aria-hidden="true">
             Progress: {progressPercent}% of core preparation ({coreCompletedCount}/{coreTotal})
           </p>
-          <p className="text-xs text-muted-foreground">
-            A new mission is available each day.
-          </p>
+          <p className="text-xs text-muted-foreground">A new mission is available each day.</p>
         </div>
 
         <div className="grid gap-4">
@@ -176,7 +182,10 @@ function DailyMissionPage() {
                       <p className="text-sm text-muted-foreground">{task.description}</p>
                       <p className="text-xs text-muted-foreground">{task.effort}</p>
                     </div>
-                    <Badge variant="outline" className={done ? "text-primary" : "text-muted-foreground"}>
+                    <Badge
+                      variant="outline"
+                      className={done ? "text-primary" : "text-muted-foreground"}
+                    >
                       {done ? "Checked" : "Not checked"}
                     </Badge>
                   </div>
@@ -187,7 +196,8 @@ function DailyMissionPage() {
           })}
           {!jobUpdateChecked ? (
             <p className="text-xs text-muted-foreground">
-              Open an official vacancy notice or source link on the verified jobs page to mark this check complete.
+              Open an official vacancy notice or source link on the verified jobs page to mark this
+              check complete.
             </p>
           ) : null}
         </div>
@@ -198,10 +208,22 @@ function DailyMissionPage() {
           ) : null}
           {fullMissionComplete ? (
             <>
-              <Link to="/test" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-auto")}>
+              <Link
+                to="/test"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "w-full sm:w-auto",
+                )}
+              >
                 Continue Typing Practice
               </Link>
-              <Link to="/tests" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-auto")}>
+              <Link
+                to="/tests"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "w-full sm:w-auto",
+                )}
+              >
                 More Mock Tests
               </Link>
             </>

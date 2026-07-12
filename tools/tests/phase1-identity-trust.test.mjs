@@ -17,10 +17,11 @@ const HOME = readFileSync(path.join(ROOT, "src/routes/index.tsx"), "utf8");
 const LOGIN = readFileSync(path.join(ROOT, "src/routes/login.tsx"), "utf8");
 const STORAGE = readFileSync(path.join(ROOT, "src/lib/storage.ts"), "utf8");
 const NAV = readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8");
+const BRAND = readFileSync(path.join(ROOT, "src/lib/brand.ts"), "utf8");
 
-const HOME_TITLE = "TAIPOQ — Government Job Updates, Mock Tests, PYQ and Computer Practice";
+const HOME_TITLE = "TAIPOQ — Government Exam Preparation, Verified Jobs, PYQs and Mock Tests";
 const HOME_DESCRIPTION =
-  "Verified government job updates, mock tests, PYQ practice, current affairs, computer knowledge, and English–Hindi typing preparation for Indian competitive examinations.";
+  "Prepare for government exams with verified job updates, PYQs, mock tests, Daily Mission and Math Speed Lab on TAIPOQ.";
 
 function parseUser(raw) {
   if (!raw) return null;
@@ -41,7 +42,10 @@ test("homepage renders one modern product identity (no legacy HomeDesktop block)
   assert.doesNotMatch(HOME, /function HomeDesktop\(/);
   assert.doesNotMatch(HOME, /<HomeDesktop\s*\/>/);
   assert.match(HOME, /function HomeHero\(/);
-  assert.match(HOME, /Govt Job Computer & Typing Preparation/);
+  assert.match(HOME, /Prepare Smarter\. Progress Every Day\./);
+  assert.doesNotMatch(HOME, /Govt Job Computer & Typing Preparation/);
+  assert.match(BRAND, /SITE_TITLE/);
+  assert.doesNotMatch(BRAND, /Govt Job Computer & Typing Preparation/);
 });
 
 test('legacy phrase "Master precision and speed" is absent from homepage', () => {
@@ -62,11 +66,13 @@ test("homepage has exactly one H1", () => {
 });
 
 test("homepage metadata title is correct", () => {
-  assert.match(HOME, new RegExp(HOME_TITLE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(HOME, /SITE_TITLE/);
+  assert.match(BRAND, new RegExp(HOME_TITLE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });
 
 test("homepage metadata description is correct", () => {
-  assert.match(HOME, new RegExp(HOME_DESCRIPTION.slice(0, 40)));
+  assert.match(HOME, /SITE_DESCRIPTION/);
+  assert.match(BRAND, new RegExp(HOME_DESCRIPTION.slice(0, 40)));
 });
 
 test("/login renders Local Profile", () => {
@@ -120,9 +126,12 @@ test("existing display-name data migrates safely and corrupt storage recovers", 
   assert.equal(parseUser(JSON.stringify({})), null);
 });
 
-test("navigation still points to Local Profile at /login", () => {
+test("navigation still points to local progress profile at /login", () => {
   assert.match(NAV, /to: "\/login"/);
-  assert.match(NAV, /label: "Local Profile"/);
+  assert.match(NAV, /label: "My Progress"/);
+  assert.match(NAV, /Find Tests/);
+  assert.doesNotMatch(NAV, /label: "Search"/);
+  assert.doesNotMatch(NAV, /V1\.0/);
 });
 
 test("homepage retains core module links", () => {

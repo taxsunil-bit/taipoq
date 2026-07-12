@@ -1,8 +1,4 @@
-export type DailyMissionTaskId =
-  | "typing"
-  | "currentAffairs"
-  | "miniMock"
-  | "jobUpdate";
+export type DailyMissionTaskId = "typing" | "currentAffairs" | "miniMock" | "jobUpdate";
 
 export type DailyMissionTaskResult = {
   netWpm?: number;
@@ -83,8 +79,8 @@ export const DAILY_MISSION_TASKS: DailyMissionTaskConfig[] = [
   },
   {
     id: "jobUpdate",
-    title: "Verified Job Updates",
-    description: "Review the latest verified opportunities.",
+    title: "Review one verified job update",
+    description: "Optional opportunity check on the latest verified openings.",
     effort: "About 5 minutes",
     href: "/upcoming-exams",
     optional: true,
@@ -164,7 +160,10 @@ function normalizeTaskEntry(entry: unknown): DailyMissionTaskState {
   };
 }
 
-export function validateDailyMissionState(raw: unknown, today = getTodayDateKey()): DailyMissionState {
+export function validateDailyMissionState(
+  raw: unknown,
+  today = getTodayDateKey(),
+): DailyMissionState {
   if (!raw || typeof raw !== "object") {
     return createEmptyDailyMissionState(today);
   }
@@ -299,7 +298,7 @@ export function getDailyMissionProgressPercent(state = readDailyMissionState()):
 
 export function getCoreProgressLabel(state = readDailyMissionState()): string {
   const n = getCoreMissionCompletedCount(state);
-  return `${n} of ${DAILY_MISSION_CORE_TASK_ORDER.length} preparation tasks completed`;
+  return `${n} of ${DAILY_MISSION_CORE_TASK_ORDER.length} preparation activities completed`;
 }
 
 export function getMissionStatusHeadline(state = readDailyMissionState()): string {
@@ -330,7 +329,10 @@ export function getDailyMissionPrimaryCtaLabel(state = readDailyMissionState()):
 
 export function getDailyMissionPrimaryCtaRoute(
   state = readDailyMissionState(),
-): { kind: "daily-mission" } | { kind: "path"; href: string } | { kind: "test-paper"; subject: string; paperId: string } {
+):
+  | { kind: "daily-mission" }
+  | { kind: "path"; href: string }
+  | { kind: "test-paper"; subject: string; paperId: string } {
   if (isFullMissionAchieved(state)) {
     return { kind: "daily-mission" };
   }
@@ -404,10 +406,7 @@ export function getTodayMissionSummaryLines(state = readDailyMissionState()): st
 }
 
 export function isDailyMissionCurrentAffairsPaper(subject: string, paperId: string): boolean {
-  return (
-    subject === DAILY_MISSION_CA_PAPER.subject &&
-    paperId === DAILY_MISSION_CA_PAPER.paperId
-  );
+  return subject === DAILY_MISSION_CA_PAPER.subject && paperId === DAILY_MISSION_CA_PAPER.paperId;
 }
 
 export function isDailyMissionMiniMockPaper(subject: string, paperId: string): boolean {

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/math-speed-lab/complements-10n/practice/direct")({
   head: () => ({
     meta: [
-      { title: "T02 Direct Practice — Math Speed Lab Canary | TAIPOQ" },
+      { title: "Direct Practice — Complements to Powers of Ten — Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:
@@ -25,7 +25,7 @@ function MslT02DirectPracticePage() {
     <div className="mx-auto max-w-3xl space-y-6 font-hindi">
       <div className="flex flex-wrap gap-2">
         <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
-          Canary / Pilot
+          Early Access
         </span>
       </div>
 

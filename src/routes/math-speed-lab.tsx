@@ -4,13 +4,12 @@ import { PageShell } from "@/components/PageShell";
 export const Route = createFileRoute("/math-speed-lab")({
   head: () => ({
     meta: [
-      { title: "Math Speed Lab Canary | TAIPOQ" },
+      { title: "Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:
-          "Math Speed Lab engineering canary — Techniques T01–T03 (direct practice). Exact arithmetic practice for competitive maths. Not an official examination product.",
+          "Learn reliable calculation techniques through clear lessons, worked examples and direct practice on TAIPOQ Math Speed Lab.",
       },
-      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: MathSpeedLabLayout,

@@ -10,7 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { getDirectQuestionsForTechnique } from "@/content/math-speed-lab";
-import { markLessonOpened } from "@/lib/math-speed-lab";
+import { formatMslProgressLabel, markLessonOpened } from "@/lib/math-speed-lab";
 import type { MslTechniqueMeta, MslTechniqueProgress } from "@/lib/math-speed-lab/types";
 import { cn } from "@/lib/utils";
 
@@ -44,11 +44,11 @@ export function MslLessonView({
     <div className="mx-auto max-w-3xl space-y-6 font-hindi">
       <div className="flex flex-wrap items-center gap-2">
         <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
-          Canary / Pilot
+          Early Access
         </span>
         {progress ? (
           <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted-foreground">
-            Progress: {progress.state}
+            Progress: {formatMslProgressLabel(progress.state)}
             {progress.directScorePercent != null
               ? ` · last direct ${progress.directScorePercent}%`
               : ""}
@@ -65,7 +65,7 @@ export function MslLessonView({
             </span>
           </>
         }
-        subtitle={`Technique ID: ${technique.techniqueId}`}
+        subtitle={technique.shortDescription}
         accent="neutral"
       />
 

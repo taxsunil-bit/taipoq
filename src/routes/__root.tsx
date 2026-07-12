@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SITE_CANONICAL_URL, SITE_DESCRIPTION, SITE_TITLE } from "../lib/brand";
 import { BodyScrollLockRouteSync } from "../components/BodyScrollLockRouteSync";
 import { CookieConsentProvider } from "../components/CookieConsent";
 import { ConsentAwareAnalytics } from "../components/ConsentAwareAnalytics";
@@ -81,26 +82,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TAIPOQ — English & Hindi Typing Practice for Job Preparation" },
-      {
-        name: "description",
-        content:
-          "Practice English and Hindi (KrutiDev/Remington) typing for job and exam preparation. Track WPM, accuracy, and mistakes with daily targets.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
       { name: "author", content: "TAIPOQ" },
-      {
-        property: "og:title",
-        content: "TAIPOQ — English & Hindi Typing Practice for Job Preparation",
-      },
-      {
-        property: "og:description",
-        content: "Practice English and Hindi typing for job and exam preparation.",
-      },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_CANONICAL_URL },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE_CANONICAL_URL },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

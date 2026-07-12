@@ -11,6 +11,7 @@ import {
   resolveVacancyDataUpdatedIso,
   type VerifiedJobSector,
 } from "@/lib/vacancies";
+import { getPublishedVacanciesSnapshot } from "@/lib/vacanciesPublishedSnapshot";
 import { formatDateDDMMYYYY } from "@/lib/upcomingExams";
 import { cn } from "@/lib/utils";
 import type { VacanciesPayload, VacancyItem } from "@/types/vacancy";
@@ -64,11 +65,12 @@ function formatListingCount(count: number): string {
 }
 
 function UpcomingExamsPage() {
-  const [vacancyItems, setVacancyItems] = useState<VacancyItem[]>([]);
+  const snapshot = getPublishedVacanciesSnapshot();
+  const [vacancyItems, setVacancyItems] = useState<VacancyItem[]>(snapshot.items);
   const [payloadMeta, setPayloadMeta] = useState<Pick<VacanciesPayload, "lastUpdated">>({
-    lastUpdated: "",
+    lastUpdated: snapshot.lastUpdated,
   });
-  const [verifiedLoading, setVerifiedLoading] = useState(true);
+  const [verifiedLoading, setVerifiedLoading] = useState(false);
   const [selectedSector, setSelectedSector] = useState<VerifiedJobSector>("all");
   const [moreFiltersOpen, setMoreFiltersOpen] = useState(false);
 
@@ -124,9 +126,9 @@ function UpcomingExamsPage() {
           <CardContent className="space-y-1 p-2.5 text-[11px] leading-relaxed sm:p-3 sm:text-xs">
             <p className="font-semibold text-amber-50">Important disclaimer</p>
             <p className="text-amber-100/90">
-              This page lists open application windows TAIPOQ currently tracks. Always confirm final
-              dates, eligibility, fees and rules on the official website before applying. TAIPOQ does
-              not guarantee selection.
+              TAIPOQ checks each listing against official sources before publication. Recruitment
+              authorities may later amend dates, eligibility or other conditions. Always confirm the
+              latest notice on the official website before applying.
             </p>
           </CardContent>
         </Card>
@@ -156,9 +158,7 @@ function UpcomingExamsPage() {
             </Badge>
           ) : null}
           {dataUpdatedLabel ? (
-            <span className="text-muted-foreground">
-              Vacancy data updated: {dataUpdatedLabel}
-            </span>
+            <span className="text-muted-foreground">Vacancy data updated: {dataUpdatedLabel}</span>
           ) : null}
         </div>
 
@@ -179,7 +179,9 @@ function UpcomingExamsPage() {
               <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
                 {getSectorResultsTitle(selectedSector)}
               </h2>
-              <p className="text-xs text-muted-foreground">{formatListingCount(filteredJobs.length)}</p>
+              <p className="text-xs text-muted-foreground">
+                {formatListingCount(filteredJobs.length)}
+              </p>
             </div>
 
             {filteredJobs.length > 0 ? (
@@ -218,7 +220,8 @@ function SectorFilterBar({
   onToggleMore: () => void;
 }) {
   const primaryOptions = options.filter(
-    (option) => PRIMARY_SECTOR_IDS.has(option.id) && (option.id === "all" || (counts[option.id] ?? 0) > 0),
+    (option) =>
+      PRIMARY_SECTOR_IDS.has(option.id) && (option.id === "all" || (counts[option.id] ?? 0) > 0),
   );
   const secondaryOptions = options.filter(
     (option) => !PRIMARY_SECTOR_IDS.has(option.id) && (counts[option.id] ?? 0) > 0,

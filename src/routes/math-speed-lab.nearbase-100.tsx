@@ -3,11 +3,11 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 export const Route = createFileRoute("/math-speed-lab/nearbase-100")({
   head: () => ({
     meta: [
-      { title: "Near-Base Multiplication (Base 100) — Math Speed Lab Canary | TAIPOQ" },
+      { title: "Near-Base Multiplication (Base 100) — Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:
-          "Lesson and practice for Base 100 Model A near-base multiplication (90–99). Engineering canary.",
+          "Lesson and practice for Base 100 Model A near-base multiplication (90–99). Exact arithmetic practice for competitive exams.",
       },
       { name: "robots", content: "noindex, nofollow" },
     ],

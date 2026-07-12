@@ -4,7 +4,7 @@ import { MslT02LessonView } from "@/components/math-speed-lab/MslT02LessonView";
 export const Route = createFileRoute("/math-speed-lab/complements-10n/")({
   head: () => ({
     meta: [
-      { title: "Complements to Powers of Ten — Math Speed Lab Canary | TAIPOQ" },
+      { title: "Complements to Powers of Ten — Math Speed Lab — TAIPOQ" },
       {
         name: "description",
         content:

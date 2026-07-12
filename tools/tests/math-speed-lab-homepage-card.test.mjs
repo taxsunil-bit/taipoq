@@ -62,13 +62,13 @@ test("Math Speed Lab appears after Tests and before English Typing links", () =>
   assert.ok(engIdx < hinIdx);
 });
 
-test("Math Speed Lab card copy and Pilot badge", () => {
+test("Math Speed Lab card copy and Early Access badge", () => {
   const msl = mathSpeedLabCardBlock();
   assert.match(msl, /hindiTitle="तीव्र गणना अभ्यास"/);
   assert.match(msl, /वर्ग, पूरक और निकट-आधार गुणा की सरल तकनीकों से गणना गति बढ़ाएँ।/);
   assert.match(msl, /supportingLabel="3 Techniques · Lesson \+ Direct Practice"/);
   assert.match(msl, /cta="गणना अभ्यास आरम्भ करें"/);
-  assert.match(msl, /badge="Pilot"/);
+  assert.match(msl, /badge="Early Access"/);
 });
 
 test("homepage does not use forbidden promotional claims on Math Speed Lab card", () => {
@@ -124,12 +124,19 @@ test("Math Speed Lab routes remain in registry", () => {
   );
 });
 
-test("navbar does not add Math Speed Lab to site navigation", () => {
-  assert.doesNotMatch(NAV, /math-speed-lab|Math Speed Lab/);
+test("navbar primary links do not add Math Speed Lab to top navigation", () => {
+  const primaryStart = NAV.indexOf("const primaryLinks");
+  const utilityStart = NAV.indexOf("const utilityLinks");
+  const primary = NAV.slice(primaryStart, utilityStart);
+  assert.doesNotMatch(primary, /math-speed-lab|Math Speed Lab/);
 });
 
-test("MSL module landing copy has no false direct-URL-only wording", () => {
+test("MSL module landing copy has approved student-facing wording", () => {
   const mod = readFileSync(path.join(ROOT, "src/content/math-speed-lab/module.ts"), "utf8");
   assert.doesNotMatch(mod, /direct URL only/i);
-  assert.match(mod, /Pilot learning module with lessons and direct practice for calculation speed/);
+  assert.doesNotMatch(mod, /Local pilot canary/i);
+  assert.match(
+    mod,
+    /Learn reliable calculation techniques through clear lessons, worked examples and direct practice/,
+  );
 });

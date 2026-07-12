@@ -285,7 +285,8 @@ test("no registration in TestPaper pack, subjects, navbar, DM", () => {
   assert.doesNotMatch(subjects, /math-speed-lab/);
 
   const nav = readFileSync(path.join(ROOT, "src", "components", "NavBar.tsx"), "utf8");
-  assert.doesNotMatch(nav, /math-speed-lab|Math Speed Lab/);
+  const primary = nav.slice(nav.indexOf("const primaryLinks"), nav.indexOf("const utilityLinks"));
+  assert.doesNotMatch(primary, /math-speed-lab|Math Speed Lab/);
 
   const bottom = readFileSync(path.join(ROOT, "src", "components", "MobileBottomNav.tsx"), "utf8");
   assert.doesNotMatch(bottom, /math-speed-lab/);
@@ -646,13 +647,15 @@ test("T02 and T03 routes exist", () => {
   }
 });
 
-test("landing shows three pilot techniques", () => {
+test("landing shows three techniques with Early Access badge", () => {
   const landing = readFileSync(
     path.join(ROOT, "src", "routes", "math-speed-lab.index.tsx"),
     "utf8",
   );
   assert.match(landing, /MSL_PILOT_TECHNIQUES/);
-  assert.match(landing, /Canary \/ Pilot/);
+  assert.match(landing, /Early Access/);
+  assert.doesNotMatch(landing, /Canary \/ Pilot/);
+  assert.doesNotMatch(landing, /Local pilot/);
   assert.doesNotMatch(landing, /T04|T05|T10/);
 });
 
@@ -732,8 +735,7 @@ test("homepage includes Math Speed Lab in preparation tools", () => {
   const home = readFileSync(path.join(ROOT, "src/routes/index.tsx"), "utf8");
   assert.equal((home.match(/title="Math Speed Lab"/g) ?? []).length, 1);
   assert.match(home, /to="\/math-speed-lab"/);
-  assert.doesNotMatch(
-    readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8"),
-    /math-speed-lab|Math Speed Lab/,
-  );
+  const nav = readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8");
+  const primary = nav.slice(nav.indexOf("const primaryLinks"), nav.indexOf("const utilityLinks"));
+  assert.doesNotMatch(primary, /math-speed-lab|Math Speed Lab/);
 });

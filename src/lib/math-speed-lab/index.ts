@@ -5,3 +5,4 @@ export * from "./formulas/t02";
 export * from "./formulas/t03";
 export * from "./scoreDirect";
 export * from "./progressStorage";
+export * from "./progressLabels";
