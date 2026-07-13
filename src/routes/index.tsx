@@ -49,7 +49,7 @@ function Home() {
             className="grid gap-4 lg:grid-cols-12 lg:gap-6"
           >
             <h2 id="mission-continue-heading" className="sr-only">
-              Today&apos;s Mission and Continue Preparation
+              Today&apos;s Mission and Recommended Preparation
             </h2>
             <div className="space-y-4 lg:col-span-8">
               <DailyMissionSection />
@@ -205,20 +205,20 @@ function ContinuePreparation() {
         id="continue-prep-heading"
         className="text-lg font-bold text-[var(--text-primary)] md:text-xl"
       >
-        Continue Preparation
+        Recommended Preparation
       </h2>
       <p className="mt-1 text-sm text-[var(--text-secondary)]">
-        Resume useful practice from where TAIPOQ can reliably guide you.
+        Choose a reliable next practice step — Math Speed Lab, Tests, or verified PYQ.
       </p>
       <ul className="mt-4 grid gap-3 sm:grid-cols-3">
         {[
           {
-            title: "Continue Math Speed Lab",
+            title: "Math Speed Lab",
             sub: "Lessons and direct practice for calculation speed",
             to: "/math-speed-lab",
           },
           {
-            title: "Resume Tests Hub",
+            title: "Tests Hub",
             sub: "Subject tests, model papers and verified PYQs",
             to: "/tests",
           },
@@ -465,10 +465,14 @@ function ProgressSummary() {
           <p>
             Profile: <span className="font-semibold text-[var(--text-primary)]">{name}</span>
           </p>
-          <p>
-            Typing results saved in this browser:{" "}
-            <span className="font-semibold text-[var(--text-primary)]">{resultCount}</span>
-          </p>
+          {resultCount > 0 ? (
+            <p>
+              Typing results saved in this browser:{" "}
+              <span className="font-semibold text-[var(--text-primary)]">{resultCount}</span>
+            </p>
+          ) : (
+            <p>No saved results yet. Complete a test to see progress here.</p>
+          )}
           <Link
             to="/progress"
             className="inline-flex min-h-11 items-center font-semibold text-[var(--cs-secondary-strong)] hover:underline"

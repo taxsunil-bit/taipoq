@@ -8,17 +8,17 @@ import { PYQ_GUIDE_PAPER_ID, PYQ_GUIDE_SUBJECT_SLUG } from "@/lib/tests/pyqGuide
 const primaryLinks = [
   { to: "/" as const, label: "Home" },
   { to: "/tests" as const, label: "Tests" },
-  { to: "/study-corner" as const, label: "Learn" },
+  { to: "/study-corner" as const, label: "Library" },
   { to: "/upcoming-exams" as const, label: "Jobs" },
   { to: "/daily-mission" as const, label: "Daily Mission" },
 ];
 
+/** Utility: Local Profile edits device-stored display name (/login). Progress hub is /progress. */
 const utilityLinks = [
-  { to: "/tests" as const, label: "Find Tests", ariaLabel: "Find tests and practice papers" },
   {
     to: "/login" as const,
-    label: "My Progress",
-    ariaLabel: "My Progress — local profile stored on this device",
+    label: "Local Profile",
+    ariaLabel: "Local Profile — display name stored on this device",
   },
 ];
 
@@ -85,7 +85,7 @@ export const INFO_LINKS = [
   { to: "/typing-tips" as const, label: "Typing Tips" },
   { to: "/upcoming-exams" as const, label: "Jobs" },
   { to: "/word-learning" as const, label: "Word Learning" },
-  { to: "/study-corner" as const, label: "Learn / Library" },
+  { to: "/study-corner" as const, label: "Library" },
   { to: "/english" as const, label: "English Typing" },
   { to: "/hindi" as const, label: "Hindi Typing" },
   { to: "/progress" as const, label: "Progress" },

@@ -41,6 +41,11 @@ const cards = [
 function EnglishHub() {
   return (
     <PageShell>
+      <PageHeader
+        title="English Typing"
+        subtitle="Build typing speed with lessons, practice, and tests."
+        accent="english"
+      />
       <EnglishHubMobile />
       <EnglishHubDesktop />
     </PageShell>
@@ -50,11 +55,6 @@ function EnglishHub() {
 function EnglishHubMobile() {
   return (
     <div className="space-y-4 overflow-x-hidden md:hidden">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-english">English Typing</h1>
-        <p className="text-sm text-muted-foreground">Lessons, passages and exam preparation.</p>
-      </header>
-
       <Link
         to="/english/practice"
         className={cn(MOBILE_ACTION, "bg-english text-english-foreground shadow-sm")}
@@ -108,15 +108,13 @@ function EnglishHubMobile() {
 function EnglishHubDesktop() {
   return (
     <div className="hidden md:block">
-      <PageHeader
-        title="English Typing"
-        subtitle="Build typing speed with lessons, practice, and tests."
-        accent="english"
-      />
       <div className="mb-4 rounded-md border border-primary/40 bg-primary/5 p-4">
         <p className="text-sm">
-          <b>First time?</b> Typing start karne se pahle finger position dekhein.{" "}
-          <Link to="/typing-start-guide" className="font-semibold text-primary underline underline-offset-2">
+          <b>First time?</b> Review finger placement before you start typing.{" "}
+          <Link
+            to="/typing-start-guide"
+            className="font-semibold text-primary underline underline-offset-2"
+          >
             Learn finger placement →
           </Link>
         </p>

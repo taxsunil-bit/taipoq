@@ -13,8 +13,13 @@ import {
   scoreHubPaperAttempt,
   usesSharedMockFoundation,
 } from "@/lib/mockTestHubIntegration";
-import { canAccessPaper } from "@/lib/tests/testAccess";
-import { createShuffledSession, getAllPapers, getPaperBySlugs, getPaperRouteParams } from "@/lib/tests/testGenerator";
+import { canAccessPaper, getAccessRequirementLabelHi } from "@/lib/tests/testAccess";
+import {
+  createShuffledSession,
+  getAllPapers,
+  getPaperBySlugs,
+  getPaperRouteParams,
+} from "@/lib/tests/testGenerator";
 import {
   isPyqGuidePaper,
   PYQ_CTET_OFFICIAL_SOURCES,
@@ -68,14 +73,21 @@ function PaperNotFound({ subject, paperId }: { subject: string; paperId: string 
       <div className="mx-auto max-w-3xl space-y-4 font-hindi">
         <h1 className="font-display text-2xl font-bold">Test paper not found</h1>
         <p className="text-muted-foreground">
-          No paper matched <code className="font-mono text-sm">/tests/{subject}/{paperId}</code>
+          No paper matched{" "}
+          <code className="font-mono text-sm">
+            /tests/{subject}/{paperId}
+          </code>
         </p>
         {available.length > 0 ? (
           <ul className="space-y-2 rounded-xl border border-border bg-card p-4 text-sm">
             <li className="font-semibold text-foreground">Available papers for this subject:</li>
             {available.map((p) => (
               <li key={p.paperId}>
-                <Link to="/tests/$subject/$paperId" params={{ subject, paperId: p.paperId }} className="text-primary hover:underline">
+                <Link
+                  to="/tests/$subject/$paperId"
+                  params={{ subject, paperId: p.paperId }}
+                  className="text-primary hover:underline"
+                >
                   {p.title} — {p.paperId}
                 </Link>
               </li>
@@ -193,7 +205,8 @@ function PaperTestPage() {
             <p className="text-sm font-medium text-foreground/90">{PYQ_CTET_PROVENANCE_LINE}</p>
           ) : null}
           <p className="text-sm text-muted-foreground">
-            {paper.questionCount} प्रश्न · {paper.durationMinutes} मिनट · {paper.access}
+            {paper.questionCount} प्रश्न · {paper.durationMinutes} मिनट ·{" "}
+            {getAccessRequirementLabelHi(paper.access)}
           </p>
           {isCA ? (
             <p className="rounded-xl border border-amber-500/30 bg-amber-950/20 px-3 py-2 text-sm text-amber-100/90">
@@ -232,7 +245,9 @@ function PaperTestPage() {
                 </div>
               </>
             ) : null}
-            <p className={cn("text-sm leading-relaxed text-muted-foreground", isPyqGuide && "mt-3")}>
+            <p
+              className={cn("text-sm leading-relaxed text-muted-foreground", isPyqGuide && "mt-3")}
+            >
               प्रश्न shuffle होंगे। विकल्प भी shuffle होंगे। Login की आवश्यकता नहीं।
             </p>
             {lastAttempt ? (

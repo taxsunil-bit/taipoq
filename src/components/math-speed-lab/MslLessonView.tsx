@@ -184,8 +184,8 @@ export function MslLessonView({
               key={err.code}
               className="rounded-lg border border-border bg-surface/40 px-4 py-3 text-sm"
             >
-              <span className="font-mono text-xs text-muted-foreground">{err.code}</span>
-              <p className="mt-1 text-muted-foreground">{err.description}</p>
+              <span className="sr-only">Error reference {err.code}. </span>
+              <p className="font-medium text-foreground">{err.description}</p>
             </li>
           ))}
         </ul>
@@ -222,7 +222,7 @@ export function MslLessonView({
         </h2>
         {progress ? (
           <ul className="space-y-1 text-sm text-muted-foreground">
-            <li>State: {progress.state}</li>
+            <li>State: {formatMslProgressLabel(progress.state)}</li>
             <li>
               Direct score:{" "}
               {progress.directScorePercent != null ? `${progress.directScorePercent}%` : "—"}

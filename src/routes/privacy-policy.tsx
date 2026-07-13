@@ -14,7 +14,8 @@ export const Route = createFileRoute("/privacy-policy")({
       { title: "Privacy Policy — TAIPOQ" },
       {
         name: "description",
-        content: "Privacy Policy for taipoq.com — cookies, analytics tools, and how typing practice data may be handled.",
+        content:
+          "Privacy Policy for taipoq.com — cookies, analytics tools, and how browser-stored preparation data may be handled.",
       },
     ],
   }),
@@ -38,7 +39,9 @@ function PrivacyPolicy() {
           <h1 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">{PRIVACY_POLICY_INTRO}</p>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+            {PRIVACY_POLICY_INTRO}
+          </p>
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
             <CalendarDays className="h-4 w-4" aria-hidden="true" />
             <span>Effective Date: {PRIVACY_POLICY_EFFECTIVE_DATE}</span>
@@ -55,12 +58,17 @@ function PrivacyPolicy() {
               >
                 <div className="mb-4 flex items-center gap-3">
                   <Icon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-                  <h2 className="font-display text-xl font-semibold text-foreground">{section.title}</h2>
+                  <h2 className="font-display text-xl font-semibold text-foreground">
+                    {section.title}
+                  </h2>
                 </div>
 
                 {"paragraphs" in section &&
                   section.paragraphs?.map((paragraph) => (
-                    <p key={paragraph.slice(0, 40)} className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+                    <p
+                      key={paragraph.slice(0, 40)}
+                      className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base"
+                    >
                       {paragraph}
                     </p>
                   ))}
@@ -99,7 +107,10 @@ function PrivacyPolicy() {
                       </a>
                     </p>
                     <p className="pt-2">
-                      <Link to="/contact" className="text-primary underline-offset-4 hover:underline">
+                      <Link
+                        to="/contact"
+                        className="text-primary underline-offset-4 hover:underline"
+                      >
                         Contact page
                       </Link>
                     </p>

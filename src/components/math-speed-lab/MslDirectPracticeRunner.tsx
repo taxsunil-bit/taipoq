@@ -6,6 +6,7 @@ import { NumericAnswerInput } from "@/components/math-speed-lab/NumericAnswerInp
 import {
   completeDirectSet,
   deriveStateAfterDirectSet,
+  formatMslProgressLabel,
   getActiveDirectSession,
   getTechniqueProgress,
   markPracticeStarted,
@@ -233,12 +234,15 @@ export function MslDirectPracticeRunner({
               <span className="font-semibold text-foreground">{summary.accuracyPercent}%</span>
             </li>
             <li>
-              Current state: <span className="font-semibold text-foreground">{progress.state}</span>
+              Current state:{" "}
+              <span className="font-semibold text-foreground">
+                {formatMslProgressLabel(progress.state)}
+              </span>
             </li>
           </ul>
           <p className="text-sm text-muted-foreground">
-            Timing is not scored. Recognition, mixed, exam, error, and revision sets remain deferred
-            for later pilot work.
+            Timing is not scored. Additional recognition, mixed, exam, error, and revision practice
+            sets may be added in future updates.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button type="button" className="min-h-11" onClick={handleRestart}>
@@ -264,7 +268,7 @@ export function MslDirectPracticeRunner({
         <p className="text-sm font-medium text-muted-foreground">
           Question {index + 1} of {questions.length}
         </p>
-        <p className="font-mono text-xs text-muted-foreground">{question.questionId}</p>
+        <p className="sr-only">Question reference {question.questionId}</p>
       </div>
 
       <Card className="border-border bg-card/80">

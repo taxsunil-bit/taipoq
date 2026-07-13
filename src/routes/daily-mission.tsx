@@ -70,9 +70,6 @@ function DailyMissionContinueButton({
 function DailyMissionPage() {
   const {
     state,
-    coreCompletedCount,
-    coreTotal,
-    progressPercent,
     primaryCtaLabel,
     fullMissionComplete,
     dailyGoalAchieved,
@@ -121,9 +118,6 @@ function DailyMissionPage() {
             {statusHeadline}
           </p>
           <MissionProgressSteps state={state} nextTaskId={nextTaskId} />
-          <p className="text-xs text-muted-foreground" aria-hidden="true">
-            Progress: {progressPercent}% of core preparation ({coreCompletedCount}/{coreTotal})
-          </p>
           <p className="text-xs text-muted-foreground">A new mission is available each day.</p>
         </div>
 

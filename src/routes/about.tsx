@@ -7,7 +7,8 @@ export const Route = createFileRoute("/about")({
       { title: "About TAIPOQ" },
       {
         name: "description",
-        content: "Learn about TAIPOQ — English and Hindi typing practice for students and job aspirants, created by Manas Dixit.",
+        content:
+          "About TAIPOQ — a mobile-first government exam preparation platform with verified jobs, PYQs, practice tests, Daily Mission, Math Speed Lab, current affairs, typing practice, and local progress.",
       },
     ],
   }),
@@ -18,20 +19,35 @@ function About() {
   return (
     <InfoPage title="About TAIPOQ">
       <p>
-        TAIPOQ is a smart English and Hindi typing practice platform created by Manas Dixit for students and job aspirants. It helps candidates practice typing anytime, anywhere, especially for typing-based job requirements.
+        TAIPOQ is a mobile-first government-exam preparation platform created by Manas Dixit. It
+        helps aspirants practise with clear tools for tests, verified job updates, calculation
+        skills, current affairs, and typing — with progress saved locally in the browser.
       </p>
+      <p>Current modules include:</p>
+      <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+        <li>Verified government-job vacancy updates with official-source links</li>
+        <li>Clearly labelled verified previous-year questions (PYQs)</li>
+        <li>TAIPOQ-original practice tests and subject papers</li>
+        <li>Daily Mission for a focused daily practice loop</li>
+        <li>Math Speed Lab for reliable calculation techniques</li>
+        <li>Current-affairs practice packs</li>
+        <li>English and Hindi typing preparation</li>
+        <li>Local profile and browser-stored progress</li>
+      </ul>
       <p>
-        TAIPOQ currently supports English typing practice and Hindi KrutiDev/Remington typing practice. It is designed to help learners improve speed, accuracy, confidence, and regular practice discipline.
-      </p>
-      <p>
-        This platform is intended for students, beginners, typing learners, clerks, data entry candidates, stenography aspirants, and other job aspirants who need regular typing practice.
+        Typing practice is an important preparation module on TAIPOQ, not the entire product
+        identity. Always verify final recruitment rules, dates, and eligibility on official sources.
       </p>
       <InfoSection title="Mission">
-        <p>Our mission is to make typing practice simple, accessible, and useful for job preparation.</p>
-      </InfoSection>
-      <InfoSection title="Current Version">
         <p>
-          TAIPOQ v1 is a public demo/prototype. Results and saved practice data may be stored locally in the user&apos;s browser unless a secure database is added in a future version.
+          Our mission is to make structured exam preparation simple, trustworthy, and accessible —
+          with honest labelling of verified content, original practice, and educational techniques.
+        </p>
+      </InfoSection>
+      <InfoSection title="Local progress">
+        <p>
+          Display name and practice results may be stored locally in your browser. Clearing browser
+          data can remove saved progress. TAIPOQ does not submit job applications on your behalf.
         </p>
       </InfoSection>
     </InfoPage>

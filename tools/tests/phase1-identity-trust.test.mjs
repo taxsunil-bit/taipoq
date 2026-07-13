@@ -126,10 +126,11 @@ test("existing display-name data migrates safely and corrupt storage recovers", 
   assert.equal(parseUser(JSON.stringify({})), null);
 });
 
-test("navigation still points to local progress profile at /login", () => {
+test("navigation points to Local Profile at /login; no duplicate Find Tests", () => {
   assert.match(NAV, /to: "\/login"/);
-  assert.match(NAV, /label: "My Progress"/);
-  assert.match(NAV, /Find Tests/);
+  assert.match(NAV, /label: "Local Profile"/);
+  assert.doesNotMatch(NAV, /Find Tests/);
+  assert.doesNotMatch(NAV, /label: "My Progress"/);
   assert.doesNotMatch(NAV, /label: "Search"/);
   assert.doesNotMatch(NAV, /V1\.0/);
 });

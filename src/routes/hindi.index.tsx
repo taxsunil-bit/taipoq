@@ -72,6 +72,11 @@ const subCards = [
 function HindiHub() {
   return (
     <PageShell>
+      <PageHeader
+        title="Hindi Typing"
+        subtitle="हिंदी टाइपिंग सीखें, अभ्यास करें और परीक्षा दें।"
+        accent="hindi"
+      />
       <HindiHubMobile />
       <HindiHubDesktop />
     </PageShell>
@@ -81,11 +86,6 @@ function HindiHub() {
 function HindiHubMobile() {
   return (
     <div className="space-y-4 overflow-x-hidden font-hindi md:hidden">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-hindi">Hindi Typing</h1>
-        <p className="text-sm text-muted-foreground">KrutiDev / Remington lessons और passage अभ्यास।</p>
-      </header>
-
       <section className="rounded-2xl border border-hindi/30 bg-hindi/5 p-4">
         <Badge className="mb-2 bg-hindi text-hindi-foreground">Active · Recommended</Badge>
         <p className="text-sm leading-relaxed text-muted-foreground">
@@ -147,12 +147,6 @@ function HindiHubMobile() {
 function HindiHubDesktop() {
   return (
     <div className="hidden md:block">
-      <PageHeader
-        title="Hindi Typing"
-        subtitle="हिंदी टाइपिंग सीखें, अभ्यास करें और परीक्षा दें।"
-        accent="hindi"
-      />
-
       <h2 className="mb-3 text-lg font-semibold">Choose Hindi Mode</h2>
       <div className="grid gap-4 md:grid-cols-3">
         {modes.map((m) => (
@@ -172,10 +166,8 @@ function HindiHubDesktop() {
                   </Link>
                 </Button>
               ) : (
-                <Button asChild variant="outline" className="w-full">
-                  <Link to="/hindi/practice" search={{ mode: m.mode }}>
-                    {m.btn}
-                  </Link>
+                <Button type="button" variant="outline" className="w-full" disabled aria-disabled>
+                  {m.btn}
                 </Button>
               )}
             </CardContent>

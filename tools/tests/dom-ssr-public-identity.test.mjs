@@ -54,9 +54,10 @@ test("homepage and root metadata use government-exam identity", () => {
   assert.doesNotMatch(ROOT_ROUTE, /English & Hindi Typing Practice for Job Preparation/);
 });
 
-test("navigation uses Find Tests and My Progress, not Search/V1.0", () => {
-  assert.match(NAV, /Find Tests/);
-  assert.match(NAV, /My Progress/);
+test("navigation uses Local Profile (not Find Tests / Search / V1.0)", () => {
+  assert.match(NAV, /label: "Local Profile"/);
+  assert.doesNotMatch(NAV, /Find Tests/);
+  assert.doesNotMatch(NAV, /label: "My Progress"/);
   assert.doesNotMatch(NAV, /label: "Search"/);
   assert.doesNotMatch(NAV, /V1\.0/);
 });

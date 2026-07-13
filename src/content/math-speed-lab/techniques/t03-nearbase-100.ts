@@ -120,7 +120,7 @@ export const T03_TECHNIQUE: MslTechniqueMeta = {
       techniqueId: T03_TECHNIQUE_ID,
       prompt: "103 × 97",
       reason:
-        "103 is above base 100 while 97 is below — a mixed above/below case excluded from Model A in this pilot.",
+        "103 is above base 100 while 97 is below — a mixed above/below case excluded from Model A in the current supported practice set.",
     },
   ],
   masteryDirectPercent: 90,

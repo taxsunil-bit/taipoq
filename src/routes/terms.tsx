@@ -7,7 +7,8 @@ export const Route = createFileRoute("/terms")({
       { title: "Terms of Use — TAIPOQ" },
       {
         name: "description",
-        content: "Terms of Use for TAIPOQ — guidelines for using this typing practice platform.",
+        content:
+          "Terms of Use for TAIPOQ — guidelines for using this government exam preparation platform.",
       },
     ],
   }),
@@ -15,13 +16,14 @@ export const Route = createFileRoute("/terms")({
 });
 
 const POINTS = [
-  "TAIPOQ is provided as a typing practice and learning tool.",
-  "The platform does not guarantee selection in any job, exam, recruitment, or typing test.",
-  "Users are responsible for verifying official typing test rules of their concerned recruitment authority.",
-  "TAIPOQ may contain sample typing lessons and practice material for educational use.",
+  "TAIPOQ is provided as an educational preparation platform for government exams and related skills practice.",
+  "Modules may include verified job updates, practice tests, labelled PYQs, Daily Mission, Math Speed Lab, current affairs, typing practice, and locally stored progress.",
+  "The platform does not guarantee selection in any job, exam, or recruitment process.",
+  "Users are responsible for verifying official rules, notifications, and eligibility with the concerned recruitment authority.",
+  "Verified PYQs may be adapted for digital practice while preserving provenance; original practice papers are not official PYQs.",
+  "Math Speed Lab methods are educational techniques and are not examination-body endorsements.",
   "Users must not misuse the website, attempt to damage the service, copy content unfairly, or use it for illegal purposes.",
   "TAIPOQ may change, update, or remove features at any time.",
-  "Current v1 is a prototype/demo and may have limitations.",
   "Continued use of the website means acceptance of these terms.",
 ] as const;
 
@@ -29,7 +31,8 @@ function Terms() {
   return (
     <InfoPage title="Terms of Use">
       <p>
-        By using TAIPOQ, users agree to use the website for lawful learning, practice, and typing improvement purposes.
+        By using TAIPOQ, users agree to use the website for lawful learning and exam preparation
+        purposes.
       </p>
       <InfoList items={POINTS} />
     </InfoPage>

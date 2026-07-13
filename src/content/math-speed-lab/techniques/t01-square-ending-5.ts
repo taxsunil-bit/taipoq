@@ -31,7 +31,7 @@ export const T01_TECHNIQUE: MslTechniqueMeta = {
   whenNotToUse: [
     "The number does not end in 5.",
     "The task asks for a product of two different numbers instead of one square.",
-    "Operands outside the locked canary set (only the nine two-digit endings in 5).",
+    "Operands outside the current supported practice range (only the nine two-digit endings in 5).",
   ],
   ordinaryMethod: "Multiply the number by itself: n × n.",
   rapidMethodSteps: [

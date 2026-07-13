@@ -23,7 +23,7 @@ export const T02_TECHNIQUE: MslTechniqueMeta = {
     "You want a fast mental path and will verify with ordinary subtraction (or n + answer = base).",
   ],
   whenNotToUse: [
-    "The base is not 100 or 1000 (for example base 10, 50, 200, or 10000 are outside this pilot).",
+    "The base is not 100 or 1000 (for example base 10, 50, 200, or 10000 are outside the current supported range).",
     "The operand is outside 1 ≤ n < base (including n ≥ base).",
     "You need a non-integer or approximate complement.",
   ],
@@ -97,7 +97,7 @@ export const T02_TECHNIQUE: MslTechniqueMeta = {
       techniqueId: T02_TECHNIQUE_ID,
       prompt: "Complement of 37 to 50",
       reason:
-        "Base 50 is outside the locked pilot bases (only 100 and 1000). Do not apply this T02 lesson to arbitrary bases.",
+        "Base 50 is outside the current supported bases (only 100 and 1000). Do not apply this T02 lesson to arbitrary bases.",
     },
   ],
   masteryDirectPercent: 90,
