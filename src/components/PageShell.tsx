@@ -33,11 +33,15 @@ export function PageHeader({
     accent === "english" ? "text-english" : accent === "hindi" ? "text-hindi" : "text-foreground";
   return (
     <div className="mb-4 md:mb-8">
-      <h1 className={`text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl ${accentClass}`}>
+      <h1
+        className={`text-[28px] font-bold leading-tight tracking-tight sm:text-[32px] md:text-[36px] lg:text-[40px] ${accentClass}`}
+      >
         {title}
       </h1>
       {subtitle && (
-        <p className="mt-1.5 text-sm text-muted-foreground md:mt-2 md:text-base">{subtitle}</p>
+        <p className="mt-1.5 text-[15.5px] leading-relaxed text-muted-foreground md:mt-2 md:text-base">
+          {subtitle}
+        </p>
       )}
     </div>
   );

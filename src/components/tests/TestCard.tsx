@@ -27,7 +27,7 @@ export function TestCard({ paper, subjectSlug, className }: TestCardProps) {
   const resultHint = getTestResultHint();
 
   const cardClass = cn(
-    "flex min-h-[52px] w-full cursor-pointer flex-col rounded-xl border border-blue-300/30 bg-gradient-to-br from-blue-600/90 to-blue-700/90 px-4 py-3.5 text-left text-white transition-all duration-200 hover:scale-[1.01] hover:shadow-lg hover:shadow-blue-600/20",
+    "flex min-h-[52px] w-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-white px-4 py-3.5 text-left shadow-[var(--shadow-subtle)] transition-all duration-[var(--duration-standard)] hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-px",
     !unlocked && "cursor-not-allowed opacity-80",
     className,
   );
@@ -35,20 +35,22 @@ export function TestCard({ paper, subjectSlug, className }: TestCardProps) {
   const inner = (
     <>
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <span className="text-base font-semibold leading-snug text-white">{paper.title}</span>
+        <span className="text-[17px] font-semibold leading-snug text-[var(--text-primary)]">
+          {paper.title}
+        </span>
         <div className="flex flex-wrap gap-1.5">
           {isPyqGuide ? (
-            <span className="rounded-full border border-amber-200/40 bg-amber-100/15 px-2 py-0.5 text-[11px] font-semibold text-amber-100">
+            <span className="rounded-full border border-[var(--status-warning)]/25 bg-[var(--status-warning-container)] px-2 py-0.5 text-[11px] font-semibold text-[var(--status-warning)]">
               {PYQ_GUIDE_CONTENT_LABEL}
             </span>
           ) : null}
-          <span className="rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-white">
+          <span className="rounded-full border border-[var(--border-subtle)] bg-[var(--cs-primary-container)] px-2 py-0.5 text-[11px] font-semibold text-[var(--cs-on-primary-container)]">
             {getTestLevelLabel(paper.level)}
           </span>
         </div>
       </div>
-      <p className="mt-1 line-clamp-2 text-sm text-blue-100">{paper.intro}</p>
-      <div className="mt-2 flex flex-wrap gap-2 text-xs text-blue-100/90">
+      <p className="mt-1 line-clamp-2 text-sm text-[var(--text-secondary)]">{paper.intro}</p>
+      <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--text-muted)]">
         <span>{paper.questionCount} प्रश्न</span>
         <span>·</span>
         <span>{paper.durationMinutes} मिनट</span>
@@ -56,16 +58,14 @@ export function TestCard({ paper, subjectSlug, className }: TestCardProps) {
         <span>{getAccessRequirementLabelHi(paper.access)}</span>
       </div>
       {isCA ? (
-        <p className="mt-2 text-xs leading-relaxed text-amber-200/90">
+        <p className="mt-2 text-xs leading-relaxed text-[var(--status-warning)]">
           Current Affairs questions are date-stamped. Refresh before long-term use.
         </p>
       ) : null}
-      <span className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-white underline-offset-2 hover:underline">
+      <span className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-primary underline-offset-2 hover:underline">
         {getTestCardCtaLabel()}
       </span>
-      {resultHint ? (
-        <span className="text-xs text-blue-100/90">{resultHint}</span>
-      ) : null}
+      {resultHint ? <span className="text-xs text-[var(--text-muted)]">{resultHint}</span> : null}
     </>
   );
 
@@ -78,11 +78,7 @@ export function TestCard({ paper, subjectSlug, className }: TestCardProps) {
   }
 
   return (
-    <Link
-      to="/tests/$subject/$paperId"
-      params={{ subject, paperId }}
-      className={cardClass}
-    >
+    <Link to="/tests/$subject/$paperId" params={{ subject, paperId }} className={cardClass}>
       {inner}
     </Link>
   );

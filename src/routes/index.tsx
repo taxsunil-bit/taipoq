@@ -6,7 +6,7 @@ import { ProductToolCard } from "@/components/ProductToolCard";
 import { ToughMockChallengePopup } from "@/components/ToughMockChallengePopup";
 import { VerifiedVacancyCard } from "@/components/VerifiedVacancyCard";
 import { SSC_CGL_PATTERN_PRACTICE_HREF } from "@/content/sscCglPatternPracticeContent";
-import { BRAND_ASSETS, SITE_CANONICAL_URL, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/brand";
+import { SITE_CANONICAL_URL, SITE_DESCRIPTION, SITE_TITLE, UTILITY_ROW } from "@/lib/brand";
 import { getResults, getUser } from "@/lib/storage";
 import { PYQ_GUIDE_PAPER_ID, PYQ_GUIDE_SUBJECT_SLUG } from "@/lib/tests/pyqGuide";
 import { getVerifiedPublicVacancies, loadVacanciesLive } from "@/lib/vacancies";
@@ -44,20 +44,31 @@ function Home() {
       <PageShell>
         <div className="space-y-8 md:space-y-10">
           <HomeHero />
-          <section aria-labelledby="mission-continue-heading" className="space-y-4">
+          <section
+            aria-labelledby="mission-continue-heading"
+            className="grid gap-4 lg:grid-cols-12 lg:gap-6"
+          >
             <h2 id="mission-continue-heading" className="sr-only">
               Today&apos;s Mission and Continue Preparation
             </h2>
-            <DailyMissionSection />
-            <ContinuePreparation />
+            <div className="space-y-4 lg:col-span-8">
+              <DailyMissionSection />
+              <ContinuePreparation />
+            </div>
+            <aside className="hidden lg:col-span-4 lg:block">
+              <HomeProgressRail />
+            </aside>
           </section>
           <PreparationTools />
           <ChooseYourExam />
-          <SuggestedNextSteps />
           <LatestVerifiedVacancies />
           <ProgressSummary />
           <WhyTaipoq />
           <TypingAndLibraryLinks />
+          <p className="text-center text-xs leading-relaxed text-[var(--text-muted)]">
+            TAIPOQ is under continuous development. Some learning features may change as the
+            platform is improved.
+          </p>
         </div>
       </PageShell>
     </>
@@ -67,59 +78,120 @@ function Home() {
 function HomeHero() {
   return (
     <section
-      className="overflow-hidden rounded-[14px] border border-[#E2E8F0] bg-[#EFF6FF] p-5 shadow-[0_2px_8px_rgba(15,23,42,0.05)] md:p-8 lg:p-10"
+      className="overflow-hidden rounded-[20px] border border-[var(--border-subtle)] bg-[var(--surface-focus)] p-5 shadow-[var(--shadow-subtle)] md:p-8 lg:p-10"
       aria-labelledby="home-hero-heading"
     >
-      <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center md:gap-8">
+      <div className="grid gap-6 md:grid-cols-[1fr_minmax(220px,280px)] md:items-center md:gap-8">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-[#1D4ED8]">TAIPOQ</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary">TAIPOQ</p>
           <h1
             id="home-hero-heading"
-            className="mt-2 font-display text-[34px] font-bold leading-tight tracking-tight text-[#0F172A] md:text-5xl lg:text-[52px]"
+            className="mt-2 font-display text-[34px] font-bold leading-tight tracking-tight text-[var(--text-primary)] md:text-5xl lg:text-[52px]"
           >
             Prepare Smarter. Progress Every Day.
           </h1>
-          <p className="mt-3 max-w-xl text-base leading-relaxed text-[#475569] md:text-lg">
-            Verified vacancies, PYQs, tests, daily practice and calculation-speed learning for
-            government-exam preparation.
+          <p className="mt-3 max-w-xl text-[15.5px] leading-relaxed text-[var(--text-secondary)] md:text-lg">
+            Verified opportunities, focused tests and daily practice—organised around your next
+            useful step.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               to="/daily-mission"
-              className="inline-flex min-h-12 items-center justify-center rounded-[12px] bg-[#1D4ED8] px-6 text-base font-semibold text-white transition-colors hover:bg-[#1E40AF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] focus-visible:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-[12px] bg-primary px-6 text-base font-semibold text-primary-foreground transition-colors hover:bg-[var(--cs-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               Start Today&apos;s Mission
             </Link>
             <Link
               to="/tests"
-              className="inline-flex min-h-12 items-center justify-center rounded-[12px] border border-[#93C5FD] bg-white px-6 text-base font-semibold text-[#1D4ED8] transition-colors hover:bg-[#EFF6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] focus-visible:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-[12px] border border-primary/35 bg-white px-6 text-base font-semibold text-primary transition-colors hover:bg-[var(--cs-primary-container)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               Explore Tests
             </Link>
           </div>
-          <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-[#475569]">
-            <li>Official-source verification</li>
-            <li>Clearly labelled PYQs</li>
-            <li>Free preparation tools</li>
+          <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-[var(--text-secondary)]">
+            <li>Official-source checked jobs</li>
+            <li>Verified PYQ provenance</li>
+            <li>Mobile-first preparation</li>
           </ul>
-          <p className="mt-4 hidden text-sm leading-relaxed text-[#475569] md:block">
-            TAIPOQ is under continuous development. Some learning features may change as the
-            platform is improved.
-          </p>
         </div>
-        <div className="mx-auto w-full max-w-[240px] rounded-[14px] border border-[#E2E8F0] bg-white p-3 shadow-[0_2px_8px_rgba(15,23,42,0.05)] md:max-w-[280px]">
-          <img
-            src={BRAND_ASSETS.logo3d}
-            alt="TAIPOQ"
-            width={280}
-            height={200}
-            className="mx-auto h-auto max-h-[140px] w-full object-contain md:max-h-[180px]"
-            loading="eager"
-            decoding="async"
-          />
+        <div
+          className="mx-auto w-full max-w-[280px] space-y-2 rounded-[16px] border border-[var(--border-subtle)] bg-white p-3 shadow-[var(--shadow-subtle)]"
+          aria-hidden="true"
+        >
+          <div className="rounded-xl bg-[var(--surface-focus)] px-3 py-2.5">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">
+              Today&apos;s Mission
+            </p>
+            <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
+              3 preparation activities
+            </p>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--border-subtle)]">
+              <div className="h-full w-2/5 rounded-full bg-[var(--cs-secondary)]" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between rounded-xl border border-[var(--border-subtle)] px-3 py-2">
+            <span className="text-xs font-medium text-[var(--text-secondary)]">Verified PYQ</span>
+            <span className="rounded-full bg-[var(--status-info-container)] px-2 py-0.5 text-[10px] font-semibold text-[var(--status-info)]">
+              Provenance
+            </span>
+          </div>
+          <div className="flex items-center justify-between rounded-xl border border-[var(--border-subtle)] px-3 py-2">
+            <span className="text-xs font-medium text-[var(--text-secondary)]">Open Jobs</span>
+            <span className="rounded-full bg-[var(--status-success-container)] px-2 py-0.5 text-[10px] font-semibold text-[var(--status-success)]">
+              Verified
+            </span>
+          </div>
+          <div className="flex items-center justify-between rounded-xl border border-[var(--border-subtle)] px-3 py-2">
+            <span className="text-xs font-medium text-[var(--text-secondary)]">Math Speed Lab</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--cs-accent-intelligence)]" />
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function HomeProgressRail() {
+  const [resultCount, setResultCount] = useState(0);
+  const [vacancyTitle, setVacancyTitle] = useState<string | null>(null);
+
+  useEffect(() => {
+    setResultCount(getResults().length);
+    const first = getVerifiedPublicVacancies(getPublishedVacanciesSnapshot().items)[0];
+    setVacancyTitle(first?.title ?? null);
+  }, []);
+
+  return (
+    <div className="space-y-3 rounded-[20px] border border-[var(--border-subtle)] bg-white p-4 shadow-[var(--shadow-subtle)]">
+      <h3 className="text-sm font-semibold text-[var(--text-primary)]">Preparation rail</h3>
+      <div className="rounded-xl bg-[var(--cs-secondary-container)] px-3 py-3">
+        <p className="text-xs font-medium text-[var(--cs-on-secondary-container)]">
+          Browser practice results
+        </p>
+        <p className="mt-1 text-2xl font-bold text-[var(--cs-on-secondary-container)]">
+          {resultCount}
+        </p>
+      </div>
+      <div className="rounded-xl border border-[var(--border-subtle)] px-3 py-3">
+        <p className="text-xs font-medium text-[var(--text-muted)]">Latest verified vacancy</p>
+        <p className="mt-1 line-clamp-2 text-sm font-semibold text-[var(--text-primary)]">
+          {vacancyTitle ?? "Open Jobs for current listings"}
+        </p>
+        <Link
+          to="/upcoming-exams"
+          className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--status-success)] hover:underline"
+        >
+          View Jobs →
+        </Link>
+      </div>
+      <Link
+        to="/math-speed-lab"
+        className="flex min-h-11 items-center justify-between rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--cs-secondary-container)]"
+      >
+        <span>Recommended: Math Speed Lab</span>
+        <span className="h-2 w-2 rounded-full bg-[var(--cs-accent-intelligence)]" aria-hidden />
+      </Link>
+    </div>
   );
 }
 
@@ -127,12 +199,15 @@ function ContinuePreparation() {
   return (
     <section
       aria-labelledby="continue-prep-heading"
-      className="rounded-[14px] border border-[#E2E8F0] bg-white p-4 shadow-[0_2px_8px_rgba(15,23,42,0.05)] md:p-5"
+      className="rounded-[16px] border border-[var(--border-subtle)] bg-white p-4 shadow-[var(--shadow-subtle)] md:p-5"
     >
-      <h2 id="continue-prep-heading" className="text-lg font-bold text-[#0F172A] md:text-xl">
+      <h2
+        id="continue-prep-heading"
+        className="text-lg font-bold text-[var(--text-primary)] md:text-xl"
+      >
         Continue Preparation
       </h2>
-      <p className="mt-1 text-sm text-[#475569]">
+      <p className="mt-1 text-sm text-[var(--text-secondary)]">
         Resume useful practice from where TAIPOQ can reliably guide you.
       </p>
       <ul className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -158,18 +233,22 @@ function ContinuePreparation() {
               <Link
                 to={item.to}
                 params={item.params}
-                className="flex min-h-11 flex-col rounded-[12px] border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 transition-colors hover:border-[#93C5FD] hover:bg-[#EFF6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8]"
+                className="flex min-h-11 flex-col rounded-[12px] border border-[var(--border-subtle)] bg-[var(--surface-muted)] px-4 py-3 transition-colors hover:border-[var(--border-focus)] hover:bg-[var(--cs-primary-container)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <span className="text-sm font-semibold text-[#0F172A]">{item.title}</span>
-                <span className="mt-0.5 text-xs text-[#475569]">{item.sub}</span>
+                <span className="text-sm font-semibold text-[var(--text-primary)]">
+                  {item.title}
+                </span>
+                <span className="mt-0.5 text-xs text-[var(--text-secondary)]">{item.sub}</span>
               </Link>
             ) : (
               <Link
                 to={item.to}
-                className="flex min-h-11 flex-col rounded-[12px] border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 transition-colors hover:border-[#93C5FD] hover:bg-[#EFF6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8]"
+                className="flex min-h-11 flex-col rounded-[12px] border border-[var(--border-subtle)] bg-[var(--surface-muted)] px-4 py-3 transition-colors hover:border-[var(--border-focus)] hover:bg-[var(--cs-primary-container)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <span className="text-sm font-semibold text-[#0F172A]">{item.title}</span>
-                <span className="mt-0.5 text-xs text-[#475569]">{item.sub}</span>
+                <span className="text-sm font-semibold text-[var(--text-primary)]">
+                  {item.title}
+                </span>
+                <span className="mt-0.5 text-xs text-[var(--text-secondary)]">{item.sub}</span>
               </Link>
             )}
           </li>
@@ -186,11 +265,11 @@ function PreparationTools() {
       <div>
         <h2
           id="prep-tools-heading"
-          className="text-xl font-bold tracking-tight text-[#0F172A] md:text-2xl"
+          className="text-[23px] font-bold tracking-tight text-[var(--text-primary)] md:text-[28px]"
         >
           Preparation Tools
         </h2>
-        <p className="mt-1 text-sm text-[#475569] md:text-base">
+        <p className="mt-1 text-sm text-[var(--text-secondary)] md:text-base">
           Tests, Math Speed Lab, PYQs and Daily Mission — start with one clear next step.
         </p>
       </div>
@@ -258,29 +337,32 @@ function ChooseYourExam() {
   return (
     <section aria-labelledby="choose-exam-heading" className="space-y-3">
       <div>
-        <h2 id="choose-exam-heading" className="text-xl font-bold text-[#0F172A] md:text-2xl">
+        <h2
+          id="choose-exam-heading"
+          className="text-[23px] font-bold text-[var(--text-primary)] md:text-[28px]"
+        >
           Choose Your Exam
         </h2>
-        <p className="mt-1 text-sm text-[#475569]">
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">
           Open a genuine preparation path — no invented test counts.
         </p>
       </div>
       <div className="-mx-1 overflow-x-auto pb-1">
-        <ul className="flex min-w-max gap-2 px-1 md:grid md:min-w-0 md:grid-cols-3 lg:grid-cols-6 md:gap-3">
+        <ul className="flex min-w-max gap-2 px-1 md:grid md:min-w-0 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
           {exams.map((exam) => (
             <li key={exam.label} className="w-[148px] shrink-0 md:w-auto">
               {"params" in exam && exam.params ? (
                 <Link
                   to={exam.to}
                   params={exam.params}
-                  className="flex min-h-12 items-center justify-center rounded-[12px] border border-[#E2E8F0] bg-white px-3 py-3 text-center text-sm font-semibold text-[#0F172A] shadow-[0_2px_8px_rgba(15,23,42,0.05)] transition-colors hover:border-[#93C5FD] hover:bg-[#EFF6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8]"
+                  className="flex min-h-12 items-center justify-center rounded-[12px] border border-[var(--border-subtle)] bg-white px-3 py-3 text-center text-sm font-semibold text-[var(--text-primary)] shadow-[var(--shadow-subtle)] transition-colors hover:border-[var(--border-focus)] hover:bg-[var(--cs-primary-container)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   {exam.label}
                 </Link>
               ) : (
                 <Link
                   to={exam.to}
-                  className="flex min-h-12 items-center justify-center rounded-[12px] border border-[#E2E8F0] bg-white px-3 py-3 text-center text-sm font-semibold text-[#0F172A] shadow-[0_2px_8px_rgba(15,23,42,0.05)] transition-colors hover:border-[#93C5FD] hover:bg-[#EFF6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8]"
+                  className="flex min-h-12 items-center justify-center rounded-[12px] border border-[var(--border-subtle)] bg-white px-3 py-3 text-center text-sm font-semibold text-[var(--text-primary)] shadow-[var(--shadow-subtle)] transition-colors hover:border-[var(--border-focus)] hover:bg-[var(--cs-primary-container)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   {exam.label}
                 </Link>
@@ -289,52 +371,6 @@ function ChooseYourExam() {
           ))}
         </ul>
       </div>
-    </section>
-  );
-}
-
-function SuggestedNextSteps() {
-  return (
-    <section aria-labelledby="suggested-heading" className="space-y-3">
-      <div>
-        <h2 id="suggested-heading" className="text-xl font-bold text-[#0F172A] md:text-2xl">
-          Suggested Next Steps
-        </h2>
-        <p className="mt-1 text-sm text-[#475569]">
-          Rule-based suggestions from real TAIPOQ modules — not personalised claims.
-        </p>
-      </div>
-      <ul className="grid gap-3 sm:grid-cols-3">
-        <li>
-          <ProductToolCard
-            title="Today's Mission"
-            description="Complete today's focused preparation activities."
-            cta="Open Mission"
-            to="/daily-mission"
-            accent="mission"
-          />
-        </li>
-        <li>
-          <ProductToolCard
-            title="Verified PYQ Paper"
-            description="Practise a clearly labelled previous-year paper."
-            cta="Open PYQ"
-            to="/tests/$subject/$paperId"
-            params={PYQ_ROUTE.params}
-            accent="pyqs"
-          />
-        </li>
-        <li>
-          <ProductToolCard
-            title="Continue Math Speed Lab"
-            description="Learn the next calculation technique with direct practice."
-            cta="Open Lab"
-            to="/math-speed-lab"
-            accent="msl"
-            badge="Early Access"
-          />
-        </li>
-      </ul>
     </section>
   );
 }
@@ -367,24 +403,27 @@ function LatestVerifiedVacancies() {
     <section aria-labelledby="vacancies-heading" className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 id="vacancies-heading" className="text-xl font-bold text-[#0F172A] md:text-2xl">
+          <h2
+            id="vacancies-heading"
+            className="text-[23px] font-bold text-[var(--text-primary)] md:text-[28px]"
+          >
             Latest Verified Vacancies
           </h2>
-          <p className="mt-1 text-sm text-[#475569]">
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">
             Official-source verified openings from the Jobs module.
           </p>
         </div>
         <Link
           to="/upcoming-exams"
-          className="min-h-11 text-sm font-semibold text-[#15803D] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#15803D]"
+          className="min-h-11 text-sm font-semibold text-[var(--status-success)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--status-success)]"
         >
           View all Jobs →
         </Link>
       </div>
       {!loaded ? (
-        <p className="text-sm text-[#475569]">Loading verified vacancies…</p>
+        <p className="text-sm text-[var(--text-secondary)]">Loading verified vacancies…</p>
       ) : items.length === 0 ? (
-        <p className="rounded-[14px] border border-[#E2E8F0] bg-[#F0FDF4] p-4 text-sm text-[#15803D]">
+        <p className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--status-success-container)] p-4 text-sm text-[var(--status-success)]">
           No current verified vacancies to show here. Check Jobs for the full list.
         </p>
       ) : (
@@ -413,35 +452,38 @@ function ProgressSummary() {
   return (
     <section
       aria-labelledby="progress-heading"
-      className="rounded-[14px] border border-[#E2E8F0] bg-[#F5F3FF] p-5"
+      className="rounded-[16px] border border-[var(--border-subtle)] bg-[var(--cs-secondary-container)] p-5"
     >
-      <h2 id="progress-heading" className="text-xl font-bold text-[#0F172A] md:text-2xl">
+      <h2
+        id="progress-heading"
+        className="text-[23px] font-bold text-[var(--text-primary)] md:text-[28px]"
+      >
         Progress Summary
       </h2>
       {name ? (
-        <div className="mt-3 space-y-2 text-sm text-[#475569]">
+        <div className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
           <p>
-            Profile: <span className="font-semibold text-[#0F172A]">{name}</span>
+            Profile: <span className="font-semibold text-[var(--text-primary)]">{name}</span>
           </p>
           <p>
             Typing results saved in this browser:{" "}
-            <span className="font-semibold text-[#0F172A]">{resultCount}</span>
+            <span className="font-semibold text-[var(--text-primary)]">{resultCount}</span>
           </p>
           <Link
             to="/progress"
-            className="inline-flex min-h-11 items-center font-semibold text-[#7C3AED] hover:underline"
+            className="inline-flex min-h-11 items-center font-semibold text-[var(--cs-secondary-strong)] hover:underline"
           >
             Open Progress →
           </Link>
         </div>
       ) : (
         <div className="mt-3 space-y-3">
-          <p className="text-sm text-[#475569]">
+          <p className="text-sm text-[var(--text-secondary)]">
             Create a free profile to save your progress and continue later.
           </p>
           <Link
             to="/login"
-            className="inline-flex min-h-12 items-center justify-center rounded-[12px] bg-[#7C3AED] px-5 text-sm font-semibold text-white hover:bg-[#6D28D9]"
+            className="inline-flex min-h-12 items-center justify-center rounded-[12px] bg-[var(--cs-secondary)] px-5 text-sm font-semibold text-white hover:bg-[var(--cs-secondary-strong)]"
           >
             Set Local Profile
           </Link>
@@ -461,14 +503,17 @@ function WhyTaipoq() {
   ];
   return (
     <section aria-labelledby="why-heading" className="space-y-3">
-      <h2 id="why-heading" className="text-xl font-bold text-[#0F172A] md:text-2xl">
+      <h2
+        id="why-heading"
+        className="text-[23px] font-bold text-[var(--text-primary)] md:text-[28px]"
+      >
         Why TAIPOQ
       </h2>
       <ul className="grid gap-2 sm:grid-cols-2">
         {points.map((p) => (
           <li
             key={p}
-            className="rounded-[12px] border border-[#E2E8F0] bg-white px-4 py-3 text-sm font-medium text-[#0F172A]"
+            className="rounded-[12px] border border-[var(--border-subtle)] bg-white px-4 py-3 text-sm font-medium text-[var(--text-primary)]"
           >
             {p}
           </li>
@@ -495,32 +540,27 @@ function TypingAndLibraryLinks() {
 
   return (
     <section aria-labelledby="typing-lib-heading" className="space-y-3">
-      <h2 id="typing-lib-heading" className="text-lg font-bold text-[#0F172A]">
+      <h2 id="typing-lib-heading" className="text-lg font-bold text-[var(--text-primary)]">
         Typing &amp; Library
       </h2>
-      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3">
         {links.map((link) => (
           <li key={link.to + link.title}>
             {"search" in link && link.search ? (
               <Link
                 to={link.to}
                 search={link.search}
-                className={cn(
-                  "flex min-h-11 items-center justify-between rounded-[12px] border border-[#E2E8F0] bg-white px-4 py-3 text-sm font-medium text-[#0F172A] hover:bg-[#F8FAFC]",
-                )}
+                className={cn(UTILITY_ROW, "justify-between")}
               >
-                <span>{link.title}</span>
-                <span aria-hidden="true" className="text-[#475569]">
+                <span className="text-sm font-medium text-[var(--text-primary)]">{link.title}</span>
+                <span aria-hidden="true" className="text-[var(--text-muted)]">
                   →
                 </span>
               </Link>
             ) : (
-              <Link
-                to={link.to}
-                className="flex min-h-11 items-center justify-between rounded-[12px] border border-[#E2E8F0] bg-white px-4 py-3 text-sm font-medium text-[#0F172A] hover:bg-[#F8FAFC]"
-              >
-                <span>{link.title}</span>
-                <span aria-hidden="true" className="text-[#475569]">
+              <Link to={link.to} className={cn(UTILITY_ROW, "justify-between")}>
+                <span className="text-sm font-medium text-[var(--text-primary)]">{link.title}</span>
+                <span aria-hidden="true" className="text-[var(--text-muted)]">
                   →
                 </span>
               </Link>

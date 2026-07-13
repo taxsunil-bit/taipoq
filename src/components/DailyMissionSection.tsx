@@ -86,7 +86,7 @@ export function DailyMissionSection() {
   const jobTask = DAILY_MISSION_TASKS.find((t) => t.id === "jobUpdate")!;
 
   return (
-    <section className="bento-tile space-y-4 p-4 sm:p-5" aria-labelledby="daily-mission-heading">
+    <section className="tq-focus-card space-y-4 p-4 sm:p-5" aria-labelledby="daily-mission-heading">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
           <h2
@@ -103,9 +103,9 @@ export function DailyMissionSection() {
           className={cn(
             "shrink-0 rounded-full border px-3 py-1 text-xs font-medium",
             fullMissionComplete
-              ? "border-primary/40 bg-primary/10 text-primary"
+              ? "border-primary/40 bg-[var(--cs-primary-container)] text-primary"
               : dailyGoalAchieved
-                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                ? "border-[var(--status-success)]/40 bg-[var(--status-success-container)] text-[var(--status-success)]"
                 : "border-border bg-muted/20 text-muted-foreground",
           )}
           aria-live="polite"

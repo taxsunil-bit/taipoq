@@ -27,24 +27,24 @@ const touchBtn = "min-h-11 px-3 text-sm whitespace-nowrap";
 
 /** Calm Focus readable status styles — light surfaces, WCAG-friendly contrast. */
 const BADGE_VERIFIED =
-  "border-[#86EFAC] bg-[#F0FDF4] px-1.5 py-0.5 text-[11px] font-semibold text-[#15803D]";
+  "border-[var(--status-success)]/35 bg-[var(--status-success-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-success)]";
 const BADGE_PENDING =
-  "border-[#CBD5E1] bg-[#F8FAFC] px-1.5 py-0.5 text-[11px] font-semibold text-[#334155]";
+  "border-[var(--border-default)] bg-[var(--surface-muted)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--text-secondary)]";
 const BADGE_JUDICIAL =
-  "border-[#FCD34D] bg-[#FFFBEB] px-1.5 py-0.5 text-[11px] font-semibold text-[#B45309]";
+  "border-[var(--status-warning)]/35 bg-[var(--status-warning-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-warning)]";
 const APPLY_WINDOW =
-  "rounded-md border border-[#86EFAC] bg-[#F0FDF4] px-2.5 py-1.5 text-xs font-semibold leading-snug text-[#166534]";
+  "rounded-md border border-[var(--status-success)]/40 bg-[var(--status-success-container)] px-2.5 py-1.5 text-xs font-semibold leading-snug text-[var(--status-success)]";
 
 function statusBadgeClass(status: VacancyStatus): string {
   switch (status) {
     case "closing_soon":
-      return "border-[#FCD34D] bg-[#FFFBEB] px-1.5 py-0.5 text-[11px] font-semibold text-[#B45309]";
+      return "border-[var(--status-warning)]/35 bg-[var(--status-warning-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-warning)]";
     case "closed":
     case "archive":
-      return "border-[#FCA5A5] bg-[#FEF2F2] px-1.5 py-0.5 text-[11px] font-semibold text-[#B91C1C]";
+      return "border-[var(--status-danger)]/35 bg-[var(--status-danger-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-danger)]";
     case "active":
     default:
-      return "border-[#BFDBFE] bg-[#EFF6FF] px-1.5 py-0.5 text-[11px] font-semibold text-[#1D4ED8]";
+      return "border-[var(--status-info)]/35 bg-[var(--status-info-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-info)]";
   }
 }
 
@@ -197,7 +197,7 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
 
   return (
     <li>
-      <Card className="border-[#E2E8F0] bg-white shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
+      <Card className="border-[var(--border-subtle)] bg-white shadow-[var(--shadow-subtle)]">
         <CardContent className="space-y-2.5 p-3 sm:p-4">
           <div className="flex flex-wrap items-center gap-1.5">
             {isFullyVerified ? (

@@ -124,7 +124,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Mobile navigation"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-[#E2E8F0] bg-white/95 backdrop-blur-xl md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border-subtle)] bg-[var(--surface-elevated)] backdrop-blur-md md:hidden"
       style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
     >
       <ul className="mx-auto grid max-w-lg grid-cols-5">
@@ -137,17 +137,23 @@ export function MobileBottomNav() {
                 to={item.to}
                 className={cn(
                   "flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 py-2 text-[11px] font-medium transition-colors",
-                  emphasize && !active && "text-[#D97706]",
-                  active ? (emphasize ? "text-[#D97706]" : "text-[#1D4ED8]") : "text-[#475569]",
+                  active ? "text-primary" : "text-[var(--text-secondary)]",
                 )}
                 aria-current={active ? "page" : undefined}
               >
                 <span
                   className={cn(
-                    emphasize &&
-                      "flex h-8 w-8 items-center justify-center rounded-full bg-[#FFFBEB] ring-1 ring-[#FCD34D]/60",
+                    "relative flex h-8 w-8 items-center justify-center rounded-full",
+                    active && "bg-[var(--cs-primary-container)]",
+                    emphasize && !active && "bg-[var(--cs-accent-intelligence-soft)]",
                   )}
                 >
+                  {emphasize ? (
+                    <span
+                      className="absolute right-0.5 top-0.5 h-1.5 w-1.5 rounded-full bg-[var(--cs-accent-intelligence)]"
+                      aria-hidden="true"
+                    />
+                  ) : null}
                   <NavIcon name={item.label} />
                 </span>
                 <span>{item.label}</span>

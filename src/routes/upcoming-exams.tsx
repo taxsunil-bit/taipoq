@@ -122,10 +122,10 @@ function UpcomingExamsPage() {
           subtitle="Open application windows with official source links. Verification and closing status are shown separately."
         />
 
-        <Card className="border-[#FCD34D] bg-[#FFFBEB]">
+        <Card className="border-[var(--border-subtle)] bg-[var(--surface-muted)] shadow-none">
           <CardContent className="space-y-1 p-2 text-[11px] leading-snug sm:p-3 sm:text-xs sm:leading-relaxed">
-            <p className="font-semibold text-[#92400E]">Important disclaimer</p>
-            <p className="text-[#78350F]">
+            <p className="font-semibold text-[var(--text-secondary)]">Important disclaimer</p>
+            <p className="text-[var(--text-muted)]">
               TAIPOQ checks each listing against official sources before publication. Recruitment
               authorities may later amend dates, eligibility or other conditions. Always confirm the
               latest notice on the official website before applying.
@@ -139,14 +139,14 @@ function UpcomingExamsPage() {
         >
           <Badge
             variant="outline"
-            className="border-[#BFDBFE] bg-[#EFF6FF] px-2 py-0.5 font-semibold text-[#1D4ED8]"
+            className="border-[var(--status-info)]/30 bg-[var(--status-info-container)] px-2 py-0.5 font-semibold text-[var(--status-info)]"
           >
             Open listings: {summary.openListings}
           </Badge>
           {showFullyVerifiedCount ? (
             <Badge
               variant="outline"
-              className="border-[#86EFAC] bg-[#F0FDF4] px-2 py-0.5 font-semibold text-[#15803D]"
+              className="border-[var(--status-success)]/30 bg-[var(--status-success-container)] px-2 py-0.5 font-semibold text-[var(--status-success)]"
             >
               Fully verified: {summary.fullyVerified}
             </Badge>
@@ -154,14 +154,16 @@ function UpcomingExamsPage() {
           {summary.reviewPending > 0 ? (
             <Badge
               variant="outline"
-              className="border-[#FCD34D] bg-[#FFFBEB] px-2 py-0.5 font-semibold text-[#B45309]"
+              className="border-[var(--status-warning)]/30 bg-[var(--status-warning-container)] px-2 py-0.5 font-semibold text-[var(--status-warning)]"
             >
               {showFullyVerifiedCount ? "Review pending" : "Verification in progress"}:{" "}
               {summary.reviewPending}
             </Badge>
           ) : null}
           {dataUpdatedLabel ? (
-            <span className="text-[#64748B]">Vacancy data updated: {dataUpdatedLabel}</span>
+            <span className="text-[var(--text-muted)]">
+              Vacancy data updated: {dataUpdatedLabel}
+            </span>
           ) : null}
         </div>
 

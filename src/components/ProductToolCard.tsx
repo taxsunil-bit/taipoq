@@ -6,34 +6,34 @@ export type ProductToolAccent = "tests" | "pyqs" | "msl" | "mission" | "jobs" | 
 
 const ACCENT_STYLES: Record<ProductToolAccent, { bar: string; cta: string; badge: string }> = {
   tests: {
-    bar: "bg-[#2563EB]",
-    cta: "text-[#2563EB]",
-    badge: "bg-[#EFF6FF] text-[#2563EB]",
+    bar: "bg-[var(--tq-tests)]",
+    cta: "text-[var(--tq-tests)]",
+    badge: "bg-[var(--tq-pale-tests)] text-[var(--tq-tests)]",
   },
   pyqs: {
-    bar: "bg-[#4F46E5]",
-    cta: "text-[#4F46E5]",
-    badge: "bg-[#EEF2FF] text-[#4F46E5]",
+    bar: "bg-[var(--tq-pyqs)]",
+    cta: "text-[var(--tq-pyqs)]",
+    badge: "bg-[var(--tq-pale-pyqs)] text-[var(--tq-pyqs)]",
   },
   msl: {
-    bar: "bg-[#0F766E]",
-    cta: "text-[#0F766E]",
-    badge: "bg-[#F0FDFA] text-[#0F766E]",
+    bar: "bg-[var(--tq-msl)]",
+    cta: "text-[var(--tq-msl)]",
+    badge: "bg-[var(--tq-pale-msl)] text-[var(--tq-msl)]",
   },
   mission: {
-    bar: "bg-[#D97706]",
-    cta: "text-[#D97706]",
-    badge: "bg-[#FFFBEB] text-[#D97706]",
+    bar: "bg-[var(--tq-mission)]",
+    cta: "text-[var(--tq-mission)]",
+    badge: "bg-[var(--tq-pale-mission)] text-[var(--tq-mission)]",
   },
   jobs: {
-    bar: "bg-[#15803D]",
-    cta: "text-[#15803D]",
-    badge: "bg-[#F0FDF4] text-[#15803D]",
+    bar: "bg-[var(--tq-jobs)]",
+    cta: "text-[var(--tq-jobs)]",
+    badge: "bg-[var(--tq-pale-jobs)] text-[var(--tq-jobs)]",
   },
   progress: {
-    bar: "bg-[#7C3AED]",
-    cta: "text-[#7C3AED]",
-    badge: "bg-[#F5F3FF] text-[#7C3AED]",
+    bar: "bg-[var(--tq-progress)]",
+    cta: "text-[var(--tq-progress)]",
+    badge: "bg-[var(--tq-pale-progress)] text-[var(--tq-progress)]",
   },
 };
 
@@ -86,9 +86,13 @@ export function ProductToolCard(props: ProductToolCardProps) {
       <span className={cn("absolute inset-y-0 left-0 w-1", styles.bar)} aria-hidden="true" />
       <div className="flex items-start justify-between gap-2 pl-2">
         <div>
-          <h3 className="text-base font-semibold leading-snug text-[#0F172A]">{title}</h3>
+          <h3 className="text-[17px] font-semibold leading-snug text-[var(--text-primary)]">
+            {title}
+          </h3>
           {hindiTitle ? (
-            <p className="mt-0.5 font-hindi text-sm font-medium text-[#475569]">{hindiTitle}</p>
+            <p className="mt-0.5 font-hindi text-sm font-medium text-[var(--text-secondary)]">
+              {hindiTitle}
+            </p>
           ) : null}
         </div>
         {badge ? (
@@ -102,11 +106,13 @@ export function ProductToolCard(props: ProductToolCardProps) {
           </span>
         ) : null}
       </div>
-      <p className="mt-2 flex-1 pl-2 text-sm leading-relaxed text-[#475569]">{description}</p>
+      <p className="mt-2 flex-1 pl-2 text-[15.5px] leading-relaxed text-[var(--text-secondary)]">
+        {description}
+      </p>
       {supportingLabel ? (
-        <p className="mt-1 pl-2 text-xs font-medium text-[#475569]">{supportingLabel}</p>
+        <p className="mt-1 pl-2 text-xs font-medium text-[var(--text-muted)]">{supportingLabel}</p>
       ) : null}
-      <span className={cn("mt-3 pl-2 text-sm font-semibold", styles.cta)}>{cta} →</span>
+      <span className={cn("mt-3 pl-2 text-[15px] font-semibold", styles.cta)}>{cta} →</span>
     </>
   );
 

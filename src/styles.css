@@ -5,12 +5,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 16px);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 28px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -32,6 +32,7 @@
   --color-ring: var(--ring);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--status-warning);
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
   --color-english: var(--english);
@@ -40,12 +41,13 @@
   --color-hindi-foreground: var(--hindi-foreground);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-display: "Inter", "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-body: "Inter", "Noto Sans Devanagari", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-hindi: "Noto Sans Devanagari", "Hind", "Mukta", "Mangal", system-ui, sans-serif;
-  /* Calm Focus product accents */
+  /* Calm Spatial product accents */
   --color-tq-tests: var(--tq-tests);
   --color-tq-pyqs: var(--tq-pyqs);
   --color-tq-msl: var(--tq-msl);
@@ -55,50 +57,129 @@
 }
 
 :root {
-  --radius: 0.875rem; /* ~14px Calm Focus cards */
-  /* Calm Focus light palette */
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  /* TAIPOQ Calm Spatial Learning OS */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+  --radius: 16px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  --shadow-subtle: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-card-hover: 0 8px 24px rgba(16, 24, 40, 0.08);
+  --shadow-focus: 0 12px 32px rgba(16, 24, 40, 0.07);
+
+  --duration-fast: 120ms;
+  --duration-standard: 180ms;
+  --duration-emphasis: 260ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Primary brand */
+  --cs-primary: #2457d6;
+  --cs-primary-strong: #183b99;
+  --cs-primary-hover: #1e48b8;
+  --cs-primary-container: #eaf0ff;
+  --cs-on-primary: #ffffff;
+  --cs-on-primary-container: #132b66;
+
+  /* Secondary / progress (teal) */
+  --cs-secondary: #087f78;
+  --cs-secondary-strong: #065f5b;
+  --cs-secondary-container: #e4f7f5;
+  --cs-on-secondary: #ffffff;
+  --cs-on-secondary-container: #064e49;
+
+  /* Controlled micro-accent (lime — tiny indicators only) */
+  --cs-accent-intelligence: #b7e34a;
+  --cs-accent-intelligence-soft: #f3fad9;
+
+  /* Surfaces */
+  --surface-canvas: #f7f9fc;
+  --surface-card: #ffffff;
+  --surface-focus: #eef4ff;
+  --surface-secondary: #f0faf9;
+  --surface-muted: #f8fafc;
+  --surface-elevated: rgba(255, 255, 255, 0.94);
+
+  /* Text */
+  --text-primary: #101828;
+  --text-secondary: #475467;
+  --text-muted: #667085;
+  --text-disabled: #98a2b3;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border-subtle: #e4e7ec;
+  --border-default: #d0d5dd;
+  --border-focus: #84a7ff;
+  --border-strong: #98a2b3;
+
+  /* Status */
+  --status-success: #16835b;
+  --status-success-container: #e8f7f0;
+  --status-warning: #a85b00;
+  --status-warning-container: #fff4e5;
+  --status-danger: #b42318;
+  --status-danger-container: #feeceb;
+  --status-info: #175cd3;
+  --status-info-container: #eaf2ff;
+
+  /* shadcn / Tailwind semantic bridge */
+  --background: #f7f9fc;
+  --foreground: #101828;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #101828;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #1d4ed8;
+  --popover-foreground: #101828;
+  --primary: #2457d6;
   --primary-foreground: #ffffff;
-  --secondary: #eff6ff;
-  --secondary-foreground: #1e40af;
-  --muted: #f1f5f9;
-  --muted-foreground: #475569;
-  --accent: #eff6ff;
-  --accent-foreground: #0f172a;
-  --destructive: #dc2626;
+  --secondary: #e4f7f5;
+  --secondary-foreground: #064e49;
+  --muted: #f8fafc;
+  --muted-foreground: #475467;
+  --accent: #eaf0ff;
+  --accent-foreground: #132b66;
+  --destructive: #b42318;
   --destructive-foreground: #ffffff;
-  --success: #15803d;
+  --success: #16835b;
   --success-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #1d4ed8;
+  --border: #e4e7ec;
+  --input: #d0d5dd;
+  --ring: #2457d6;
   --surface: #ffffff;
-  --surface-hover: #f1f5f9;
-  --english: #2563eb;
+  --surface-hover: #f8fafc;
+  --english: #2457d6;
   --english-foreground: #ffffff;
-  --hindi: #d97706;
+  --hindi: #a85b00;
   --hindi-foreground: #ffffff;
-  --ink: #0f172a;
-  --ink-soft: #475569;
+  --ink: #101828;
+  --ink-soft: #475467;
+
   /* Product accents */
-  --tq-tests: #2563eb;
-  --tq-pyqs: #4f46e5;
-  --tq-msl: #0f766e;
-  --tq-mission: #d97706;
-  --tq-jobs: #15803d;
-  --tq-progress: #7c3aed;
-  --tq-pale-tests: #eff6ff;
+  --tq-tests: #2457d6;
+  --tq-pyqs: #3b5bdb;
+  --tq-msl: #087f78;
+  --tq-mission: #a85b00;
+  --tq-jobs: #16835b;
+  --tq-progress: #087f78;
+  --tq-pale-tests: #eaf0ff;
   --tq-pale-pyqs: #eef2ff;
-  --tq-pale-msl: #f0fdfa;
-  --tq-pale-mission: #fffbeb;
-  --tq-pale-jobs: #f0fdf4;
-  --tq-pale-progress: #f5f3ff;
+  --tq-pale-msl: #e4f7f5;
+  --tq-pale-mission: #fff4e5;
+  --tq-pale-jobs: #e8f7f0;
+  --tq-pale-progress: #e4f7f5;
 }
 
 @layer base {
@@ -128,6 +209,7 @@
   }
   .font-hindi {
     font-family: var(--font-hindi);
+    line-height: 1.65;
   }
   .font-mono {
     font-family: var(--font-mono);
@@ -135,32 +217,53 @@
   .font-kruti {
     font-family: "Kruti Dev 010", "KrutiDev010", "Kruti Dev", "Kruti Dev 011", serif;
   }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @utility bento-tile {
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
   transition:
-    border-color 200ms ease,
-    transform 200ms ease,
-    background 200ms ease,
-    box-shadow 200ms ease;
+    border-color var(--duration-standard) var(--ease-standard),
+    transform var(--duration-standard) var(--ease-standard),
+    background var(--duration-standard) var(--ease-standard),
+    box-shadow var(--duration-standard) var(--ease-standard);
 }
 @utility bento-tile-hover {
   &:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.09);
+    border-color: var(--border-default);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-1px);
   }
 }
 
 @utility tq-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+}
+
+@utility tq-focus-card {
+  background: var(--surface-focus);
+  border: 1px solid var(--border-focus);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-subtle);
+}
+
+@utility tq-utility-row {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--duration-fast) var(--ease-standard);
 }
 
 @keyframes caret-blink {

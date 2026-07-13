@@ -105,7 +105,7 @@ function DailyMissionPage() {
               {dailyGoalAchieved ? (
                 <Badge
                   variant="outline"
-                  className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                  className="border-[var(--status-success)]/40 bg-[var(--status-success-container)] text-[var(--status-success)]"
                 >
                   Daily Goal achieved
                 </Badge>

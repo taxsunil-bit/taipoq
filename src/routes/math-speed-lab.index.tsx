@@ -49,7 +49,7 @@ function MathSpeedLabIndex() {
   return (
     <div className="mx-auto max-w-3xl space-y-6 font-hindi">
       <div className="flex flex-wrap gap-2">
-        <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
+        <span className="rounded-full border border-[var(--cs-secondary)]/30 bg-[var(--cs-secondary-container)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--cs-on-secondary-container)]">
           Early Access
         </span>
       </div>

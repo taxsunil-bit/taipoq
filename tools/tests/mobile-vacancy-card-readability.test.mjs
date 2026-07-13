@@ -17,31 +17,30 @@ const CARD = readFileSync(path.join(ROOT, "src/components/VerifiedVacancyCard.ts
 const SHELL = readFileSync(path.join(ROOT, "src/components/PageShell.tsx"), "utf8");
 const NAV = readFileSync(path.join(ROOT, "src/components/NavBar.tsx"), "utf8");
 
-test("Apply Window uses high-contrast Calm Focus green styling", () => {
-  assert.match(CARD, /bg-\[#F0FDF4\]/);
-  assert.match(CARD, /border-\[#86EFAC\]/);
-  assert.match(CARD, /text-\[#166534\]/);
+test("Apply Window uses high-contrast Calm Spatial success styling", () => {
+  assert.match(CARD, /status-success-container/);
+  assert.match(CARD, /status-success/);
   assert.doesNotMatch(CARD, /text-emerald-100/);
   assert.doesNotMatch(CARD, /bg-emerald-500\/10/);
 });
 
 test("Verified badge uses readable semantic styling", () => {
   assert.match(CARD, /BADGE_VERIFIED/);
-  assert.match(CARD, /text-\[#15803D\]/);
+  assert.match(CARD, /status-success/);
   assert.doesNotMatch(CARD, /text-emerald-300/);
 });
 
 test("Applications Open / status badges are distinguishable from Verified", () => {
   assert.match(CARD, /statusBadgeClass/);
-  assert.match(CARD, /text-\[#1D4ED8\]/);
+  assert.match(CARD, /status-info/);
   assert.match(CARD, /closing_soon/);
-  assert.match(CARD, /text-\[#B45309\]/);
+  assert.match(CARD, /status-warning/);
 });
 
 test("legacy pending badge is readable (no invisible slate text / blank grey bar)", () => {
   assert.match(CARD, /BADGE_PENDING/);
   assert.match(CARD, /verification review pending/i);
-  assert.match(CARD, /text-\[#334155\]/);
+  assert.match(CARD, /text-secondary/);
   assert.doesNotMatch(CARD, /text-slate-200/);
   assert.doesNotMatch(CARD, /bg-slate-500\/15/);
 });

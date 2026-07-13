@@ -27,18 +27,27 @@ export const SITE_DESCRIPTION =
 
 export const SITE_CANONICAL_URL = "https://www.taipoq.com/";
 
-/** Shared primary practice card — Calm Focus solid blue (legacy gradient retained for Tests hub). */
+/** Level 1 — focus / principal active state */
+export const FOCUS_CARD =
+  "rounded-[20px] border border-[var(--border-focus)] bg-[var(--surface-focus)] shadow-[var(--shadow-subtle)] transition-all duration-[var(--duration-standard)] ease-[var(--ease-standard)] hover:shadow-[var(--shadow-focus)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
+
+/** Level 2 — standard product / feature cards */
+export const PRODUCT_CARD =
+  "rounded-2xl border border-[var(--border-subtle)] bg-white shadow-[var(--shadow-subtle)] transition-all duration-[var(--duration-standard)] ease-[var(--ease-standard)] hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
+
+/** Level 3 — compact utility rows */
+export const UTILITY_ROW =
+  "flex min-h-11 items-center gap-3 border-b border-[var(--border-subtle)] py-3 transition-colors duration-[var(--duration-fast)] hover:bg-[var(--surface-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
+/** Shared primary practice card — Calm Spatial primary blue */
 export const MAIN_ACTION_CARD =
-  "bg-[#1D4ED8] text-white border border-[#93C5FD]/60 shadow-[0_2px_8px_rgba(15,23,42,0.05)] transition-all duration-200 hover:bg-[#1E40AF] hover:shadow-[0_8px_22px_rgba(15,23,42,0.09)] hover:-translate-y-px";
+  "bg-primary text-primary-foreground border border-[var(--border-focus)] shadow-[var(--shadow-subtle)] transition-all duration-[var(--duration-standard)] hover:bg-[var(--cs-primary-hover)] hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-px";
 
-export const MAIN_ACTION_SUBTITLE = "text-blue-100";
+export const MAIN_ACTION_SUBTITLE = "text-primary-foreground/80";
 
-/** Tests hub only — same base blue; extra border/shadow/glow via badge + CTA. */
-export const TESTS_HUB_CARD_HIGHLIGHT = "tests-hub-card-glow border-blue-200/50 shadow-blue-600/25";
+/** Tests hub highlight — restrained, no heavy glow */
+export const TESTS_HUB_CARD_HIGHLIGHT =
+  "border-[var(--border-focus)] shadow-[var(--shadow-subtle)]";
 
 export const TESTS_HUB_BADGE =
-  "absolute right-3 top-3 rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-sm";
-
-/** Calm Focus product-tool card surfaces */
-export const PRODUCT_CARD =
-  "rounded-[14px] border border-[#E2E8F0] bg-white shadow-[0_2px_8px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-[0_8px_22px_rgba(15,23,42,0.09)] hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] focus-visible:ring-offset-2";
+  "absolute right-3 top-3 rounded-full border border-[var(--border-subtle)] bg-[var(--cs-primary-container)] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--cs-on-primary-container)]";
