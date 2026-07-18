@@ -102,7 +102,9 @@ export { LIVE_LIST_REFERENCE_DATE } from "./vacancyPublicCore.mjs";
 
 import {
   computePublicVacancySummary as computePublicVacancySummaryCore,
+  computeVacancyApplicationState as computeVacancyApplicationStateCore,
   filterVerifiedPublicVacanciesBySector as filterVerifiedPublicVacanciesBySectorCore,
+  formatVacancyApplicationStateLabel as formatVacancyApplicationStateLabelCore,
   getApplicationDeadlineMs as getApplicationDeadlineMsCore,
   getVerifiedPublicVacancies as getVerifiedPublicVacanciesCore,
   getVerifiedVacancySector as getVerifiedVacancySectorCore,
@@ -118,11 +120,31 @@ import {
   isVacancyPubliclyVerified as isVacancyPubliclyVerifiedCore,
   parseIsoDate as parseIsoDateCore,
   resolveVacancyDataUpdatedIso as resolveVacancyDataUpdatedIsoCore,
+  resolveVacancyPublicStatusLabel as resolveVacancyPublicStatusLabelCore,
   VACANCY_DATE_ONLY_CLOSING_TIME as VACANCY_DATE_ONLY_CLOSING_TIME_CORE,
 } from "./vacancyPublicCore.mjs";
 import { classifyVacancyTrust } from "./vacanciesSource.mjs";
 
 export const VACANCY_DATE_ONLY_CLOSING_TIME = VACANCY_DATE_ONLY_CLOSING_TIME_CORE;
+
+export type VacancyApplicationState = "UPCOMING" | "OPEN" | "CLOSED" | "UNKNOWN";
+
+/** Canonical application-window state (IST). Prefer this over static JSON status for badges. */
+export function computeVacancyApplicationState(
+  item: VacancyItem,
+  at?: Date,
+): VacancyApplicationState {
+  return computeVacancyApplicationStateCore(item, at ?? getVacancyClockNowCore()) as VacancyApplicationState;
+}
+
+export function formatVacancyApplicationStateLabel(state: VacancyApplicationState): string {
+  return formatVacancyApplicationStateLabelCore(state);
+}
+
+/** Public card status pill — derived from dates, not static "active" → Applications Open. */
+export function resolveVacancyPublicStatusLabel(item: VacancyItem, clock?: VacancyClock): string {
+  return resolveVacancyPublicStatusLabelCore(item, getVacancyClockNowCore(clock));
+}
 
 export function parseIsoDate(value: string | undefined): string | null {
   return parseIsoDateCore(value);
@@ -199,14 +221,15 @@ export function countVacanciesByStatus(items: VacancyItem[]) {
   return counts;
 }
 
-export function canShowApplyButton(item: VacancyItem): boolean {
+export function canShowApplyButton(item: VacancyItem, clock?: VacancyClock): boolean {
   const applyUrl = item.applyUrl?.trim();
   if (!applyUrl) return false;
   if (item.isPreparationOnly) return false;
   if (item.status === "verification_pending") return false;
   if (item.status === "archive" || item.status === "closed") return false;
   if (item.sourceType === "cross_check_only") return false;
-  return item.status === "active" || item.status === "closing_soon";
+  if (!(item.status === "active" || item.status === "closing_soon")) return false;
+  return isVacancyApplicationWindowOpen(item, getVacancyClockNow(clock));
 }
 
 export function isHttpsUrl(url: string | undefined): boolean {

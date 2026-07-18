@@ -29,6 +29,15 @@ export declare function getApplicationDeadlineMs(
   applicationEndDate: string | undefined,
   applicationEndTime: string | undefined,
 ): number | null;
+
+export type VacancyApplicationState = "UPCOMING" | "OPEN" | "CLOSED" | "UNKNOWN";
+
+export declare function computeVacancyApplicationState(
+  item: VacancyItem,
+  at: Date,
+): VacancyApplicationState;
+export declare function formatVacancyApplicationStateLabel(state: VacancyApplicationState): string;
+export declare function resolveVacancyPublicStatusLabel(item: VacancyItem, at: Date): string;
 export declare function isVacancyApplicationWindowOpen(item: VacancyItem, at: Date): boolean;
 export declare function isLiveVacancyByClosingDate(
   applicationEndDate: string | undefined,

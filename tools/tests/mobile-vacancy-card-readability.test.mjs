@@ -37,12 +37,18 @@ test("Applications Open / status badges are distinguishable from Verified", () =
   assert.match(CARD, /status-warning/);
 });
 
-test("legacy pending badge is readable (no invisible slate text / blank grey bar)", () => {
-  assert.match(CARD, /BADGE_PENDING/);
-  assert.match(CARD, /verification review pending/i);
-  assert.match(CARD, /text-secondary/);
+test("pending/legacy listings are excluded from VerifiedVacancyCard", () => {
+  assert.match(CARD, /isFullyVerified/);
+  assert.match(CARD, /if \(!isFullyVerified\)/);
+  assert.doesNotMatch(CARD, /Open listing — verification review pending/);
   assert.doesNotMatch(CARD, /text-slate-200/);
   assert.doesNotMatch(CARD, /bg-slate-500\/15/);
+});
+
+test("status pill uses derived application state (not static Applications Open)", () => {
+  assert.match(CARD, /resolveVacancyPublicStatusLabel/);
+  assert.match(CARD, /computeVacancyApplicationState/);
+  assert.doesNotMatch(CARD, /formatVacancyStatusLabel\(item\.status\)/);
 });
 
 test("no animate-pulse skeleton in VerifiedVacancyCard", () => {

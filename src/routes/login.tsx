@@ -69,7 +69,7 @@ function LocalProfilePage() {
     <PageShell>
       <PageHeader
         title="Local Profile"
-        subtitle="Your name and progress are stored in this browser. No online account or password is required."
+        subtitle="Set up your profile on this device. Progress is saved in this browser — no password required. Progress remains on this device unless browser data is cleared."
       />
       <Card className="mx-auto max-w-md">
         <CardContent className="space-y-4 p-6">

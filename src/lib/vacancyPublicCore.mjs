@@ -71,17 +71,57 @@ export function getApplicationDeadlineMs(applicationEndDate, applicationEndTime)
   return istWallTimeToUtcMs(year, month, day, hours, minutes, seconds);
 }
 
+/**
+ * Canonical application-window state derived from verified dates + clock.
+ * Timezone: Asia/Kolkata (IST, UTC+5:30). Date-only closing dates end at 23:59:59 IST.
+ * Closing instant is inclusive (`now === deadline` → OPEN).
+ *
+ * @returns {"UPCOMING"|"OPEN"|"CLOSED"|"UNKNOWN"}
+ */
+export function computeVacancyApplicationState(item, at) {
+  if (!item) return "UNKNOWN";
+  if (item.isPreparationOnly) return "CLOSED";
+  if (item.status === "archive" || item.status === "closed") return "CLOSED";
+  if (item.active === false) return "CLOSED";
+
+  const start = parseIsoDate(item.applicationStartDate);
+  const deadlineMs = getApplicationDeadlineMs(item.applicationEndDate, item.applicationEndTime);
+  if (!start || deadlineMs === null) return "UNKNOWN";
+
+  const nowMs = at.getTime();
+  if (nowMs < istDateStartMs(start)) return "UPCOMING";
+  if (nowMs <= deadlineMs) return "OPEN";
+  return "CLOSED";
+}
+
+export function formatVacancyApplicationStateLabel(state) {
+  switch (state) {
+    case "UPCOMING":
+      return "Upcoming";
+    case "OPEN":
+      return "Applications Open";
+    case "CLOSED":
+      return "Applications Closed";
+    case "UNKNOWN":
+    default:
+      return "Date Unverified";
+  }
+}
+
+/**
+ * Public status pill text — never trusts static `status === "active"` alone.
+ * While OPEN, preserves Closing Soon when the stored enum says so.
+ */
+export function resolveVacancyPublicStatusLabel(item, at) {
+  const state = computeVacancyApplicationState(item, at);
+  if (state === "OPEN" && item?.status === "closing_soon") return "Closing Soon";
+  if (state === "OPEN" && item?.status === "correction_window") return "Correction Window";
+  return formatVacancyApplicationStateLabel(state);
+}
+
 /** True while the application window is open (IST deadline, inclusive end instant). */
 export function isVacancyApplicationWindowOpen(item, at) {
-  if (!item?.active) return false;
-  if (item.isPreparationOnly) return false;
-  if (item.status === "archive" || item.status === "closed") return false;
-  const start = parseIsoDate(item.applicationStartDate);
-  if (!start) return false;
-  const deadlineMs = getApplicationDeadlineMs(item.applicationEndDate, item.applicationEndTime);
-  if (deadlineMs === null) return false;
-  const nowMs = at.getTime();
-  return nowMs >= istDateStartMs(start) && nowMs <= deadlineMs;
+  return computeVacancyApplicationState(item, at) === "OPEN";
 }
 
 export function isLiveVacancyByClosingDate(applicationEndDate, referenceDate = LIVE_LIST_REFERENCE_DATE) {
@@ -206,13 +246,16 @@ export function getVerifiedPublicVacancies(items, clock) {
     if (item.sourceType === "cross_check_only") return false;
     if (item.status !== "active" && item.status !== "closing_soon") return false;
     if (!isHttpsUrl(item.sourceUrl)) return false;
+    // "Latest Verified" / public verified list: strict publication only.
+    // Legacy open listings must not appear under a verified heading.
+    if (classifyVacancyTrust(item) !== "VERIFIED_PUBLISHED") return false;
     return true;
   });
 
   return verified.sort((a, b) => {
     const ai = DISPLAY_ORDER.indexOf(a.id);
     const bi = DISPLAY_ORDER.indexOf(b.id);
-    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1 && bi === -1) return a.id.localeCompare(b.id);
     if (ai === -1) return 1;
     if (bi === -1) return -1;
     return ai - bi;
@@ -239,7 +282,7 @@ export function isVacancyPubliclyVerified(item, clock) {
   if (item.sourceType === "cross_check_only") return false;
   if (item.status !== "active" && item.status !== "closing_soon") return false;
   if (!isHttpsUrl(item.sourceUrl)) return false;
-  return true;
+  return classifyVacancyTrust(item) === "VERIFIED_PUBLISHED";
 }
 
 export function computePublicVacancySummary(items, clock) {

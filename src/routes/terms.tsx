@@ -8,7 +8,7 @@ export const Route = createFileRoute("/terms")({
       {
         name: "description",
         content:
-          "Terms of Use for TAIPOQ — guidelines for using this government exam preparation platform.",
+          "Terms of Use for TAIPOQ — verified vacancies, practice tests, PYQs, Daily Mission, typing, Math Speed Lab, and browser-local progress.",
       },
     ],
   }),
@@ -16,15 +16,17 @@ export const Route = createFileRoute("/terms")({
 });
 
 const POINTS = [
-  "TAIPOQ is provided as an educational preparation platform for government exams and related skills practice.",
-  "Modules may include verified job updates, practice tests, labelled PYQs, Daily Mission, Math Speed Lab, current affairs, typing practice, and locally stored progress.",
-  "The platform does not guarantee selection in any job, exam, or recruitment process.",
-  "Users are responsible for verifying official rules, notifications, and eligibility with the concerned recruitment authority.",
-  "Verified PYQs may be adapted for digital practice while preserving provenance; original practice papers are not official PYQs.",
-  "Math Speed Lab methods are educational techniques and are not examination-body endorsements.",
+  "TAIPOQ is an educational government-exam preparation platform. It is not an official government recruitment website and is not affiliated with any examination authority.",
+  "The platform may include verified vacancy discovery with official-source outbound links, practice tests, labelled PYQs, adapted digital-practice content, original TAIPOQ practice material, Daily Mission, typing practice, Math Speed Lab, and browser-local profile/progress.",
+  "“Verified” describes TAIPOQ’s internal publication checks for listed information. It does not mean TAIPOQ is a government entity or that a vacancy is guaranteed accurate forever.",
+  "“Official-source linked” means TAIPOQ points to an external official page or document when available. Those third-party websites remain outside TAIPOQ’s control.",
+  "Users must verify final recruitment details — dates, fees, eligibility, and application steps — from the official notification before acting.",
+  "Verified PYQs may be adapted for digital practice while preserving provenance. TAIPOQ-original practice papers are not official PYQs.",
+  "Math Speed Lab methods are educational calculation techniques and are not examination-body endorsements.",
+  "Profile name and progress are stored in the current browser on this device. No online account or password is required. Clearing browser data may remove locally stored progress.",
+  "TAIPOQ does not promise selection, score, employment, or official acceptance of any practice result.",
   "Users must not misuse the website, attempt to damage the service, copy content unfairly, or use it for illegal purposes.",
-  "TAIPOQ may change, update, or remove features at any time.",
-  "Continued use of the website means acceptance of these terms.",
+  "TAIPOQ may change, update, or remove features at any time. Continued use of the website means acceptance of these terms.",
 ] as const;
 
 function Terms() {

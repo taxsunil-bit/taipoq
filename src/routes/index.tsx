@@ -483,7 +483,8 @@ function ProgressSummary() {
       ) : (
         <div className="mt-3 space-y-3">
           <p className="text-sm text-[var(--text-secondary)]">
-            Create a free profile to save your progress and continue later.
+            Set up your profile on this device to save progress in this browser. No password
+            required — progress remains on this device unless browser data is cleared.
           </p>
           <Link
             to="/login"

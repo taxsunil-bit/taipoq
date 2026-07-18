@@ -125,7 +125,7 @@ export function CookiePreferencesModal({
             </Button>
           </div>
           <p className="text-center text-sm">
-            <Link to="/privacy-policy" className="text-primary underline-offset-4 hover:underline" onClick={onClose}>
+            <Link to="/privacy" className="text-primary underline-offset-4 hover:underline" onClick={onClose}>
               Privacy Policy
             </Link>
           </p>

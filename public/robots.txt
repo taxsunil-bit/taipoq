@@ -1,0 +1,12 @@
+# TAIPOQ — https://www.taipoq.com/
+User-agent: *
+Allow: /
+
+# Internal / non-indexable surfaces
+Disallow: /admin
+Disallow: /admin/
+Disallow: /vacancies-preview
+Disallow: /result
+Disallow: /certificate
+
+Sitemap: https://www.taipoq.com/sitemap.xml

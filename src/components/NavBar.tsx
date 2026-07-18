@@ -37,7 +37,7 @@ type FooterLink =
   | { to: "/about"; label: string }
   | { to: "/contact"; label: string }
   | { to: "/disclaimer"; label: string }
-  | { to: "/privacy-policy"; label: string }
+  | { to: "/privacy"; label: string }
   | { to: "/terms"; label: string };
 
 const FOOTER_GROUPS: { heading: string; links: FooterLink[] }[] = [
@@ -68,7 +68,7 @@ const FOOTER_GROUPS: { heading: string; links: FooterLink[] }[] = [
       { to: "/about", label: "About" },
       { to: "/contact", label: "Contact" },
       { to: "/disclaimer", label: "Disclaimer" },
-      { to: "/privacy-policy", label: "Privacy" },
+      { to: "/privacy", label: "Privacy" },
       { to: "/terms", label: "Terms" },
     ],
   },
@@ -79,7 +79,7 @@ export const INFO_LINKS = [
   { to: "/" as const, label: "Home" },
   { to: "/about" as const, label: "About" },
   { to: "/contact" as const, label: "Contact" },
-  { to: "/privacy-policy" as const, label: "Privacy Policy" },
+  { to: "/privacy" as const, label: "Privacy Policy" },
   { to: "/terms" as const, label: "Terms" },
   { to: "/disclaimer" as const, label: "Disclaimer" },
   { to: "/typing-tips" as const, label: "Typing Tips" },

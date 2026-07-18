@@ -5,18 +5,20 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   classifyVacancyTrust,
+  computeVacancyApplicationState,
   formatVacancyApplicationEndDisplay,
   formatVacancyApplicationStartDisplay,
   formatVacancyApplyWindowStrip,
-  formatVacancyStatusLabel,
   isHttpsUrl,
   isJudicialLocalVacancyCategory,
   isMeaningfulVacancyDetailText,
   normalizeVacancyDisplayText,
+  resolveVacancyPublicStatusLabel,
+  type VacancyApplicationState,
 } from "@/lib/vacancies";
 import { markDailyMissionTaskComplete } from "@/lib/dailyMission";
 import { formatDateDDMMYYYY, getPrepareLinkLabel, resolvePrepareLink } from "@/lib/upcomingExams";
-import type { VacancyItem, VacancyPostGroup, VacancyStatus } from "@/types/vacancy";
+import type { VacancyItem, VacancyPostGroup } from "@/types/vacancy";
 import { cn } from "@/lib/utils";
 
 type VerifiedVacancyCardProps = {
@@ -28,21 +30,22 @@ const touchBtn = "min-h-11 px-3 text-sm whitespace-nowrap";
 /** Calm Focus readable status styles — light surfaces, WCAG-friendly contrast. */
 const BADGE_VERIFIED =
   "border-[var(--status-success)]/35 bg-[var(--status-success-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-success)]";
-const BADGE_PENDING =
-  "border-[var(--border-default)] bg-[var(--surface-muted)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--text-secondary)]";
 const BADGE_JUDICIAL =
   "border-[var(--status-warning)]/35 bg-[var(--status-warning-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-warning)]";
 const APPLY_WINDOW =
   "rounded-md border border-[var(--status-success)]/40 bg-[var(--status-success-container)] px-2.5 py-1.5 text-xs font-semibold leading-snug text-[var(--status-success)]";
 
-function statusBadgeClass(status: VacancyStatus): string {
-  switch (status) {
-    case "closing_soon":
-      return "border-[var(--status-warning)]/35 bg-[var(--status-warning-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-warning)]";
-    case "closed":
-    case "archive":
+function statusBadgeClass(state: VacancyApplicationState, closingSoon: boolean): string {
+  if (state === "OPEN" && closingSoon) {
+    return "border-[var(--status-warning)]/35 bg-[var(--status-warning-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-warning)]";
+  }
+  switch (state) {
+    case "CLOSED":
       return "border-[var(--status-danger)]/35 bg-[var(--status-danger-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-danger)]";
-    case "active":
+    case "UPCOMING":
+    case "UNKNOWN":
+      return "border-[var(--border-default)] bg-[var(--surface-muted)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--text-secondary)]";
+    case "OPEN":
     default:
       return "border-[var(--status-info)]/35 bg-[var(--status-info-container)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--status-info)]";
   }
@@ -172,8 +175,13 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
   const showNotice = isHttpsUrl(item.officialNoticeUrl);
   const trustClass = classifyVacancyTrust(item);
   const isFullyVerified = trustClass === "VERIFIED_PUBLISHED";
+  // Defensive: public "verified" section must not render pending/unverified cards.
+  if (!isFullyVerified) {
+    return null;
+  }
   const isJudiciaryLocal = isJudicialLocalVacancyCategory(item.category);
-  const statusPill = formatVacancyStatusLabel(item.status);
+  const applicationState = computeVacancyApplicationState(item);
+  const statusPill = resolveVacancyPublicStatusLabel(item);
   const applyWindowStrip = formatVacancyApplyWindowStrip(
     item.applicationStartDate,
     item.applicationEndDate,
@@ -200,25 +208,18 @@ export function VerifiedVacancyCard({ item }: VerifiedVacancyCardProps) {
       <Card className="border-[var(--border-subtle)] bg-white shadow-[var(--shadow-subtle)]">
         <CardContent className="space-y-2.5 p-3 sm:p-4">
           <div className="flex flex-wrap items-center gap-1.5">
-            {isFullyVerified ? (
-              <Badge variant="outline" className={BADGE_VERIFIED}>
-                Verified Open Job
-              </Badge>
-            ) : (
-              <Badge
-                variant="outline"
-                title="Preserved public listing. Confirm details on the official website before applying."
-                className={BADGE_PENDING}
-              >
-                Open listing — verification review pending
-              </Badge>
-            )}
+            <Badge variant="outline" className={BADGE_VERIFIED}>
+              Verified Open Job
+            </Badge>
             {isJudiciaryLocal ? (
               <Badge variant="outline" className={BADGE_JUDICIAL}>
                 Judiciary Local / PLA
               </Badge>
             ) : null}
-            <Badge variant="outline" className={statusBadgeClass(item.status)}>
+            <Badge
+              variant="outline"
+              className={statusBadgeClass(applicationState, item.status === "closing_soon")}
+            >
               {statusPill}
             </Badge>
           </div>

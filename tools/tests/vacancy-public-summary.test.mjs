@@ -10,14 +10,18 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   computePublicVacancySummary,
+  computeVacancyApplicationState,
   filterVerifiedPublicVacanciesBySector,
+  formatVacancyApplicationStateLabel,
   getApplicationDeadlineMs,
   getVerifiedPublicVacancies,
   getVerifiedVacancySector,
   isVacancyApplicationWindowOpen,
   resolveVacancyDataUpdatedIso,
+  resolveVacancyPublicStatusLabel,
   VACANCY_DATE_ONLY_CLOSING_TIME,
 } from "../../src/lib/vacancyPublicCore.mjs";
+import { classifyVacancyTrust } from "../../src/lib/vacanciesSource.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..", "..");
@@ -41,6 +45,8 @@ const base = {
   applicationStartDate: "2026-06-01",
   applicationEndDate: "2026-07-10",
   sourceUrl: "https://example.gov.in/notice.pdf",
+  officialNoticeUrl: "https://example.gov.in/notice.pdf",
+  applyUrl: "https://example.gov.in/apply",
   title: "Sample",
   organisation: "Sample Org",
   category: "Banking / PO / All India",
@@ -59,6 +65,12 @@ const base = {
   trustNote: "Test",
   preparationLinks: [],
   id: "sample-open",
+  lifecycleStatus: "published",
+  verificationStatus: "verified",
+  lastVerifiedAt: "2026-06-20",
+  officialNotificationUrl: "https://example.gov.in/notice.pdf",
+  officialApplicationUrl: "https://example.gov.in/apply",
+  sourceIds: ["src-sample-open"],
 };
 
 test("date-only deadline closes at 23:59:59 IST", () => {
@@ -170,4 +182,133 @@ test("getApplicationDeadlineMs returns numeric instant", () => {
   const ms = getApplicationDeadlineMs("2026-07-03", "17:00");
   assert.equal(typeof ms, "number");
   assert.ok(ms > 0);
+});
+
+test("future opening date → Upcoming", () => {
+  const item = { ...base, applicationStartDate: "2026-08-01", applicationEndDate: "2026-08-31" };
+  const at = new Date("2026-07-15T04:00:00.000Z");
+  assert.equal(computeVacancyApplicationState(item, at), "UPCOMING");
+  assert.equal(formatVacancyApplicationStateLabel("UPCOMING"), "Upcoming");
+  assert.equal(resolveVacancyPublicStatusLabel(item, at), "Upcoming");
+});
+
+test("current time inside application window → Open", () => {
+  const at = new Date("2026-07-05T04:00:00.000Z");
+  assert.equal(computeVacancyApplicationState(base, at), "OPEN");
+  assert.equal(resolveVacancyPublicStatusLabel(base, at), "Applications Open");
+});
+
+test("exact closing-day inclusive end of day IST still Open", () => {
+  const item = { ...base, applicationEndDate: "2026-07-05" };
+  const atInclusive = new Date("2026-07-05T18:29:59.000Z"); // 23:59:59 IST
+  assert.equal(computeVacancyApplicationState(item, atInclusive), "OPEN");
+});
+
+test("one instant after deadline → Closed", () => {
+  const item = { ...base, applicationEndDate: "2026-07-05" };
+  const atClosed = new Date("2026-07-05T18:30:00.001Z");
+  assert.equal(computeVacancyApplicationState(item, atClosed), "CLOSED");
+  assert.equal(resolveVacancyPublicStatusLabel(item, atClosed), "Applications Closed");
+});
+
+test("date-only deadline uses Asia/Kolkata end of day", () => {
+  const item = { ...base, applicationEndDate: "2026-07-10", applicationEndTime: undefined };
+  // 2026-07-10 23:59:59 IST = 2026-07-10T18:29:59Z still open
+  assert.equal(computeVacancyApplicationState(item, new Date("2026-07-10T18:29:59.000Z")), "OPEN");
+  assert.equal(computeVacancyApplicationState(item, new Date("2026-07-10T18:30:00.001Z")), "CLOSED");
+});
+
+test("invalid or missing start date → UNKNOWN (not Open)", () => {
+  assert.equal(
+    computeVacancyApplicationState({ ...base, applicationStartDate: undefined }, new Date("2026-07-05T04:00:00.000Z")),
+    "UNKNOWN",
+  );
+  assert.equal(
+    computeVacancyApplicationState({ ...base, applicationStartDate: "not-a-date" }, new Date("2026-07-05T04:00:00.000Z")),
+    "UNKNOWN",
+  );
+  assert.equal(
+    resolveVacancyPublicStatusLabel({ ...base, applicationStartDate: undefined }, new Date("2026-07-05T04:00:00.000Z")),
+    "Date Unverified",
+  );
+});
+
+test("invalid or missing closing date → UNKNOWN (not Open)", () => {
+  assert.equal(
+    computeVacancyApplicationState({ ...base, applicationEndDate: undefined }, new Date("2026-07-05T04:00:00.000Z")),
+    "UNKNOWN",
+  );
+  assert.equal(
+    computeVacancyApplicationState({ ...base, applicationEndDate: "32/13/2026" }, new Date("2026-07-05T04:00:00.000Z")),
+    "UNKNOWN",
+  );
+});
+
+test("pending-verification listing excluded from verified homepage section", () => {
+  const pending = { ...base, id: "pending-1", status: "verification_pending" };
+  const at = clockAt("2026-07-05T04:00:00.000Z");
+  const displayed = getVerifiedPublicVacancies([base, pending], at);
+  assert.equal(displayed.length, 1);
+  assert.equal(displayed[0].id, "sample-open");
+});
+
+test("legacy unverified open listing excluded from verified section", () => {
+  const legacy = {
+    ...base,
+    id: "legacy-open",
+    lifecycleStatus: undefined,
+    verificationStatus: undefined,
+    lastVerifiedAt: undefined,
+    sourceIds: undefined,
+    officialNotificationUrl: undefined,
+    officialApplicationUrl: undefined,
+  };
+  assert.equal(classifyVacancyTrust(legacy), "LEGACY_PUBLIC_UNVERIFIED");
+  const at = clockAt("2026-07-05T04:00:00.000Z");
+  assert.equal(getVerifiedPublicVacancies([legacy], at).length, 0);
+});
+
+test("expired vacancy excluded from open verified section even when status=active", () => {
+  const expired = {
+    ...base,
+    id: "expired-active",
+    status: "active",
+    applicationEndDate: "2026-07-01",
+    applicationEndTime: "17:00",
+  };
+  const at = clockAt("2026-07-05T04:00:00.000Z");
+  assert.equal(computeVacancyApplicationState(expired, at.now()), "CLOSED");
+  assert.equal(resolveVacancyPublicStatusLabel(expired, at.now()), "Applications Closed");
+  assert.equal(getVerifiedPublicVacancies([expired], at).length, 0);
+});
+
+test("valid open verified vacancy included", () => {
+  const at = clockAt("2026-07-05T04:00:00.000Z");
+  const displayed = getVerifiedPublicVacancies([base], at);
+  assert.equal(displayed.length, 1);
+  assert.equal(classifyVacancyTrust(displayed[0]), "VERIFIED_PUBLISHED");
+});
+
+test("sorting of open vacancies follows DISPLAY_ORDER then id", () => {
+  const items = [
+    { ...base, id: "isro-istrac-02-2026", sourceIds: ["a"] },
+    { ...base, id: "ibps-po-mt-xvi-2026", sourceIds: ["b"] },
+    { ...base, id: "zzz-unknown-order", sourceIds: ["c"] },
+  ];
+  const at = clockAt("2026-07-05T04:00:00.000Z");
+  const ids = getVerifiedPublicVacancies(items, at).map((i) => i.id);
+  assert.deepEqual(ids, ["ibps-po-mt-xvi-2026", "isro-istrac-02-2026", "zzz-unknown-order"]);
+});
+
+test("static status=active never bypasses canonical closed state", () => {
+  const stale = {
+    ...base,
+    status: "active",
+    statusLabel: "Applications Open; Last Date 01/07/2026",
+    applicationEndDate: "2026-07-01",
+  };
+  const at = new Date("2026-07-18T04:00:00.000Z");
+  assert.equal(isVacancyApplicationWindowOpen(stale, at), false);
+  assert.notEqual(resolveVacancyPublicStatusLabel(stale, at), "Applications Open");
+  assert.equal(resolveVacancyPublicStatusLabel(stale, at), "Applications Closed");
 });

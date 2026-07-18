@@ -21,6 +21,7 @@ import { Route as StudyCornerRouteImport } from './routes/study-corner'
 import { Route as ResultRouteImport } from './routes/result'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ModelPaperTestRouteImport } from './routes/model-paper-test'
 import { Route as ModelPaperRouteImport } from './routes/model-paper'
 import { Route as MockTestRouteImport } from './routes/mock-test'
@@ -155,6 +156,11 @@ const ProgressRoute = ProgressRouteImport.update({
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModelPaperTestRoute = ModelPaperTestRouteImport.update({
@@ -590,6 +596,7 @@ export interface FileRoutesByFullPath {
   '/mock-test': typeof MockTestRouteWithChildren
   '/model-paper': typeof ModelPaperRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
+  '/privacy': typeof PrivacyRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
@@ -673,6 +680,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/mock-test': typeof MockTestRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
+  '/privacy': typeof PrivacyRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
@@ -754,6 +762,7 @@ export interface FileRoutesById {
   '/mock-test': typeof MockTestRouteWithChildren
   '/model-paper': typeof ModelPaperRouteWithChildren
   '/model-paper-test': typeof ModelPaperTestRoute
+  '/privacy': typeof PrivacyRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/progress': typeof ProgressRoute
   '/result': typeof ResultRoute
@@ -845,6 +854,7 @@ export interface FileRouteTypes {
     | '/mock-test'
     | '/model-paper'
     | '/model-paper-test'
+    | '/privacy'
     | '/privacy-policy'
     | '/progress'
     | '/result'
@@ -928,6 +938,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/mock-test'
     | '/model-paper-test'
+    | '/privacy'
     | '/privacy-policy'
     | '/progress'
     | '/result'
@@ -1008,6 +1019,7 @@ export interface FileRouteTypes {
     | '/mock-test'
     | '/model-paper'
     | '/model-paper-test'
+    | '/privacy'
     | '/privacy-policy'
     | '/progress'
     | '/result'
@@ -1098,6 +1110,7 @@ export interface RootRouteChildren {
   MockTestRoute: typeof MockTestRouteWithChildren
   ModelPaperRoute: typeof ModelPaperRouteWithChildren
   ModelPaperTestRoute: typeof ModelPaperTestRoute
+  PrivacyRoute: typeof PrivacyRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProgressRoute: typeof ProgressRoute
   ResultRoute: typeof ResultRoute
@@ -1196,6 +1209,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/model-paper-test': {
@@ -2089,6 +2109,7 @@ const rootRouteChildren: RootRouteChildren = {
   MockTestRoute: MockTestRouteWithChildren,
   ModelPaperRoute: ModelPaperRouteWithChildren,
   ModelPaperTestRoute: ModelPaperTestRoute,
+  PrivacyRoute: PrivacyRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProgressRoute: ProgressRoute,
   ResultRoute: ResultRoute,

@@ -39,17 +39,36 @@ test("five-item mobile bottom nav preserved", () => {
 
 test("public legal pages reflect current platform scope", () => {
   assert.match(ABOUT, /government-exam preparation platform/i);
+  assert.match(ABOUT, /Verified Opportunities/i);
+  assert.match(ABOUT, /Trustworthy Practice/i);
+  assert.match(ABOUT, /Guided Daily Preparation/i);
   assert.match(ABOUT, /Math Speed Lab/);
-  assert.match(ABOUT, /Daily Mission/);
+  assert.match(ABOUT, /Daily\s+Mission/);
+  assert.match(ABOUT, /Typing practice and Math Speed Lab are preparation tools/i);
   assert.doesNotMatch(ABOUT, /public demo\/prototype/i);
   assert.doesNotMatch(ABOUT, /TAIPOQ v1 is a public demo/i);
+  assert.doesNotMatch(ABOUT, /typing practice platform/i);
   assert.doesNotMatch(TERMS, /prototype\/demo/i);
   assert.doesNotMatch(TERMS, /typing practice and learning tool/);
+  assert.match(TERMS, /verified vacancy discovery/i);
+  assert.match(TERMS, /browser-local profile/i);
   assert.match(DISCLAIMER, /Vacancy information may change/);
   assert.match(DISCLAIMER, /Math Speed Lab methods are educational/);
   assert.match(DISCLAIMER, /Local browser-stored progress/);
   assert.match(CONTACT, /Vacancy correction/);
   assert.match(CONTACT, /Math Speed Lab issue/);
+});
+
+test("footer Privacy link targets /privacy", () => {
+  assert.match(NAV, /to: "\/privacy"/);
+  assert.match(NAV, /label: "Privacy"/);
+  assert.doesNotMatch(NAV, /to: "\/privacy-policy", label: "Privacy"/);
+});
+
+test("homepage local-profile CTA does not imply cloud account signup", () => {
+  assert.match(HOME, /Set up your profile on this device/);
+  assert.match(HOME, /save progress in this browser/i);
+  assert.doesNotMatch(HOME, /Create a free profile/);
 });
 
 test("English and Hindi hubs expose exactly one PageHeader H1 each", () => {

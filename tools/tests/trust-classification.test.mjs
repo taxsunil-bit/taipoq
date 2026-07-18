@@ -51,12 +51,16 @@ test("11: public UI shows a verified marker only for VERIFIED_PUBLISHED", () => 
   // The verified badge must be gated behind the classification, not hardcoded.
   assert.ok(/classifyVacancyTrust/.test(card), "card uses classifyVacancyTrust");
   assert.ok(/isFullyVerified/.test(card), "card computes fully-verified gate");
-  // Legacy records get a truthful neutral marker, not "Verified".
-  assert.ok(/verification review pending/i.test(card), "card shows neutral legacy marker");
+  // Pending/legacy listings are excluded from VerifiedVacancyCard entirely.
+  assert.ok(/if \(!isFullyVerified\)/.test(card), "card returns null when not fully verified");
+  assert.doesNotMatch(card, /Open listing — verification review pending/);
   // Verified label must be inside the isFullyVerified branch.
   const idx = card.indexOf("isFullyVerified");
   const verifiedIdx = card.indexOf("Verified Open Job");
   assert.ok(idx >= 0 && verifiedIdx > idx, "Verified Open Job label is gated by isFullyVerified");
+  // Status pill must use derived application state, not static status enum alone.
+  assert.ok(/resolveVacancyPublicStatusLabel/.test(card), "card uses derived status label");
+  assert.ok(/computeVacancyApplicationState/.test(card), "card uses canonical application state");
 });
 
 test("trust labels are concise and truthful", () => {
